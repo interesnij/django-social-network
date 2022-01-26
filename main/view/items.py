@@ -9,15 +9,15 @@ class ItemLikes(ListView):
         self.type = request.GET.get('type')
         self.item = request.user.get_item(self.type)
         if not self.item.votes_on:
-			raise Http404
-		if request.user.is_authenticated:
-			if not self.item.list.is_user_can_see_el(request.user.pk):
-				raise Http404
-			self.template_name = get_template_user_item(self.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			if not self.item.list.is_anon_user_can_see_el(request.user.pk):
-				raise Http404
-			self.template_name = get_template_anon_user_item(self.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
+            raise Http404
+        if request.user.is_authenticated:
+            if not self.item.list.is_user_can_see_el(request.user.pk):
+                raise Http40
+            self.template_name = get_template_user_item(self.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            if not self.item.list.is_anon_user_can_see_el(request.user.pk):
+                raise Http404
+            self.template_name = get_template_anon_user_item(self.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ItemLikes,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -36,15 +36,15 @@ class ItemDislikes(ListView):
         self.type = request.GET.get('type')
         self.item = request.user.get_item(self.type)
         if not self.item.votes_on:
-			raise Http404
-		if request.user.is_authenticated:
-			if not self.item.list.is_user_can_see_el(request.user.pk):
-				raise Http404
-			self.template_name = get_template_user_item(self.item, "generic/items/comment/", "dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			if not self.item.list.is_anon_user_can_see_el(request.user.pk):
-				raise Http404
-			self.template_name = get_template_anon_user_item(self.item, "generic/items/comment/anon_dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+            raise Http404
+        if request.user.is_authenticated:
+            if not self.item.list.is_user_can_see_el(request.user.pk):
+                raise Http404
+            self.template_name = get_template_user_item(self.item, "generic/items/comment/", "dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            if not self.item.list.is_anon_user_can_see_el(request.user.pk):
+                raise Http404
+            self.template_name = get_template_anon_user_item(self.item, "generic/items/comment/anon_dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ItemDislikes,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
