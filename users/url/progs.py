@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^like_comment/$', CommentLikeCreate.as_view()),
     url(r'^dislike_comment/$', CommentDislikeCreate.as_view()),
     url(r'^edit_comment/$', CommentEdit.as_view()),
+    url(r'^delete_comment/$', CommentDelete.as_view()),
+    url(r'^recover_comment/$', CommentRecover.as_view()),
 ]

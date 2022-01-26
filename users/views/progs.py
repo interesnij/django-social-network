@@ -216,3 +216,28 @@ class CommentEdit(TemplateView):
                 return render_for_platform(request, 'generic/items/comment/parent.html',{'comment': comment, 'prefix': type[:3]})
         else:
             return HttpResponseBadRequest()
+
+
+class CommentDelete(View):
+    def get(self,request,*args,**kwargs):
+        type = request.GET.get('type')
+        comment = request.user.get_comment(type)
+        list = comment.get_item().list
+
+        if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \
+        and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
+            comment.delete_item()
+            return HttpResponse()
+        raise Http404
+
+class CommentRecover(View):
+    def get(self,request,*args,**kwargs):
+        type = request.GET.get('type')
+        comment = request.user.get_comment(type)
+        list = comment.get_item().list
+
+        if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \
+        and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
+            comment.restore_item()
+            return HttpResponse()
+        raise Http404
