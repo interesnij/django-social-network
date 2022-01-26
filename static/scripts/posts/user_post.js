@@ -298,7 +298,7 @@ on('#ajax', 'click', '.comment_edit', function() {
 });
 
 on('#ajax', 'click', '.comment_edit_btn', function() {
-  form = _this.parentElement.parentElement.parentElement
+  form = this.parentElement.parentElement.parentElement
   _text = form_post.querySelector(".smile_supported").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
