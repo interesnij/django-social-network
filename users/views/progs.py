@@ -295,12 +295,11 @@ class RepostCreate(TemplateView):
         from common.check.community import check_can_get_lists
         from posts.forms import PostForm
         from django.http import HttpResponse, HttpResponseBadRequest
-        from communities.models import Community
+        from posts.models import PostsList
 
         type = request.POST.get('type')
         if type[0] == "l":
             if type[:3] == "lpo":
-                from posts.models import PostsList
                 item, t, i = PostsList.objects.get(pk=type[3:]), "POL", "post"
             elif type[:3] == "lph":
                 from gallery.models import PhotoList
