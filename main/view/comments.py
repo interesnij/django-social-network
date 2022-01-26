@@ -29,44 +29,44 @@ class CommentLikes(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.type = request.GET.get('type')
+		self.type = request.GET.get('type')
 		self.comment = request.user.get_comment(self.type)
-        if not self.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
-            raise Http404
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommentLikes,self).get(request,*args,**kwargs)
+		if not self.item.votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
+			raise Http404
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_likes.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommentLikes,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommentLikes,self).get_context_data(**kwargs)
-        context['item'] = self.item
-        context['text'] = "Комментарий одобрили:"
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommentLikes,self).get_context_data(**kwargs)
+		context['item'] = self.item
+		context['text'] = "Комментарий одобрили:"
+		return context
 
-    def get_queryset(self):
-        return User.objects.filter(id__in=self.comment.likes().values("user_id"))
+	def get_queryset(self):
+		return User.objects.filter(id__in=self.comment.likes().values("user_id"))
 
 class CommentDislikes(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        self.type = request.GET.get('type')
+		self.type = request.GET.get('type')
 		self.comment = request.user.get_comment(self.type)
-        if not self.comment.get_item().votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
-            raise Http404
-        if request.user.is_authenticated:
-            self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommentDislikes,self).get(request,*args,**kwargs)
+		if not self.comment.get_item().votes_on or not self.comment.get_item().list.is_can_see_el(request.user.pk):
+			raise Http404
+		if request.user.is_authenticated:
+			self.template_name = get_template_user_item(self.comment.item, "generic/items/comment/", "dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			self.template_name = get_template_anon_user_item(self.comment.item, "generic/items/comment/anon_dislikes.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommentDislikes,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(CommentDislikes,self).get_context_data(**kwargs)
-        context['item'] = self.comment
-        context['text'] = "Комментарий не одобрили:"
-        return context
+	def get_context_data(self,**kwargs):
+		context = super(CommentDislikes,self).get_context_data(**kwargs)
+		context['item'] = self.comment
+		context['text'] = "Комментарий не одобрили:"
+		return context
 
-    def get_queryset(self):
-        return User.objects.filter(id__in=self.comment.dislikes().values("user_id"))
+	def get_queryset(self):
+		return User.objects.filter(id__in=self.comment.dislikes().values("user_id"))
