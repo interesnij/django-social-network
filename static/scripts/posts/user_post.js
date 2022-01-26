@@ -467,43 +467,6 @@ on('#ajax', 'click', '.dislike2', function() {
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-
-on('#ajax', 'click', '.comment_delete', function() {
-  data = this.parentElement;
-  type = data.getAttribute("data-type");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link.open('GET', "/users/progs/delete_comment/?type=" + type, true);
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function() {
-      if (link.readyState == 4 && link.status == 200) {
-          comment = data.parentElement.parentElement.parentElement.parentElement;
-          comment.style.display = "none";
-          div = document.createElement("div");
-          div.classList.add("media", "comment");
-          div.innerHTML = "<p class='comment_restore' style='cursor:pointer;text-decoration:underline;padding:15px' data-type='" + type + "'>Комментарий удален. Восстановить</p>";
-          comment.style.display = "none"
-          comment.parentElement.insertBefore(div, comment);
-      }
-  };
-  link.send()
-});
-
-on('#ajax', 'click', '.comment_restore', function() {
-  comment = this.parentElement.nextElementSibling;
-  type = this.getAttribute("data-type");
-  block = this.parentElement;
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link.open('GET', "/users/progs/recover_comment/?type=" + type, true);
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function() {
-      if (link.readyState == 4 && link.status == 200) {
-          block.remove();
-          comment.style.display = "flex";
-      }
-  };
-  link.send()
-});
-
 on('#ajax', 'change', '#u_photo_post_attach', function() {
   form = this.parentElement;
   form_data = new FormData(form);

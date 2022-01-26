@@ -31,31 +31,6 @@ class RemoveVideoListFromCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-
-class VideoCommentCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent.post.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_comment()
-            return HttpResponse()
-
-class VideoCommentCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent.post.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.restore_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class CommunityVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video, c = Video.objects.get(pk=self.kwargs["video_pk"]), Community.objects.get(pk=self.kwargs["pk"])

@@ -48,13 +48,6 @@ function good_gallery(loader){
   });
 };
 
-on('#ajax', 'click', '.u_good_comment_delete', function() {
-  comment_delete(this, "/goods/user_progs/delete_comment/", "u_good_comment_restore")
-})
-on('#ajax', 'click', '.u_good_comment_restore', function() {
-  comment_restore(this, "/goods/user_progs/restore_comment/")
-});
-
 on('#ajax', 'click', '.u_good_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });

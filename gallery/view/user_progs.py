@@ -57,26 +57,7 @@ class PhotoAttachUserCreate(View):
             return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list})
         else:
             raise Http404
-
-
-class PhotoCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoCommentUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.restore_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
+            
 class UserPhotoDescription(View):
     form_image = None
 

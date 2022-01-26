@@ -35,13 +35,6 @@ on('#video_loader', 'click', '.u_video_on_comment', function() {
   post.querySelector(".load_video_comments").style.display = "unset"
 });
 
-on('#video_loader', 'click', '.u_video_comment_delete', function() {
-  comment_delete(this, "/video/user_progs/delete_comment/", "u_video_comment_restore")
-});
-on('#video_loader', 'click', '.u_video_comment_restore', function() {
-  comment_restore(this, "/video/user_progs/restore_comment/")
-});
-
 on('#ajax', 'click', '.u_video_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });

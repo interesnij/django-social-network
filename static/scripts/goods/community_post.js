@@ -17,13 +17,6 @@ on('#ajax', 'click', '.c_good_on_comment', function() {
   post.querySelector(".load_good_comments").style.display = "unset"
 });
 
-on('#ajax', 'click', '.c_good_comment_delete', function() {
-  comment_delete(this, "/goods/community_progs/delete_comment/", "c_good_comment_restore")
-});
-on('#ajax', 'click', '.c_good_comment_restore', function() {
-  comment_restore(this, "/goods/community_progs/restore_comment/")
-});
-
 
 on('#ajax', 'click', '.c_good_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');

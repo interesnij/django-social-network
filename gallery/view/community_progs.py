@@ -47,34 +47,6 @@ class CommunityAddAvatar(View):
         else:
             return HttpResponseBadRequest()
 
-
-class PhotoCommentCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent.post.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PhotoCommentCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PhotoComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.post.community
-        except:
-            community = comment.parent.post.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.restore_comment()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class CommunityPhotoDescription(View):
     form_image = None
 

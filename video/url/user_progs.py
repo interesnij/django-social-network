@@ -17,9 +17,6 @@ urlpatterns = [
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeVideoPosition.as_view()),
 	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeVideoListPosition.as_view()),
 
-    url(r'^delete_comment/(?P<pk>\d+)/$', VideoCommentUserDelete.as_view()),
-	url(r'^restore_comment/(?P<pk>\d+)/$', VideoCommentUserRecover.as_view()),
-
     url(r'^add_list/(?P<pk>\d+)/$', UserVideoListCreate.as_view()),
     url(r'^edit_list/(?P<pk>\d+)/$', UserVideolistEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/$', UserVideolistDelete.as_view()),

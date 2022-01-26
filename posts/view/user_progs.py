@@ -145,24 +145,6 @@ class PostUserEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class PostCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostCommentUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])

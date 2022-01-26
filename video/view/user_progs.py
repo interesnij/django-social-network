@@ -29,25 +29,6 @@ class RemoveVideoListFromUserCollections(View):
         else:
             return HttpResponse()
 
-
-class VideoCommentUserDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class VideoCommentUserRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = VideoComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == comment.commenter.pk:
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])

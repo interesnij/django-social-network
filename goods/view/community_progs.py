@@ -291,32 +291,6 @@ class CommunityGoodListRecover(View):
         else:
             raise Http404
 
-class GoodCommentCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.good.community
-        except:
-            community = comment.parent.good.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class GoodCommentCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = GoodComment.objects.get(pk=self.kwargs["pk"])
-        try:
-            community = comment.good.community
-        except:
-            community = comment.parent.good.community
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class CommunityChangeGoodPosition(View):
     def post(self,request,*args,**kwargs):
         import json

@@ -28,13 +28,6 @@ on('#video_loader', 'click', '.c_video_on_comment', function() {
   post.querySelector(".load_video_comments").style.display = "unset"
 });
 
-on('#video_loader', 'click', '.c_video_comment_delete', function() {
-  comment_delete(this, "/video/community_progs/delete_comment/", "c_video_comment_restore")
-});
-on('#video_loader', 'click', '.c_video_comment_restore', function() {
-  comment_restore(this, "/video/community_progs/restore_comment/")
-});
-
 
 on('#video_loader', 'click', '.c_video_off_votes', function() {
   send_photo_change(this, "/video/community_progs/off_votes/", "c_video_on_votes", "Вкл. реакции");

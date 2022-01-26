@@ -51,13 +51,6 @@ on('#ajax', 'click', '.u_photo_on_comment', function() {
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
 
-on('#ajax', 'click', '.u_photo_comment_delete', function() {
-  comment_delete(this, "/gallery/user_progs/delete_comment/", "u_photo_comment_restore")
-});
-on('#ajax', 'click', '.u_photo_comment_restore', function() {
-  comment_restore(this, "/gallery/user_progs/restore_comment/")
-});
-
 on('#ajax', 'click', '.u_photo_edit', function() {
   this.parentElement.nextElementSibling.style.display = "block"
 });

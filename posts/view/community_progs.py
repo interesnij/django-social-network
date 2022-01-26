@@ -200,25 +200,6 @@ class PostOfferCommunityCreate(View):
         else:
             return HttpResponseBadRequest()
 
-
-class PostCommentCommunityDelete(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["comment_pk"])
-        if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class PostCommentCommunityRecover(View):
-    def get(self,request,*args,**kwargs):
-        comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (request.user.pk == comment.commenter.pk or request.user.is_staff_of_community(self.kwargs["pk"])):
-            comment.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])

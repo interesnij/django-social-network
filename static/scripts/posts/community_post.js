@@ -279,19 +279,6 @@ on('#ajax', 'click', '.c_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.c_post_comment_delete', function() {
-  comment_delete(this, "/posts/community_progs/delete_comment/", "c_post_comment_restore")
-})
-on('#ajax', 'click', '.c_post_comment_restore', function() {
-  comment_restore(this, "/posts/community_progs/restore_comment/")
-});
-on('#ajax', 'click', '.c_post_owner_comment_delete', function() {
-  comment_owner_delete(this, "/posts/community_progs/delete_owner_comment/", "c_post_owner_comment_restore")
-})
-on('#ajax', 'click', '.c_post_owner_comment_restore', function() {
-  comment_owner_restore(this, "/posts/community_progs/restore_owner_comment/")
-});
-
 on('#ajax', 'click', '.c_like', function() {
   item = this.parentElement.parentElement.parentElement.parentElement;
   item_pk = item.getAttribute("data-pk");
