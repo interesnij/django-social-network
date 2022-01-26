@@ -267,7 +267,6 @@ class RepostCreate(TemplateView):
         from common.utils import get_item_of_type
         from common.check.user import check_user_can_get_list
         from common.check.community import check_can_get_lists
-        from posts.forms import PostForm
 
         self.type = request.GET.get('type')
         self.item = get_item_of_type(self.type)
@@ -281,6 +280,8 @@ class RepostCreate(TemplateView):
         return super(RepostCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
+        from posts.forms import PostForm
+
         context = super(RepostCreate,self).get_context_data(**kwargs)
         context["form"] = PostForm()
         context["object"] = self.item
