@@ -11,7 +11,13 @@
         </span>
         <span class="stream_reply_comments">
             {% for reply in comment.get_replies %}
-              _
+              {% if reply.is_deleted %}
+                <div class="comment">
+                  <p class="underline" style="display: flex;">Комментарий удален</p>
+                </div>
+              {% else %}
+                {% include 'desctop/generic/items/comment/reply.html' %}
+              {% endif %}
             {% endfor %}
         </span>
       </div>
@@ -20,6 +26,6 @@
     {% endif %}
   {% endfor %}
   {% if page_obj.has_next %}
-    <a class="pointer load_next_list_comments mt-1" data-link="comment/{{ item.pk }}/?page={{ page_obj.next_page_number }}">Показать еще комментарии</a>
+    <a class="pointer load_next_list_comments mt-1" data-link="comment/{{ item.pk }}/?type={{ type }}&page={{ page_obj.next_page_number }}">Показать еще комментарии</a>
   {% endif %}
 </span>

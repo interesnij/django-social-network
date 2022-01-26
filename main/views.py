@@ -254,17 +254,13 @@ class ItemCommentList(ListView):
 		self.template_name = get_template_comments(self.item, "generic/items/comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		if not request.is_ajax() or not self.item.comments_enabled:
 			raise Http404
-		if self.item.community:
-			self.target = "c_" + self.prefix + "_"
-		else:
-			self.target = "u_" + self.prefix + "_"
 		return super(ItemCommentList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super(ItemCommentList, self).get_context_data(**kwargs)
 		context['item'] = self.item
 		context['prefix'] = self.prefix
-		context['target'] = self.target
+		context['type'] = self.type
 		return context
 
 	def get_queryset(self):
