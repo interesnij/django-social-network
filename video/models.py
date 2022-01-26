@@ -1204,21 +1204,6 @@ class VideoComment(models.Model):
     def window_dislikes(self):
         return VideoCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
 
-    def edit_comment(self, attach, text):
-        from common.processing_2 import get_text_processing
-        if not text and not attach:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Нет текста или прикрепленных элементов")
-
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _text = get_text_processing(text)
-        self.attach = _attach
-        self.text = _text
-        self.type = VideoComment.EDITED
-        self.save()
-        return self
-
     def count_replies_ru(self):
         count = self.count_replies()
         a = count % 10

@@ -24,14 +24,6 @@ on('#ajax', 'click', '.u_video_create_window', function(e) {
   open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
 });
 
-on('#ajax', 'click', '.u_video_comment_edit', function() {
-  get_edit_comment_form(this, "/video/user_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.u_video_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/video/user_progs/edit_comment/")
-});
-
 on('#video_loader', 'click', '.u_video_off_comment', function() {
   send_photo_change(this, "/video/user_progs/off_comment/", "u_video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

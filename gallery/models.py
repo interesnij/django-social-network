@@ -1189,21 +1189,6 @@ class PhotoComment(models.Model):
         else:
             return ''
 
-    def edit_comment(self, attach, text):
-        from common.processing_2 import get_text_processing
-        if not text and not attach:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Нет текста или прикрепленных элементов")
-
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        _text = get_text_processing(text)
-        self.attach = _attach
-        self.text = _text
-        self.type = PhotoComment.EDITED
-        self.save()
-        return self
-
     def get_attach(self, user):
         from common.attach.comment_attach import get_comment_attach
         return get_comment_attach(self, user)

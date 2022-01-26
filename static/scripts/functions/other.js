@@ -172,63 +172,6 @@ function remove_item_and_show_restore_block(item, url, _class, title) {
     ajax_link.send();
 };
 
-function get_edit_comment_form(_this, url){
-  clear_comment_dropdown();
-  pk = _this.parentElement.getAttribute("data-pk");
-  _this.parentElement.style.display = "none";
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    parent = _this.parentElement.parentElement.parentElement;
-
-    parent.parentElement.querySelector(".comment_text").style.display = "none";
-    parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
-    parent.append(response);
-  }};
-  link.send( null );
-};
-
-function post_edit_comment_form(_this, url) {
-  form = _this.parentElement.parentElement.parentElement
-  _text = form_post.querySelector(".smile_supported").innerHTML;
-  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){
-    toast_error("Напишите или прикрепите что-нибудь");
-    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
-    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
-    return
-  };
-
-  span_form = form.parentElement;
-  block = span_form.parentElement.parentElement.parentElement;
-  $input = document.createElement("input");
-  $input.setAttribute("name", "text");
-  $input.setAttribute("type", "hidden");
-  $input.classList.add("input_text");
-  $input.value = form.querySelector(".smile_supported").innerHTML;
-  form.append($input);
-  form_comment = new FormData(form);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  link_.open('POST', url + _this.getAttribute("data-pk") + "/", true);
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          elem = link_.responseText;
-          new_post = document.createElement("span");
-          new_post.innerHTML = elem;
-          block.querySelector(".media-body").innerHTML = new_post.querySelector(".media-body").innerHTML;
-          toast_success("Комментарий изменен");
-      }
-  };
-  link_.send(form_comment)
-};
-
 function send_change_items(array, link) {
   // функция передает новый порядок элементов, принимая их массив и ссылку, по которой нужно отправить изменения.
   len = array.length + 1;

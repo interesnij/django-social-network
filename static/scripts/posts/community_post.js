@@ -279,14 +279,6 @@ on('#ajax', 'click', '.c_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.c_post_comment_edit', function() {
-  get_edit_comment_form(this, "/posts/community_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.c_post_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/posts/community_progs/edit_comment/")
-});
-
 on('#ajax', 'click', '.c_post_comment_delete', function() {
   comment_delete(this, "/posts/community_progs/delete_comment/", "c_post_comment_restore")
 })

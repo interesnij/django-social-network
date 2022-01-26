@@ -40,14 +40,6 @@ on('#ajax', 'click', '#u_ucm_photo_list_repost_btn', function() {
                      "Репост фотоальбома в сообщения сделан")
 });
 
-on('#ajax', 'click', '.u_photo_comment_edit', function() {
-  get_edit_comment_form(this, "/gallery/user_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.u_photo_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/gallery/user_progs/edit_comment/")
-});
-
 on('#ajax', 'click', '.u_photo_off_comment', function() {
   send_photo_change(this, "/gallery/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

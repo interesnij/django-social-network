@@ -5,13 +5,6 @@ on('#ajax', 'click', '.c_good_add_attach', function() {
   create_fullscreen('/goods/community_progs/add_attach/' + pk + '/', "item_fullscreen");
 });
 
-on('#ajax', 'click', '.c_good_comment_edit', function() {
-  get_edit_comment_form(this, "/goods/community_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.c_good_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/goods/community_progs/edit_comment/")
-});
 
 on('#ajax', 'click', '.c_good_off_comment', function() {
   send_good_change(this, "/goods/community_progs/off_comment/", "c_good_on_comment", "Вкл. комментарии");

@@ -48,14 +48,6 @@ function good_gallery(loader){
   });
 };
 
-on('#ajax', 'click', '.u_good_comment_edit', function() {
-  get_edit_comment_form(this, "/goods/user_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.u_good_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/goods/user_progs/edit_comment/")
-});
-
 on('#ajax', 'click', '.u_good_comment_delete', function() {
   comment_delete(this, "/goods/user_progs/delete_comment/", "u_good_comment_restore")
 })

@@ -166,37 +166,6 @@ class PostCommunityEdit(TemplateView):
             return HttpResponseBadRequest()
 
 
-class PostCommunityCommentEdit(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_my_template
-
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_my_template("generic/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(PostCommunityCommentEdit,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(PostCommunityCommentEdit,self).get_context_data(**kwargs)
-        context["comment"] = self.comment
-        context["form_post"] = CommentForm(instance=self.comment)
-        context["btn_class"] = "c_post_edit_comment_btn"
-        return context
-
-    def post(self,request,*args,**kwargs):
-        self.comment = PostComment.objects.get(pk=self.kwargs["pk"])
-        self.form = CommentForm(request.POST,instance=self.comment)
-        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.comment.commenter.pk:
-            from common.templates import render_for_platform
-            _comment = self.form.save(commit=False)
-            new_comment = _comment.edit_comment(text=_comment.text, attach = request.POST.getlist("attach_items"))
-            if self.comment.parent:
-                return render_for_platform(request, 'posts/c_post_comment/reply.html',{'reply': new_comment})
-            else:
-                return render_for_platform(request, 'posts/c_post_comment/parent.html',{'comment': new_comment})
-        else:
-            return HttpResponseBadRequest()
-
 class PostOfferCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         from common.check.community import check_private_post_exists

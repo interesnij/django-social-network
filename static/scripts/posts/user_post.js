@@ -273,12 +273,61 @@ on('#ajax', 'click', '.u_restore_post_list', function() {
     ajax_link.send();
 });
 
-on('#ajax', 'click', '.u_post_comment_edit', function() {
-  get_edit_comment_form(this, "/posts/user_progs/edit_comment/")
+on('#ajax', 'click', '.comment_edit', function() {
+  clear_comment_dropdown();
+  type = _this.parentElement.getAttribute("data-type");
+  _this.parentElement.style.display = "none";
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/posts/user_progs/edit_comment/?type=" + type + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    parent = _this.parentElement.parentElement.parentElement;
+
+    parent.parentElement.querySelector(".comment_text").style.display = "none";
+    parent.parentElement.querySelector(".attach_container") ? parent.parentElement.querySelector(".attach_container").style.display = "none" : null;
+    parent.append(response);
+  }};
+  link.send( null );
 });
 
-on('#ajax', 'click', '.u_post_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/posts/user_progs/edit_comment/")
+on('#ajax', 'click', '.edit_comment_btn', function() {
+  form = _this.parentElement.parentElement.parentElement
+  _text = form_post.querySelector(".smile_supported").innerHTML;
+  if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){
+    toast_error("Напишите или прикрепите что-нибудь");
+    form.querySelector(".text-comment").style.border = "1px #FF0000 solid";
+    form.querySelector(".dropdown").style.border = "1px #FF0000 solid";
+    return
+  };
+
+  span_form = form.parentElement;
+  block = span_form.parentElement.parentElement.parentElement;
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = form.querySelector(".smile_supported").innerHTML;
+  form.append($input);
+  form_comment = new FormData(form);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  link_.open('POST', "/posts/user_progs/edit_comment/", true);
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          elem = link_.responseText;
+          new_post = document.createElement("span");
+          new_post.innerHTML = elem;
+          block.querySelector(".media-body").innerHTML = new_post.querySelector(".media-body").innerHTML;
+          toast_success("Комментарий изменен");
+      }
+  };
+  link_.send(form_comment)
 });
 
 /*!

@@ -1236,20 +1236,6 @@ class GoodComment(models.Model):
 		else:
 			return ''
 
-	def edit_comment(self, attach, text):
-		from common.processing_2 import get_text_processing
-		if not text and not attach:
-			from rest_framework.exceptions import ValidationError
-			raise ValidationError("Нет текста или прикрепленных элементов")
-
-		_attach = str(attach)
-		_attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-		self.attach = _attach
-		self.text = get_text_processing(text)
-		self.type = GoodComment.EDITED
-		self.save()
-		return self
-
 	def get_created(self):
 		from django.contrib.humanize.templatetags.humanize import naturaltime
 		return naturaltime(self.created)

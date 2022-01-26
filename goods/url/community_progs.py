@@ -11,7 +11,6 @@ urlpatterns=[
     url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesGood.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesGood.as_view()),
 
-    url(r'^edit_comment/(?P<pk>\d+)/$', GoodCommunityCommentEdit.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentCommunityRecover.as_view())),
 

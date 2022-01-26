@@ -17,14 +17,6 @@ on('#ajax', 'click', '#c_ucm_video_list_repost_btn', function() {
                      "Репост видеоальбома в сообщения сделан")
 });
 
-on('#ajax', 'click', '.c_video_comment_edit', function() {
-  get_edit_comment_form(this, "/video/community_progs/edit_comment/")
-});
-
-on('#ajax', 'click', '.c_video_edit_comment_btn', function() {
-  post_edit_comment_form(this, "/video/community_progs/edit_comment/")
-});
-
 on('#video_loader', 'click', '.c_video_off_comment', function() {
   send_photo_change(this, "/video/community_progs/off_comment/", "c_video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;

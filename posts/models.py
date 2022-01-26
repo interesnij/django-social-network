@@ -1530,20 +1530,6 @@ class PostComment(models.Model):
     def __str__(self):
         return self.commenter.get_full_name()
 
-    def edit_comment(self, attach, text):
-        from common.processing_2 import get_text_processing
-        if not text and not attach:
-            from rest_framework.exceptions import ValidationError
-            raise ValidationError("Нет текста или прикрепленных элементов")
-
-        _attach = str(attach)
-        _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
-        self.attach = _attach
-        self.text = get_text_processing(text)
-        self.type = PostComment.EDITED
-        self.save()
-        return self
-
     def count_replies_ru(self):
         count = self.count_replies()
         a, b= count % 10, count % 100

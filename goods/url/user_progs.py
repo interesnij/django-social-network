@@ -11,7 +11,6 @@ urlpatterns=[
     url(r'^on_votes/(?P<pk>\d+)/$', UserOnVotesGood.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', UserOffVotesGood.as_view()),
 
-    url(r'^edit_comment/(?P<pk>\d+)/$', GoodUserCommentEdit.as_view()),
     url(r'^delete_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserDelete.as_view())),
 	url(r'^restore_comment/(?P<pk>\d+)/$', login_required(GoodCommentUserRecover.as_view())),
 

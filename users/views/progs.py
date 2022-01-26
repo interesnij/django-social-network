@@ -143,14 +143,13 @@ class ReplyUserCreate(View):
             else:
                 return HttpResponseBadRequest()
             return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': new_comment, 'comment': parent, 'target': target, 'prefix': prefix})
-        else:
-            return HttpResponseBadRequest()
+        return HttpResponseBadRequest()
 
 class CommentLikeCreate(View):
     def get(self, request, **kwargs):
         type = request.GET.get('type')
         comment = request.user.get_comment(type)
-        if not request.is_ajax():
+        if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_like(request.user, None)
 
@@ -158,6 +157,60 @@ class CommentDislikeCreate(View):
     def get(self, request, **kwargs):
         type = request.GET.get('type')
         comment = request.user.get_comment(type)
-        if not request.is_ajax():
+        if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_dislike(request.user, None)
+
+
+from django.views.generic.base import TemplateView
+class PostUserCommentEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_my_template
+
+        self.template_name = get_my_template("generic/items/comment/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        self.type = request.GET.get('type')
+        self.comment = request.user.get_comment(type)
+        return super(PostUserCommentEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from posts.forms import CommentForm
+
+        context = super(PostUserCommentEdit,self).get_context_data(**kwargs)
+        context["comment"] = self.comment
+        context["form_post"] = CommentForm(instance=self.comment)
+        context["type"] = self.type
+        return context
+
+    def post(self,request,*args,**kwargs):
+        type = request.POST.get('type')
+        comment = request.user.get_comment(type)
+        form = CommentForm(request.POST,instance=comment)
+        list = comment.get_item().list
+
+        if request.is_ajax() and form.is_valid() and list.is_user_can_add_comment(request.user.pk) \
+        and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
+            from common.templates import render_for_platform
+            from common.processing_2 import get_text_processing
+
+            _comment = form.save(commit=False)
+            attach = request.POST.getlist("attach_items")
+
+            if not _comment.text and not attach:
+                from rest_framework.exceptions import ValidationError
+                raise ValidationError("Нет текста или прикрепленных элементов")
+
+            _attach = str(attach)
+            _attach = _attach.replace("'", "").replace("[", "").replace("]", "").replace(" ", "")
+            comment.attach = _attach
+            comment.text = get_text_processing(_comment.text)
+            self.type = "EDI"
+            self.save()
+
+            if comment.parent:
+                return render_for_platform(request, 'generic/items/comment/reply.html',{'reply': comment})
+            else:
+                return render_for_platform(request, 'generic/items/comment/parent.html',{'comment': comment})
+        else:
+            return HttpResponseBadRequest()
