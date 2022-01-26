@@ -592,8 +592,26 @@ on('#ajax', 'click', '.u_create_video_attach_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.create_repost_btn', function() {
-  form_data = new FormData(this.parentElement.parentElement);
+on('#ajax', 'click', '#create_repost_btn', function() {
+  form_post = _this.parentElement.parentElement;
+  collector = form_post.querySelector(".collector");
+  if (!collector.innerHTML) {
+    collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки записей или получателей</div>';
+    return
+  }
+  text_val = form_post.querySelector(".smile_supported");
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
+
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = _text;
+  form_post.append($input);
+
+  form_data = new FormData(form_post);
+
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/users/progs/create_repost/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
