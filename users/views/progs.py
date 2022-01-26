@@ -347,7 +347,7 @@ class RepostCreate(TemplateView):
             if type[:3] == "pos":
                 parent = item
             else:
-                parent = Post.create_parent_post(creator=doc.creator, community=item.community, attach=type)
+                parent = Post.create_parent_post(creator=item.creator, community=item.community, attach=type)
             if lists:
                 if item.community:
                     from common.notify.notify import community_notify, community_wall
