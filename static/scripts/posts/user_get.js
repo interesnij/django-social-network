@@ -20,10 +20,10 @@ on('#ajax', 'click', '.comment_dislikes', function() {
 });
 
 on('#ajax', 'click', '.item_likes', function() {
-  create_fullscreen("/item/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/items/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 on('#ajax', 'click', '.item_dislikes', function() {
-  create_fullscreen("/item/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
+  create_fullscreen("/items/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.input_new_post_in_list', function() {
