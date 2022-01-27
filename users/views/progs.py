@@ -421,11 +421,11 @@ class ClaimCreate(TemplateView):
         from common.check.user import check_user_can_get_list
         from common.check.community import check_can_get_lists
 
-        self.type = request.GET.get('type')
-        self.subtype = request.GET.get('subtype')
+        self._type = request.GET.get('type')
+        self._subtype = request.GET.get('subtype')
 
-        if self.subtype and self.subtype == "comment":
-            self.item = get_comment(self.type)
+        if self._subtype and self._subtype == "comment":
+            self.item = get_comment(self._type)
             if self.item.get_item().community:
                 check_can_get_lists(request.user, self.item.get_item().community)
             else:
@@ -439,7 +439,7 @@ class ClaimCreate(TemplateView):
             self.item = Community.objects.get(pk=_type[3:])
             check_can_get_lists(request.user, self.item)
         else:
-            self.item = get_item_of_type(self.type)
+            self.item = get_item_of_type(self._type)
             if self.item.community:
                 check_can_get_lists(request.user, self.item.community)
             elif self.item.creator.pk != request.user.pk:
@@ -454,8 +454,8 @@ class ClaimCreate(TemplateView):
         context["form"] = ReportForm()
         context["object"] = self.item
         context["community"] = self.item.community
-        context["type"] = self.type
-        context["subtype"] = self.subtype
+        context["type"] = self._type
+        context["subtype"] = self._subtype
         return context
 
     def post(self, request, *args, **kwargs):
