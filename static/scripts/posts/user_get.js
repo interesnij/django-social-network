@@ -21,6 +21,10 @@ on('#ajax', 'click', '.create_repost', function() {
 on('#ajax', 'click', '.create_claim', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
+  dropdowns = document.body.querySelectorAll(".dropdown-menu");
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].classList.remove("show")
+  };
   create_fullscreen("/users/progs/create_claim/?type=" + type, "worker_fullscreen");
 });
 
