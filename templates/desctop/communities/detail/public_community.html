@@ -87,8 +87,8 @@
                 <button type="button" class="btn btn-sm border member_create" style="margin: 3px;margin-top:10px">
                     Подписаться
                 </button>
-                <div class="card mt-1 mb-1" style="padding: 10px;">
-                  {% if manager %}
+                <div class="card mt-1 mb-1" style="padding: 10px;" data-type="com{{ community.pk }}">
+                  {% if request.user.manager %}
                     <a class="community_blocker pointer">Блокировать</a>
                     <a class="community_suspend pointer">Остановка</a>
                     {% if community.is_have_warning_banner %}
@@ -99,6 +99,7 @@
                   {% else %}
                     <a class="community_claim pointer">Пожаловаться</a>
                   {% endif %}
+                  <span class="create_repost pointer">Поделиться</span>
                   {% if is_stat_open %}
                     <a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Статистика</a>
                   {% endif %}

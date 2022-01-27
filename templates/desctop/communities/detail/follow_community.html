@@ -68,8 +68,19 @@
               <button type="button" class="btn btn-sm border member_follow_delete" style="margin: 3px;margin-top:10px">
                   Отозвать заявку
               </button>
-              <div class="card mt-1 mb-1" style="padding: 10px;">
-                <span class="community_claim" style="cursor:pointer">Пожаловаться</span>
+              <div class="card mt-1 mb-1" data-type="com{{ community.pk }}" style="padding: 10px;">
+                {% if request.user.manager %}
+                  <a class="community_blocker pointer">Блокировать</a>
+                  <a class="community_suspend pointer">Остановка</a>
+                  {% if community.is_have_warning_banner %}
+                    <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax">Применен баннер</a>
+                  {% else %}
+                    <a class="community_warning_banner pointer">Повесить баннер</a>
+                  {% endif %}
+                {% else %}
+                  <a class="community_claim pointer">Пожаловаться</a>
+                {% endif %}
+                <span class="create_repost pointer">Поделиться</span>
               </div>
             </div>
           {% if common_friends %}

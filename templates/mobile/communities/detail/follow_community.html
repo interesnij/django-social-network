@@ -13,7 +13,7 @@
 
 <div class="container main-container mt-3" data-type="community_main" data-pk="{{ community.pk }}">
         <div class="card mb-3">
-            <div class="card-body">
+            <div class="card-body" data-type="com{{ community.pk }}">
               <h1 class="mb-0 mt-1" style="font-size: 22px;">{{ community.name }}
                 {% if community.is_identified %}
                   <svg class="svg_info svg_default" fill="currentColor" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><g><rect fill="none" /></g><g><path d="M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z"/></g></svg>
@@ -30,12 +30,34 @@
                 {% endif %}
                 <br><br>
                 <span style="display:flex;flex-wrap: wrap">
-                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
+                  <span style="flex: 0 0 40%;max-width:40%;padding:5px;">
                     <a class="btn btn-sm border community_send_page_message" data-pk="{{ community.pk }}" style="width: -webkit-fill-available;">Сообщение</a>
                   </span>
-                  <span style="flex: 0 0 50%;max-width:50%;padding:5px;">
+                  <span style="flex: 0 0 40%;max-width:40%;padding:5px;">
                     <span data-id="{{ community.pk }}" class="btn btn-sm border member_follow_delete">Отменить заявку</span>
                   </span>
+                  <span style="flex: 0 0 20%;max-width:20%;padding:5px;" class="btn_default menu_drop">
+                    <a class="btn btn-sm pointer border" style="width: -webkit-fill-available;">
+                      <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </a>
+                  </span>
+                  <div class="dropdown-menu" style="margin-top:-65px;width:100%" data-type="com{{ community.pk }}">
+                    <span class="dropdown-item create_repost">Поделиться</span>
+                    {% if request.user.is_manager %}
+                      <span class="dropdown-item community_blocker pointer">Блокировать</span>
+                      <span class="dropdown-item community_suspend pointer">Остановка</span>
+                      {% if community.is_have_warning_banner %}
+                        <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="dropdown-item ajax">Применен баннер</a>
+                      {% else %}
+                        <span class="dropdown-item community_warning_banner pointer">Повесить баннер</span>
+                      {% endif %}
+                    {% else %}
+                      <span class="dropdown-item create_claim pointer">Пожаловаться</span>
+                    {% endif %}
+                    {% if is_stat_open %}
+                      <a href="{% url 'community_traffic_day' community.pk %}" class="dropdown-item ajax">Статистика</a>
+                    {% endif %}
+                  </div>
                 </span>
 
                 {% include 'mobile/communities/detail_sections/description.html' %}

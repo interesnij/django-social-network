@@ -25,9 +25,9 @@
           <svg style="width: 17px;height: 17px; "fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
         </a>
       </span>
-      <div class="dropdown-menu" style="margin-top:-65px;width:100%"  data-type="com{{ community.pk }}">
+      <div class="dropdown-menu" style="margin-top:-65px;width:100%" data-type="com{{ community.pk }}">
         <span class="dropdown-item create_repost">Поделиться</span>
-        {% if manager %}
+        {% if request.user.is_manager %}
           <span class="dropdown-item community_blocker pointer">Блокировать</span>
           <span class="dropdown-item community_suspend pointer">Остановка</span>
           {% if community.is_have_warning_banner %}
@@ -36,7 +36,7 @@
             <span class="dropdown-item community_warning_banner pointer">Повесить баннер</span>
           {% endif %}
         {% else %}
-          <span class="dropdown-item community_claim pointer">Пожаловаться</span>
+          <span class="dropdown-item create_claim pointer">Пожаловаться</span>
         {% endif %}
         {% if is_stat_open %}
           <a href="{% url 'community_traffic_day' community.pk %}" class="dropdown-item ajax">Статистика</a>
