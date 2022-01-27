@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^delete_comment/$', CommentDelete.as_view()),
     url(r'^recover_comment/$', CommentRecover.as_view()),
     url(r'^create_repost/$', RepostCreate.as_view()),
+    url(r'^create_claim/$', ClaimCreate.as_view()),
 ]

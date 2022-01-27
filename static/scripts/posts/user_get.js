@@ -18,10 +18,10 @@ on('#ajax', 'click', '.create_repost', function() {
   create_fullscreen("/users/progs/create_repost/?type=" + type, "worker_fullscreen");
   clear_attach_block();
 });
-on('#ajax', 'click', '.create_repost', function() {
+on('#ajax', 'click', '.create_claim', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
-  create_fullscreen("/users/progs/create_report/?type=" + type, "worker_fullscreen");
+  create_fullscreen("/users/progs/create_claim/?type=" + type, "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.comment_likes', function() {

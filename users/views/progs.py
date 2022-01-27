@@ -413,7 +413,7 @@ class RepostCreate(TemplateView):
             return HttpResponseBadRequest()
 
 
-class ReportCreate(TemplateView):
+class ClaimCreate(TemplateView):
     template_name, community = None, None
 
     def get(self,request,*args,**kwargs):
@@ -437,12 +437,12 @@ class ReportCreate(TemplateView):
             elif self.item.creator.pk != request.user.pk:
                 check_user_can_get_list(request.user, self.item.creator)
         self.template_name = get_detect_platform_template("generic/report.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(ReportCreate,self).get(request,*args,**kwargs)
+        return super(ClaimCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         from managers.forms import ReportForm
 
-        context = super(ReportCreate,self).get_context_data(**kwargs)
+        context = super(ClaimCreate,self).get_context_data(**kwargs)
         context["form"] = ReportForm()
         context["object"] = self.item
         context["community"] = self.item.community
