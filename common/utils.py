@@ -284,3 +284,32 @@ def get_item_of_type(type):
         elif type[:3] == "sur":
             from survey.models import Survey
             return Survey.objects.get(pk=type[3:])
+
+
+def get_item_with_comments(item):
+    if item[:3] == "pos":
+        from posts.models import Post
+        return Post.objects.get(pk=item[3:])
+    elif item[:3] == "pho":
+        from gallery.models import Photo
+        return Photo.objects.get(pk=item[3:])
+    elif item[:3] == "goo":
+        from goods.models import Good
+        return Good.objects.get(pk=item[3:])
+    elif item[:3] == "vid":
+        from video.models import Video
+        return Video.objects.get(pk=item[3:])
+
+def get_comment(item):
+    if item[:3] == "pos":
+        from posts.models import PostComment
+        return PostComment.objects.get(pk=item[3:])
+    elif item[:3] == "pho":
+        from gallery.models import PhotoComment
+        return PhotoComment.objects.get(pk=item[3:])
+    elif item[:3] == "goo":
+        from goods.models import GoodComment
+        return GoodComment.objects.get(pk=item[3:])
+    elif item[:3] == "vid":
+        from video.models import VideoComment
+        return VideoComment.objects.get(pk=item[3:])

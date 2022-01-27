@@ -16,8 +16,10 @@ class ItemCommentList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_template_comments
+		from common.utils import get_item_with_comments
+
 		self.type = request.GET.get('type')
-		self.item = request.user.get_item(self.type)
+		self.item = get_item_with_comments(self.type)
 		self.prefix = self.type[:3]
 		self.template_name = get_template_comments(self.item, "generic/items/comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
 		if not request.is_ajax() or not self.item.comments_enabled:
@@ -39,8 +41,10 @@ class CommentLikes(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.utils import get_comment
+
 		self.type = request.GET.get('type')
-		self.comment = request.user.get_comment(self.type)
+		self.comment = get_comment(self.type)
 		item = self.comment.get_item()
 		if not item.votes_on:
 			raise Http404
@@ -73,8 +77,10 @@ class CommentDislikes(ListView):
 	template_name, paginate_by = None, 12
 
 	def get(self,request,*args,**kwargs):
+		from common.utils import get_comment
+
 		self.type = request.GET.get('type')
-		self.comment = request.user.get_comment(self.type)
+		self.comment = get_comment(self.type)
 		item = self.comment.get_item()
 		if not item.votes_on:
 			raise Http404

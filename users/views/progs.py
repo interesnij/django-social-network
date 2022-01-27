@@ -95,10 +95,10 @@ class CommentUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
         from common.processing_2 import get_text_processing
+        from common.utils import get_item_with_comments
 
         type = request.POST.get('item')
-
-        form_post, item = CommentForm(request.POST), request.user.get_item(type)
+        form_post, item = CommentForm(request.POST), get_item_with_comments(type)
 
         if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment = form_post.save(commit=False)
@@ -123,10 +123,10 @@ class CommentUserCreate(View):
 class ReplyUserCreate(View):
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
+        from common.utils import get_comment
 
         type = request.POST.get('comment')
-
-        form_post, parent = CommentForm(request.POST), request.user.get_comment(type)
+        form_post, parent = CommentForm(request.POST), get_comment(type)
         item = parent.get_item()
 
         if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
@@ -147,16 +147,20 @@ class ReplyUserCreate(View):
 
 class CommentLikeCreate(View):
     def get(self, request, **kwargs):
+        from common.utils import get_comment
+
         type = request.GET.get('type')
-        comment = request.user.get_comment(type)
+        comment = get_comment(type)
         if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_like(request.user, None)
 
 class CommentDislikeCreate(View):
     def get(self, request, **kwargs):
+        from common.utils import get_comment
+
         type = request.GET.get('type')
-        comment = request.user.get_comment(type)
+        comment = get_comment(type)
         if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_dislike(request.user, None)
@@ -164,16 +168,20 @@ class CommentDislikeCreate(View):
 
 class ItemLikeCreate(View):
     def get(self, request, **kwargs):
+        from common.utils import get_item_with_comments
+
         type = request.GET.get('type')
-        item = request.user.get_item(type)
+        item = get_item_with_comments(type)
         if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
             raise Http404
         return item.send_like(request.user, None)
 
 class ItemDislikeCreate(View):
     def get(self, request, **kwargs):
+        from common.utils import get_item_with_comments
+
         type = request.GET.get('type')
-        item = request.user.get_item(type)
+        item = get_item_with_comments(type)
         if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
             raise Http404
         return item.send_dislike(request.user, None)
@@ -185,10 +193,11 @@ class CommentEdit(TemplateView):
 
     def get(self,request,*args,**kwargs):
         from common.templates import get_my_template
+        from common.utils import get_comment
 
         self.template_name = get_my_template("generic/items/comment/comment_edit.html", request.user, request.META['HTTP_USER_AGENT'])
         self.type = request.GET.get('type')
-        self.comment = request.user.get_comment(self.type)
+        self.comment = get_comment(self.type)
         return super(CommentEdit,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -202,9 +211,10 @@ class CommentEdit(TemplateView):
 
     def post(self,request,*args,**kwargs):
         from posts.forms import CommentForm
+        from common.utils import get_comment
 
         type = request.POST.get('type')
-        comment = request.user.get_comment(type)
+        comment = get_comment(type)
         form = CommentForm(request.POST,instance=comment)
         list = comment.get_item().list
 
@@ -237,8 +247,10 @@ class CommentEdit(TemplateView):
 
 class CommentDelete(View):
     def get(self,request,*args,**kwargs):
+        from common.utils import get_comment
+
         type = request.GET.get('type')
-        comment = request.user.get_comment(type)
+        comment = get_comment(type)
         list = comment.get_item().list
 
         if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \
@@ -249,8 +261,10 @@ class CommentDelete(View):
 
 class CommentRecover(View):
     def get(self,request,*args,**kwargs):
+        from common.utils import get_comment
+
         type = request.GET.get('type')
-        comment = request.user.get_comment(type)
+        comment = get_comment(type)
         list = comment.get_item().list
 
         if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \

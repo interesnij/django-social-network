@@ -16,8 +16,10 @@ class ItemLikes(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.utils import get_item_with_comments
+
 		self.type = request.GET.get('type')
-		self.item = request.user.get_item(self.type)
+		self.item = get_item_with_comments(self.type)
 		if not self.item.votes_on:
 			raise Http404
 		if request.user.is_authenticated:
@@ -49,8 +51,10 @@ class ItemDislikes(ListView):
 	template_name, paginate_by = None, 15
 
 	def get(self,request,*args,**kwargs):
+		from common.utils import get_item_with_comments
+
 		self.type = request.GET.get('type')
-		self.item = request.user.get_item(self.type)
+		self.item = get_item_with_comments(self.type)
 		if not self.item.votes_on:
 			raise Http404
 		if request.user.is_authenticated:
