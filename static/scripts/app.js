@@ -24,11 +24,6 @@ loadScripts('/static/scripts/goods/community_get.js');
 loadScripts('/static/scripts/goods/user_post.js');
 loadScripts('/static/scripts/goods/community_post.js');
 
-loadScripts('/static/scripts/manager/user.js');
-loadScripts('/static/scripts/manager/community.js');
-loadScripts('/static/scripts/manager/post.js');
-loadScripts('/static/scripts/manager/photo.js');
-
 loadScripts('/static/scripts/music/user_get.js');
 loadScripts('/static/scripts/music/community_get.js');
 loadScripts('/static/scripts/music/user_post.js');
