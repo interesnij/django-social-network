@@ -430,6 +430,14 @@ class ClaimCreate(TemplateView):
                 check_can_get_lists(request.user, self.item.get_item().community)
             else:
                 check_user_can_get_list(request.user, self.item.get_item().creator)
+        elif "use" in self._type:
+            from user.models import User
+            self.item = User.objects.get(pk=_type[3:])
+            check_user_can_get_list(request.user, self.item)
+        elif "com" in self._type:
+            from communities.models import Community
+            self.item = Community.objects.get(pk=_type[3:])
+            check_can_get_lists(request.user, self.item)
         else:
             self.item = get_item_of_type(self.type)
             if self.item.community:
