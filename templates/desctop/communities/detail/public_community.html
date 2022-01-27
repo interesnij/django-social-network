@@ -99,7 +99,7 @@
                   {% else %}
                     <a class="create_claim pointer">Пожаловаться</a>
                   {% endif %}
-                  <span class="create_repost pointer">Поделиться</span>
+                  <a class="create_repost pointer">Поделиться</a>
                   {% if is_stat_open %}
                     <a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Статистика</a>
                   {% endif %}
