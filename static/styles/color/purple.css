@@ -47,14 +47,11 @@ body {
   background-color: #492786;
   color: #ffffff;
 }
-.header-color-primary {
-  color: #ffffff;
-}
+
 .header-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
-.text-muted,
-.text-secondary {
+.text-muted {
   color: rgba(255, 255, 255, 0.4) !important;
 }
 
@@ -78,9 +75,7 @@ body {
 .main-header {
   background-color: #7e3eef;
 }
-.search-header .input-group .form-control {
-  background-color: rgba(73, 39, 134, 0.5);
-}
+
 .card, .mobile_naw, .card_fullscreen {
   background-color: #5a30a6;
 }
@@ -106,19 +101,6 @@ a.media:hover {
   border-color: rgba(255, 255, 255, 0.5);
   background-color: #5f32ae;
   color: rgba(255, 255, 255, 0.6);
-}
-.line-control-menu-bar, .line-control-status-bar {
-  background: #492786;
-}
-
-.chat-window .card .card-body {
-  background: #492786;
-}
-.chatlist li .media .media-body {
-  background: #542d9a;
-}
-.chatlist li .media .media-body:before {
-  background: #542d9a;
 }
 
 .btn_default svg, .btn_default span{
@@ -146,13 +128,6 @@ a.media:hover {
 .progress2:before{
   background-color: #492786 !important;
 }
-.like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window, .custom_color {
+.like_window, .dislike_window, .repost_window {
   background: #4d298e !important; color: rgba(255, 255, 255, 0.6) !important;
-}
-.thumb{
-border:rgba(255, 255, 255, 0.6) solid 1px;
-}
-.thumb_small{
-  border:rgba(255, 255, 255, 0.6) solid 1px;
 }

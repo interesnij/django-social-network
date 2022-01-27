@@ -36,7 +36,7 @@
                             <span class="likes_count">{{ comment.likes_count }}</span>
                         </span>
 
-                        <span class="comment_like_window">
+                        <span class="comment_like_window custom_color">
                             {% if comment.window_likes %}
                             <div class="comment_like_pop">
                                 <span class="comment_likes pointer">Оценили: <span data-count="like">{{ comment.likes_count }}</span> {{ comment.likes_count|rupluralize:"человек,человека,людей" }}</span>
@@ -56,7 +56,7 @@
                             <span class="dislikes_count">{{ comment.dislikes_count }}</span>
                         </span>
 
-                        <span class="comment_dislike_window">
+                        <span class="comment_dislike_window custom_color">
                             {% if comment.window_dislikes %}
                             <div class="comment_dislike_pop">
                                 <span class="comment_dislikes pointer">Не оценили: <span data-count="dislike">{{ comment.dislikes_count }}</span> {{ comment.dislikes_count|rupluralize:"человек,человека,людей" }}</span>

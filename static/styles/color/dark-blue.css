@@ -51,17 +51,13 @@ body {
   background-color: #0f152f;
   color: rgba(255, 255, 255, 0.8) !important;
 }
-.header-color-primary {
-  color: #ffffff;
-}
 .header-color-secondary {
   color: rgba(255, 255, 255, 0.7);
 }
 .media p, .media span {
   color: rgba(255, 255, 255, 0.7) !important;
 }
-.text-muted,
-.text-secondary {
+.text-muted {
   color: rgba(255, 255, 255, 0.4) !important;
 }
 
@@ -79,9 +75,7 @@ body {
 .main-header {
   background-color: #233160;
 }
-.search-header .input-group .form-control {
-  background-color: rgba(15, 21, 47, 0.5);
-}
+
 .card, .mobile_naw, .card_fullscreen {
   background-color: #19234e;
 }
@@ -107,19 +101,6 @@ a.media:hover {
   border-color: rgba(255, 255, 255, 0.5);
   background-color: #1b2656;
   color: rgba(255, 255, 255, 0.6);
-}
-.line-control-menu-bar, .line-control-status-bar {
-  background: #0f152f;
-}
-
-.chat-window .card .card-body {
-  background: #0f152f;
-}
-.chatlist li .media .media-body {
-  background: #151e42;
-}
-.chatlist li .media .media-body:before {
-  background: #151e42;
 }
 
 .btn_default svg, .btn_default span{
@@ -147,14 +128,6 @@ a.media:hover {
 .progress2:before{
   background-color: #233160 !important;
 }
-.like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window, .custom_color {
+.like_window, .dislike_window, .repost_window {
   background: #111837 !important; color: rgba(255, 255, 255, 0.6) !important;
-}
-
-.thumb{
-border:rgba(255, 255, 255, 0.6) solid 1px;
-}
-.thumb_small{
-  border:rgba(255, 255, 255, 0.6) solid 1px;
 }

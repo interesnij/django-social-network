@@ -13,9 +13,9 @@
         <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
         <br>
         <h4 class="">{{ object.title }}</h4>
-        <p class="text-secondary underline">{{ object.creator }}</p>
+        <p class="content-color-primary underline">{{ object.creator }}</p>
         {% if object.time_end %}
-          <p class="text-secondary">До {{ object.time_end }}</p>
+          <p class="content-color-primary">До {{ object.time_end }}</p>
         {% endif %}
         <br>
         {% for answer in object.get_answers %}

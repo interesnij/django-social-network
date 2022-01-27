@@ -35,7 +35,7 @@
                         </svg>
                         <span class="likes_count">{{ reply.likes_count }}</span>
                     </span>
-                    <span class="comment_like_window">
+                    <span class="comment_like_window custom_color">
                         {% if reply.window_likes %}
                         <div class="comment_like_pop">
                             <span class="comment_likes pointer">Оценили: <span data-count="like">{{ reply.likes_count }}</span> {{ reply.likes_count|rupluralize:"человек,человека,людей" }}</span>
@@ -55,7 +55,7 @@
                         <span class="dislikes_count">{{ reply.dislikes_count }}</span>
                     </span>
 
-                    <span class="comment_dislike_window">
+                    <span class="comment_dislike_window custom_color">
                         {% if reply.window_dislikes %}
                         <div class="comment_dislike_pop">
                             <span class="comment_dislikes pointer">Не оценили: <span data-count="dislike">{{ reply.dislikes_count }}</span> {{ reply.dislikes_count|rupluralize:"человек,человека,людей" }}</span>

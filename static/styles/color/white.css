@@ -20,9 +20,6 @@ a {
 .slides_arrows label:hover {
   box-shadow: inset 2px -2px 0 1px black !important;
 }
-.border-top {
-    border-top: 1px solid rgba(127,127,127, 0.7) !important;
-}
 .border{
   border: 1px solid rgba(127,127,127, 0.7) !important;
 }
@@ -56,17 +53,14 @@ body {
   background-color: #edeef0;
   color: #000000 !important;
 }
-.header-color-primary {
-  color: #000000;
-}
+
 .header-color-secondary {
   color: #888888;
 }
 .media p {
   color: black !important;
 }
-.text-muted,
-.text-secondary {
+.text-muted {
   color: rgba(0, 0, 0, 0.4) !important;
 }
 .content-color-primary {
@@ -84,9 +78,7 @@ body {
 .main-header {
   background-color: #ffffff;
 }
-.search-header .input-group .form-control {
-  background-color: rgba(240, 242, 246, 0.5);
-}
+
 .card, .mobile_naw, .card_fullscreen {
   background-color: white;
 }
@@ -113,19 +105,6 @@ a.media:hover {
   background-color: white;
   color: rgba(0, 0, 0, 1);
 }
-.line-control-menu-bar, .line-control-status-bar {
-  background: #f0f2f6;
-}
-
-.chat-window .card .card-body {
-  background: #f0f2f6;
-}
-.chatlist li .media .media-body {
-  background: white;
-}
-.chatlist li .media .media-body:before {
-  background: white;
-}
 
 .svg_default {color:rgba(0, 0, 0, 0.5) !important}
 
@@ -144,12 +123,9 @@ a.media:hover {
 }
 
 .svg_default_30, .svg_default_40, .svg_default_50, .svg_default_80{border: #6C757D solid 1px;}
-.like_window, .dislike_window, .repost_window,
-.comment_like_window, .comment_dislike_window, .custom_color {
+.like_window, .dislike_window, .repost_window {
   background: #D6DAE1 !important; color: rgba(0, 0, 0, 0.8) !important;
 }
-.thumb{border:#6C757D solid 1px;}
-.thumb_small{border:#6C757D solid 1px;}
 .dropdown-menu {color:rgba(0, 0, 0, 0.9) !important; background-color: #f0f2f6 !important}
 .lite_color{color:rgba(0, 0, 0, 0.9) !important; background-color: #E0E0E0 !important}
 .dropdown-menu .dropdown-item:hover{

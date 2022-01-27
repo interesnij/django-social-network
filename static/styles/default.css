@@ -2132,37 +2132,6 @@ body.dragging * {
   display: none;
 }
 
-.main-header .dropdown-menu {
-  background: #ffffff;
-  color: #888888;
-}
-
-.main-header .dropdown-menu .dropdown-item {
-  color: #000000;
-}
-
-.main-header .dropdown-menu .dropdown-divider {
-  border-top-color: rgba(0, 0, 0, 0.05);
-}
-
-.main-header .dropdown-menu .card {
-  background: #ffffff;
-}
-
-.main-header .dropdown-menu .header-color-primary,
-.main-header .dropdown-menu .media h5 {
-  color: #000000;
-}
-
-.main-header .dropdown-menu .header-color-secondary,
-.main-header .dropdown-menu .media p {
-  color: #888888;
-}
-
-.main-header .pink-gradient h5, .main-header .dropdown-menu .dropdown-item:active h5, .dropdown-menu .main-header .dropdown-item:active h5, .main-header .dropdown-menu .dropdown-item.active h5, .dropdown-menu .main-header .dropdown-item.active h5, .main-header .success-gradient h5, .main-header .primary-gradient h5, .main-header .danger-gradient h5, .main-header .secondary-gradient h5, .main-header .warning-gradient h5 {
-  color: #ffffff;
-}
-
 .logo {
   font-weight: 300;
   color: #A426F1;
@@ -2199,37 +2168,6 @@ body.dragging * {
   margin-top: 0;
   vertical-align: top;
   margin-right: 0.5rem;
-}
-
-.search-header {
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: none;
-}
-
-.search-header .input-group .btn {
-  border: 0;
-  min-height: 22px;
-  line-height: 1em;
-  border-radius: 15px;
-  padding: 0;
-  margin-left: 5px;
-  width: 22px;
-  background: none;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-
-.search-header .input-group .form-control {
-  font-size: 0.9em;
-  border-radius: 11px;
-  line-height: 1em;
-  border: 0;
-  min-height: 22px;
-  height: 22px;
 }
 
 .btn-search {
@@ -2271,48 +2209,6 @@ body.dragging * {
   line-height: 1em;
   font-size: 0.7em;
   display: block;
-}
-
-.time-day {
-  list-style: none;
-  width: auto;
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0;
-  padding-left: 0;
-}
-
-.time-day li {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.time-day li:last-child {
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.time-day li p {
-  vertical-align: top;
-  display: inline-block;
-  margin: 0;
-  font-size: 1em;
-  line-height: 1.4em;
-}
-
-.time-day li p small {
-  display: block;
-  font-size: 0.8em;
-  line-height: 0.9em;
-}
-
-.time-day li p span {
-  display: block;
-}
-
-.time-day li h2 {
-  vertical-align: top;
-  display: inline-block;
-  margin: 0 10px;
 }
 
 .fixed-header .wrapper {
@@ -2507,18 +2403,6 @@ body.dragging * {
   padding: .75em 1em;
 }
 
-.dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item.active {
-  color: #ffffff;
-}
-
-.dropdown-menu .dropdown-item:active .text-danger, .dropdown-menu .dropdown-item.active .text-danger {
-  color: #ffffff !important;
-}
-
-.dropdown-menu .dropdown-item:active .header-color-secondary, .dropdown-menu .dropdown-item.active .header-color-secondary {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
 .dropdown-menu .dropdown-item:first-child {
   border-radius: 4px 4px 0 0;
   overflow: hidden;
@@ -2579,38 +2463,12 @@ body.dragging * {
   width: 100%;
 }
 
-.main-header h5 {
-  color: #ffffff;
-}
-
 .main-header .media p {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.icon-rounded {
-  border-radius: 4px;
-}
-
 .icon-circle {
   border-radius: 50%;
-}
-
-.material-icons {
-  font-size: 1.5em;
-}
-
-.icon-sm {
-  font-size: 1.1em;
-}
-
-.icon-lg {
-  font-size: 2em;
-}
-
-.top-right-icon {
-  position: absolute;
-  right: 15px;
-  top: -10px;
 }
 
 .icon-100 {
@@ -2727,7 +2585,6 @@ body.dragging * {
   display: inline-block;
   position: relative;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
   vertical-align: middle;
   margin: 0;
   cursor: pointer;
@@ -2736,8 +2593,6 @@ body.dragging * {
 .switch + label:before {
   content: '';
   border-radius: 50%;
-  background-color: #ffffff;
-  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 0px;
   left: 0;
@@ -2831,40 +2686,6 @@ body.dragging * {
   border-radius: 20px !important;
 }
 
-.checkbox-user-check {
-  height: 100%;
-  width: 100%;
-  display: block;
-  position: absolute;
-  text-align: center;
-}
-
-.checkbox-user-check input[type="checkbox"] {
-  display: none;
-}
-
-.checkbox-user-check i {
-  line-height: 40px;
-  vertical-align: middle;
-  width: 100%;
-  text-align: center;
-  display: none;
-}
-
-.checkbox-user-check.active {
-  background: #7979ff;
-}
-
-.checkbox-user-check.active i {
-  display: inline-block;
-  color: #ffffff;
-}
-
-.line-control-menu-bar .dropdown-menu > li > a:hover, .line-control-menu-bar .dropdown-menu > li > a:focus, .line-control-menu-bar .dropdown-submenu:hover > a, .line-control-menu-bar .dropdown-submenu:focus > a, .line-control-status-bar .dropdown-menu > li > a:hover, .line-control-status-bar .dropdown-menu > li > a:focus, .line-control-status-bar .dropdown-submenu:hover > a, .line-control-status-bar .dropdown-submenu:focus > a {
-  background-color: #7979ff;
-  color: #fff;
-}
-
 .theme-color {
   width: 100%;
   text-align: center;
@@ -2949,77 +2770,6 @@ body.dragging * {
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(206, 212, 218, 0.2);
-}
-
-.chat-window {
-  position: fixed;
-  width: 250px;
-  bottom: 0;
-  margin-top: -50px;
-  right: 50px;
-  display: none;
-  z-index: 11;
-}
-
-.chat-window .card .card-header .media .media-body {
-  min-width: 60%;
-}
-
-.chat-window .card .card-header .media .media-body h6 {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.chat-window .card .card-header .media .chat-minmax {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.chat-window .card .card-header .media .chat-minmax i.fullscreenicon {
-  display: block;
-}
-
-.chat-window .card .card-header .media .chat-minmax i.minimizeicon {
-  display: none;
-}
-
-.chat-window .card .card-header .media .chat-minmax.active i.minimizeicon {
-  display: block;
-}
-
-.chat-window .card .card-header .media .chat-minmax.active i.fullscreenicon {
-  display: none;
-}
-
-.chat-window .card .card-header .media .chat-close {
-  color: #ffffff;
-  text-decoration: none;
-  margin-top: -2px;
-}
-.chat-window .card .card-body {
-  padding: 0px;
-  max-height: 250px;
-  overflow-y: auto;
-  height: 0;
-  min-height: auto;
-}
-
-.chat-window .card .card-footer {
-  padding: 0;
-  height: 0;
-  min-height: none;
-}
-
-.chat-window.active .card .card-body {
-  padding: 15px;
-  min-height: 100px;
-  height: auto;
-}
-
-.chat-window.active .card .card-footer {
-  padding: 15px;
-  height: auto;
 }
 
 .chatlist {
@@ -3115,10 +2865,6 @@ body.dragging * {
   padding-bottom: 1em;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-#chat-list .list-group-item {
-  cursor: pointer;
 }
 
 .log-information li {
@@ -3247,28 +2993,6 @@ body.dragging * {
   color: #ffffff;
 }
 
-.grid .grid-item {
-  width: 33.3%;
-  padding: 1px;
-}
-
-.grid .grid-item .swipebox {
-  width: 100%;
-  display: block;
-}
-
-.grid .grid-item .swipebox img {
-  width: 100%;
-}
-
-.grid.grid-four .grid-item {
-  width: 25%;
-}
-
-.pswp__bg {
-  opacity: 0.6 !important;
-}
-
 .timeline-bubble {
   height: 10px;
   width: 10px;
@@ -3392,41 +3116,7 @@ opacity:0.5;
 .style_removed_object #btn_console{
 opacity:0;
 }
-.manage_window_fullscreen{
-position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 20;padding: 5%;display: block;overflow: auto;
-}
-@media screen and (min-width: 621px) {
-.manage_window_fullscreen{
-  left: 20%;width: 60%;padding-left: 5%;padding-right: 5%;
-}
-}
-.manage_window_fullscreen_hide{
-cursor: pointer;float: right;
-}
 
-.comment_photo1 img, .comment_photo2 img{
-width: 85%;
-height: auto;
-}
-.close_upload_block{
-position: absolute;
-z-index: 100;
-cursor: pointer;
-}
-.comment_photo1,.comment_photo2{
-    border: 2px dashed #FF0000;
-    color: rgba(0, 0, 0, 0.8);
-    padding: 10px;
-    text-align: center;
-    margin: 20px;
-    cursor:pointer;
-    width: 85%;
-    min-width: 85%;
-}
-.comment_photo1 img, .comment_photo2 img{
-  width: 85%;
-  height: auto;
-}
 .stream_reply_comments{
   display:none;
   margin-left: 7%;
