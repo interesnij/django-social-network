@@ -2,9 +2,9 @@
       <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available">
           У Вас в друзьях
       </button>
-      <div class="dropdown-menu" style="margin-top:5px;width:100%">
+      <div class="dropdown-menu" data-type="use{{ user.pk }}" style="margin-top:5px;width:100%">
           <span class="dropdown-item connect_delete">Убрать из друзей</span>
           <span class="dropdown-item user_block">Заблокировать</span>
-          <span class="dropdown-item create_claim" data-type="use{{ user.pk }}">Пожаловаться</span>
+          <span class="dropdown-item create_claim">Пожаловаться</span>
       </div>
 </span>
