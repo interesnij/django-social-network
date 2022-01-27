@@ -441,7 +441,9 @@ class ClaimCreate(TemplateView):
         else:
             self.item = get_item_of_type(self._type)
             if self.item.community:
-                check_can_get_lists(request.user, self.item.community)
+                self.community = self.item.community
+                check_can_get_lists(request.user, self.community)
+
             elif self.item.creator.pk != request.user.pk:
                 check_user_can_get_list(request.user, self.item.creator)
         self.template_name = get_detect_platform_template("generic/report.html", request.user, request.META['HTTP_USER_AGENT'])
@@ -453,7 +455,7 @@ class ClaimCreate(TemplateView):
         context = super(ClaimCreate,self).get_context_data(**kwargs)
         context["form"] = ReportForm()
         context["object"] = self.item
-        context["community"] = self.item.community
+        context["community"] = self.community
         context["type"] = self._type
         context["subtype"] = self._subtype
         return context
