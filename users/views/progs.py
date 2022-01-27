@@ -431,7 +431,7 @@ class ClaimCreate(TemplateView):
             else:
                 check_user_can_get_list(request.user, self.item.get_item().creator)
         elif "use" in self._type:
-            from user.models import User
+            from users.models import User
             self.item = User.objects.get(pk=_type[3:])
             check_user_can_get_list(request.user, self.item)
         elif "com" in self._type:
