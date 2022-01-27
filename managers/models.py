@@ -2,22 +2,27 @@ from django.db import models
 from django.conf import settings
 from django.db.models import Q
 
+USER, COMMUNITY, SITE, MAIL = 'USE', 'COM', 'SIT', 'MAI'
 
-USER, COMMUNITY, SITE = 1,2,6
-POST_LIST, POST, POST_COMMENT = 8, 9, 10
-PHOTO_LIST, PHOTO, PHOTO_COMMENT = 12, 13, 14
-DOC_LIST, DOC = 17, 18
-SURVEY_LIST, SURVEY = 21, 22
-MUSIC_LIST, MUSIC = 25, 26
-VIDEO_LIST, VIDEO, VIDEO_COMMENT = 29, 30, 31
-GOOD_LIST, GOOD, GOOD_COMMENT = 33, 34, 35
-WORKSPACE, BOARD, COLUMN, CARD, CARD_COMMENT = 38, 39, 40, 41, 42
-FORUM_ITEM, FORUM_COMMENT = 45, 46
-MAIL, MESSAGE, WIKI = 54, 55, 56
-ARTICLE_LIST, ARTICLE = 58, 59
+POST_LIST, POST, POST_COMMENT = 'POL', 'POS', 'CPO'
+PHOTO_LIST, PHOTO, PHOTO_COMMENT = 'PHL', 'PHO', 'CPH'
+GOOD_LIST, GOOD, GOOD_COMMENT = 'GOL', 'GOO', 'CGO'
+VIDEO_LIST, VIDEO, VIDEO_COMMENT = 'VIL', 'VID', 'CVI'
+FORUM_LIST, FORUM, FORUM_COMMENT = 'FOL', 'FOI', 'CFO'
+WIKI_LIST, WIKI_ITEM, WIKI_COMMENT = 'WIL', 'WII', 'CWI'
+
+DOC_LIST, DOC = 'DOL', 'DOC'
+SURVEY_LIST, SURVEY = 'SUL', 'SUR'
+MUSIC_LIST, MUSIC = 'MUL', 'MUS'
+ARTICLE_LIST, ARTICLE = 'ARL', 'ART'
+CHAT, MESSAGE = 'CHA', 'MES'
+
+WORKSPACE, BOARD, COLUMN, CARD, CARD_COMMENT = 'WrS', 'BoA', 'CoL', 'CaR', 'CwC'
 
 TYPE = (
-    (USER, 'Пользователь'),(COMMUNITY, 'Сообщество'),(SITE, 'Сайт'),(ARTICLE, 'Статья'),(ARTICLE_LIST, 'Список статей'),
+    (USER, 'Пользователь'),(COMMUNITY, 'Сообщество'),(SITE, 'Сайт'),(MAIL, 'Почта'),
+    (ARTICLE, 'Статья'),(ARTICLE_LIST, 'Список статей'),
+    (CHAT, 'Чат'),(MESSAGE, 'Сообщение'),
     (MUSIC_LIST, 'Плейлист'),(MUSIC, 'Трек'),
     (POST_LIST, 'Список записей'),(POST, 'Запись'),(POST_COMMENT, 'Коммент к записи'),
     (DOC_LIST, 'Список документов'),(DOC, 'Документ'),
@@ -26,8 +31,8 @@ TYPE = (
     (VIDEO_LIST, 'Список роликов'),(VIDEO, 'Ролик'), (VIDEO_COMMENT, 'Коммент к ролику'),
     (GOOD_LIST, 'Список товаров'),(GOOD, 'Товар'),(GOOD_COMMENT, 'Коммент к товару'),
     (WORKSPACE, 'Рабочее пространство'),(BOARD, 'Доска'),(COLUMN, 'Колонка'),(CARD, 'Карточка'),(CARD_COMMENT, 'Коммент к карточке'),
-    (FORUM_ITEM, 'Обсуждение'),(FORUM_COMMENT, 'Коммент к обсуждению'),
-    (MAIL, 'Почта'),(MESSAGE, 'Сообщения'), (WIKI, 'Объект википедии')
+    (FORUM_LIST, 'Список обсуждений'),(FORUM, 'Обсуждение'),(FORUM_COMMENT, 'Коммент к обсуждению'),
+    (WIKI_LIST, 'Список википедии'),(WIKI_ITEM, 'Объект википедии'),(WIKI_COMMENT, 'Коммент к википедии')
 )
 
 
@@ -398,7 +403,7 @@ class ModerationReport(models.Model):
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(Moderated, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
-    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Класс объекта")
+    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Категория жалобы")
 
     def __str__(self):
         return self.reporter.get_full_name()

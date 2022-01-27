@@ -1,0 +1,36 @@
+<form class="mt-4">
+  {% csrf_token %}
+  <input type="hidden" name="_type" value="{{ type }}">
+  <input type="hidden" name="_subtype" value="{{ subtype }}">
+  <div class="card">
+    Создание жалобы
+    <div class="card-header">
+      <br>
+        <div class="form-group">
+          <label>Выберите причину жалобы</label>
+          <select class="form-control" name="type">
+              <option value="P">Порнография</option>
+              <option value="NC">Для взрослых</option>
+              <option value="B">Оскорбительное содержание</option>
+              <option value="F">Мошенничество</option>
+              <option value="D">Наркотики</option>
+              <option value="AS">Продажа оружия</option>
+              <option value="V">Насилие</option>
+              <option value="PE">Призыв к травле</option>
+              <option value="SU">Призыв к суициду</option>
+              <option value="PA">Жестокое обращение c животными</option>
+              <option value="MI">Введение в заблуждение</option>
+              <option value="EX">Экстремизм</option>
+              <option value="RH">Риторика ненависти</option>
+          </select>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div style="display:inline-block" contenteditable="true" placeholder="Добавить запись в список" class="form-control new_element_text input_new_post_in_list smile_supported"></div>
+    </div>
+    <div class="card-footer">
+        <button class="btn border item_fullscreen_hide">Отмена</button>
+        <button type="button" class="btn btn-success float-right" id="create_claim_btn">Пожаловаться</button>
+    </div>
+  </div>
+</form>

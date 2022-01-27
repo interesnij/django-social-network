@@ -411,3 +411,166 @@ class RepostCreate(TemplateView):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class ReportCreate(TemplateView):
+    template_name, community = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_item_of_type, get_comment
+        from common.check.user import check_user_can_get_list
+        from common.check.community import check_can_get_lists
+
+        self.type = request.GET.get('type')
+        self.subtype = request.GET.get('subtype')
+
+        if self.subtype and self.subtype == "comment":
+            self.item = get_comment(self.type)
+            if self.item.get_item().community:
+                check_can_get_lists(request.user, self.item.get_item().community)
+            else:
+                check_user_can_get_list(request.user, self.item.get_item().creator)
+        else:
+            self.item = get_item_of_type(self.type)
+            if self.item.community:
+                check_can_get_lists(request.user, self.item.community)
+            elif self.item.creator.pk != request.user.pk:
+                check_user_can_get_list(request.user, self.item.creator)
+        self.template_name = get_detect_platform_template("generic/report.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(ReportCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from managers.forms import ReportForm
+
+        context = super(ReportCreate,self).get_context_data(**kwargs)
+        context["form"] = ReportForm()
+        context["object"] = self.item
+        context["community"] = self.item.community
+        context["type"] = self.type
+        context["subtype"] = self.subtype
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from common.check.user import check_user_can_get_list
+        from common.check.community import check_can_get_lists
+        from django.http import HttpResponse, HttpResponseBadRequest
+        from managers.forms import ReportForm
+        from managers.models import ModerationReport
+
+        _type = request.POST.get('_type')
+        _subtype = request.POST.get('_subtype')
+
+        if _type[0] == "l":
+            if _type[:3] == "lpo":
+                from posts.models import PostsList
+                item, t = PostsList.objects.get(pk=_type[3:]), "POL"
+            elif _type[:3] == "lph":
+                from gallery.models import PhotoList
+                item, t =  PhotoList.objects.get(pk=_type[3:]), "PHL"
+            elif _type[:3] == "lgo":
+                from goods.models import GoodList
+                item, t =  GoodList.objects.get(pk=_type[3:]), "GOL"
+            elif _type[:3] == "lvi":
+                from video.models import VideoList
+                item, t =  VideoList.objects.get(pk=_type[3:]), "VIL"
+            elif _type[:3] == "ldo":
+                from docs.models import DocsList
+                item, t =  DocsList.objects.get(pk=_type[3:]), "DOL"
+            elif _type[:3] == "lmu":
+                from music.models import MusicList
+                item, t =  MusicList.objects.get(pk=_type[3:]), "MUL"
+            elif _type[:3] == "lsu":
+                from survey.models import SurveyList
+                item, t =  SurveyList.objects.get(pk=_type[3:]), "SUL"
+            elif _type[:3] == "lfo":
+                from survey.models import SurveyList
+                item, t =  SurveyList.objects.get(pk=_type[3:]), "FOL"
+            elif _type[:3] == "lar":
+                from survey.models import SurveyList
+                item, t =  SurveyList.objects.get(pk=_type[3:]), "ARL"
+            elif _type[:3] == "lwi":
+                from survey.models import SurveyList
+                item, t =  SurveyList.objects.get(pk=_type[3:]), "WIL"
+
+        elif _subtype and _subtype == "comment":
+            if _type[:3] == "pos":
+                from posts.models import PostComment
+                item, t = PostComment.objects.get(pk=_type[3:]), "CPO"
+            elif _type[:3] == "pho":
+                from gallery.models import PhotoComment
+                item, t =  PhotoComment.objects.get(pk=_type[3:]), "CPH"
+            elif _type[:3] == "goo":
+                from goods.models import GoodComment
+                item, t =  GoodComment.objects.get(pk=_type[3:]), "CGO"
+            elif _type[:3] == "vid":
+                from video.models import VideoComment
+                item, t =  VideoComment.objects.get(pk=_type[3:]), "CVI"
+            elif _type[:3] == "wik":
+                from video.models import VideoComment
+                item, t =  VideoComment.objects.get(pk=_type[3:]), "CWI"
+            elif _type[:3] == "CwC":
+                from video.models import VideoComment
+                item, t =  VideoComment.objects.get(pk=_type[3:]), "CwC"
+
+        elif _subtype and _subtype == "planner":
+            if _type[:3] == "WrS":
+                from posts.models import PostComment
+                item, t = PostComment.objects.get(pk=_type[3:]), "WrS"
+            elif type[:3] == "BoA":
+                from gallery.models import PhotoComment
+                item, t =  PhotoComment.objects.get(pk=_type[3:]), "BoA"
+            elif _type[:3] == "CoL":
+                from goods.models import GoodComment
+                item, t =  GoodComment.objects.get(pk=_type[3:]), "CoL"
+            elif _type[:3] == "CaR":
+                from video.models import VideoComment
+                item, t =  VideoComment.objects.get(pk=_type[3:]), "CaR"
+
+        else:
+            if _type[:3] == "pos":
+                item, t =  Post.objects.get(pk=_type[3:]), "POS"
+            elif _type[:3] == "pho":
+                from gallery.models import Photo
+                item, t =  Photo.objects.get(pk=_type[3:]), "PHO"
+            elif _type[:3] == "goo":
+                from goods.models import Good
+                item, t =  Good.objects.get(pk=_type[3:]), "GOO"
+            elif _type[:3] == "vid":
+                from video.models import Video
+                item, t =  Video.objects.get(pk=_type[3:]), "VID"
+            elif _type[:3] == "doc":
+                from docs.models import Doc
+                item, t =  Doc.objects.get(pk=_type[3:]), "DOC"
+            elif _type[:3] == "mus":
+                from music.models import Music
+                item, t =  Music.objects.get(pk=_type[3:]), "MUS"
+            elif _type[:3] == "sur":
+                from survey.models import Survey
+                item, t =  Survey.objects.get(pk=_type[3:]), "SUR"
+            elif _type[:3] == "mes":
+                from chat.models import Message
+                item, t =  Message.objects.get(pk=_type[3:]), "CHA"
+
+            elif _type[:3] == "use":
+                from user.models import User
+                item, t =  User.objects.get(pk=_type[3:]), "USE"
+            elif _type[:3] == "com":
+                from communities.models import Community
+                item, t =  Community.objects.get(pk=_type[3:]), "COM"
+            elif _type[:3] == "sit":
+                from music.models import Music
+                item, t=  Music.objects.get(pk=_type[3:]), "SIT"
+            elif type[:3] == "mai":
+                from survey.models import Survey
+                item, t =  Survey.objects.get(pk=_type[3:]), "MAI"
+            elif _type[:3] == "for":
+                from survey.models import Survey
+                item, t =  Survey.objects.get(pk=_type[3:]), "FOR"
+
+        form_post = PostForm(request.POST)
+        if request.is_ajax() and form_post.is_valid() and not ModerationReport.is_user_already_reported(request.user.pk, t, item[3:]):
+            post = form_post.save(commit=False)
+            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=_type[3:], description=post.description, type=post.type)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
