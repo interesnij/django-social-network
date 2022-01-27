@@ -66,8 +66,9 @@
               <button type="button" class="btn btn-sm border menu_drop" style="margin: 3px;margin-top:10px">
                   Вы блокированы
               </button>
-              <div class="dropdown-menu" style="width:100%">
-                  <span class="dropdown-item community_claim">Пожаловаться</span>
+              <div class="dropdown-menu" style="width:100%" data-type="com{{ community.pk }}">
+                  <span class="dropdown-item create_claim">Пожаловаться</span>
+                  <span class="create_repost dropdown-item">Поделиться</span>
               </div>
           </div>
 
