@@ -9,4 +9,4 @@ class ModeratedForm(forms.ModelForm):
 class ReportForm(forms.ModelForm):
 	class Meta:
 		model = ModerationReport
-		fields = ['description']
+		fields = ['description', 'type']
