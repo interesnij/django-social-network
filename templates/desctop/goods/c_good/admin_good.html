@@ -30,8 +30,12 @@
                             <a style="cursor:pointer" class="btn_default drop">
                               еще
                             </a>
-                            <div class="dropdown-menu">
-                                <span class="dropdown-item good_claim">Пожаловаться</span>
+                            <div class="dropdown-menu" data-type="goo{{ object.pk }}">
+                              {% if request.user.is_moderator %}
+                                <span class="dropdown-item create_close">Закрыть</span>
+                              {% else %}
+                                <span class="dropdown-item create_claim">Пожаловаться</span>
+                              {% endif %}
                             </div>
                         </div>
                       </div>

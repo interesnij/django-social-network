@@ -14,15 +14,17 @@
     <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
         Опции
     </button>
-    <div class="dropdown-menu dropdown-menu-right">
-      <span>
-        <span class="dropdown-item post_claim">Пожаловаться</span>
+    <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
+        {% if request.user.is_moderator %}
+          <span class="create_close">Закрыть</span>
+        {% else %}
+          <span class="create_claim">Пожаловаться</span>
+        {% endif %}
         <span class="dropdown-item">Скопировать ссылку</span>
         <span>
           <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
           <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
         </span>
-      </span>
     </div>
   </div>
   <div class="col" style="padding:5px;">

@@ -15,7 +15,7 @@
     <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
         Опции
     </button>
-    <div class="dropdown-menu dropdown-menu-right">
+    <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
       {% if request.user.pk == object.creator.pk %}
         <span class="dropdown-item u_post_remove">Удалить запись</span>
         <span class="dropdown-item">Редактировать</span>
@@ -34,10 +34,10 @@
             <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
           {% endif %}
         </span>
-      {% elif request.user.is_manager %}
-        <span class="dropdown-item u_post_close">Закрыть</span>
+      {% elif request.user.is_moderator %}
+        <span class="dropdown-item create_close">Закрыть</span>
       {% else %}
-        <span class="dropdown-item post_claim">Пожаловаться</span>
+        <span class="dropdown-item create_claim">Пожаловаться</span>
       {% endif %}
         <span class="dropdown-item copy_link">Скопировать ссылку</span>
     </div>

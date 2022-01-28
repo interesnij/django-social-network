@@ -30,7 +30,7 @@
       </span>
     </span>
     &nbsp;
-      <span class="btn_settings_photo">
+      <span class="btn_settings_photo" data-type="pho{{ object.pk }}">
         <span>
           {% if avatar %}
             Это ваш аватар - <span class="u_unset_avatar">убрать аватар</span>
@@ -56,10 +56,10 @@
             {% endif %}
           </span>
       </span>
-      {% elif request.user.is_photo_manager %}
-        <span class="u_post_close_window">Закрыть</span>
+      {% elif request.user.is_moderator %}
+        <span class="create_close">Закрыть</span>
       {% else %}
-        <span class="u_post_claim">Пожаловаться</span>
+        <span class="create_claim">Пожаловаться</span>
       {% endif %}
       <span class="js-textareacopybtn">Скопировать ссылку</span>
     </span>

@@ -18,7 +18,11 @@
                     <div class="dropdown-menu dropdown-menu-right" data-type="mus{{ object.pk }}" style="top: 25px;">
                         <span class="dropdown-item create_repost">Добавить</span>
                         <span class="dropdown-item copy_link">Копировать ссылку</span>
-                        <span class="dropdown-item track_claim">Пожаловаться</span>
+                        {% if request.user.is_moderator %}
+                          <span class="create_close">Закрыть</span>
+                        {% else %}
+                          <span class="create_claim">Пожаловаться</span>
+                        {% endif %}
                     </div>
                 </div>
               </span>

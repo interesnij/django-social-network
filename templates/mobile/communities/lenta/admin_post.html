@@ -14,7 +14,7 @@
     <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
         Опции
     </button>
-    <div class="dropdown-menu dropdown-menu-right">
+    <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
       <span>
         <span class="dropdown-item c_post_wall_remove">Удалить запись</span>
         {% if object.is_fixed %}
@@ -41,11 +41,11 @@
             <span class="dropdown-item c_post_on_votes">Вкл. реакции</span>
           {% endif %}
         </span>
-      {% elif request.user.is_manager %}
-        <span class="dropdown-item c_post_close_window">Закрыть</span>
-      {% else %}
-        <span class="dropdown-item c_post_claim">Пожаловаться</span>
-      {% endif %}
+        {% elif request.user.is_moderator %}
+          <span class="dropdown-item create_close">Закрыть</span>
+        {% else %}
+          <span class="dropdown-item create_claim">Пожаловаться</span>
+        {% endif %}
       <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
       <span>
         <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>

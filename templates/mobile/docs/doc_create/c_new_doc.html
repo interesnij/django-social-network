@@ -20,10 +20,10 @@
                     {% elif request.user.pk == object.creator.pk %}
                       <span class="dropdown-item u_doc_edit">Изменить</span>
                       <span class="dropdown-item u_doc_remove">Удалить</span>
-                    {% elif request.user.is_manager %}
-                      <span class="dropdown-item c_close_doc">Закрыть</span>
+                    {% elif request.user.is_moderator %}
+                      <span class="dropdown-item create_close">Закрыть</span>
                     {% else %}
-                      <span class="dropdown-item c_doc_claim">Пожаловаться</span>
+                      <span class="dropdown-item create_claim">Пожаловаться</span>
                     {% endif %}
                     <span class="dropdown-item copy_link">Копировать ссылку</span>
                   </div>

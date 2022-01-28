@@ -1,7 +1,7 @@
 
 <div class="mb-3 data_display is_stat_list" data-type="user_photo" data-pk="{{ object.pk }}" owner-pk="{{ user.pk }}">
   <div class="row">
-    <div class="col-lg-8 col-md-7 col-sm-12 order-1">
+    <div class="col-lg-8 col-md-7 col-sm-12 order-1" data-type="pho{{ object.pk }}">
       <div class="card rounded-0 border-0 mb-3">
         {% if object.file %}
           <img style="width: 100%;" src="{{ object.file.url }}" alt="">
@@ -10,11 +10,11 @@
         {% endif %}
     </div>
 
-      {% if request.user.is_photo_manager %}
-        <span class="u_post_close_window">Закрыть</span>
-      {% else %}
-        <span class="u_post_claim">Пожаловаться</span>
-      {% endif %}
+    {% if request.user.is_moderator %}
+      <span class="create_close">Закрыть</span>
+    {% else %}
+      <span class="create_claim">Пожаловаться</span>
+    {% endif %}
       <span class="js-textareacopybtn">Скопировать ссылку</span>
   </div>
   <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">

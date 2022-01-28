@@ -17,13 +17,17 @@
             <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
                 <span class="dropdown-item">Скопировать ссылку</span>
                 <span>
                   <span class="dropdown-item c_all_posts_likes pointer">Оценили</span>
                   <span class="dropdown-item c_all_posts_dislikes pointer">Не оценили</span>
                 </span>
-                <span class="dropdown-item post_claim">Пожаловаться</span>
+                {% if request.user.is_moderator %}
+                  <span class="create_close">Закрыть</span>
+                {% else %}
+                  <span class="create_claim">Пожаловаться</span>
+                {% endif %}
             </div>
           </div>
       </div>

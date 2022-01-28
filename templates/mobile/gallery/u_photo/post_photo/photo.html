@@ -12,13 +12,13 @@
       <button type="button" class="btn btn-sm border menu_drop" style="width: -webkit-fill-available;">
           Опции
       </button>
-      <div class="dropdown-menu">
-          {% if request.user.is_manager %}
-            <span class="dropdown-item u_photo_close">Закрыть</span>
+      <div class="dropdown-menu" data-type="pho{{ object.pk }}">
+          {% if request.user.is_moderator %}
+            <span class="dropdown-item create_close">Закрыть</span>
           {% else %}
-            <span class="dropdown-item u_photo_claim">Пожаловаться</span>
+            <span class="dropdown-item create_claim">Пожаловаться</span>
           {% endif %}
-            <span class="dropdown-item">Скопировать ссылку</span>
+          <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
       </div>
     </div>
     <div class="col" style="padding:5px;">

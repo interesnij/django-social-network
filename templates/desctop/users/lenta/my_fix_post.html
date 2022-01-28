@@ -19,7 +19,7 @@
             <a style="cursor:pointer" class="icon-circle icon-30 btn_default drop">
               <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" data-type="pos{{ object.pk }}">
               <span>
                   <span class="dropdown-item u_post_unfixed">Открепить</span>
               </span>
@@ -42,11 +42,11 @@
                     <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
                   {% endif %}
                 </span>
-              {% elif request.user.is_manager %}
-                <span class="dropdown-item u_post_close">Закрыть</span>
-              {% else %}
-                <span class="dropdown-item post_claim">Пожаловаться</span>
-              {% endif %}
+                {% elif request.user.is_moderator %}
+                  <span class="create_close">Закрыть</span>
+                {% else %}
+                  <span class="create_claim">Пожаловаться</span>
+                {% endif %}
               <span class="dropdown-item js-textareacopybtn">Скопировать ссылку</span>
             </div>
           </div>
