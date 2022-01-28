@@ -27,7 +27,8 @@ class UserGallery(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.user, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
+        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'], c['photo_list_pk'] = self.user, \
+        self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section, self.user.get_selected_photo_list_pk()
         return c
 
 class UserCommunities(ListView):
@@ -251,6 +252,7 @@ class ProfileUserView(TemplateView):
 
         user_pk, r_user_pk = int(self.kwargs["pk"]), request.user.pk
         self.user = User.objects.get(pk=user_pk)
+
         if request.user.is_authenticated:
             if user_pk == r_user_pk:
                 self.is_community_open, self.is_photo_open, self.is_video_open, self.is_music_open, self.is_friend_open, self.is_good_open  = True,True,True,True,True,True

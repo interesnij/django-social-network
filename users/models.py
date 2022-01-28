@@ -880,6 +880,30 @@ class User(AbstractUser):
         from users.model.list import UserPostsListPosition
         list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
         return list.list
+    def get_selected_photo_list_pk(self):
+        from users.model.list import UserPhotoListPosition
+        list = UserPhotoListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
+    def get_selected_doc_list_pk(self):
+        from users.model.list import UserDocsListPosition
+        list = UserDocsListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
+    def get_selected_good_list_pk(self):
+        from users.model.list import UserGoodListPosition
+        list = UserGoodListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
+    def get_selected_music_list_pk(self):
+        from users.model.list import UserMusicListPosition
+        list = UserMusicListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
+    def get_selected_video_list_pk(self):
+        from users.model.list import UserVideoListPosition
+        list = UserVideoListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
+    def get_selected_survey_list_pk(self):
+        from users.model.list import UserSurveyListPosition
+        list = UserSurveyListPosition.objects.filter(user=self.pk, type=1).first()
+        return list.list
 
     def get_survey_lists(self):
         from survey.models import SurveyList
@@ -896,24 +920,29 @@ class User(AbstractUser):
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return PhotoList.objects.filter(query)
-
     def get_video_lists(self):
         from video.models import VideoList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return VideoList.objects.filter(query)
-
-    def get_playlists(self):
+    def get_music_lists(self):
         from music.models import MusicList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return MusicList.objects.filter(query)
-
     def get_good_lists(self):
         from goods.models import GoodList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return GoodList.objects.filter(query)
+    def get_survey_lists(self):
+        from survey.models import SurveyList
+        query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return SurveyList.objects.filter(query)
+    def get_doc_lists(self):
+        from docs.models import DocsList
+        return DocsList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
     def get_good_list(self):
         from goods.models import GoodList
@@ -927,6 +956,7 @@ class User(AbstractUser):
     def get_photo_list(self):
         from gallery.models import PhotoList
         return PhotoList.objects.get(creator_id=self.pk, community__isnull=True, type=PhotoList.MAIN)
+
     def get_avatar_pk(self):
         from gallery.models import PhotoList
         try:
@@ -996,10 +1026,6 @@ class User(AbstractUser):
 
     def get_last_docs(self):
         return self.get_doc_list().get_items()[:6]
-
-    def get_doc_lists(self):
-        from docs.models import DocsList
-        return DocsList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
 
     def get_followers(self):
         query = Q(follows__followed_user_id=self.pk)

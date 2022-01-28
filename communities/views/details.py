@@ -143,7 +143,9 @@ class CommunityGallery(TemplateView):
 
     def get_context_data(self,**kwargs):
         c = super(CommunityGallery,self).get_context_data(**kwargs)
-        c['community'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'] = self.c, self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section
+        c['community'], c['list'], c['get_lists'], c['count_lists'], \
+        c['is_user_can_see_photo_section'], c['photo_list_pk'] = self.c, self.list, self.get_lists, \
+        self.count_lists, self.is_user_can_see_photo_section, self.c.get_selected_photo_list_pk()
         return c
 
 class CommunityPhotoList(TemplateView):
