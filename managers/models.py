@@ -417,9 +417,8 @@ class ModerationReport(models.Model):
         moderated_object = Moderated.get_or_create_moderated_object(type=_type, object_id=object_id)
         return cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
 
-    @classmethod
-    def is_user_already_reported(cls, reporter_id, type, object_id):
-        return cls.objects.filter(reporter_id=reporter_id, type=type, moderated_object__object_id=object_id).exists()
+    def is_user_already_reported(self, reporter_id, type, object_id):
+        return Moderated.objects.filter(reporter_id=reporter_id, type=type, object_id=object_id).exists()
 
 
 class ModerationPenalty(models.Model):
