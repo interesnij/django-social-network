@@ -1,12 +1,18 @@
 from django.contrib import admin
-from managers.models import ModerationReport
+from managers.models import *
 
 
-class ModerationReportAdmin(admin.ModelAdmin):
-    list_display = ['reporter', 'description', 'type']
+class ModerationReportInline(admin.TabularInline):
+    model = ModerationReport
+
+class ModerationAdmin(admin.ModelAdmin):
+    inlines = [
+        ModerationReportInline,
+    ]
+    list_display = ['type', 'object_id', 'description', 'status', 'verified']
     search_fields = ['type']
     class Meta:
-            model = ModerationReport
+            model = Moderation
 
 
-admin.site.register(ModerationReport, ModerationReportAdmin)
+admin.site.register(Moderation, ModerationAdmin)
