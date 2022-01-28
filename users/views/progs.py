@@ -579,7 +579,7 @@ class ClaimCreate(TemplateView):
 
         form_post = ReportForm(request.POST)
         if request.is_ajax() and form_post.is_valid():
-            if Moderated.objects.filter(reports__reporter=request.user, reports__type=t).exists():
+            if Moderated.objects.filter(reports__reporter_id=request.user.pk).exists():
                 return HttpResponse("Вы уже оставляли жалобу!")
             post = form_post.save(commit=False)
             ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=item.pk, description=post.description, type=post.type)
