@@ -833,18 +833,18 @@ class Video(models.Model):
     def likes(self):
         from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__gt=0)
-
-    def window_likes(self):
-        from common.model.votes import VideoVotes
-        return VideoVotes.objects.filter(parent=self, vote__gt=0)[0:6]
-
     def dislikes(self):
         from common.model.votes import VideoVotes
         return VideoVotes.objects.filter(parent=self, vote__lt=0)
 
+    def window_likes(self):
+        from common.model.votes import VideoVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in VideoVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]])
     def window_dislikes(self):
         from common.model.votes import VideoVotes
-        return VideoVotes.objects.filter(parent=self, vote__lt=0)[0:6]
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in VideoVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def visits_count_ru(self):
         count = self.all_visits_count()
@@ -866,7 +866,6 @@ class Video(models.Model):
             return self.like
         else:
             return ''
-
     def dislikes_count(self):
         if self.dislike > 0:
             return self.dislike
@@ -1182,13 +1181,14 @@ class VideoComment(models.Model):
 
     def likes(self):
         return VideoCommentVotes.objects.filter(item=self, vote__gt=0)
+    def dislikes(self):
+        return VideoCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def likes_count(self):
         if self.like > 0:
             return self.like
         else:
             return ''
-
     def dislikes_count(self):
         if self.dislike > 0:
             return self.dislike
@@ -1196,13 +1196,13 @@ class VideoComment(models.Model):
             return ''
 
     def window_likes(self):
-        return VideoCommentVotes.objects.filter(item=self, vote__gt=0)[0:6]
-
-    def dislikes(self):
-        return VideoCommentVotes.objects.filter(item=self, vote__lt=0)
-
+        from common.model.votes import VideoCommentVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in VideoCommentVotes.objects.filter(item_id=self.pk, vote=1).values("user_id")[0:6]])
     def window_dislikes(self):
-        return VideoCommentVotes.objects.filter(item=self, vote__lt=0)[0:6]
+        from common.model.votes import VideoCommentVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in VideoCommentVotes.objects.filter(item_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def count_replies_ru(self):
         count = self.count_replies()

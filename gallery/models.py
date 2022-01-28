@@ -876,7 +876,6 @@ class Photo(models.Model):
     def likes(self):
         from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)
-
     def dislikes(self):
         from common.model.votes import PhotoVotes
         return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)
@@ -886,29 +885,25 @@ class Photo(models.Model):
             return self.like
         else:
             return ''
-
     def reposts_count(self):
         if self.repost > 0:
             return self.repost
         else:
             return ''
-
-    def window_likes(self):
-        from common.model.votes import PhotoVotes
-        return PhotoVotes.objects.filter(parent_id=self.pk, vote__gt=0)[0:6]
-
     def dislikes_count(self):
         if self.dislike > 0:
             return self.dislike
         else:
             return ''
 
+    def window_likes(self):
+        from common.model.votes import PhotoVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PhotoVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]])
     def window_dislikes(self):
         from common.model.votes import PhotoVotes
-        return PhotoVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
-
-    def get_type(self):
-        return self.list.all()[0].type
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PhotoVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def make_private(self):
         from notify.models import Notify, Wall
@@ -1158,31 +1153,29 @@ class PhotoComment(models.Model):
     def likes(self):
         from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-
-    def window_likes(self):
-        from common.model.votes import PhotoCommentVotes
-        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)[0:6]
-
     def dislikes(self):
         from common.model.votes import PhotoCommentVotes
         return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 
+    def window_likes(self):
+        from common.model.votes import PhotoCommentVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PhotoCommentVotes.objects.filter(item_id=self.pk, vote=1).values("user_id")[0:6]])
     def window_dislikes(self):
         from common.model.votes import PhotoCommentVotes
-        return PhotoCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)[0:6]
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PhotoCommentVotes.objects.filter(item_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def likes_count(self):
         if self.like > 0:
             return self.like
         else:
             return ''
-
     def dislikes_count(self):
         if self.dislike > 0:
             return self.dislike
         else:
             return ''
-
     def reposts_count(self):
         if self.repost > 0:
             return self.repost

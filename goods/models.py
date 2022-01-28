@@ -832,10 +832,6 @@ class Good(models.Model):
 		self.repost -= count
 		return self.save(update_fields=['repost'])
 
-	def likes(self):
-		from common.model.votes import GoodVotes
-		return GoodVotes.objects.filter(parent=self, vote__gt=0)
-
 	def is_draft(self):
 		if self.type == Good.DRAFT:
 			return True
@@ -847,36 +843,38 @@ class Good(models.Model):
 			return self.like
 		else:
 			return ''
-
-	def window_likes(self):
-		from common.model.votes import GoodVotes
-		return GoodVotes.objects.filter(parent=self, vote__gt=0)[0:6]
-
-	def dislikes(self):
-		from common.model.votes import GoodVotes
-		return GoodVotes.objects.filter(parent=self, vote__lt=0)
-
 	def dislikes_count(self):
 		if self.dislike > 0:
 			return self.dislike
 		else:
 			return ''
+	def count_reposts(self):
+		if self.repost > 0:
+			return self.repost
+		else:
+			return ''
 
-	def window_dislikes(self):
+	def likes(self):
 		from common.model.votes import GoodVotes
-		return GoodVotes.objects.filter(parent=self, vote__lt=0)[0:6]
+		return GoodVotes.objects.filter(parent=self, vote=1)
+	def dislikes(self):
+		from common.model.votes import GoodVotes
+		return GoodVotes.objects.filter(parent=self, vote=1)
+
+	def window_likes(self):
+		from common.model.votes import GoodVotes
+		from users.models import User
+		return User.objects.filter(id__in=[i['user_id'] for i in GoodVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]])
+    def window_dislikes(self):
+		from common.model.votes import GoodVotes
+		from users.models import User
+		return User.objects.filter(id__in=[i['user_id'] for i in GoodVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
 
 	def get_reposts(self):
 		return Good.objects.filter(parent=self)
 
 	def get_window_reposts(self):
 		return Good.objects.filter(parent=self)[0:6]
-
-	def count_reposts(self):
-		if self.repost > 0:
-			return self.repost
-		else:
-			return ''
 
 	def get_comments(self):
 		comments_query = Q(item_id=self.pk)
@@ -904,9 +902,6 @@ class Good(models.Model):
 	def visits_count(self):
 		from stst.models import GoodNumbers
 		return GoodNumbers.objects.filter(good=self.pk).values('pk').count()
-
-	def get_list_uuid(self):
-		return self.list.all()[0].uuid
 
 	def get_images(self):
 		return GoodImage.objects.filter(good_id=self.pk)
@@ -1205,31 +1200,29 @@ class GoodComment(models.Model):
 	def likes(self):
 		from common.model.votes import GoodCommentVotes
 		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)
-
-	def window_likes(self):
-		from common.model.votes import GoodCommentVotes
-		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__gt=0)[0:6]
-
 	def dislikes(self):
 		from common.model.votes import GoodCommentVotes
 		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)
 
-	def window_dislikes(self):
+	def window_likes(self):
 		from common.model.votes import GoodCommentVotes
-		return GoodCommentVotes.objects.filter(item_id=self.pk, vote__lt=0)[0:6]
+		from users.models import User
+		return User.objects.filter(id__in=[i['user_id'] for i in GoodCommentVotes.objects.filter(item_id=self.pk, vote=1).values("user_id")[0:6]])
+    def window_dislikes(self):
+		from common.model.votes import GoodCommentVotes
+		from users.models import User
+		return User.objects.filter(id__in=[i['user_id'] for i in GoodCommentVotes.objects.filter(item_id=self.pk, vote=-1).values("user_id")[0:6]])
 
 	def likes_count(self):
 		if self.like > 0:
 			return self.like
 		else:
 			return ''
-
 	def dislikes_count(self):
 		if self.dislike > 0:
 			return self.dislike
 		else:
 			return ''
-
 	def reposts_count(self):
 		if self.repost > 0:
 			return self.repost
