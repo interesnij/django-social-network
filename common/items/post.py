@@ -25,8 +25,8 @@ def post(user, value):
                     user_like = "btn_success"
                 window_likes = '<div class="like_pop"><span class="item_likes pointer">Оценили: ' + post.likes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
                 for i in post.window_likes():
-                    window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                    str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '">', i.user.get_my_avatar(), '</figure></a>'])
+                    window_likes = ''.join([window_likes, '<a href="', i.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                    str(i.pk), '"><figure style="margin: 0;" title="', i.get_full_name(), '">', i.get_my_avatar(), '</figure></a>'])
                 window_likes += '</span></div>'
             else:
                 window_likes = ''
@@ -35,8 +35,8 @@ def post(user, value):
                     user_dislikes = "btn_danger"
                 window_dislikes = '<div class="dislike_pop"><span class="item_dislikes pointer">Не оценили: ' + post.dislikes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
                 for i in post.window_dislikes():
-                    window_dislikes = ''.join([window_dislikes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                    str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '">', i.user.get_my_avatar(), '</figure></figure></a>'])
+                    window_dislikes = ''.join([window_dislikes, '<a href="', i.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                    str(i.pk), '"><figure style="margin: 0;" title="', i.get_full_name(), '">', i.get_my_avatar(), '</figure></figure></a>'])
                 window_dislikes += '</div></span>'
             else:
                 window_dislikes = ''
@@ -73,8 +73,8 @@ def post(user, value):
                     user_like = "btn_success"
                 window_likes = '<div class="like_pop"><span class="u_all_posts_likes pointer">Оценили: ' + post.likes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
                 for i in post.window_likes():
-                    window_likes = ''.join([window_likes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                    str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '">', i.user.get_my_avatar(), '</figure></a>'])
+                    window_likes = ''.join([window_likes, '<a href="', i.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                    str(i.pk), '"><figure style="margin: 0;" title="', i.get_full_name(), '">', i.get_my_avatar(), '</figure></a>'])
                 window_likes += '</span></div>'
             else:
                 window_likes = ''
@@ -83,8 +83,8 @@ def post(user, value):
                     user_dislikes = "btn_danger"
                 window_dislikes = '<div class="dislike_pop"><span class="u_all_posts_dislikes pointer">Не оценили: ' + post.dislikes_count_ru() + '</span><span style="display: flex;margin-top: 10px;">'
                 for i in post.window_dislikes():
-                    window_dislikes = ''.join([window_dislikes, '<a href="', i.user.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
-                    str(i.user.pk), '"><figure style="margin: 0;" title="', i.user.get_full_name(), '">', i.user.get_my_avatar(), '</figure></a>'])
+                    window_dislikes = ''.join([window_dislikes, '<a href="', i.get_link(), '" class="ajax" style="padding-right:10px" data-pk="', \
+                    str(i.pk), '"><figure style="margin: 0;" title="', i.get_full_name(), '">', i.get_my_avatar(), '</figure></a>'])
                 window_dislikes += '</div></span>'
             else:
                 window_dislikes = ''

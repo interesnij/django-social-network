@@ -1248,13 +1248,11 @@ class Post(models.Model):
     def window_likes(self):
         from common.model.votes import PostVotes
         from users.models import User
-        votes = PostVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]
-        return User.objects.filter(id__in=[i['user_id'] for i in votes])
+        return User.objects.filter(id__in=[i['user_id'] for i in PostVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]])
     def window_dislikes(self):
         from common.model.votes import PostVotes
         from users.models import User
-        votes = PostVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]
-        return User.objects.filter(id__in=[i['user_id'] for i in votes])
+        return User.objects.filter(id__in=[i['user_id'] for i in PostVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def get_reposts(self):
         return Post.objects.filter(parent=self)
@@ -1526,7 +1524,12 @@ class PostComment(models.Model):
 
     def window_likes(self):
         from common.model.votes import PostCommentVotes
-        return PostCommentVotes.objects.filter(item=self, vote__gt=0)[0:6]
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PostCommentVotes.objects.filter(item_id=self.pk, vote=1).values("user_id")[0:6]])
+    def window_dislikes(self):
+        from common.model.votes import PostCommentVotes
+        from users.models import User
+        return User.objects.filter(id__in=[i['user_id'] for i in PostCommentVotes.objects.filter(item_id=self.pk, vote=-1).values("user_id")[0:6]])
 
     def window_dislikes(self):
         from common.model.votes import PostCommentVotes
