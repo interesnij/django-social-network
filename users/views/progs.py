@@ -465,7 +465,7 @@ class ClaimCreate(TemplateView):
         from common.check.community import check_can_get_lists
         from django.http import HttpResponse, HttpResponseBadRequest
         from managers.forms import ReportForm
-        from managers.models import Moderation, ModerationReport
+        from managers.models import Moderated, ModerationReport
 
         _type = request.POST.get('_type')
         _subtype = request.POST.get('_subtype')
