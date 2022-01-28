@@ -465,7 +465,7 @@ class ClaimCreate(TemplateView):
         from common.check.community import check_can_get_lists
         from django.http import HttpResponse, HttpResponseBadRequest
         from managers.forms import ReportForm
-        from managers.models import ModerationReport
+        from managers.models import Moderation, ModerationReport
 
         _type = request.POST.get('_type')
         _subtype = request.POST.get('_subtype')
@@ -578,7 +578,9 @@ class ClaimCreate(TemplateView):
                 item, t =  Survey.objects.get(pk=_type[3:]), "FOR"
 
         form_post = ReportForm(request.POST)
-        if request.is_ajax() and form_post.is_valid() and not ModerationReport.is_user_already_reported(request.user.pk, t, item.pk):
+        if request.is_ajax() and form_post.is_valid():
+            if Moderated.objects.filter(reporter_id=request.user.pk, type=t, object_id=item.pk).exists():
+                return HttpResponse("Вы уже оставляли жалобу!")
             post = form_post.save(commit=False)
             ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=item.pk, description=post.description, type=post.type)
             return HttpResponse()
