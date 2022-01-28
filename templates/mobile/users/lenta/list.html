@@ -44,16 +44,7 @@
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
 
-      <span>
-          <a class="claim_post_list pointer">Пожаловаться</a>
-            &nbsp;
-          {% load get_key %}
-          {% if list|is_user_can_add_list:request.user.pk %}
-            <a class="copy_user_post_list pointer">Добавить список</a>
-          {% elif request.user.pk in list.get_users_ids %}
-            <a class="uncopy_user_post_list pointer">Удалить список</a>
-          {% endif %}
-        </span>
+      {% include 'desctop/generic/items/list_meta.html' %}
 
         {% if is_user_can_create_posts %}
           {% include 'mobile/users/profile/new_post.html' %}

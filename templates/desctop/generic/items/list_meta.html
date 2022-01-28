@@ -1,0 +1,20 @@
+<span>
+{% if list.community and request.user in list.community.get_administrators %}
+  <a class="c_edit_post_list pointer">изменить список</a>
+  {% if list.is_have_edit %}
+    <a class="c_delete_post_list pointer">удалить список</a>
+  {% endif %}
+
+{% elif request.user.pk == list.creator.pk %}
+  <a class="u_edit_post_list pointer">изменить список</a>
+  {% if list.is_have_edit %}
+    <a class="u_delete_post_list pointer">удалить список</a>
+  {% endif %}
+
+{% elif request.user.is_moderator %}
+  <a class="create_close pointer">Закрыть</a>
+  
+{% else %}
+  <a class="create_claim pointer">Пожаловаться</a>
+{% endif %}
+</span>
