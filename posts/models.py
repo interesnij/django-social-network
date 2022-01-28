@@ -1250,7 +1250,9 @@ class Post(models.Model):
         return self.like > 0
     def window_dislikes(self):
         from common.model.votes import PostVotes
-        return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)[0:6]
+        from users.models import User
+        votes = PostVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]
+        return User.objects.filter(id__in=[i['user_id'] for i in votes])
     def is_have_dislikes(self):
         return self.dislike > 0
 
