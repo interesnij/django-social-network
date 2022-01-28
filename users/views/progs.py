@@ -285,10 +285,10 @@ class RepostCreate(TemplateView):
         self.type = request.GET.get('type')
         self.item = get_item_of_type(self.type)
 
-        if self.item.list:
-            self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
-        elif self.item.count:
+        if self.type[0] == "l":
             self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
+        elif not self.type[0] == "l":
+            self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
         self.template_name = get_detect_platform_template("generic/repost/repost.html", request.user, request.META['HTTP_USER_AGENT'])
         if self.item.community:
             check_can_get_lists(request.user, self.item.community)
