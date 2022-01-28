@@ -562,7 +562,7 @@ class ClaimCreate(TemplateView):
                 item, t =  Message.objects.get(pk=_type[3:]), "CHA"
 
             elif _type[:3] == "use":
-                from user.models import User
+                from users.models import User
                 item, t =  User.objects.get(pk=_type[3:]), "USE"
             elif _type[:3] == "com":
                 from communities.models import Community
