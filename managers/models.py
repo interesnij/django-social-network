@@ -175,6 +175,8 @@ class Moderated(models.Model):
 
     def get_reports(self):
         return self.reports.all()
+    def get_reporters_ids(self):
+        return [i['reporter_id'] for i in self.reports.values("reporter_id")]
 
     def get_btn_console(self):
         return '<div class="border-top btn_console"><a class="create_user_suspend pointer">Заморозить</a>| <a class="create_user_close pointer">Заблокировать</a>| <a class="create_user_warning_banner pointer">Повесить баннер</a>| <a class="create_user_rejected pointer">Отклонить</a></div>'
@@ -415,6 +417,9 @@ class ModerationReport(models.Model):
     @classmethod
     def create_moderation_report(cls, reporter_id, _type, object_id, description, type):
         moderated_object = Moderated.get_or_create_moderated_object(type=_type, object_id=object_id)
+        if reporter_id in moderated_object.get_reporters_ids():
+            from django.http import HttpResponse
+            return HttpResponse("Вы уже оставляли жалобу!")
         return cls.objects.create(reporter_id=reporter_id, type=type, description=description, moderated_object=moderated_object)
 
 
