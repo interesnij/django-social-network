@@ -49,7 +49,7 @@ class Moderated(models.Model):
     description = models.TextField(max_length=300, blank=True, verbose_name="Описание")
     verified = models.BooleanField(default=False, verbose_name="Проверено")
     status = models.PositiveSmallIntegerField(choices=STATUS, default=PENDING, verbose_name="Статус")
-    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Класс объекта")
+    type = models.CharField(max_length=4, choices=TYPE, verbose_name="Класс объекта")
     object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
 
     def __str__(self):
@@ -403,7 +403,7 @@ class ModerationReport(models.Model):
     reporter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reporter', null=False, verbose_name="Репортер")
     moderated_object = models.ForeignKey(Moderated, on_delete=models.CASCADE, related_name='reports', null=False, verbose_name="Объект")
     description = models.CharField(max_length=300, blank=True, verbose_name="Описание")
-    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Категория жалобы")
+    type = models.CharField(max_length=4, choices=TYPE, verbose_name="Класс объекта")
 
     def __str__(self):
         return self.reporter.get_full_name()
