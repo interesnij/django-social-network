@@ -577,7 +577,7 @@ class ClaimCreate(TemplateView):
                 from survey.models import Survey
                 item, t =  Survey.objects.get(pk=_type[3:]), "FOR"
 
-        form_post = PostForm(request.POST)
+        form_post = ReportForm(request.POST)
         if request.is_ajax() and form_post.is_valid() and not ModerationReport.is_user_already_reported(request.user.pk, t, item[3:]):
             post = form_post.save(commit=False)
             ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=_type[3:], description=post.description, type=post.type)
