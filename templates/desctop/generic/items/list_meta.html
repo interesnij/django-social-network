@@ -1,4 +1,6 @@
-<span>
+<span data-type="lpo{{ list.pk }}">
+
+<a class="create_repost pointer">Добавить</a>
 {% if list.community and request.user in list.community.get_administrators %}
   <a class="c_edit_post_list pointer">изменить список</a>
   {% if list.is_have_edit %}
@@ -13,7 +15,7 @@
 
 {% elif request.user.is_moderator %}
   <a class="create_close pointer">Закрыть</a>
-  
+
 {% else %}
   <a class="create_claim pointer">Пожаловаться</a>
 {% endif %}
