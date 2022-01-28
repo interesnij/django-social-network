@@ -5,14 +5,14 @@ from managers.models import *
 class ModerationReportInline(admin.TabularInline):
     model = ModerationReport
 
-class ModerationAdmin(admin.ModelAdmin):
+class ModeratedAdmin(admin.ModelAdmin):
     inlines = [
         ModerationReportInline,
     ]
     list_display = ['type', 'object_id', 'description', 'status', 'verified']
     search_fields = ['type']
     class Meta:
-            model = Moderation
+            model = Moderated
 
 
-admin.site.register(Moderation, ModerationAdmin)
+admin.site.register(Moderated, ModeratedAdmin)
