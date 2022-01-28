@@ -610,6 +610,35 @@ on('#ajax', 'click', '#create_repost_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#create_claim_btn', function() {
+  form_post = this.parentElement.parentElement;
+
+  text_val = form_post.querySelector(".smile_supported");
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
+
+  $input = document.createElement("input");
+  $input.setAttribute("name", "description");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = _text;
+  form_post.append($input);
+
+  form_data = new FormData(form_post);
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/users/progs/create_claim/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    close_work_fullscreen();
+    toast_info("Жалоба отправлена!")
+  }};
+
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '.video_load_one', function() {
   _this = this;
   pk = _this.getAttribute('video-pk');
