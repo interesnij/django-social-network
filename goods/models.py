@@ -865,7 +865,7 @@ class Good(models.Model):
 		from common.model.votes import GoodVotes
 		from users.models import User
 		return User.objects.filter(id__in=[i['user_id'] for i in GoodVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]])
-    def window_dislikes(self):
+	def window_dislikes(self):
 		from common.model.votes import GoodVotes
 		from users.models import User
 		return User.objects.filter(id__in=[i['user_id'] for i in GoodVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
@@ -1208,7 +1208,7 @@ class GoodComment(models.Model):
 		from common.model.votes import GoodCommentVotes
 		from users.models import User
 		return User.objects.filter(id__in=[i['user_id'] for i in GoodCommentVotes.objects.filter(item_id=self.pk, vote=1).values("user_id")[0:6]])
-    def window_dislikes(self):
+	def window_dislikes(self):
 		from common.model.votes import GoodCommentVotes
 		from users.models import User
 		return User.objects.filter(id__in=[i['user_id'] for i in GoodCommentVotes.objects.filter(item_id=self.pk, vote=-1).values("user_id")[0:6]])
