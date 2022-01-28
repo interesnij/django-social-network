@@ -1243,8 +1243,8 @@ class Post(models.Model):
     def window_likes(self):
         from common.model.votes import PostVotes
         from users.models import User
-        ids = [i['user_id'] for i in PostVotes.objects.filter(parent_id=self.pk, vote=1)][0:6]
-        return User.objects.filter(id__in=ids)
+        votes = PostVotes.objects.filter(parent_id=self.pk, vote=1).values("user_id")[0:6]
+        return User.objects.filter(id__in=[i['user_id'] for i in votes])
 
     def is_have_likes(self):
         return self.like > 0
