@@ -9,7 +9,7 @@ from common.check.community import check_can_get_lists
 from gallery.forms import PhotoDescriptionForm
 
 
-class CommunityPhotosList(ListView):
+class CommunityAlbumPhotosList(ListView):
     template_name = None
     paginate_by = 15
     is_user_can_see_photo_section = None
@@ -35,10 +35,10 @@ class CommunityPhotosList(ListView):
             self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
             self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
             self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityPhotosList,self).get(request,*args,**kwargs)
+        return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityPhotosList,self).get_context_data(**kwargs)
+        context = super(CommunityAlbumPhotosList,self).get_context_data(**kwargs)
         context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
         context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
         context['is_user_can_create_photos'] = self.is_user_can_create_photos
@@ -47,34 +47,6 @@ class CommunityPhotosList(ListView):
 
     def get_queryset(self):
         return self.list.get_items()
-
-class CommunityAlbumPhotosList(ListView):
-    template_name = None
-    paginate_by = 15
-
-    def get(self,request,*args,**kwargs):
-        from common.templates import get_template_community_list, get_template_anon_community_list
-
-        self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.list = PhotoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax():
-            if request.user.is_authenticated:
-                self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-            else:
-                self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        else:
-            raise Http404
-        return super(CommunityAlbumPhotosList,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityAlbumPhotosList,self).get_context_data(**kwargs)
-        context['community'] = self.community
-        context['list'] = self.list
-        return context
-
-    def get_queryset(self):
-        return self.list.get_items()
-
 
 class GetCommunityPhoto(TemplateView):
     template_name = None
