@@ -178,10 +178,10 @@ class PostPhotoDetail(TemplateView):
 		context = super(PostPhotoDetail,self).get_context_data(**kwargs)
 		context["object"] = self.photo
 		context["post"] = self.post
-		if self.photos.filter(order=self.photo.order + 1).exists():
-			context["next"] = self.photos.filter(order=self.photo.order + 1)[0]
 		if self.photos.filter(order=self.photo.order - 1).exists():
-			context["prev"] = self.photos.filter(order=self.photo.order - 1)[0]
+			context["next"] = self.photos.filter(order=self.photo.order - 1)[0]
+		if self.photos.filter(order=self.photo.order + 1).exists():
+			context["prev"] = self.photos.filter(order=self.photo.order + 1)[0]
 		context["avatar"] = self.photo.is_avatar(self.request.user)
 		context["user_form"] = self.user_form
 		context["community"] = self.community
