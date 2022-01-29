@@ -80,6 +80,9 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def get_code(self):
+        return "com" + str(self.pk)
+
     def get_b_avatar(self):
         if self.get_avatar_pk():
             return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + str(self.get_avatar_pk()) + '">'

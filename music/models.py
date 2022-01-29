@@ -110,6 +110,9 @@ class MusicList(models.Model):
         verbose_name = "плейлист"
         verbose_name_plural = "плейлисты"
 
+    def get_code(self):
+        return "lmu" + str(self.pk)
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100
@@ -652,6 +655,9 @@ class Music(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_code(self):
+        return "mus" + str(self.pk)
 
     def count_reposts(self):
         if self.repost == 0:

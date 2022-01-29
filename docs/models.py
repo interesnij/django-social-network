@@ -52,6 +52,9 @@ class DocsList(models.Model):
         verbose_name = "список документов"
         verbose_name_plural = "списки документов"
 
+    def get_code(self):
+        return "ldo" + str(self.pk)
+
     def count_items_ru(self):
         count = self.count_items()
         a = count % 10
@@ -595,6 +598,9 @@ class Doc(models.Model):
             return ''
         else:
             return self.repost
+
+    def get_code(self):
+        return "doc" + str(self.pk)
 
     def is_open(self):
         return self.type[0] != "_"

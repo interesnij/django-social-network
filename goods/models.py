@@ -91,6 +91,9 @@ class GoodList(models.Model):
 	def __str__(self):
 		return self.name
 
+	def get_code(self):
+		return "lgo" + str(self.pk)
+
 	def get_can_see_el_exclude_users_ids(self):
 		list = GoodListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
 		return [i['user_id'] for i in list]
@@ -803,6 +806,9 @@ class Good(models.Model):
 	def __str__(self):
 		return self.title
 
+	def get_code(self):
+		return "goo" + str(self.pk)
+
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
 		verbose_name="Товар"
@@ -1185,11 +1191,14 @@ class GoodComment(models.Model):
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']), )
-		verbose_name = "комментарий к записи"
-		verbose_name_plural = "комментарии к записи"
+		verbose_name = "комментарий к товару"
+		verbose_name_plural = "комментарии к товарам"
 
 	def __str__(self):
 		return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+	def get_code(self):
+		return "cgo" + str(self.pk)
 
 	def get_replies(self):
 		return self.good_comment_replies.filter(Q(type=GoodComment.EDITED)|Q(type=GoodComment.PUBLISHED))

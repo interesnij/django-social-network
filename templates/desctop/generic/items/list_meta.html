@@ -1,6 +1,6 @@
 {% load user %}
 
-<span data-type="lpo{{ list.pk }}">
+<span data-type="{{ list.get_code }}">
 
 <a class="create_repost pointer">Добавить</a>
 {% if request.user|is_can_work_list:list %}

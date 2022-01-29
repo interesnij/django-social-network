@@ -63,6 +63,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_code(self):
+        return "use" + str(self.pk)
+
     def get_or_create_manager_chat_pk(self):
         from chat.models import Chat, ChatUsers
         if Chat.objects.filter(creator_id=self.pk, type=Chat.MANAGER).exists():

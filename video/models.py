@@ -82,6 +82,9 @@ class VideoList(models.Model):
     def __str__(self):
         return self.name
 
+    def get_code(self):
+        return "lvi" + str(self.pk)
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100
@@ -783,6 +786,9 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def get_code(self):
+        return "vid" + str(self.pk)
+
     def count_reposts(self):
         if self.repost == 0:
             return ''
@@ -1158,6 +1164,9 @@ class VideoComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+    def get_code(self):
+        return "cvi" + str(self.pk)
 
     def get_item(self):
         if self.parent:

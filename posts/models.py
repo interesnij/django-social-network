@@ -58,6 +58,9 @@ class PostsList(models.Model):
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
 
+    def get_code(self):
+        return "lpo" + str(self.pk)
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100
@@ -823,6 +826,9 @@ class Post(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def get_code(self):
+        return "pos" + str(self.pk)
+
     def get_format_text(self):
         from common.utils import hide_text
         return hide_text(self.text)
@@ -1396,6 +1402,9 @@ class PostComment(models.Model):
 
     def __str__(self):
         return self.commenter.get_full_name()
+
+    def get_code(self):
+        return "cpo" + str(self.pk)
 
     def send_like(self, user, community):
         import json

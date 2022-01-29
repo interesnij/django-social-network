@@ -56,6 +56,9 @@ class SurveyList(models.Model):
         verbose_name = "список опросов"
         verbose_name_plural = "списки опросов"
 
+    def get_code(self):
+        return "lsu" + str(self.pk)
+
     def get_can_see_el_exclude_users_ids(self):
         list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
         return [i['user_id'] for i in list]
@@ -482,6 +485,9 @@ class Survey(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_code(self):
+        return "sur" + str(self.pk)
 
     def count_reposts(self):
         if self.repost == 0:

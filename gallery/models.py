@@ -62,6 +62,9 @@ class PhotoList(models.Model):
     def __str__(self):
         return self.name
 
+    def get_code(self):
+        return "lph" + str(self.pk)
+
     def get_can_see_el_exclude_users_ids(self):
         list = PhotoListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
         return [i['user_id'] for i in list]
@@ -795,6 +798,9 @@ class Photo(models.Model):
         from django.contrib.humanize.templatetags.humanize import naturaltime
         return naturaltime(self.created)
 
+    def get_code(self):
+        return "pho" + str(self.pk)
+
     def count_reposts(self):
         if self.repost == 0:
             return ''
@@ -1128,6 +1134,9 @@ class PhotoComment(models.Model):
 
     def __str__(self):
         return "{0}/{1}".format(self.commenter.get_full_name(), self.text[:10])
+
+    def get_code(self):
+        return "cph" + str(self.pk)
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
