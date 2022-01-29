@@ -656,6 +656,8 @@ class ListCreate(TemplateView):
             community = Community.objects.get(pk=community_id)
             if not request.user.pk in community.get_administrators_ids():
                 return HttpResponseBadRequest()
+        else:
+            community = None
 
         type = request.POST.get('type')
         if type[:3] == "lpo":
