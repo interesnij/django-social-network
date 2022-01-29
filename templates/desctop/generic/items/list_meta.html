@@ -1,7 +1,7 @@
 {% load user %}
 
 <span data-type="{{ list.get_code }}">
-
+<span>{{ list.name }}: </span>
 {% if request.user|is_can_work_list:list %}
   <a class="add_list pointer" tooltip="Добавить список" flow="up">
     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
