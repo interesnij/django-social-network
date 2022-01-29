@@ -3,7 +3,7 @@ from video.view.community_progs import *
 
 
 urlpatterns = [
-    url(r'^create_video/(?P<pk>\d+)/$', CommunityVideoCreate.as_view()),
+    #url(r'^create_video/(?P<pk>\d+)/$', CommunityVideoCreate.as_view()),
     url(r'^edit/(?P<pk>\d+)/$', CommunityVideoEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/$', CommunityVideoDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', CommunityVideoRecover.as_view()),
