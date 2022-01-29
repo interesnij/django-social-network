@@ -617,7 +617,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true };
-  type = form_post.querySelector(".class").value;
+  type = form_post.querySelector(".type").value;
   form_data = new FormData(form_post);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
