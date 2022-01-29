@@ -1,5 +1,5 @@
 
-    <form community-pk="{{ community.pk }}" class="is_stat_list case_create" data-pk="{{ community.pk }}" data-type="create_community_doc_list">
+    <form community-pk="{{ community.pk }}" class="is_stat_list case_create" data-pk="{{ list.pk }}" data-type="create_community_doc_list">
       {% csrf_token %}
       <input type="hidden" name="type" value="{{ type }}" class="type">
       {% if community %}
