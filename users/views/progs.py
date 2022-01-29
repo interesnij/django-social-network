@@ -706,9 +706,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/lenta/my_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/lenta/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/lenta/admin_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/lenta/my_list.html',{'list': new_list})
             elif type[:3] == "lph":
                 from gallery.models import PhotoList
                 new_list = PhotoList.create_list(
@@ -749,7 +749,10 @@ class ListCreate(TemplateView):
                     copy_el=list.copy_el,
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
-                return render_for_platform(request, 'users/goods/list/my_list.html',{'list': new_list})
+                if community:
+                    return render_for_platform(request, 'communities/goods/list/admin_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/goods/list/my_list.html',{'list': new_list})
             elif type[:3] == "lvi":
                 from video.models import VideoList
                 new_list = VideoList.create_list(
