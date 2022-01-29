@@ -650,14 +650,14 @@ class ListCreate(TemplateView):
         from common.check.community import check_can_get_lists
         from django.http import HttpResponse, HttpResponseBadRequest
 
-        community_id = request.GET.get('community_id')
+        community_id = request.POST.get('community_id')
         if community_id:
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
             if not request.user.pk in community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
-        type = request.GET.get('type')
+        type = request.POST.get('type')
         if type[:3] == "lpo":
             have_comments = True
             self.text = "Создание списка записей"
@@ -899,14 +899,14 @@ class ListEdit(TemplateView):
         from common.check.community import check_can_get_lists
         from django.http import HttpResponse, HttpResponseBadRequest
 
-        community_id = request.GET.get('community_id')
+        community_id = request.POST.get('community_id')
         if community_id:
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
             if not request.user.pk in community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
-        type = request.GET.get('type')
+        type = request.POST.get('type')
         if type[:3] == "lpo":
             from posts.models import PostsList
             list = PostsList.objects.get(pk=type[3:])
