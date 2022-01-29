@@ -616,6 +616,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
   if (!form_post.querySelector("#id_name").value){
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
+    return
   } else { this.disabled = true };
   type = form_post.querySelector(".type").value;
   form_data = new FormData(form_post);
@@ -698,6 +699,7 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
+    return
   } else { this.disabled = true }
   pk = form.getAttribute("data-pk")
 
