@@ -239,29 +239,50 @@ def create_community_models(community):
     video_list = VideoList.objects.create(creator=community.creator, community=community, type=VideoList.MAIN, name="Основной список")
     CommunityVideoListPosition.objects.create(community=community.pk, list=video_list.pk, position=1)
 
+
+def get_list_of_type(type):
+    if type[:3] == "lpo":
+        from posts.models import PostsList
+        return PostsList.objects.get(pk=type[3:])
+    elif type[:3] == "lph":
+        from gallery.models import PhotoList
+        return PhotoList.objects.get(pk=type[3:])
+    elif type[:3] == "lgo":
+        from goods.models import GoodList
+        return GoodList.objects.get(pk=type[3:])
+    elif type[:3] == "lvi":
+        from video.models import VideoList
+        return VideoList.objects.get(pk=type[3:])
+    elif type[:3] == "ldo":
+        from docs.models import DocsList
+        return DocsList.objects.get(pk=type[3:])
+    elif type[:3] == "lmu":
+        from music.models import MusicList
+        return MusicList.objects.get(pk=type[3:])
+    elif type[:3] == "lsu":
+        from survey.models import SurveyList
+        return SurveyList.objects.get(pk=type[3:])
+
+def get_comment(item):
+    if item[:3] == "pos":
+        from posts.models import PostComment
+        return PostComment.objects.get(pk=item[3:])
+    elif item[:3] == "pho":
+        from gallery.models import PhotoComment
+        return PhotoComment.objects.get(pk=item[3:])
+    elif item[:3] == "goo":
+        from goods.models import GoodComment
+        return GoodComment.objects.get(pk=item[3:])
+    elif item[:3] == "vid":
+        from video.models import VideoComment
+        return VideoComment.objects.get(pk=item[3:])
+
+
 def get_item_of_type(type):
     if type[0] == "l":
-        if type[:3] == "lpo":
-            from posts.models import PostsList
-            return PostsList.objects.get(pk=type[3:])
-        elif type[:3] == "lph":
-            from gallery.models import PhotoList
-            return PhotoList.objects.get(pk=type[3:])
-        elif type[:3] == "lgo":
-            from goods.models import GoodList
-            return GoodList.objects.get(pk=type[3:])
-        elif type[:3] == "lvi":
-            from video.models import VideoList
-            return VideoList.objects.get(pk=type[3:])
-        elif type[:3] == "ldo":
-            from docs.models import DocsList
-            return DocsList.objects.get(pk=type[3:])
-        elif type[:3] == "lmu":
-            from music.models import MusicList
-            return MusicList.objects.get(pk=type[3:])
-        elif type[:3] == "lsu":
-            from survey.models import SurveyList
-            return SurveyList.objects.get(pk=type[3:])
+        return get_list_of_type(type)
+    if type[0] == "c":
+        return get_comment(type)
     else:
         if type[:3] == "pos":
             from posts.models import Post
@@ -299,17 +320,3 @@ def get_item_with_comments(item):
     elif item[:3] == "vid":
         from video.models import Video
         return Video.objects.get(pk=item[3:])
-
-def get_comment(item):
-    if item[:3] == "pos":
-        from posts.models import PostComment
-        return PostComment.objects.get(pk=item[3:])
-    elif item[:3] == "pho":
-        from gallery.models import PhotoComment
-        return PhotoComment.objects.get(pk=item[3:])
-    elif item[:3] == "goo":
-        from goods.models import GoodComment
-        return GoodComment.objects.get(pk=item[3:])
-    elif item[:3] == "vid":
-        from video.models import VideoComment
-        return VideoComment.objects.get(pk=item[3:])

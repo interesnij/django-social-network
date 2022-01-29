@@ -20,4 +20,9 @@ urlpatterns = [
     url(r'^recover_comment/$', CommentRecover.as_view()),
     url(r'^create_repost/$', RepostCreate.as_view()),
     url(r'^create_claim/$', ClaimCreate.as_view()),
+
+    url(r'^create_list/$', ListCreate.as_view()),
+    url(r'^edit_list/$', ListEdit.as_view()),
+    #url(r'^delete_list/$', ListDelete.as_view()),
+    #url(r'^recover_list/$', ListRecover.as_view()),
 ]

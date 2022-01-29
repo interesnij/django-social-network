@@ -587,3 +587,467 @@ class ClaimCreate(TemplateView):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class ListCreate(TemplateView):
+    template_name, community = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_list_of_type
+        from common.check.community import check_can_get_lists
+
+        self.type = request.GET.get('type')
+        if self.type[:3] == "lpo":
+            have_comments = True
+            self.text = "Создание списка записей"
+        elif self.type[:3] == "lph":
+            have_comments = True
+            self.text = "Создание фотоальбома"
+        elif self.type[:3] == "lgo":
+            have_comments = True
+            self.text = "Создание подборки товаров"
+        elif self.type[:3] == "lvi":
+            have_comments = True
+            self.text = "Создание видеоальбома"
+        elif self.type[:3] == "ldo":
+            have_comments = False
+            self.text = "Создание списка документов"
+        elif self.type[:3] == "lmu":
+            have_comments = False
+            self.text = "Создание плейлиста"
+        elif self.type[:3] == "lsu":
+            have_comments = False
+            self.text = "Создание списка опросов"
+
+        community_id = request.GET.get('community_id')
+        if community_id:
+            from communities.models import Community
+            self.community = Community.objects.get(pk=community_id)
+            if not requests.user.pk in self.community.get_administrators_ids():
+                return HttpResponseBadRequest()
+
+        if have_comments:
+            from posts.forms import PostListForm
+
+            self.form = PostListForm()
+            self.template_name = get_detect_platform_template("generic/form/add_list_with_comment.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            from docs.forms import DocListForm
+
+            self.form = DocListForm()
+            self.template_name = get_detect_platform_template("generic/form/add_list_not_comment.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(ListCreate,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(ListCreate,self).get_context_data(**kwargs)
+        context["form"] = self.form
+        context["community"] = self.community
+        context["type"] = self.type
+        context["text"] = self.text
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from common.check.community import check_can_get_lists
+        from django.http import HttpResponse, HttpResponseBadRequest
+
+        community_id = request.GET.get('community_id')
+        if community_id:
+            from communities.models import Community
+            community = Community.objects.get(pk=community_id)
+            if not requests.user.pk in community.get_administrators_ids():
+                return HttpResponseBadRequest()
+
+        type = request.GET.get('type')
+        if type[:3] == "lpo":
+            have_comments = True
+            self.text = "Создание списка записей"
+        elif type[:3] == "lph":
+            have_comments = True
+        elif type[:3] == "lgo":
+            have_comments = True
+        elif type[:3] == "lvi":
+            have_comments = True
+        elif type[:3] == "ldo":
+            have_comments = False
+        elif type[:3] == "lmu":
+            have_comments = False
+        elif type[:3] == "lsu":
+            have_comments = False
+
+        if have_comments:
+            from posts.forms import PostListForm
+            form = PostListForm(request.POST)
+        else:
+            from docs.forms import DocListForm
+            form = DocListForm(request.POST)
+
+        if request.is_ajax() and form.is_valid():
+            from common.templates import render_for_platform
+
+            post = form.save(commit=False)
+            if type[:3] == "lpo":
+                from posts.models import PostsList
+                new_list = PostsList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/lenta/my_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/lenta/admin_list.html',{'list': new_list})
+            elif type[:3] == "lph":
+                from gallery.models import PhotoList
+                new_list = PhotoList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/photos/list/new_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/photos/list/new_list.html',{'list': new_list})
+            elif type[:3] == "lgo":
+                from goods.models import GoodList
+                new_list = GoodList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                return render_for_platform(request, 'users/goods/list/my_list.html',{'list': new_list})
+            elif type[:3] == "lvi":
+                from video.models import VideoList
+                new_list = VideoList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/video/list/new_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/video/list/new_list.html',{'list': new_list})
+            elif type[:3] == "ldo":
+                from docs.models import DocsList
+                new_list = DocsList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/docs/list/new_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/docs/list/new_list.html',{'list': new_list})
+            elif type[:3] == "lmu":
+                from music.models import MusicList
+                new_list = MusicList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/music/list/new_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/music/list/new_list.html',{'list': new_list})
+            elif type[:3] == "lsu":
+                from survey.models import SurveyList
+                new_list = SurveyList.create_list(
+                    creator=request.user,
+                    name=list.name,
+                    description=list.description,
+                    community=community,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+                if community:
+                    return render_for_platform(request, 'communities/survey/list/new_list.html',{'list': new_list})
+                else:
+                    return render_for_platform(request, 'users/survey/list/new_list.html',{'list': new_list})
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class ListEdit(TemplateView):
+    template_name, community = None, None
+
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_list_of_type
+        from common.check.community import check_can_get_lists
+
+        self.type = request.GET.get('type')
+        if self.type[:3] == "lpo":
+            from posts.models import PostsList
+            self.list = PostsList.objects.get(pk=self.type[3:])
+            have_comments = True
+            self.text = "Изменение списка записей"
+        elif self.type[:3] == "lph":
+            from gallery.models import PhotoList
+            self.list = PhotoList.objects.get(pk=self.type[3:])
+            have_comments = True
+            self.text = "Изменение фотоальбома"
+        elif self.type[:3] == "lgo":
+            from goods.models import GoodList
+            self.list = GoodList.objects.get(pk=self.type[3:])
+            have_comments = True
+            self.text = "Изменение подборки товаров"
+        elif self.type[:3] == "lvi":
+            from video.models import VideoList
+            self.list = VideoList.objects.get(pk=self.type[3:])
+            have_comments = True
+            self.text = "Изменение видеоальбома"
+        elif self.type[:3] == "ldo":
+            from docs.models import DocsList
+            self.list = DocsList.objects.get(pk=self.type[3:])
+            have_comments = False
+            self.text = "Изменение списка документов"
+        elif self.type[:3] == "lmu":
+            from music.models import MusicList
+            self.list = MusicList.objects.get(pk=self.type[3:])
+            have_comments = False
+            self.text = "Изменение плейлиста"
+        elif self.type[:3] == "lsu":
+            from survey.models import SurveyList
+            self.list = SurveyList.objects.get(pk=self.type[3:])
+            have_comments = False
+            self.text = "Изменение списка опросов"
+
+        community_id = request.GET.get('community_id')
+        if community_id:
+            from communities.models import Community
+            self.community = Community.objects.get(pk=community_id)
+            if not requests.user.pk in self.community.get_administrators_ids():
+                return HttpResponseBadRequest()
+
+        if have_comments:
+            self.template_name = get_detect_platform_template("generic/form/edit_list_with_comment.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            self.template_name = get_detect_platform_template("generic/form/edit_list_not_comment.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(ListEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(ListEdit,self).get_context_data(**kwargs)
+        context["community"] = self.community
+        context["type"] = self.type
+        context["text"] = self.text
+        context["list"] = self.list
+        return context
+
+    def post(self, request, *args, **kwargs):
+        from common.check.community import check_can_get_lists
+        from django.http import HttpResponse, HttpResponseBadRequest
+
+        community_id = request.GET.get('community_id')
+        if community_id:
+            from communities.models import Community
+            community = Community.objects.get(pk=community_id)
+            if not requests.user.pk in community.get_administrators_ids():
+                return HttpResponseBadRequest()
+
+        type = request.GET.get('type')
+        if type[:3] == "lpo":
+            from posts.models import PostsList
+            list = PostsList.objects.get(pk=type[3:])
+            have_comments = True
+        elif type[:3] == "lph":
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=type[3:])
+            have_comments = True
+        elif type[:3] == "lgo":
+            from goods.models import GoodList
+            list = GoodList.objects.get(pk=type[3:])
+            have_comments = True
+        elif type[:3] == "lvi":
+            from video.models import VideoList
+            list = VideoList.objects.get(pk=type[3:])
+            have_comments = True
+        elif type[:3] == "ldo":
+            from docs.models import DocsList
+            list = DocsList.objects.get(pk=type[3:])
+            have_comments = False
+        elif type[:3] == "lmu":
+            from music.models import MusicList
+            list = MusicList.objects.get(pk=type[3:])
+            have_comments = False
+        elif type[:3] == "lsu":
+            from survey.models import SurveyList
+            list = SurveyList.objects.get(pk=type[3:])
+            have_comments = False
+
+        if list.creator.pk != request.user.pk:
+            return HttpResponseBadRequest()
+        elif have_comments:
+            from posts.forms import PostListForm
+            form = PostListForm(request.POST)
+        else:
+            from docs.forms import DocListForm
+            form = DocListForm(request.POST)
+
+        if request.is_ajax() and form.is_valid():
+            post = form.save(commit=False)
+            if type[:3] == "lpo":
+                from posts.models import PostsList
+                new_list = PostsList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "lph":
+                from gallery.models import PhotoList
+                new_list = PhotoList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "lgo":
+                from goods.models import GoodList
+                new_list = GoodList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "lvi":
+                from video.models import VideoList
+                new_list = VideoList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    can_see_comment=list.can_see_comment,
+                    can_see_comment_users=request.POST.getlist("can_see_comment_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    create_comment=list.create_comment,
+                    create_comment_users=request.POST.getlist("create_comment_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "ldo":
+                from docs.models import DocsList
+                new_list = DocsList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "lmu":
+                from music.models import MusicList
+                new_list = MusicList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+            elif type[:3] == "lsu":
+                from survey.models import SurveyList
+                new_list = SurveyList.edit_list(
+                    name=list.name,
+                    description=list.description,
+                    can_see_el=list.can_see_el,
+                    can_see_el_users=request.POST.getlist("can_see_el_users"),
+                    create_el=list.create_el,
+                    create_el_users=request.POST.getlist("create_el_users"),
+                    copy_el=list.copy_el,
+                    copy_el_users=request.POST.getlist("create_copy_el"),
+                )
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
