@@ -613,7 +613,7 @@ on('#ajax', 'click', '#create_repost_btn', function() {
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   type = form_post.querySelector(".type").value;
-  console.log(type.slice(2));
+  console.log(type.slice(0,2));
   if (!form_post.querySelector("#id_name").value){
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
