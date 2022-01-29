@@ -1,6 +1,5 @@
 {% load user %}
 
-<span>{{ list.name }}: </span>
 <span data-type="{{ list.get_code }}" data-community-id="{{ list.community.pk }}">
 {% if request.user|is_can_work_list:list %}
   <a class="create_list pointer" tooltip="Добавить список" flow="up">
