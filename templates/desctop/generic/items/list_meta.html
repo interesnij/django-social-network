@@ -1,6 +1,6 @@
 {% load user %}
 
-<span data-type="{{ list.get_code }}">добавить список
+<span data-type="{{ list.get_code }}">
 
 {% if request.user|is_can_work_list:list %}
   <a class="add_list pointer" tooltip="Добавить список" flow="up">
