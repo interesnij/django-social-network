@@ -613,7 +613,7 @@ on('#ajax', 'click', '#create_repost_btn', function() {
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   type = form_post.querySelector(".type").value;
-  console.log(type.slice(0,2));
+  console.log(type.slice(0,3));
   if (!form_post.querySelector("#id_name").value){
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
@@ -629,8 +629,8 @@ on('#ajax', 'click', '#create_list_btn', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
-    console.log(type.indexOf("lpo") !== -1);
-    if (type.indexOf("lpo") !== -1) {
+
+    if (type.slice(0,3) == "lpo") {
       new_post = document.createElement("span");
       new_post.innerHTML = elem;
       post_stream = document.body.querySelector(".span_list_pk");
