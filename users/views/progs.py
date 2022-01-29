@@ -623,7 +623,7 @@ class ListCreate(TemplateView):
         if community_id:
             from communities.models import Community
             self.community = Community.objects.get(pk=community_id)
-            if not requests.user.pk in self.community.get_administrators_ids():
+            if not request.user.pk in self.community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
         if have_comments:
@@ -654,7 +654,7 @@ class ListCreate(TemplateView):
         if community_id:
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
-            if not requests.user.pk in community.get_administrators_ids():
+            if not request.user.pk in community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
         type = request.GET.get('type')
@@ -878,7 +878,7 @@ class ListEdit(TemplateView):
         if community_id:
             from communities.models import Community
             self.community = Community.objects.get(pk=community_id)
-            if not requests.user.pk in self.community.get_administrators_ids():
+            if not request.user.pk in self.community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
         if have_comments:
@@ -903,7 +903,7 @@ class ListEdit(TemplateView):
         if community_id:
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
-            if not requests.user.pk in community.get_administrators_ids():
+            if not request.user.pk in community.get_administrators_ids():
                 return HttpResponseBadRequest()
 
         type = request.GET.get('type')
