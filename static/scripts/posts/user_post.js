@@ -443,7 +443,7 @@ on('#ajax', 'click', '.delete_list', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.previousElementSibling.style.display = "none";
     _this.nextElementSibling.style.display = "none";
-    _this.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "none";
+    _this.previousElementSibling.previousElementSibling.style.display = "none";
     _this.parentElement.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
@@ -464,7 +464,7 @@ on('#ajax', 'click', '.recover_list', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.previousElementSibling.style.display = "unset";
     _this.nextElementSibling.style.display = "unset";
-    _this.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "unset";
+    _this.previousElementSibling.previousElementSibling.style.display = "unset";
     second_list = document.body.querySelector('.second_list_name');
     name = second_list.getAttribute("data-name");
     second_list.innerHTML = name;
