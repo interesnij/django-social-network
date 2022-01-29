@@ -613,8 +613,8 @@ on('#ajax', 'click', '#create_repost_btn', function() {
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
 
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+  if (!form_post.querySelector("#id_name").value){
+    form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
   } else { this.disabled = true };
   type = form_post.querySelector(".class").value;
@@ -637,7 +637,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
       userpic = document.body.querySelector(".userpic");
 
-      name = form.querySelector("#id_name").value;
+      name = form_post.querySelector("#id_name").value;
       li = document.createElement("li");
       li.classList.add("date", "list", "active");
       new_pk = new_post.querySelector(".span_list_pk").getAttribute("list-pk");
