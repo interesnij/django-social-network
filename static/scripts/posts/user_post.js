@@ -693,7 +693,30 @@ on('#ajax', 'click', '#create_list_btn', function() {
 });
 
 on('#ajax', 'click', '#edit_list_btn', function() {
-  media_list_edit(this, "/users/progs/edit_list/", "edited_user_photo_list")
+  form = this.parentElement.parentElement.parentElement;
+  form_data = new FormData(form);
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+  pk = form.getAttribute("data-pk")
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/users/progs/edit_list/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    close_work_fullscreen();
+    name = form.querySelector('#id_name').value;
+    list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
+    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
+    document.body.querySelector('.second_list_name').innerHTML = name;
+    toast_success("Список изменен");
+    //main_container = document.body.querySelector(".main-container");
+    //add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+  }}
+  link_.send(form_data);
 });
 
 on('#ajax', 'click', '#create_claim_btn', function() {
