@@ -3,8 +3,6 @@ from docs.view.user_progs import *
 
 
 urlpatterns = [
-    url(r'^add_list/(?P<pk>\d+)/$', UserDocListCreate.as_view()),
-    url(r'^edit_list/(?P<pk>\d+)/$', UserDocListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/$', UserDocListDelete.as_view()),
     url(r'^restore_list/(?P<pk>\d+)/$', UserDocListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddDocListInUserCollections.as_view()),

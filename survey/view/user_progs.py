@@ -148,56 +148,6 @@ class RemoveSurveyListFromUserCollections(View):
         else:
             return HttpResponse()
 
-
-class UserSurveyListCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("survey/user/create_list.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserSurveyListCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from survey.forms import SurveylistForm
-        context = super(UserSurveyListCreate,self).get_context_data(**kwargs)
-        context["form_post"] = SurveylistForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from survey.forms import SurveylistForm
-        form_post, user = SurveylistForm(request.POST), User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and form_post.is_valid():
-            list = form_post.save(commit=False)
-            new_list = list.create_list(creator=request.user, name=list.name, description=list.description, community=None)
-            return render_for_platform(request, 'users/user_survey_list/my_list.html',{'list': new_list, 'user': request.user})
-        else:
-            return HttpResponseBadRequest()
-
-class UserSurveyListEdit(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.list, self.template_name = get_settings_template("survey/user/edit_list.html", request.user, request.META['HTTP_USER_AGENT']), SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        return super(UserSurveyListEdit,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from survey.forms import SurveylistForm
-        context = super(UserSurveyListEdit,self).get_context_data(**kwargs)
-        context["list"] = self.list
-        context["form"] = SurveylistForm(instance=self.list)
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from survey.forms import SurveylistForm
-        self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        self.form = SurveylistForm(request.POST,instance=self.list)
-        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.list.creator.pk:
-            list = self.form.save(commit=False)
-            list.edit_list(name=list.name, description=list.description, community=None)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-        return super(UserSurveyListEdit,self).get(request,*args,**kwargs)
-
 class UserSurveyListDelete(View):
     def get(self,request,*args,**kwargs):
         list = SurveyList.objects.get(pk=self.kwargs["pk"])

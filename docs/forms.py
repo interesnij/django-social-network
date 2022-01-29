@@ -3,7 +3,7 @@ from django import forms
 from django.conf import settings
 
 
-class DocslistForm(forms.ModelForm):
+class DoclistForm(forms.ModelForm):
 
 	class Meta:
 		model = DocsList

@@ -3,8 +3,6 @@ from docs.view.community_progs import *
 
 
 urlpatterns = [
-    url(r'^add_list/(?P<pk>\d+)/$', CommunityDocListCreate.as_view()),
-    url(r'^edit_list/(?P<pk>\d+)/$', CommunityDocListEdit.as_view()),
     url(r'^delete_list/(?P<pk>\d+)/$', CommunityDocListDelete.as_view()),
     url(r'^restore_list/(?P<pk>\d+)/$', CommunityDocListRecover.as_view()),
 
