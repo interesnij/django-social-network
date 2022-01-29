@@ -612,13 +612,14 @@ on('#ajax', 'click', '#create_repost_btn', function() {
 
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
-
+  type = form_post.querySelector(".type").value;
+  console.log(type.slice(2));
   if (!form_post.querySelector("#id_name").value){
     form_post.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
     return
   } else { this.disabled = true };
-  type = form_post.querySelector(".type").value;
+
   form_data = new FormData(form_post);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -628,8 +629,8 @@ on('#ajax', 'click', '#create_list_btn', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
-    console.log(type.indexOf("lpo"));
-    if (type.indexOf("lpo")) {
+    console.log(type.indexOf("lpo") !== -1);
+    if (type.indexOf("lpo") !== -1) {
       new_post = document.createElement("span");
       new_post.innerHTML = elem;
       post_stream = document.body.querySelector(".span_list_pk");
