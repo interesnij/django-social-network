@@ -442,8 +442,9 @@ on('#ajax', 'click', '.delete_list', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.previousElementSibling.style.display = "none";
-    _this.previousElementSibling.previousElementSibling.style.display = "none";
-    _this.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
+    _this.nextElementSibling.style.display = "none";
+    _this.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "none";
+    _this.parentElement.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace("delete_list", "recover_list");
@@ -462,7 +463,8 @@ on('#ajax', 'click', '.recover_list', function() {
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     _this.previousElementSibling.style.display = "unset";
-    _this.previousElementSibling.previousElementSibling.style.display = "unset";
+    _this.nextElementSibling.style.display = "unset";
+    _this.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "unset";
     second_list = document.body.querySelector('.second_list_name');
     name = second_list.getAttribute("data-name");
     second_list.innerHTML = name;
@@ -475,7 +477,6 @@ on('#ajax', 'click', '.recover_list', function() {
     add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send();
-  media_list_recover(this, "/users/progs/recover_list/", "recover_list", "delete_list", "restored_community_music_list")
 });
 
 on('#ajax', 'click', '.like2', function() {
