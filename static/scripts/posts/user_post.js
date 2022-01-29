@@ -696,6 +696,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
 
 on('#ajax', 'click', '#edit_list_btn', function() {
   form = this.parentElement.parentElement.parentElement;
+  type = form.querySelector(".type").value;
   form_data = new FormData(form);
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
@@ -712,9 +713,15 @@ on('#ajax', 'click', '#edit_list_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     close_work_fullscreen();
     name = form.querySelector('#id_name').value;
-    list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
-    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
-    document.body.querySelector('.second_list_name').innerHTML = name;
+
+    if (type.slice(0,3) == "lpo") {
+      title = document.body.querySelector( '[list-pk=' + '"' + pk + '"' + ']' );
+      title.querySelector(".list_name").innerHTML = name }
+    else {
+      list = document.body.querySelector( '[data-pk=' + '"' + pk + '"' + ']' );
+      list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = name : null;
+      document.body.querySelector('.second_list_name').innerHTML = name;
+    };
     toast_success("Список изменен");
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat(stat_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
