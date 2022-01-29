@@ -612,10 +612,12 @@ on('#ajax', 'click', '#create_repost_btn', function() {
 
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
+
   if (!form.querySelector("#id_name").value){
     form.querySelector("#id_name").style.border = "1px #FF0000 solid";
     toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
+  } else { this.disabled = true };
+  type = form_post.querySelector(".class").value;
   form_data = new FormData(form_post);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -625,8 +627,8 @@ on('#ajax', 'click', '#create_list_btn', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
-    if () {
-
+    console.log(type.indexOf("lpo"));
+    if (type.indexOf("lpo")) {
       new_post = document.createElement("span");
       new_post.innerHTML = elem;
       post_stream = document.body.querySelector(".span_list_pk");
