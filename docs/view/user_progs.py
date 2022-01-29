@@ -3,7 +3,7 @@ from users.models import User
 from django.views import View
 from django.views.generic.base import TemplateView
 from rest_framework.exceptions import PermissionDenied
-from docs.forms import DocslistForm, DocForm
+from docs.forms import DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
 from common.templates import get_settings_template, render_for_platform

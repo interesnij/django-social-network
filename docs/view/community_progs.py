@@ -2,7 +2,7 @@ from docs.models import Doc, DocsList
 from communities.models import Community
 from django.views import View
 from django.views.generic.base import TemplateView
-from docs.forms import DocslistForm, DocForm
+from docs.forms import DocForm
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.http import Http404
 from common.templates import render_for_platform, get_community_manage_template

@@ -1,5 +1,5 @@
 from gallery.models import PhotoList, Photo, PhotoComment
-from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
+from gallery.forms import PhotoDescriptionForm, CommentForm
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists

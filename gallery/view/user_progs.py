@@ -1,6 +1,6 @@
 from users.models import User
 from gallery.models import PhotoList, Photo, PhotoComment
-from gallery.forms import PhotoDescriptionForm, CommentForm, PhotoListForm
+from gallery.forms import PhotoDescriptionForm, CommentForm
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.user import check_user_can_get_list

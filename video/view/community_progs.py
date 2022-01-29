@@ -3,7 +3,7 @@ from communities.models import Community
 from video.models import VideoList, Video, VideoComment
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
-from video.forms import VideoListForm, VideoForm, CommentForm
+from video.forms import VideoForm, CommentForm
 from common.check.community import check_can_get_lists
 from django.views.generic import ListView
 from common.templates import render_for_platform

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views import View
 from common.check.user import check_user_can_get_list
 from users.models import User
-from goods.forms import CommentForm, GoodForm, GoodListForm
+from goods.forms import CommentForm, GoodForm
 from django.http import Http404
 from common.templates import get_settings_template, render_for_platform, get_detect_platform_template
 

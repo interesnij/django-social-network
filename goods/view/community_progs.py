@@ -3,7 +3,7 @@ from goods.models import *
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.check.community import check_can_get_lists
-from goods.forms import CommentForm, GoodForm, GoodListForm
+from goods.forms import CommentForm, GoodForm
 from communities.models import Community
 from common.templates import render_for_platform
 
