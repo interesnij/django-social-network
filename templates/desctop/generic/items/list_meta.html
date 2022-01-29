@@ -2,12 +2,14 @@
 
 <a class="create_repost pointer">Добавить</a>
 {% if list.community and request.user in list.community.get_administrators %}
+  <a class="c_add_post_list pointer">добавить список</a>
   <a class="c_edit_post_list pointer">изменить список</a>
   {% if list.is_have_edit %}
     <a class="c_delete_post_list pointer">удалить список</a>
   {% endif %}
 
 {% elif request.user.pk == list.creator.pk %}
+  <a class="u_add_post_list pointer">добавить список</a>
   <a class="u_edit_post_list pointer">изменить список</a>
   {% if list.is_have_edit %}
     <a class="u_delete_post_list pointer">удалить список</a>
