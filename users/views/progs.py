@@ -684,7 +684,7 @@ class ListCreate(TemplateView):
         if request.is_ajax() and form.is_valid():
             from common.templates import render_for_platform
 
-            post = form.save(commit=False)
+            list = form.save(commit=False)
             if type[:3] == "lpo":
                 from posts.models import PostsList
                 new_list = PostsList.create_list(
