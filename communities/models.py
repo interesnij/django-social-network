@@ -673,11 +673,11 @@ class Community(models.Model):
         from users.models import User
         return User.objects.filter(communities_memberships__community__pk=community_pk)
 
-    @classmethod
-    def get_administrators(cls, community_pk):
+    def get_administrators(self):
         from users.models import User
-        community_administrators_query = Q(communities_memberships__community__pk=community_pk, communities_memberships__is_administrator=True)
-        return User.objects.filter(community_administrators_query)
+        return User.objects.filter(communities_memberships__community__pk=self.pk, communities_memberships__is_administrator=True)
+    def get_administrators_ids(self):
+        return [i['id'] for i in self.get_administrators().values('id')]
     @classmethod
     def get_moderators(cls, community_pk):
         from users.models import User
