@@ -28,6 +28,19 @@ on('#ajax', 'click', '.create_claim', function() {
   create_fullscreen("/users/progs/create_claim/?type=" + type, "worker_fullscreen");
 });
 
+on('#ajax', 'click', '.create_list', function() {
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  community_id = parent.getAttribute('data-community-id');
+  create_fullscreen("/users/progs/create_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
+});
+on('#ajax', 'click', '.edit_list', function() {
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  community_id = parent.getAttribute('data-community-id');
+  create_fullscreen("/users/progs/edit_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
+});
+
 on('#ajax', 'click', '.comment_likes', function() {
   create_fullscreen("/comments/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
