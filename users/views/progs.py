@@ -948,8 +948,7 @@ class ListEdit(TemplateView):
         if request.is_ajax() and form.is_valid():
             post = form.save(commit=False)
             if type[:3] == "lpo":
-                from posts.models import PostsList
-                new_list = PostsList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -964,8 +963,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lph":
-                from gallery.models import PhotoList
-                new_list = PhotoList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -980,8 +978,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lgo":
-                from goods.models import GoodList
-                new_list = GoodList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -996,8 +993,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lvi":
-                from video.models import VideoList
-                new_list = VideoList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -1012,8 +1008,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "ldo":
-                from docs.models import DocsList
-                new_list = DocsList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -1024,8 +1019,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lmu":
-                from music.models import MusicList
-                new_list = MusicList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -1036,8 +1030,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lsu":
-                from survey.models import SurveyList
-                new_list = SurveyList.edit_list(
+                new_list = list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
