@@ -1,7 +1,7 @@
 {% load user %}
 
-<span data-type="{{ list.get_code }}" data-community-id="{{ list.community.pk }}">
 <span>{{ list.name }}: </span>
+<span data-type="{{ list.get_code }}" data-community-id="{{ list.community.pk }}">
 {% if request.user|is_can_work_list:list %}
   <a class="create_list pointer" tooltip="Добавить список" flow="up">
     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
