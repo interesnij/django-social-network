@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Видеоролики {{ user.get_full_name_genitive }}{% endblock %}
-{% load get_key %}
 {% block meta %}
 <meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/users/{{ user.pk }}/video/" />
 <meta property="og:type" content="website" />
@@ -23,12 +22,7 @@
             <h5 class="mt-1">
               {{ list.name }} ({{ list.count_items }})
 
-              {% if list|is_user_can_add_list:request.user.pk %}
-                <span class="pointer badge badge-light-success copy_user_video_list">Добавить список в коллекцию</span>
-              {% elif request.user.pk in list.get_users_ids %}
-                <span class="pointer badge badge-light-danger uncopy_user_video_list">Удалить список из коллекции</span>
-              {% endif %}
-              <span class="pointer badge badge-light-warning u_video_video_claim">Пожаловаться</span>
+              {% include 'desctop/generic/items/list_meta.html' %}
             </h5>
           </div>
           <div class="card mb-2">

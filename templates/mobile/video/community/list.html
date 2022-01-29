@@ -1,73 +1,27 @@
 {% load get_key %}
 
-<div class="container mt-3" data-pk="{{ community.pk }}" data-uuid="{{ list.uuid }}">
-  <div class="row no-gutters">
-    {% if list.is_not_empty %}
-    <div class="col" data-type="lvi{{ list.pk }}">
-      <a class="btn btn-sm border create_repost" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-      </a>
-    </div>
-    {% endif %}
-    {% if list|is_community_can_add_list:request.user.pk %}
-    <div class="col">
-      <a class="btn btn-sm border c_add_video_list" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-    </div>
-    {% elif request.user.pk in list.get_users_ids %}
-    <div class="col">
-      <a class="btn btn-sm border c_remove_video_list" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-      </a>
-    </div>
-    {% endif %}
-    <div class="col">
-      <a class="btn btn-sm border this_mob_fullscreen_hide" style="width: -webkit-fill-available;">
-        <svg fill="currentColor" class="svg_default" style="width: 17px;" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-      </a>
-    </div>
+<span class="load_block">
+  <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    <h5 class="mt-1">
+      <p>
+        <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count }}) - видеозаписи
+        <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
+      </p>
+      {% include 'desctop/generic/items/list_meta.html' %}
+    </h5>
   </div>
-
-  {% if not list.is_deleted %}
-  <div class="card mb-2" style="flex-basis: 95%;">
-      <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-        <div style="display:flex">
-          <figure><svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></figure>
-          <div class="media-body" style="margin-left: 10px;">
-            <h6 class="my-0 mt-1"><a class="ajax" href="{% url 'community_video_list' pk=list.community.pk uuid=list.uuid %}">{{ list.name }}</a></h6>
-            <p class="">Список видео - <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a></p>
-            <p class="">Видеороликов: {{ list.get_video_count }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-          <div class="card mb-2">
-              <div class="card-body">
-                {% if object_list %}
-                    <ul class="is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_video_list">
+  {% if object_list %}
+  <div class="row is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_video_list">
                       {% for object in object_list %}
-                        {% include 'mobile/communities/video/video.html' %}
+                        {% include 'desctop/communities/video/main_list/video.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
                       <div class="load centered m-1 next_page_list" data-link="{% url 'load_video_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
                           <img src="/static/images/preloader.gif">
                       </div>
                       {% endif %}
-                    </ul>
-
-                {% else %}
-                  {% include 'mobile/communities/video/main_list/no_videos.html' %}
-                {% endif %}
-              </div>
-          </div>
-
-          {% else %}
-          <div class="card centered" style="">
-            <div class="card-body" style="margin-top: 10%;">
-            <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
-            </div>
-            <h6 style="margin: 20px;text-align: center;">Список удален. </h6>
-          </div>
-          {% endif %}
-    </div>
+  </div>
+  {% else %}
+      {% include 'desctop/communities/video/main_list/no_videos.html' %}
+  {% endif %}
+</span>

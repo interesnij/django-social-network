@@ -6,7 +6,6 @@
 <meta property="og:title" content="Видеоролики {{ user.get_full_name_genitive }} - {{ list.name }}" />
 <meta property="og:image" content="https://xn--b1afgj5al1e.xn--p1acf{{ user.get_b_avatar }}"/>
 {% endblock %}
-{% load get_key %}
 {% block content %}
 
 <div class="main-container mt-3" data-pk="{{ list.pk }}" data-type="user_photo_list">
@@ -17,31 +16,13 @@
             </div>
           </div>
 
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_items }})</h6>
-                    <p class="">Видеоролики
-                    {% include 'desctop/generic/user/user_gen.html' %}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
             <span class="load_block">
 
             <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px">
               <h5 class="mt-1">
                 {{ list.name }} ({{ list.count_items }})
 
-                {% if list|is_user_can_add_list:request.user.pk %}
-                  <span class="pointer badge badge-light-success copy_user_video_list">Добавить список в коллекцию</span>
-                {% elif request.user.pk in list.get_users_ids %}
-                  <span class="pointer badge badge-light-danger uncopy_user_video_list">Удалить список из коллекции</span>
-                {% endif %}
-                <span class="pointer badge badge-light-warning u_video_video_claim">Пожаловаться</span>
+                {% include 'desctop/generic/items/list_meta.html' %}
               </h5>
             </div>
           <div class="card mb-2">

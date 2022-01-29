@@ -1,6 +1,5 @@
 {% extends "base_mobile.html" %}
 {% block title %}Документы {{ community.name }}{% endblock %}
-{% load get_key %}
 {% block meta %}
 <meta property="og:url" content="https://xn--b1afgj5al1e.xn--p1acf/communities/{{ community.pk }}/docs/" />
 <meta property="og:type" content="website" />
@@ -26,9 +25,8 @@
     <h5 class="mt-1">{{ list.name }} ({{ list.count_items }})
       {% if community.pk == list.community.pk %}
         <span class="pointer badge badge-light-success c_doc_add">Добавить документ</span>
-        <span class="pointer badge badge-light-secondary c_doc_list_edit">Изменить список</span>
       {% endif %}
-      <span class="pointer badge badge-light-success c_doc_list_add">Создать список</span>
+      {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
   </div>
             <div class="card mb-2">

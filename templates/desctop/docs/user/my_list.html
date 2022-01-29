@@ -1,4 +1,3 @@
-{% load get_key %}
 
 <span class="load_block is_stat_list" data-type="user_doc_list" data-pk="{{ list.pk }}">
   <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
@@ -8,11 +7,7 @@
         <a class="underline ajax" href="{{ list.creator.get_link }}">{{ list.creator.get_full_name_genitive }}</a>
       </p>
       <span class="pointer badge badge-light-success u_doc_add">Добавить документ</span>
-      {% if request.user.pk == list.creator.pk and not list.is_main %}
-        <span class="pointer badge badge-light-secondary u_doc_list_edit">Изменить список</span>
-        <span class="pointer badge badge-light-danger u_doc_list_remove">Удалить список</span>
-      {% endif %}
-      <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
+      {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
   </div>
                 {% if object_list %}

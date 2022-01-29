@@ -1,4 +1,3 @@
-{% load get_key %}
 
 <div class="container mt-3">
 
@@ -12,14 +11,10 @@
         <a class="underline ajax" href="{{ list.community.get_link }}">{{ list.community.name }}</a>
       </span>
         <input type="file" accept="image/*" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
-        {% if list.is_main or list.is_have_edit %}
+
         <span class="pointer badge badge-light-success previous_click">Добавить фото</span>
-        {% endif %}
-        {% if community.pk == list.community.pk and list.is_have_edit %}
-        <span class="pointer badge badge-light-secondary c_photo_list_edit">Изменить список</span>
-        <span class="pointer badge badge-light-danger c_photo_list_remove">Удалить список</span>
-        {% endif %}
-        <span class="pointer badge badge-light-info copy_link">Копировать ссылку</span>
+
+        {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
     </form>
   </div>
