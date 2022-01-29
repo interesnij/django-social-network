@@ -909,31 +909,31 @@ class ListEdit(TemplateView):
         type = request.POST.get('type')
         if type[:3] == "lpo":
             from posts.models import PostsList
-            list = PostsList.objects.get(pk=type[3:])
+            _list = PostsList.objects.get(pk=type[3:])
             have_comments = True
         elif type[:3] == "lph":
             from gallery.models import PhotoList
-            list = PhotoList.objects.get(pk=type[3:])
+            _list = PhotoList.objects.get(pk=type[3:])
             have_comments = True
         elif type[:3] == "lgo":
             from goods.models import GoodList
-            list = GoodList.objects.get(pk=type[3:])
+            _list = GoodList.objects.get(pk=type[3:])
             have_comments = True
         elif type[:3] == "lvi":
             from video.models import VideoList
-            list = VideoList.objects.get(pk=type[3:])
+            _list = VideoList.objects.get(pk=type[3:])
             have_comments = True
         elif type[:3] == "ldo":
             from docs.models import DocsList
-            list = DocsList.objects.get(pk=type[3:])
+            _list = DocsList.objects.get(pk=type[3:])
             have_comments = False
         elif type[:3] == "lmu":
             from music.models import MusicList
-            list = MusicList.objects.get(pk=type[3:])
+            _list = MusicList.objects.get(pk=type[3:])
             have_comments = False
         elif type[:3] == "lsu":
             from survey.models import SurveyList
-            list = SurveyList.objects.get(pk=type[3:])
+            _list = SurveyList.objects.get(pk=type[3:])
             have_comments = False
 
         if list.creator.pk != request.user.pk:
@@ -946,9 +946,9 @@ class ListEdit(TemplateView):
             form = DocListForm(request.POST)
 
         if request.is_ajax() and form.is_valid():
-            post = form.save(commit=False)
+            list = form.save(commit=False)
             if type[:3] == "lpo":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -963,7 +963,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lph":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -978,7 +978,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lgo":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -993,7 +993,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lvi":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -1008,7 +1008,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "ldo":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
@@ -1020,7 +1020,7 @@ class ListEdit(TemplateView):
                 )
             elif type[:3] == "lmu":
                 new_list = list.edit_list(
-                    name=list.name,
+                    name=_list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
                     can_see_el_users=request.POST.getlist("can_see_el_users"),
@@ -1030,7 +1030,7 @@ class ListEdit(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
             elif type[:3] == "lsu":
-                new_list = list.edit_list(
+                new_list = _list.edit_list(
                     name=list.name,
                     description=list.description,
                     can_see_el=list.can_see_el,
