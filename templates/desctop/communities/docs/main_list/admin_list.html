@@ -24,10 +24,11 @@
     <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
       <h5 class="mt-1">{{ list.name }} ({{ list.count_items }})
         {% if community.pk == list.community.pk %}
-          <span class="pointer badge badge-light-success c_doc_add">Добавить документ</span>
-          <span class="pointer badge badge-light-secondary c_doc_list_edit">Изменить список</span>
+        <a class="pointer c_doc_add" tooltip="Добавить документ" flow="up">
+          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        </a>
         {% endif %}
-        <span class="pointer badge badge-light-success c_doc_list_add">Создать список</span>
+        {% include 'desctop/generic/items/list_meta.html' %}
       </h5>
     </div>
     <div class="card mb-2">
