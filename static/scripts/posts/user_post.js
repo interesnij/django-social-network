@@ -610,6 +610,90 @@ on('#ajax', 'click', '#create_repost_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#create_list_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_name").value){
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+  } else { this.disabled = true }
+  form_data = new FormData(form_post);
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/users/progs/create_list/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    elem = link_.responseText;
+    if () {
+
+      new_post = document.createElement("span");
+      new_post.innerHTML = elem;
+      post_stream = document.body.querySelector(".span_list_pk");
+      post_stream.innerHTML = '';
+      post_stream.innerHTML = '<div class="card mb-3 items_empty centered"><div class="card-body"><svg fill="currentColor" class="thumb_big svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M22 13h-8v-2h8v2zm0-6h-8v2h8V7zm-8 10h8v-2h-8v2zm-2-8v6c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2zm-1.5 6l-2.25-3-1.75 2.26-1.25-1.51L3.5 15h7z"/></svg></div><h6 style="margin: 20px;">Пока записей нет...</h6></div>';
+
+      userpic = document.body.querySelector(".userpic");
+
+      name = form.querySelector("#id_name").value;
+      li = document.createElement("li");
+      li.classList.add("date", "list", "active");
+      new_pk = new_post.querySelector(".span_list_pk").getAttribute("list-pk");
+      li.setAttribute("list-pk", new_pk);
+
+      media = document.createElement("div");
+      media.classList.add("media");
+
+      media_body = document.createElement("div");
+      media_body.classList.add("media-body");
+
+      h6 = document.createElement("h6");
+      h6.classList.add("my-0", "mt-1");
+      h6.innerHTML = '<span class="list_name">' + name + '</span> (<span class="handle">0</span>)';
+
+      figure = document.createElement("figure");
+
+      if (userpic.querySelector("img")) {
+        a = document.createElement("a");
+        a.classList.add("ajax");
+        a.setAttribute("href", userpic.getAttribute("data-pk"));
+        img = document.createElement("img");
+        img.setAttribute("src", userpic.querySelector("img").getAttribute("src"));
+        img.style.borderRadius = "30px";
+        img.style.width = "30px";
+        figure.append(img);
+        a.append(figure);
+      } else {
+        a = document.createElement("span");
+        a.innerHTML = '<svg fill="currentColor" class="svg_default svg_default_30" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>'
+        h6.classList.add("ml-2");
+      };
+
+      media_body.append(h6);
+      media.append(a);
+      media.append(media_body);
+      li.append(media);
+      document.body.querySelector(".date-list").prepend(li);
+    }
+    else {
+      elem.innerHTML = ajax_link.responseText;
+      ajax = elem.querySelector("#reload_block");
+      rtr = document.getElementById('ajax');
+      rtr.innerHTML = ajax.innerHTML;
+      window.scrollTo(0,0);
+      document.title = elem.querySelector('title').innerHTML;
+      window.history.pushState({route: url}, "network", url);
+    };
+    close_work_fullscreen();
+  }};
+
+  link_.send(form_data);
+});
+
+on('#ajax', 'click', '#edit_list_btn', function() {
+  media_list_edit(this, "/users/progs/edit_list/", "edited_user_photo_list")
+});
+
 on('#ajax', 'click', '#create_claim_btn', function() {
   form_post = this.parentElement.parentElement;
 
