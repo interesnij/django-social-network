@@ -936,7 +936,7 @@ class ListEdit(TemplateView):
             _list = SurveyList.objects.get(pk=type[3:])
             have_comments = False
 
-        if list.creator.pk != request.user.pk:
+        if _list.creator.pk != request.user.pk:
             return HttpResponseBadRequest()
         elif have_comments:
             from posts.forms import PostListForm
