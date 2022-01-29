@@ -84,7 +84,7 @@ class User(AbstractUser):
         return self.type[-1] == "P"
 
     def is_can_work_list(self, list):
-        return (list.community and request.user in list.community.get_administrators()) \
+        return (list.community and self in list.community.get_administrators()) \
         or self.pk == list.creator.pk
 
     def get_last_location(self):
