@@ -83,6 +83,10 @@ class User(AbstractUser):
     def is_closed_profile(self):
         return self.type[-1] == "P"
 
+    def is_can_work_list(self, list):
+        return (list.community and request.user in list.community.get_administrators()) \
+        or request.user.pk == list.creator.pk
+
     def get_last_location(self):
         from users.model.profile import UserLocation
         return UserLocation.objects.filter(user=self)[0]
