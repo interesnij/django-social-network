@@ -43,7 +43,6 @@ class DocsList(models.Model):
 
     users = models.ManyToManyField("users.User", blank=True, related_name='+')
     communities = models.ManyToManyField('communities.Community', blank=True, related_name='+')
-    is_doc_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -54,6 +53,8 @@ class DocsList(models.Model):
 
     def get_code(self):
         return "ldo" + str(self.pk)
+    def is_doc_list(self):
+        return True
 
     def count_items_ru(self):
         count = self.count_items()
@@ -583,7 +584,6 @@ class Doc(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     order = models.PositiveIntegerField(default=0)
-    is_doc = models.BooleanField(default=True)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
@@ -601,6 +601,8 @@ class Doc(models.Model):
 
     def get_code(self):
         return "doc" + str(self.pk)
+    def is_doc(self):
+        return True
 
     def is_open(self):
         return self.type[0] != "_"

@@ -73,7 +73,6 @@ class VideoList(models.Model):
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
-    is_video_list = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Видеоальбом'
@@ -84,6 +83,8 @@ class VideoList(models.Model):
 
     def get_code(self):
         return "lvi" + str(self.pk)
+    def is_video_list(self):
+        return True
 
     def count_items_ru(self):
         count = self.count_items()
@@ -775,7 +776,6 @@ class Video(models.Model):
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
-    is_video = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Видео-ролики"
@@ -788,6 +788,8 @@ class Video(models.Model):
 
     def get_code(self):
         return "vid" + str(self.pk)
+    def is_video(self):
+        return True
 
     def count_reposts(self):
         if self.repost == 0:
@@ -1167,6 +1169,8 @@ class VideoComment(models.Model):
 
     def get_code(self):
         return "cvi" + str(self.pk)
+    def is_video_comment(self):
+        return True
 
     def get_item(self):
         if self.parent:

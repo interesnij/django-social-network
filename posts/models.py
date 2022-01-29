@@ -49,7 +49,6 @@ class PostsList(models.Model):
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
-    is_post_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " - " + self.creator.get_full_name()
@@ -60,6 +59,8 @@ class PostsList(models.Model):
 
     def get_code(self):
         return "lpo" + str(self.pk)
+    def is_post_list(self):
+        return True
 
     def count_items_ru(self):
         count = self.count_items()
@@ -815,7 +816,6 @@ class Post(models.Model):
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
-    is_post = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Запись"
@@ -828,6 +828,8 @@ class Post(models.Model):
 
     def get_code(self):
         return "pos" + str(self.pk)
+    def is_post(self):
+        return True
 
     def get_format_text(self):
         from common.utils import hide_text
@@ -1405,6 +1407,8 @@ class PostComment(models.Model):
 
     def get_code(self):
         return "cpo" + str(self.pk)
+    def is_post_comment(self):
+        return True
 
     def send_like(self, user, community):
         import json

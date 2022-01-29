@@ -47,7 +47,6 @@ class SurveyList(models.Model):
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
-    is_survey_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -58,6 +57,8 @@ class SurveyList(models.Model):
 
     def get_code(self):
         return "lsu" + str(self.pk)
+    def is_survey_list(self):
+        return True
 
     def get_can_see_el_exclude_users_ids(self):
         list = SurveyListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
@@ -475,7 +476,6 @@ class Survey(models.Model):
     voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
-    is_survey = models.BooleanField(default=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -488,6 +488,8 @@ class Survey(models.Model):
 
     def get_code(self):
         return "sur" + str(self.pk)
+    def is_survey(self):
+        return True
 
     def count_reposts(self):
         if self.repost == 0:

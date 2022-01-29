@@ -81,7 +81,6 @@ class GoodList(models.Model):
 	create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
 	create_comment = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто пишет комментарии")
 	copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
-	is_good_list = models.BooleanField(default=True)
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
@@ -93,6 +92,8 @@ class GoodList(models.Model):
 
 	def get_code(self):
 		return "lgo" + str(self.pk)
+	def is_good_list(self):
+		return True
 
 	def get_can_see_el_exclude_users_ids(self):
 		list = GoodListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
@@ -801,13 +802,14 @@ class Good(models.Model):
 	repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
 	copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 	order = models.PositiveIntegerField(default=0)
-	is_good = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.title
 
 	def get_code(self):
 		return "goo" + str(self.pk)
+	def is_good(self):
+		return True
 
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
@@ -1199,6 +1201,8 @@ class GoodComment(models.Model):
 
 	def get_code(self):
 		return "cgo" + str(self.pk)
+	def is_good_comment(self):
+		return True
 
 	def get_replies(self):
 		return self.good_comment_replies.filter(Q(type=GoodComment.EDITED)|Q(type=GoodComment.PUBLISHED))

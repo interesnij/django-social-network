@@ -65,6 +65,8 @@ class User(AbstractUser):
 
     def get_code(self):
         return "use" + str(self.pk)
+    def is_user(self):
+        return True
 
     def get_or_create_manager_chat_pk(self):
         from chat.models import Chat, ChatUsers

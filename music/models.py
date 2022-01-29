@@ -101,7 +101,6 @@ class MusicList(models.Model):
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
     copy_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто может копировать")
-    is_music_list = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name + " " + self.creator.get_full_name()
@@ -112,6 +111,8 @@ class MusicList(models.Model):
 
     def get_code(self):
         return "lmu" + str(self.pk)
+    def is_music_list(self):
+        return True
 
     def count_items_ru(self):
         count = self.count_items()
@@ -645,7 +646,6 @@ class Music(models.Model):
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
-    is_track = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "спарсенные треки"
@@ -658,6 +658,8 @@ class Music(models.Model):
 
     def get_code(self):
         return "mus" + str(self.pk)
+    def is_track(self):
+        return True
 
     def count_reposts(self):
         if self.repost == 0:

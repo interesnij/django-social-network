@@ -64,6 +64,8 @@ class PhotoList(models.Model):
 
     def get_code(self):
         return "lph" + str(self.pk)
+    def is_photo_list(self):
+        return True
 
     def get_can_see_el_exclude_users_ids(self):
         list = PhotoListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
@@ -786,7 +788,6 @@ class Photo(models.Model):
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
     order = models.PositiveIntegerField(default=0)
-    is_photo = models.BooleanField(default=True)
 
     class Meta:
         indexes = (BrinIndex(fields=['created']),)
@@ -800,6 +801,8 @@ class Photo(models.Model):
 
     def get_code(self):
         return "pho" + str(self.pk)
+    def is_photo(self):
+        return True
 
     def count_reposts(self):
         if self.repost == 0:
@@ -1137,6 +1140,8 @@ class PhotoComment(models.Model):
 
     def get_code(self):
         return "cph" + str(self.pk)
+    def is_photo_comment(self):
+        return True
 
     def get_created(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
