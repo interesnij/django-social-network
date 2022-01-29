@@ -433,6 +433,7 @@ on('#ajax', 'click', '.dislike_item', function() {
 });
 
 on('#ajax', 'click', '.delete_list', function() {
+  _this = this;
   type = _this.parentElement.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/users/progs/delete_list/?type=" + type , true );
@@ -453,6 +454,7 @@ on('#ajax', 'click', '.delete_list', function() {
   link_.send();
 });
 on('#ajax', 'click', '.recover_list', function() {
+  _this = this;
   type = _this.parentElement.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/users/progs/recover_list/?type=" + type, true );
