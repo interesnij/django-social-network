@@ -414,25 +414,6 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('#ajax', 'click', '.u_like', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
-  item_pk = item.getAttribute("data-pk");
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
-  send_like(item, "/posts/votes/user_like/" + item_pk + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_posts_likes");
-  main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("like_user_post",item_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
-on('#ajax', 'click', '.u_dislike', function() {
-  item = this.parentElement.parentElement.parentElement.parentElement;
-  item_pk = item.getAttribute("data-pk");
-  document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = item.getAttribute('data-pk');
-  send_dislike(item, "/posts/votes/user_dislike/" + item_pk + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_posts_dislikes");
-  main_container = document.body.querySelector(".main-container");
-  add_list_in_all_stat("dislike_user_post",item_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
-});
-
 on('#ajax', 'click', '.like_item', function() {
   _this = this;
   item = _this.parentElement;
@@ -451,7 +432,49 @@ on('#ajax', 'click', '.dislike_item', function() {
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
+on('#ajax', 'click', '.delete_list', function() {
+  type = _this.parentElement.getAttribute('data-type');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/users/progs/delete_list/?type=" + type , true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    _this.previousElementSibling.style.display = "none";
+    _this.previousElementSibling.previousElementSibling.style.display = "none";
+    _this.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
+    list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
+    list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
+    _this.classList.replace("delete_list", "recover_list");
+    _this.innerHTML = "Восстановить список";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+  }}
+  link_.send();
+});
+on('#ajax', 'click', '.recover_list', function() {
+  type = _this.parentElement.getAttribute('data-type');
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/users/progs/recover_list/?type=" + type, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    _this.previousElementSibling.style.display = "unset";
+    _this.previousElementSibling.previousElementSibling.style.display = "unset";
+    second_list = document.body.querySelector('.second_list_name');
+    name = second_list.getAttribute("data-name");
+    second_list.innerHTML = name;
+    document.body.querySelector('.file-manager-item') ?
+      (list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' ),
+       list.querySelector('.list_name').innerHTML = name) : null;
+    _this.classList.replace("recover_list", "delete_list");
+    _this.innerHTML = "Удалить список";
+    main_container = document.body.querySelector(".main-container");
+    add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+  }}
+  link_.send();
+  media_list_recover(this, "/users/progs/recover_list/", "recover_list", "delete_list", "restored_community_music_list")
+});
 
 on('#ajax', 'click', '.like2', function() {
   _this = this;

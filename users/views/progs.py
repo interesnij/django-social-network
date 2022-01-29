@@ -273,6 +273,31 @@ class CommentRecover(View):
             return HttpResponse()
         raise Http404
 
+class ListDelete(View):
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_list_of_type
+
+        list = get_list_of_type(request.GET.get('type'))
+        if request.is_ajax():
+            if list.community and not request.user.pk in list.community.get_administrators_ids():
+                return HttpResponse()
+            elif not request.user.pk == list.creator.pk:
+                return HttpResponse()
+            list.delete_item()
+        return HttpResponse()
+
+class ListRecover(View):
+    def get(self,request,*args,**kwargs):
+        from common.utils import get_list_of_type
+
+        list = get_list_of_type(request.GET.get('type'))
+        if request.is_ajax():
+            if list.community and not request.user.pk in list.community.get_administrators_ids():
+                return HttpResponse()
+            elif not request.user.pk == list.creator.pk:
+                return HttpResponse()
+            list.restore_item()
+        return HttpResponse()
 
 class RepostCreate(TemplateView):
     template_name, community = None, None

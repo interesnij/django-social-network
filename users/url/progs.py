@@ -23,6 +23,6 @@ urlpatterns = [
 
     url(r'^create_list/$', ListCreate.as_view()),
     url(r'^edit_list/$', ListEdit.as_view()),
-    #url(r'^delete_list/$', ListDelete.as_view()),
-    #url(r'^recover_list/$', ListRecover.as_view()),
+    url(r'^delete_list/$', ListDelete.as_view()),
+    url(r'^recover_list/$', ListRecover.as_view()),
 ]
