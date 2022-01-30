@@ -1070,12 +1070,12 @@ class ListEdit(TemplateView):
 
 
 class ChangeListPosition(View):
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         import json
 
         user, community = User.objects.get(pk=self.kwargs["pk"]), None
-        type = request.POST.get('type')
-        community_id = request.POST.get('community_id')
+        type = request.GET.get('type')
+        community_id = request.GET.get('community_id')
         if community_id:
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
