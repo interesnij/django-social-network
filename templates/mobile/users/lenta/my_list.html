@@ -39,11 +39,12 @@
 
 {% endif %}
 
-{% include 'mobile/users/lenta/my_lists.html' %}
+{% include 'mobile/users/lenta/lists.html' %}
   <span class="span_list_pk" list-pk="{{ list.pk }}">
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
 
+      <span>{{ list.name }}: </span>
       {% include 'desctop/generic/items/list_meta.html' %}
 
        {% if is_user_can_create_posts %}
