@@ -20,9 +20,8 @@
                   <span class="dropdown-item u_post_unfixed">Открепить</span>
                 {% endif %}
               </span>
-              {% if request.user.pk == object.creator.pk %}
+
                 <span class="dropdown-item u_post_remove">Удалить запись</span>
-                <span class="dropdown-item u_post_edit">Редактировать</span>
                 <span class="dropdown-item item_stat_f">Статистика записи</span>
                 <span>
                   {% if object.comments_enabled %}
@@ -38,6 +37,8 @@
                     <span class="dropdown-item u_post_on_votes">Вкл. реакции</span>
                   {% endif %}
                 </span>
+              {% if request.user.pk == object.creator.pk %}
+                <span class="dropdown-item u_post_edit">Редактировать</span>
               {% elif request.user.is_moderator %}
                 <span class="dropdown-item create_close">Закрыть</span>
               {% else %}
