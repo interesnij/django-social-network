@@ -1,9 +1,3 @@
-on('#ajax', 'click', '.copy_user_music_list', function() {
-  on_off_list_in_collections(this, "/music/user_progs/add_list_in_collections/", "uncopy_user_music_list", "copy_user_music_list", "Удалить")
-});
-on('#ajax', 'click', '.uncopy_user_music_list', function() {
-  on_off_list_in_collections(this, "/music/user_progs/remove_list_from_collections/", "copy_user_music_list", "uncopy_user_music_list", "Добавить")
-});
 
 on('#ajax', 'click', '.load_profile_playlist', function() {
   profile_list_block_load(this, ".load_block", "/music_list/", "load_profile_playlist");

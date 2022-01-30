@@ -59,21 +59,6 @@ on('#ajax', 'click', '.input_new_post_in_list', function() {
   this.parentElement.nextElementSibling.style.display = "block";
 });
 
-on('#ajax', 'click', '.copy_user_post_list', function() {
-  on_off_list_in_collections(this, "/posts/user_progs/add_list_in_collections/", "uncopy_user_post_list", "copy_user_post_list", "Удалить")
-});
-on('#ajax', 'click', '.uncopy_user_post_list', function() {
-  on_off_list_in_collections(this, "/posts/user_progs/remove_list_from_collections/", "copy_user_post_list", "uncopy_user_post_list", "Добавить")
-});
-
-on('#ajax', 'click', '.u_add_post_list', function() {
-  create_fullscreen("/posts/user_progs/add_list/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_edit_post_list', function() {
-  list_pk = this.parentElement.parentElement.getAttribute("data-uuid");
-  create_fullscreen("/posts/user_progs/edit_list/" + list_pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.post_list_change', function() {
   if (!this.classList.contains("tab_active")){
     this.classList.contains("community") ? url = "/communities/list/" : url = "/users/detail/list/";

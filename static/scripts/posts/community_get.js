@@ -14,22 +14,6 @@ on('#ajax', 'click', '.c_post_edit', function() {
   }
 });
 
-on('#ajax', 'click', '.copy_community_post_list', function() {
-  on_off_list_in_collections(this, "/posts/community_progs/add_list_in_collections/", "uncopy_community_post_list", "copy_community_post_list", "Удалить")
-});
-on('#ajax', 'click', '.uncopy_community_post_list', function() {
-  on_off_list_in_collections(this, "/posts/community_progs/remove_list_from_collections/", "copy_community_post_list", "uncopy_community_post_list", "Добавить")
-});
-
-on('#ajax', 'click', '.c_add_post_list', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/posts/community_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.c_edit_post_list', function() {
-  list_pk = this.parentElement.parentElement.getAttribute("data-uuid");
-  create_fullscreen("/posts/community_progs/edit_list/" + list_pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.c_article_detail', function() {
   var uuid, pk, loader;
   uuid = this.parentElement.getAttribute('data-uuid');

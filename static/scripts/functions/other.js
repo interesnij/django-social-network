@@ -257,64 +257,6 @@ function profile_list_block_load(_this, block, url, actions_class) {
     request.send( null );
 };
 
-function on_off_list_in_collections(_this, url, new_class, old_class, text) {
-  pk = _this.parentElement.parentElement.getAttribute("data-pk");
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      _this.innerHTML = "";
-      _this.classList.add(new_class);
-      _this.classList.remove(old_class);
-      _this.innerHTML = text;
-      main_container = document.body.querySelector(".main-container");
-      add_list_in_all_stat(old_class,pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
-}}
-link.send( null );
-};
-
-function add_item_in_list(_this, url, old_class, new_class) {
-  parent = _this.parentElement;
-  list_pk = parent.getAttribute("data-pk");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/" + list_pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    _this.style.paddingLeft = "14px";
-    _this.classList.add(new_class);
-    _this.classList.remove(old_class);
-    span = document.createElement("span");
-    span.innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg> ';
-    _this.prepend(span);
-    main_container = document.body.querySelector(".main-container");
-    url_list = url.split('/');
-    add_list_in_all_stat(url_list[url_list.length - 1],pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
-  }};
-  link.send( null );
-};
-function remove_item_from_list(_this, url, old_class, new_class) {
-  parent = _this.parentElement;
-  list_pk = parent.getAttribute("data-pk");
-  pk = _this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-pk");
-  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url + pk + "/" + list_pk + "/", true );
-  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  link.onreadystatechange = function () {
-  if ( link.readyState == 4 && link.status == 200 ) {
-    _this.style.paddingLeft = "30px";
-    _this.classList.add(new_class);
-    _this.classList.remove(old_class);
-    _this.querySelector("svg").remove();
-    main_container = document.body.querySelector(".main-container");
-    url_list = url.split('/');
-    add_list_in_all_stat(url_list[url_list.length - 1],pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
-  }};
-  link.send( null );
-};
-
 function get_preview(response, type) {
   if (document.body.querySelector(".current_file_dropdown")){
     if (type == "doc") {

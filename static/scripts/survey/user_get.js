@@ -1,9 +1,3 @@
-on('#ajax', 'click', '.u_copy_survey_list', function() {
-  on_off_list_in_collections(this, "/survey/user_progs/add_list_in_collections/", "u_uncopy_survey_list", "u_copy_survey_list", "Удалить")
-});
-on('#ajax', 'click', '.u_uncopy_survey_list', function() {
-  on_off_list_in_collections(this, "/survey/user_progs/remove_list_from_collections/", "u_copy_survey_list", "u_uncopy_survey_list", "Добавить")
-});
 
 on('#ajax', 'click', '.load_profile_survey_list', function() {
   profile_list_block_load(this, ".load_block", "/survey_list/", "load_profile_survey_list");

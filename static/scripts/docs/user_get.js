@@ -1,9 +1,4 @@
-on('#ajax', 'click', '.copy_user_doc_list', function() {
-  on_off_list_in_collections(this, "/docs/user_progs/add_list_in_collections/", "uncopy_user_doc_list", "copy_user_doc_list", "Удалить")
-});
-on('#ajax', 'click', '.uncopy_user_doc_list', function() {
-  on_off_list_in_collections(this, "/docs/user_progs/remove_list_from_collections/", "copy_user_doc_list", "uncopy_user_doc_list", "Добавить")
-});
+
 
 on('#ajax', 'click', '.load_profile_doc_list', function() {
   profile_list_block_load(this, ".load_block", "/doc_list/", "load_profile_doc_list");
