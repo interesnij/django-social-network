@@ -1109,23 +1109,23 @@ class ChangeListPosition(View):
         else:
             if type == "pos":
                 from posts.models import Post
-                Post.change_position(json.loads(request.body), community, user.pk)
+                Post.change_position(json.loads(request.body))
             elif type == "pho":
                 from gallery.models import Photo
-                Photo.change_position(json.loads(request.body), community, user.pk)
+                Photo.change_position(json.loads(request.body))
             elif type == "goo":
                 from goods.models import Good
-                Good.change_position(json.loads(request.body), community, user.pk)
+                Good.change_position(json.loads(request.body))
             elif type == "vid":
                 from video.models import Video
-                Video.change_position(json.loads(request.body), community, user.pk)
+                Video.change_position(json.loads(request.body))
             elif type == "doc":
                 from docs.models import Doc
-                Docs.change_position(json.loads(request.body), community, user.pk)
+                Docs.change_position(json.loads(request.body))
             elif type == "mus":
                 from music.models import Music
-                Music.change_position(json.loads(request.body), community, user.pk)
+                Music.change_position(json.loads(request.body))
             elif type == "sur":
                 from survey.models import Survey
-                Survey.change_position(json.loads(request.body), community, user.pk)
+                Survey.change_position(json.loads(request.body))
         return HttpResponse()
