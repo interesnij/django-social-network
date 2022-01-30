@@ -95,6 +95,22 @@ class GoodList(models.Model):
 	def is_good_list(self):
 		return True
 
+	def change_position(query, community, user_id):
+		if community:
+			from communities.model.list import CommunityGoodListPosition
+
+			for item in query:
+				list = CommunityGoodListPosition.objects.get(list=item['key'], community=community.id)
+				list.position = item['value']
+				list.save(update_fields=["position"])
+		else:
+			from users.model.list import UserGoodListPosition
+
+			for item in query:
+				list = UserGoodListPosition.objects.get(list=item['key'], user=user_id)
+				list.position = item['value']
+				list.save(update_fields=["position"])
+
 	def get_can_see_el_exclude_users_ids(self):
 		list = GoodListPerm.objects.filter(list_id=self.pk, can_see_item=2).values("user_id")
 		return [i['user_id'] for i in list]

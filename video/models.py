@@ -86,6 +86,22 @@ class VideoList(models.Model):
     def is_video_list(self):
         return True
 
+    def change_position(query, community, user_id):
+        if community:
+            from communities.model.list import CommunityVideoListPosition
+
+            for item in query:
+                list = CommunityVideoListPosition.objects.get(list=item['key'], community=community.id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+        else:
+            from users.model.list import UserVideoListPosition
+
+            for item in query:
+                list = UserVideoListPosition.objects.get(list=item['key'], user=user_id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100

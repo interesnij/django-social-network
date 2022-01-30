@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^edit_list/$', ListEdit.as_view()),
     url(r'^delete_list/$', ListDelete.as_view()),
     url(r'^recover_list/$', ListRecover.as_view()),
+
+    url(r'^change_position/(?P<pk>\d+)/$', ChangeListPosition.as_view()), 
 ]

@@ -1067,3 +1067,43 @@ class ListEdit(TemplateView):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class ChangeListPosition(View):
+    def post(self,request,*args,**kwargs):
+        import json
+
+        user, community = User.objects.get(pk=self.kwargs["pk"]), None
+        type = request.POST.get('type')
+        community_id = request.POST.get('community_id')
+        if community_id:
+            from communities.models import Community
+            community = Community.objects.get(pk=community_id)
+            if not request.user.pk in community.get_administrators_ids():
+                return HttpResponse()
+        else:
+            if not user.pk == request.user.pk:
+                return HttpResponse()
+
+        if type == "lpo":
+            from posts.models import PostsList
+            PostsList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "lph":
+            from gallery.models import PhotoList
+            PhotoList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "lgo":
+            from goods.models import GoodList
+            GoodList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "lvi":
+            from video.models import VideoList
+            VideoList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "ldo":
+            from docs.models import DocsList
+            _DocsList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "lmu":
+            from music.models import MusicList
+            _MusicList.change_position(json.loads(request.body), community, user.pk)
+        elif type == "lsu":
+            from survey.models import SurveyList
+            SurveyList.change_position(json.loads(request.body), community, user.pk)
+        return HttpResponse()

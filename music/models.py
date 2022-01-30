@@ -114,6 +114,22 @@ class MusicList(models.Model):
     def is_music_list(self):
         return True
 
+    def change_position(query, community, user_id):
+        if community:
+            from communities.model.list import CommunityPlayListPosition
+
+            for item in query:
+                list = CommunityPlayListPosition.objects.get(list=item['key'], community=community.id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+        else:
+            from users.model.list import UserPlayListPosition
+
+            for item in query:
+                list = UserPlayListPosition.objects.get(list=item['key'], user=user_id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100

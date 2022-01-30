@@ -62,6 +62,22 @@ class PostsList(models.Model):
     def is_post_list(self):
         return True
 
+    def change_position(query, community, user_id):
+        if community:
+            from communities.model.list import CommunityPostsListPosition
+
+            for item in query:
+                list = CommunityPostsListPosition.objects.get(list=item['key'], community=community.id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+        else:
+            from users.model.list import UserPostsListPosition
+
+            for item in query:
+                list = UserPostsListPosition.objects.get(list=item['key'], user=user_id)
+                list.position = item['value']
+                list.save(update_fields=["position"])
+
     def count_items_ru(self):
         count = self.count_items()
         a, b = count % 10, count % 100
