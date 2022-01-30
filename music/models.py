@@ -677,6 +677,12 @@ class Music(models.Model):
     def is_track(self):
         return True
 
+    def change_position(query):
+        for item in query:
+            i = Music.objects.get(pk=item['key'])
+            i.order = item['value']
+            i.save(update_fields=["order"])
+
     def count_reposts(self):
         if self.repost == 0:
             return ''

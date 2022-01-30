@@ -283,29 +283,3 @@ def post_update_interactions(request):
     item = Post.objects.get(pk=data_point)
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
-
-class CommunityChangePostPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.models import Community
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                post = Post.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class CommunityChangePostsListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.model.list import CommunityPostsListPosition
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                list = CommunityPostsListPosition.objects.get(list=item['key'], community=community.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

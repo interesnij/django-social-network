@@ -96,30 +96,3 @@ class CommunityTrackEdit(TemplateView):
             return render_for_platform(request, 'music/music_create/c_new_track.html',{'object': self.track})
         else:
             return HttpResponseBadRequest()
-
-
-class CommunityChangeMusicPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.models import Community
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                post = Music.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class CommunityChangeMusicListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.model.list import CommunityDocEditPlayListPosition
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                list = CommunityPlayListPosition.objects.get(list=item['key'], community=community.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

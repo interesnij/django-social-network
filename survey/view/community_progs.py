@@ -141,30 +141,3 @@ class RemoveSurveyListFromCommunityCollections(View):
         if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
             list.remove_in_community_collections(community)
         return HttpResponse()
-
-
-class CommunityChangeSurveyPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.models import Community
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                post = Survey.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class CommunityChangeSurveyListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from communities.model.list import CommunitySurveyListPosition
-
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.user.is_administrator_of_community(community.pk):
-            for item in json.loads(request.body):
-                list = CommunitySurveyListPosition.objects.get(list=item['key'], community=community.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

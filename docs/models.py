@@ -620,6 +620,12 @@ class Doc(models.Model):
     def is_doc(self):
         return True
 
+    def change_position(query):
+        for item in query:
+            doc = Doc.objects.get(pk=item['key'])
+            doc.order = item['value']
+            doc.save(update_fields=["order"])
+
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):

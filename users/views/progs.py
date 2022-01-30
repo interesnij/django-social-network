@@ -1084,27 +1084,48 @@ class ChangeListPosition(View):
         else:
             if not user.pk == request.user.pk:
                 return HttpResponseBadRequestResponse()
-
-        if type == "lpo":
-            from posts.models import PostsList
-            PostsList.change_position(json.loads(request.body), community, user.pk)
-            return HttpResponse(json.loads(request.body))
-        elif type == "lph":
-            from gallery.models import PhotoList
-            PhotoList.change_position(json.loads(request.body), community, user.pk)
-        elif type == "lgo":
-            from goods.models import GoodList
-            GoodList.change_position(json.loads(request.body), community, user.pk)
-        elif type == "lvi":
-            from video.models import VideoList
-            VideoList.change_position(json.loads(request.body), community, user.pk)
-        elif type == "ldo":
-            from docs.models import DocsList
-            _DocsList.change_position(json.loads(request.body), community, user.pk)
-        elif type == "lmu":
-            from music.models import MusicList
-            _MusicList.change_position(json.loads(request.body), community, user.pk)
-        elif type == "lsu":
-            from survey.models import SurveyList
-            SurveyList.change_position(json.loads(request.body), community, user.pk)
+        if type[0] == "l":
+            if type == "lpo":
+                from posts.models import PostsList
+                PostsList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "lph":
+                from gallery.models import PhotoList
+                PhotoList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "lgo":
+                from goods.models import GoodList
+                GoodList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "lvi":
+                from video.models import VideoList
+                VideoList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "ldo":
+                from docs.models import DocsList
+                DocsList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "lmu":
+                from music.models import MusicList
+                MusicList.change_position(json.loads(request.body), community, user.pk)
+            elif type == "lsu":
+                from survey.models import SurveyList
+                SurveyList.change_position(json.loads(request.body), community, user.pk)
+        else:
+            if type == "pos":
+                from posts.models import Post
+                Post.change_position(json.loads(request.body), community, user.pk)
+            elif type == "pho":
+                from gallery.models import Photo
+                Photo.change_position(json.loads(request.body), community, user.pk)
+            elif type == "goo":
+                from goods.models import Good
+                Good.change_position(json.loads(request.body), community, user.pk)
+            elif type == "vid":
+                from video.models import Video
+                Video.change_position(json.loads(request.body), community, user.pk)
+            elif type == "doc":
+                from docs.models import Doc
+                Docs.change_position(json.loads(request.body), community, user.pk)
+            elif type == "mus":
+                from music.models import Music
+                Music.change_position(json.loads(request.body), community, user.pk)
+            elif type == "sur":
+                from survey.models import Survey
+                Survey.change_position(json.loads(request.body), community, user.pk)
         return HttpResponse()

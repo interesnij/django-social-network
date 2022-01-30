@@ -827,6 +827,12 @@ class Good(models.Model):
 	def is_good(self):
 		return True
 
+	def change_position(query):
+		for item in query:
+			i = Good.objects.get(pk=item['key'])
+			i.order = item['value']
+			i.save(update_fields=["order"])
+
 	class Meta:
 		indexes = (BrinIndex(fields=['created']),)
 		verbose_name="Товар"

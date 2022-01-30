@@ -147,29 +147,3 @@ class RemoveSurveyListFromUserCollections(View):
             return HttpResponse()
         else:
             return HttpResponse()
-
-
-class UserChangeSurveyPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                post = Survey.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class UserChangeSurveyListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from users.model.list import UserSurveyListPosition
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                list = UserSurveyListPosition.objects.get(list=item['key'], user=user.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

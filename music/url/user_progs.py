@@ -5,8 +5,6 @@ from music.view.user_progs import *
 urlpatterns = [
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPlayListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePlayListFromUserCollections.as_view()),
-    url(r'^change_position/(?P<pk>\d+)/$', UserChangeMusicPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeMusicListPosition.as_view()),
 
     url(r'^create_track/(?P<pk>\d+)/$', UserTrackCreate.as_view()),
     url(r'^edit_track/(?P<pk>\d+)/$', UserTrackEdit.as_view()),

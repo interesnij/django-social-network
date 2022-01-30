@@ -94,29 +94,3 @@ class UserTrackEdit(TemplateView):
             return render_for_platform(request, 'music/music_create/u_new_track.html',{'object': self.track})
         else:
             return HttpResponseBadRequest()
-
-
-class UserChangeMusicPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                post = Music.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class UserChangeMusicListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from users.model.list import UserPlayListPosition
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                list = UserPlayListPosition.objects.get(list=item['key'], user=user.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

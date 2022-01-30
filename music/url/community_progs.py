@@ -10,7 +10,4 @@ urlpatterns = [
     url(r'^edit_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackEdit.as_view()),
     url(r'^delete_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackRemove.as_view()),
     url(r'^restore_track/(?P<pk>\d+)/(?P<track_pk>\d+)/$', CommunityTrackAbortRemove.as_view()),
-
-    url(r'^change_position/(?P<pk>\d+)/$', CommunityChangeMusicPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangeMusicListPosition.as_view()),
 ]

@@ -820,6 +820,12 @@ class Photo(models.Model):
     def is_photo(self):
         return True
 
+    def change_position(query):
+        for item in query:
+            phone = Photo.objects.get(pk=item['key'])
+            photo.order = item['value']
+            photo.save(update_fields=["order"])
+
     def count_reposts(self):
         if self.repost == 0:
             return ''

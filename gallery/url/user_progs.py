@@ -14,11 +14,6 @@ urlpatterns=[
 
     url(r'^add_attach_photo/$', PhotoAttachUserCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
-
-    url(r'^delete_list/(?P<pk>\d+)/$', PhotoListUserDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/$', PhotoListUserRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPhotoListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePhotoListFromUserCollections.as_view()),
-    url(r'^change_position/(?P<pk>\d+)/$', UserChangePhotoPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangePhotoListPosition.as_view()),
 ]

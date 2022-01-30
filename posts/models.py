@@ -1426,6 +1426,12 @@ class PostComment(models.Model):
     def is_post_comment(self):
         return True
 
+    def change_position(query):
+        for item in query:
+            post = Post.objects.get(pk=item['key'])
+            post.order = item['value']
+            post.save(update_fields=["order"])
+
     def send_like(self, user, community):
         import json
         from common.model.votes import PostCommentVotes

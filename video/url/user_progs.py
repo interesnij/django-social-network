@@ -13,10 +13,4 @@ urlpatterns = [
     url(r'^off_private/(?P<pk>\d+)/$', UserOffPrivateVideo.as_view()),
     url(r'^on_votes/(?P<pk>\d+)/$', UserOnVotesVideo.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', UserOffVotesVideo.as_view()),
-
-    url(r'^change_position/(?P<pk>\d+)/$', UserChangeVideoPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeVideoListPosition.as_view()),
-
-    url(r'^add_list_in_collections/(?P<list_pk>\d+)/$', AddVideoListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<list_pk>\d+)/$', RemoveVideoListFromUserCollections.as_view()),
 ]

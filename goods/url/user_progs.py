@@ -18,6 +18,4 @@ urlpatterns=[
 
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddGoodListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemoveGoodListFromUserCollections.as_view()),
-    url(r'^change_position/(?P<pk>\d+)/$', UserChangeGoodPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', UserChangeGoodListPosition.as_view()),
 ]

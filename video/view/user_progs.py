@@ -9,26 +9,6 @@ from rest_framework.exceptions import PermissionDenied
 from common.templates import get_settings_template, render_for_platform
 
 
-class AddVideoListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-class RemoveVideoListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
 class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
@@ -164,28 +144,3 @@ class UserVideoEdit(TemplateView):
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
         else:
             return HttpResponseBadRequest()
-
-class UserChangeVideoPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                post = Video.objects.get(pk=item['key'])
-                post.order=item['value']
-                post.save(update_fields=["order"])
-        return HttpResponse()
-
-class UserChangeVideoListPosition(View):
-    def post(self,request,*args,**kwargs):
-        import json
-        from users.model.list import UserVideoListPosition
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.user.pk == user.pk:
-            for item in json.loads(request.body):
-                list = UserVideoListPosition.objects.get(list=item['key'], user=user.pk)
-                list.position=item['value']
-                list.save(update_fields=["position"])
-        return HttpResponse()

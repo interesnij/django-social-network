@@ -20,7 +20,4 @@ urlpatterns = [
 
 	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromCommunityCollections.as_view()),
-
-	url(r'^change_position/(?P<pk>\d+)/$', CommunityChangePostPosition.as_view()),
-	url(r'^change_list_position/(?P<pk>\d+)/$', CommunityChangePostsListPosition.as_view()),
 ]
