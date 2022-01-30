@@ -1390,6 +1390,12 @@ class Post(models.Model):
                 user_wall(comment.commenter, None, comment.pk, "POSC", "u_post_comment_notify", "COM")
         return comment
 
+    def change_position(query):
+        for item in query:
+            post = Post.objects.get(pk=item['key'])
+            post.order = item['value']
+            post.save(update_fields=["order"])
+
 
 class PostComment(models.Model):
     EDITED, PUBLISHED, DRAFT = 'EDI', 'PUB', '_DRA'
@@ -1425,12 +1431,6 @@ class PostComment(models.Model):
         return "cpo" + str(self.pk)
     def is_post_comment(self):
         return True
-
-    def change_position(query):
-        for item in query:
-            post = Post.objects.get(pk=item['key'])
-            post.order = item['value']
-            post.save(update_fields=["order"])
 
     def send_like(self, user, community):
         import json
