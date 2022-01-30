@@ -925,7 +925,7 @@ function get_image_priview(ggg, img) {
 /// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function change_position(block, el) {
   parent = el.parentElement;
-  array = parent.querySelectorAll(".card"); 
+  array = parent.querySelectorAll(".drag_item"); 
   len = array.length + 1;
   token = document.body.getAttribute("data-csrf");
   post_array = []
