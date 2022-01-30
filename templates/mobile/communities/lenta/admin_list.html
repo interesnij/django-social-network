@@ -53,7 +53,7 @@
           {% include 'mobile/communities/detail_sections/create_offer_post.html' %}
         {% endif %}
         <span></span>
-        <span class="post_stream is_paginate">
+        <span class="post_stream is_paginate" data-type="pos">
           {% for object in object_list %}
             {% include 'mobile/posts/post_community/admin_post.html' %}
           {% endfor %}
