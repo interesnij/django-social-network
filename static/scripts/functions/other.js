@@ -250,7 +250,9 @@ function profile_list_block_load(_this, block, url, actions_class) {
        parent.querySelector(".list_svg")? parent.querySelector(".list_svg").classList.remove(actions_class, "pointer") : null;
        parent.querySelector(".list_name").classList.remove(actions_class, "pointer");
        parent.classList.replace("border", "active_border");
+       get_dragula(".drag_container");
        reload_list_stat();
+
     }};
     request.send( null );
 };
@@ -925,7 +927,7 @@ function get_image_priview(ggg, img) {
 /// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
 function change_position(block, el) {
   parent = el.parentElement;
-  array = parent.querySelectorAll(".drag_item"); 
+  array = parent.querySelectorAll(".drag_item");
   len = array.length + 1;
   token = document.body.getAttribute("data-csrf");
   post_array = []
