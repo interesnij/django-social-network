@@ -659,7 +659,6 @@ class ListCreate(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(ListCreate,self).get_context_data(**kwargs)
-        context["form"] = self.form
         context["community"] = self.community
         context["type"] = self.type
         context["text"] = self.text
