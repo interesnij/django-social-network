@@ -18,7 +18,7 @@ var $user_device = user_info.getAttribute("data-device");
 page_time = false, $new_time = 0;
 
 get_dragula(".drag_container");
-
+get_dragula(".drag_list");
 // type statistics item:
 // 1. "user..." - страницы пользователя
 // 2. "community..." - страницы сообщества
