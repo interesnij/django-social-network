@@ -143,25 +143,6 @@ class RemoveSurveyListFromCommunityCollections(View):
         return HttpResponse()
 
 
-class CommunitySurveyListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != SurveyList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunitySurveyListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class CommunityChangeSurveyPosition(View):
     def post(self,request,*args,**kwargs):
         import json

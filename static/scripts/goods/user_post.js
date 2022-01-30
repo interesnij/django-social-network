@@ -176,46 +176,6 @@ on('#ajax', 'click', '#u_add_good_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '#u_create_good_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!"); return
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/goods/user_progs/add_list/", "/users/", "/goods_list/", "added_user_good_list")
-});
-
-on('#ajax', 'click', '#u_edit_good_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  uuid = form.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/goods/user_progs/edit_list/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        name = form.querySelector('#id_name').value;
-        document.body.querySelector(".list_name").innerHTML = name;
-        close_work_fullscreen();
-        toast_success("Список товаров изменен")
-      }
-    }
-    ajax_link.send(form_data);
-});
-
-on('body', 'click', '.u_good_list_remove', function() {
-  media_list_delete(this, "/goods/user_progs/delete_list/", "u_good_list_remove", "u_good_list_abort_remove")
-});
-on('body', 'click', '.u_good_list_abort_remove', function() {
-  media_list_recover(this, "/goods/user_progs/restore_list/", "u_good_list_abort_remove", "u_good_list_remove")
-});
-
 on('#ajax', 'click', '.mob_u_good_off_comment', function() {
   send_mob_good_change(this, "/goods/user_progs/off_comment/", "mob_u_good_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;

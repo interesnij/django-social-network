@@ -186,25 +186,6 @@ class GoodCommunityEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class CommunityGoodListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["pk"])
-        c = list.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != GoodList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityGoodListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["pk"])
-        c = list.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
 
 class CommunityChangeGoodPosition(View):
     def post(self,request,*args,**kwargs):

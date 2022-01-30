@@ -151,47 +151,6 @@ on('#ajax', 'click', '#c_add_good_btn', function() {
   }};
   link_.send(form_data);
 });
-on('#ajax', 'click', '#c_create_good_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true; }
-  post_and_load_object_page(form, "/goods/community_progs/add_list/", "/communities/", "/goods_list/", "added_community_good_list")
-});
-
-
-on('#ajax', 'click', '#c_edit_good_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-
-  uuid = form.getAttribute("data-uuid");
-
-  var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'POST', "/goods/community_progs/edit_list/" + uuid + "/", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        name = form.querySelector('#id_name').value;
-        document.body.querySelector(".list_name").innerHTML = name;
-        close_work_fullscreen();
-        toast_success("Список товаров изменен")
-      }
-    }
-    ajax_link.send(form_data);
-});
-
-on('body', 'click', '.c_good_list_remove', function() {
-  media_list_delete(this, "/goods/community_progs/delete_list/", "c_good_list_remove", "c_good_list_abort_remove")
-});
-on('body', 'click', '.c_good_list_abort_remove', function() {
-  media_list_recover(this, "/goods/community_progs/restore_list/", "c_good_list_abort_remove", "c_good_list_remove")
-});
 
 on('#ajax', 'click', '.mob_c_good_off_comment', function() {
   send_mob_good_change(this, "/goods/community_progs/off_comment/", "mob_c_good_on_comment", "Вкл. комментарии");

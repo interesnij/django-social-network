@@ -230,24 +230,6 @@ class PostGetVotes(View):
         data = {'like_count': post.likes_count(), 'dislike_count': post.dislikes_count()}
         return JsonResponse(data)
 
-class UserPostsListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and list.type != PostsList.MAIN and list.creator.pk == request.user.pk:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserPostsListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and list.creator.pk == request.user.pk:
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class UserChangePostPosition(View):
     def post(self,request,*args,**kwargs):

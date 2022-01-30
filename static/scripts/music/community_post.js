@@ -1,26 +1,5 @@
 
 
-on('#ajax', 'click', '#c_create_music_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/music/community_progs/add_list/", "/communities/", "/music_list/", "added_community_music_list")
-});
-
-on('#ajax', 'click', '#c_edit_playlist_btn', function() {
-  media_list_edit(this, "/music/community_progs/edit_list/", "edited_community_music_list")
-});
-
-on('body', 'click', '.c_playlist_remove', function() {
-  media_list_delete(this, "/music/community_progs/delete_list/", "c_playlist_remove", "c_playlist_abort_remove", "removed_community_music_list")
-});
-on('body', 'click', '.c_playlist_abort_remove', function() {
-  media_list_recover(this, "/music/community_progs/restore_list/", "c_playlist_abort_remove", "c_playlist_remove", "restored_community_music_list")
-});
-
 on('body', 'click', '#c_create_track_btn', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;

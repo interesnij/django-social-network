@@ -181,26 +181,6 @@ class CommunityVideolistEdit(TemplateView):
             return HttpResponseBadRequest()
         return super(CommunityPlaylistEdit,self).get(request,*args,**kwargs)
 
-class CommunityVideolistDelete(View):
-    def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk) and list.type != VideoList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityVideolistRecover(View):
-    def get(self,request,*args,**kwargs):
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        list = VideoList.objects.get(pk=self.kwargs["list_pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(community.pk):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class CommunityChangeVideoPosition(View):
     def post(self,request,*args,**kwargs):
         import json

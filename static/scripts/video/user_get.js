@@ -1,7 +1,4 @@
-on('#ajax', 'click', '.u_video_list_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/video/user_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
+
 on('#ajax', 'click', '.u_video_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/video/user_progs/create_video/" + pk + "/", "item_fullscreen");
@@ -29,11 +26,6 @@ on('#ajax', 'click', '.load_video_list', function() {
 
   create_fullscreen("/video/load_list/" + videolist_pk + "/", "item_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
-});
-
-on('#ajax', 'click', '.u_video_list_edit', function() {
-  pk = this.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/video/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.video_list_detail', function() {
@@ -79,18 +71,6 @@ on('body', 'click', '.video_fullscreen_normal', function() {
   document.body.querySelector(".video_btn_small").style.display = "none";
   document.body.querySelector(".video_btn_big").style.display = "block";
   get_normal_screen()
-});
-
-on('#ajax', 'click', '.u_video_list_create_window', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/video/user_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.user_video_list_create', function() {
-  pk_saver = document.body.querySelector(".pk_saver");
-  pk = pk_saver.getAttribute("data-pk");
-  uuid = pk_saver.getAttribute("list-uuid");
-  create_fullscreen("/video/user/create_video_list_window/" + pk + "/" + uuid + "/", "worker_fullscreen");
 });
 
 on('body', 'click', '#video_holder', function() {

@@ -3,8 +3,6 @@ from music.view.user_progs import *
 
 
 urlpatterns = [
-    url(r'^delete_list/(?P<pk>\d+)/$', UserPlaylistDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/$', UserPlaylistRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPlayListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePlayListFromUserCollections.as_view()),
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeMusicPosition.as_view()),

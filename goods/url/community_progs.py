@@ -16,8 +16,6 @@ urlpatterns=[
     url(r'^delete/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodRecover.as_view()),
 
-    url(r'^delete_list/(?P<pk>\d+)/$', CommunityGoodListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/$', CommunityGoodListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddGoodListInCommunityCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemoveGoodListFromCommunityCollections.as_view()),
 

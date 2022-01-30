@@ -74,26 +74,6 @@ class UserDocEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-
-class UserDocListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk and list.type != DocsList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserDocListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk:
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserDocRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["doc_pk"])

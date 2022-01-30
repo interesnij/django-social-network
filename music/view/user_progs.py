@@ -31,25 +31,6 @@ class RemovePlayListFromUserCollections(View):
         else:
             return HttpResponse()
 
-class UserPlaylistDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and list.type != MusicList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserPlaylistRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class UserTrackRemove(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])

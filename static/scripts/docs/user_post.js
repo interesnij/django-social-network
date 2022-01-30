@@ -78,24 +78,3 @@ on('#ajax', 'click', '#u_create_doc_btn', function() {
 
   link_.send(form_data);
 });
-
-on('#ajax', 'click', '#u_create_doc_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/docs/user_progs/add_list/", "/users/", "/doc_list/", "added_user_doc_list");
-});
-
-on('#ajax', 'click', '#u_edit_doc_list_btn', function() {
-  media_list_edit(this, "/docs/user_progs/edit_list/", "edited_user_doc_list")
-});
-
-on('body', 'click', '.u_doc_list_remove', function() {
-  media_list_delete(this, "/docs/user_progs/delete_list/", "u_doc_list_remove", "u_doc_list_abort_remove", "deleted_user_doc_list")
-});
-on('body', 'click', '.u_doc_list_abort_remove', function() {
-  media_list_recover(this, "/docs/user_progs/restore_list/", "u_doc_list_abort_remove", "u_doc_list_remove", "restored_user_doc_list")
-});

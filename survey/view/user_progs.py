@@ -148,24 +148,6 @@ class RemoveSurveyListFromUserCollections(View):
         else:
             return HttpResponse()
 
-class UserSurveyListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk and list.type != SurveyList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserSurveyListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk:
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 
 class UserChangeSurveyPosition(View):
     def post(self,request,*args,**kwargs):

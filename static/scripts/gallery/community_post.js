@@ -1,24 +1,4 @@
 
-on('body', 'click', '.c_photo_list_remove', function() {
-  media_list_delete(this, "/gallery/community_progs/delete_list/", "c_photo_list_remove", "c_photo_list_abort_remove", "removed_community_photo_list")
-});
-on('body', 'click', '.c_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/community_progs/restore_list/", "c_photo_list_abort_remove", "c_photo_list_remove", "restored_community_photo_list")
-});
-
-on('#ajax', 'click', '#c_edit_photo_list_btn', function() {
-  media_list_edit(this, "/gallery/community_progs/edit_list/", "edited_community_photo_list")
-});
-
-on('#ajax', 'click', '#c_create_photo_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/community_progs/add_list/", "/communities/", "/list/", "added_community_photo_list");
-});
 
 
 on('#ajax', 'click', '.c_photo_off_comment', function() {

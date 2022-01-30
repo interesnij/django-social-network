@@ -43,16 +43,6 @@ on('body', 'click', '.c_doc_restore', function() {
   link.send();
 });
 
-on('#ajax', 'click', '#c_create_doc_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/docs/community_progs/add_list/", "/communities/", "/doc_list/", "added_community_doc_list");
-});
-
 on('#ajax', 'click', '#c_create_doc_btn', function() {
   form = document.querySelector("#c_doc_create");
   form_data = new FormData(form);
@@ -99,15 +89,4 @@ on('#ajax', 'click', '#c_create_doc_btn', function() {
   }};
 
   link_.send(form_data);
-});
-
-on('#ajax', 'click', '#c_edit_doc_list_btn', function() {
-  media_list_edit(this, "/docs/community_progs/edit_list/", "edited_community_doc_list")
-});
-
-on('body', 'click', '.c_doc_list_remove', function() {
-  media_list_delete(this, "/docs/community_progs/delete_list/", "c_doc_list_remove", "c_doc_list_abort_remove", "deleted_community_doc_list")
-});
-on('body', 'click', '.c_doc_list_abort_remove', function() {
-  media_list_recover(this, "/docs/community_progs/restore_list/", "c_doc_list_abort_remove", "c_doc_list_remove", "recover_community_doc_list")
 });

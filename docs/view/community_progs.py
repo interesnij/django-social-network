@@ -81,27 +81,6 @@ class CommunityDocEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class CommunityDocListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["pk"])
-        c = list.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk) and list.type != DocsList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityDocListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["pk"])
-        c = list.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-
 class CommunityDocRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["doc_pk"])

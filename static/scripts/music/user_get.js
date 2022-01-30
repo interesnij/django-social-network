@@ -13,26 +13,6 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
   profile_list_block_attach(this, ".load_block", "/u_music_list_load/", "load_attach_playlist");
 });
 
-on('#ajax', 'click', '.u_playlist_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute('data-pk')
-  create_fullscreen("/music/user_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.u_soundcloud_set_create', function() {
-  create_fullscreen("/music/user_progs/souncloud_create_list_window/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.u_soundcloud_set_list', function() {
-  create_fullscreen("/music/user_progs/souncloud_list_window/" + this.parentElement.parentElement.getAttribute('data-uuid') + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_music_list_create_window', function() {
-  create_fullscreen("/music/user_progs/create_list_window/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_playlist_edit', function() {
-  pk = this.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/music/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.load_music_list', function() {
   card = this.parentElement.parentElement.parentElement;
   playlist_pk = card.getAttribute("playlist-pk");

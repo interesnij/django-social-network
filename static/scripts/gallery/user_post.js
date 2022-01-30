@@ -1,24 +1,4 @@
 
-on('body', 'click', '.u_photo_list_remove', function() {
-  media_list_delete(this, "/gallery/user_progs/delete_list/", "u_photo_list_remove", "u_photo_list_abort_remove", "removed_user_photo_list")
-});
-on('body', 'click', '.u_photo_list_abort_remove', function() {
-  media_list_recover(this, "/gallery/user_progs/restore_list/", "u_photo_list_abort_remove", "u_photo_list_remove", "restored_user_photo_list")
-});
-
-on('#ajax', 'click', '#u_edit_photo_list_btn', function() {
-  media_list_edit(this, "/gallery/user_progs/edit_list/", "edited_user_photo_list")
-});
-
-on('#ajax', 'click', '#u_create_photo_list_btn', function() {
-  form = this.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/gallery/user_progs/add_list/", "/users/", "/list/", "added_user_photo_list");
-});
 
 on('#ajax', 'click', '.u_photo_off_comment', function() {
   send_photo_change(this, "/gallery/user_progs/off_comment/", "u_photo_on_comment", "Вкл. комментарии");

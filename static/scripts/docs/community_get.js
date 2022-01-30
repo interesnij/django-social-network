@@ -5,12 +5,6 @@ on('#ajax', 'click', '.c_uncopy_doc_list', function() {
   on_off_list_in_collections(this, "/docs/community_progs/remove_list_from_collections/", "copy_community_doc_list", "uncopy_community_doc_list", "Добавить")
 });
 
-
-on('#ajax', 'click', '.c_doc_list_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/docs/community_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.c_doc_create', function(e) {
   e.preventDefault();
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
@@ -23,9 +17,4 @@ on('body', 'click', '.c_doc_edit', function() {
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_doc")
   create_fullscreen("/docs/community_progs/edit_doc/" + parent.getAttribute("data-pk") + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.c_doc_list_edit', function() {
-  pk = this.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/docs/community_progs/edit_list/" + pk + "/", "worker_fullscreen");
 });

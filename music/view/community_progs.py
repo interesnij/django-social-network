@@ -31,23 +31,6 @@ class RemovePlayListFromCommunityCollections(View):
         else:
             return HttpResponseBadRequest()
 
-class CommunityPlaylistDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]) and list.type != MusicList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityPlaylistRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
 
 class CommunityTrackRemove(View):
     def get(self, request, *args, **kwargs):

@@ -10,8 +10,6 @@ urlpatterns=[
     url(r'^vote/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', UserSurveyVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyUserDetail.as_view()),
 
-    url(r'^delete_list/(?P<pk>\d+)/$', UserSurveyListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/$', UserSurveyListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddSurveyListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemoveSurveyListFromUserCollections.as_view()),
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeSurveyPosition.as_view()),

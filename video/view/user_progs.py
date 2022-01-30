@@ -165,24 +165,6 @@ class UserVideoEdit(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class UserVideolistDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk and list.type != VideoList.MAIN:
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class UserVideolistRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = VideoList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == list.creator.pk:
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class UserChangeVideoPosition(View):
     def post(self,request,*args,**kwargs):
         import json

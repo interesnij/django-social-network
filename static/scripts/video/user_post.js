@@ -106,25 +106,3 @@ on('#ajax', 'click', '#u_create_video_btn', function() {
   } else {this.disabled = false}};
   link_.send(form_data);
 });
-
-on('#ajax', 'click', '#u_create_video_list_btn', function() {
-  this.disabled = true;
-  form = document.body.querySelector("#u_video_list_create");
-  if (!form.querySelector("#id_name").value){
-    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else { this.disabled = true }
-  post_and_load_object_page(form, "/video/user_progs/add_list/", "/users/", "/video_list/", "added_user_video_list")
-
-});
-
-on('#ajax', 'click', '#u_edit_video_list_btn', function() {
-  media_list_edit(this, "/video/user_progs/edit_list/", "edited_user_video_list")
-});
-
-on('body', 'click', '.u_video_list_remove', function() {
-  media_list_delete(this, "/video/user_progs/delete_list/", "u_video_list_remove", "u_video_list_abort_remove", "deleted_user_video_list")
-});
-on('body', 'click', '.u_video_list_abort_remove', function() {
-  media_list_recover(this, "/video/user_progs/restore_list/", "u_video_list_abort_remove", "u_video_list_remove", "restored_community_video_list")
-});

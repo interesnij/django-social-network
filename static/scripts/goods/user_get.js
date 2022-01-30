@@ -21,19 +21,6 @@ on('#ajax', 'click', '.good_detail', function() {
   setTimeout(function() {good_gallery(loader)}, 1000)
 });
 
-on('#ajax', 'click', '.u_good_list_add', function() {
-  create_fullscreen("/goods/user_progs/add_list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/", "worker_fullscreen");
-});
-on('#ajax', 'click', '.u_good_list_edit', function() {
-  pk = this.parentElement.parentElement.getAttribute('data-pk');
-  create_fullscreen("/goods/user_progs/edit_list/" + pk + "/", "worker_fullscreen");
-});
-
-on('#ajax', 'click', '.u_goods_list_create', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/goods/user_progs/add_list/" + pk + "/", "worker_fullscreen");
-});
-
 
 on('#ajax', 'click', '.load_good_list', function() {
   parent = this.parentElement.parentElement.parentElement;

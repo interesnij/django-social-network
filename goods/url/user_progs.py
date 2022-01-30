@@ -16,8 +16,6 @@ urlpatterns=[
     url(r'^delete/(?P<pk>\d+)/$', UserGoodDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', UserGoodRecover.as_view()),
 
-    url(r'^delete_list/(?P<pk>\d+)/$', UserGoodListDelete.as_view()),
-    url(r'^restore_list/(?P<pk>\d+)/$', UserGoodListRecover.as_view()),
     url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddGoodListInUserCollections.as_view()),
     url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemoveGoodListFromUserCollections.as_view()),
     url(r'^change_position/(?P<pk>\d+)/$', UserChangeGoodPosition.as_view()),

@@ -284,24 +284,6 @@ def post_update_interactions(request):
     data = {'likes': item.count_likers(), 'dislikes': item.count_dislikers(), 'comments': item.count_thread()}
     return JsonResponse(data)
 
-class CommunityPostsListDelete(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and list.type != PostsList.MAIN and request.user.is_administrator_of_community(list.c.pk):
-            list.delete_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
-class CommunityPostsListRecover(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(self.kwargs["pk"]):
-            list.restore_item()
-            return HttpResponse()
-        else:
-            raise Http404
-
 class CommunityChangePostPosition(View):
     def post(self,request,*args,**kwargs):
         import json
