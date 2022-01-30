@@ -1,6 +1,6 @@
-<div class="card mb-3 pag drag_item handle" data-type="user_post" data-pk="{{ object.pk }}">
-  <a class="pointer">
-
+<div class="card mb-3 pag" data-type="user_post" data-pk="{{ object.pk }}">
+  <a class="pointer drag_item handle" data-pk="{{ object.pk }}">
+    +
   </a>
     {% include 'desctop/posts/post_user/my_card_header.html' %}
     {% if object.text %}
