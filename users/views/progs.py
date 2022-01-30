@@ -1080,10 +1080,10 @@ class ChangeListPosition(View):
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
             if not request.user.pk in community.get_administrators_ids():
-                return HttpResponse()
+                return HttpResponseBadRequestResponse()
         else:
             if not user.pk == request.user.pk:
-                return HttpResponse()
+                return HttpResponseBadRequestResponse()
 
         if type == "lpo":
             from posts.models import PostsList
