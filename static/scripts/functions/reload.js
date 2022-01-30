@@ -687,7 +687,7 @@ function list_block_load(target_block, response_block, link) {
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
        get_dragula(".is_block_paginate");
-       get_dragula(".drag_list");
+       get_dragula(".drag_container");
        create_pagination(target_block);
     }};
     request.upload.onprogress = function(event) {
