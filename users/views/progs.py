@@ -1088,6 +1088,7 @@ class ChangeListPosition(View):
         if type == "lpo":
             from posts.models import PostsList
             PostsList.change_position(json.loads(request.body), community, user.pk)
+            return HttpResponse(json.loads(request.body))
         elif type == "lph":
             from gallery.models import PhotoList
             PhotoList.change_position(json.loads(request.body), community, user.pk)
