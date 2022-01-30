@@ -1,6 +1,6 @@
 function get_dragula(block) {
   // функция инициирует библиотеку dragula.js
-  _block = document.querySelector(block)
+  _block = document.body.querySelector(block)
   dragula([_block], {
     moves: function (el, container, handle) {
       return handle.classList.contains('handle')
@@ -17,7 +17,7 @@ var $request_user_id = user_info.getAttribute("data-id");
 var $user_device = user_info.getAttribute("data-device");
 page_time = false, $new_time = 0;
 
-get_dragula(".drag_list");
+get_dragula(".drag_container");
 
 // type statistics item:
 // 1. "user..." - страницы пользователя
@@ -688,8 +688,8 @@ function list_block_load(target_block, response_block, link) {
         elem_ = document.createElement('span');
         elem_.innerHTML = request.responseText;
        target_block.innerHTML = elem_.querySelector(response_block).innerHTML;
-       get_dragula(".is_block_paginate");
        get_dragula(".drag_container");
+       get_dragula(".drag_list");
        create_pagination(target_block);
     }};
     request.upload.onprogress = function(event) {
