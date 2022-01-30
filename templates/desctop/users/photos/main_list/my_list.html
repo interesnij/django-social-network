@@ -32,7 +32,7 @@
     </form>
   </div>
   <div class="container mt-4" id="photos_container">
-    <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ photo_list_pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_photo_list" id="list_photos_container" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ photo_list_pk }}/"></div>
+    <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ photo_list_pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/user/list_photos/{{ user.pk }}/{{ photo_list_pk }}/"></div>
   </div>
 </span>
 {% else %}
