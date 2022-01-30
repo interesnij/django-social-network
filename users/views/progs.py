@@ -652,14 +652,8 @@ class ListCreate(TemplateView):
                 return HttpResponseBadRequest()
 
         if have_comments:
-            from posts.forms import PostListForm
-
-            self.form = PostListForm()
             self.template_name = get_detect_platform_template("generic/form/add_list_with_comment.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
-            from docs.forms import DocListForm
-
-            self.form = DocListForm()
             self.template_name = get_detect_platform_template("generic/form/add_list_not_comment.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(ListCreate,self).get(request,*args,**kwargs)
 
