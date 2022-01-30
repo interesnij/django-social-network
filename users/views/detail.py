@@ -103,7 +103,7 @@ class UserMusic(ListView):
         from music.models import MusicList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list, self.get_lists = self.user.get_playlist(), None
+        self.list = MusicList.objects.get(pk=self.user.get_selected_music_list_pk())
         if request.user.pk == self.user.pk:
             self.get_lists = MusicList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_music_section = True
@@ -140,7 +140,7 @@ class UserDocs(ListView):
         from docs.models import DocsList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_doc_list()
+        self.list = DocsList.objects.get(pk=self.user.get_selected_doc_list_pk())
         if request.user.pk == self.user.pk:
             self.get_lists = DocsList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_doc_section = True
@@ -177,7 +177,7 @@ class UserGoods(ListView):
         from goods.models import GoodList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_good_list()
+        self.list = GoodList.objects.get(pk=self.user.get_selected_good_list_pk())
         if request.user.pk == self.user.pk:
             self.get_lists = GoodList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_good_section = True
@@ -214,7 +214,7 @@ class UserVideo(ListView):
         from video.models import VideoList
 
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_video_list()
+        self.list = VideoList.objects.get(pk=self.user.get_selected_video_list_pk())
         if request.user.pk == self.user.pk:
             self.get_lists = VideoList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_video_section = True

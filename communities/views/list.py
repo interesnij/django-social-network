@@ -95,7 +95,7 @@ class CommunityDocs(ListView):
 		from docs.models import DocsList
 
 		self.c, user = Community.objects.get(pk=self.kwargs["pk"]), request.user
-		self.list = DocsList.objects.get(community_id=self.c.pk, type=DocsList.MAIN)
+		self.list = DocsList.objects.get(pk=self.c.get_selected_doc_list_pk())
 		if user.is_authenticated and user.is_staff_of_community(self.c.pk):
 			self.get_lists = DocsList.get_community_staff_lists(self.c.pk)
 			self.is_user_can_see_doc_section = True
@@ -164,7 +164,7 @@ class CommunityGoods(ListView):
 		from goods.models import GoodList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_good_list()
+		self.list = GoodList.objects.get(pk=self.c.get_selected_good_list_pk())
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.get_lists = GoodList.get_community_staff_lists(self.c.pk)
 			self.is_user_can_see_good_section = True
@@ -233,7 +233,7 @@ class CommunityMusic(ListView):
 		from music.models import MusicList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_playlist()
+		self.list = MusicList.objects.get(pk=self.c.get_selected_music_list_pk())
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.get_lists = MusicList.get_community_staff_lists(self.c.pk)
 			self.is_user_can_see_music_section = True
@@ -301,7 +301,7 @@ class CommunityVideo(ListView):
 		from video.models import VideoList
 
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.list = self.c.get_video_list()
+		self.list = VideoList.objects.get(pk=self.c.get_selected_video_list_pk())
 		if request.user.is_authenticated and request.user.is_staff_of_community(self.c.pk):
 			self.get_lists = VideoList.get_community_staff_lists(self.c.pk)
 			self.is_user_can_see_video_section = True
