@@ -352,8 +352,8 @@ class Community(models.Model):
         list = CommunityGoodListPosition.objects.filter(community=self.pk, type=1).first()
         return list.list
     def get_selected_music_list_pk(self):
-        from communities.model.list import CommunityMusicListPosition
-        list = CommunityMusicListPosition.objects.filter(community=self.pk, type=1).first()
+        from communities.model.list import CommunityPlayListPosition
+        list = CommunityPlayListPosition.objects.filter(community=self.pk, type=1).first()
         return list.list
     def get_selected_video_list_pk(self):
         from communities.model.list import CommunityVideoListPosition
