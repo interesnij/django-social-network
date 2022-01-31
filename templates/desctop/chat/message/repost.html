@@ -3,7 +3,7 @@
 {% with repost=object.repost %}
 
 <div class="border-left" style="margin-left: 5%" data-pk="{{ repost.pk }}">
-  {% if not object.is_repost %}
+  {% if not repost.is_repost %} 
   {% if repost.community %}
   <div class="card-header">
       <div class="media">
