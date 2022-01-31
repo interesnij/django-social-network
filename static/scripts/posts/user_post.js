@@ -257,9 +257,9 @@ on('#ajax', 'click', '.delete_list', function() {
     for (var i = 0; i < hide_icons.length; i++){
       hide_icons[i].style.display = "none";
     };
-    parent.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
+    parent.parentElement.querySelector(".second_list_name").innerHTML = "";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
-    list.querySelector('.list_name').innerHTML = "";
+    list.querySelector('.list_name').innerHTML = "Список удален";
     _this.classList.replace("delete_list", "recover_list");
     _this.innerHTML = "Восстановить список";
     //main_container = document.body.querySelector(".main-container");
