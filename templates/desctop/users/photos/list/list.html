@@ -9,21 +9,20 @@
 {% block content %}
 
 <div class="main-container mt-3" data-pk="{{ list.pk }}" data-type="user_photo_list">
-{% if is_user_can_see_photo_section %}
   <span class="load_block pk_saver" data-pk="{{ user.pk }}">
-  <div class="media mt-3" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+    {% if is_user_can_see_photo_section %}
     <h5 class="mt-1">
       {{ list.name }} ({{ list.count_items }})
 
       {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
-  </div>
 
   <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ photo_list_pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/load_list_photos/{{ photo_list_pk }}/"></div>
-  </span>
+
   {% else %}
     {% include 'desctop/generic/centered/private_page.html' %}
   {% endif %}
+  </span>
 </div>
 
 {% endblock %}
