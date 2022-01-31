@@ -1,6 +1,6 @@
 
-{% if object_list %}
-{% for object in object_list %}
+{% if photo_list %}
+{% for object in photo_list %}
   {% include 'desctop/generic/items/photo.html' %}
 {% endfor %}
   {% if page_obj.has_next %}
@@ -8,6 +8,7 @@
       <img src="/static/images/preloader.gif">
   </div>
   {% endif %}
+
 {% else %}
   {% include 'desctop/users/photos/main_list/no_photos.html' %}
 {% endif %}
