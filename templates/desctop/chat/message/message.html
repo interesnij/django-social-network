@@ -57,7 +57,7 @@
         {% include 'desctop/chat/message/repost.html' %}
       {% endif %}
 
-      {% if object.is_have_transfer %}
+      {% elif object.is_have_transfer %}
         {% include 'desctop/chat/message/transfers.html' %}
       {% endif %}
 

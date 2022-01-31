@@ -1,6 +1,7 @@
 {% load post %}
 
 {% with repost=object.repost %}
+{{ repost }}
 <div class="border-left" style="margin-left: 5%" data-pk="{{ repost.pk }}">
   {% if not object.is_repost %}
   {% if repost.community %}
