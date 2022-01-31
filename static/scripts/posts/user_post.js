@@ -463,8 +463,12 @@ on('#ajax', 'click', '#create_copy_btn', function() {
   else if (form_post.querySelector(".is_list") && form_post.querySelector(".copy_for_communities").checked && !collector.innerHTML) {
     collector.innerHTML = '<div class="response_text">⇠ <br>Выберите сообщества</div>';
     return
+  }
+  else if (form_post.querySelector(".is_list") && !form_post.querySelector(".copy_for_communities").checked && !form_post.querySelector(".copy_for_profile").checked) {
+    collector.innerHTML = '<div class="response_text">Выберите, куда копировать объект</div>';
+    return
   };
-  
+
   form_data = new FormData(form_post);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/users/progs/create_copy/", true );
