@@ -245,17 +245,19 @@ on('#ajax', 'click', '.dislike_item', function() {
 
 on('#ajax', 'click', '.delete_list', function() {
   _this = this;
-  type = _this.parentElement.getAttribute('data-type');
+  parent = _this.parentElement;
+  type = parent.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/users/progs/delete_list/?type=" + type , true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    _this.previousElementSibling.style.display = "none";
-    _this.nextElementSibling.style.display = "none";
-    _this.previousElementSibling.previousElementSibling.style.display = "none";
-    _this.parentElement.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
+    hide_icons = parent.querySelectorAll(".hide_delete");
+    for (var i = 0; i < hide_icons.length; i++){
+      hide_icons[i].style.display = "none";
+    }
+    parent.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace("delete_list", "recover_list");
@@ -267,15 +269,17 @@ on('#ajax', 'click', '.delete_list', function() {
 });
 on('#ajax', 'click', '.recover_list', function() {
   _this = this;
-  type = _this.parentElement.getAttribute('data-type');
+  parent = _this.parentElement;
+  type = parent.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/users/progs/recover_list/?type=" + type, true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    _this.previousElementSibling.style.display = "unset";
-    _this.nextElementSibling.style.display = "unset";
-    _this.previousElementSibling.previousElementSibling.style.display = "unset";
+    hide_icons = parent.querySelectorAll(".hide_delete");
+    for (var i = 0; i < hide_icons.length; i++){
+      hide_icons[i].style.display = "unset";
+    }
     second_list = document.body.querySelector('.second_list_name');
     name = second_list.getAttribute("data-name");
     second_list.innerHTML = name;
