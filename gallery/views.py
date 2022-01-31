@@ -205,3 +205,46 @@ class AddPhotosInList(View):
 			return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
 		else:
 			raise Http404
+
+
+class LoadPhotosList(ListView):
+    template_name = None
+    paginate_by = 15
+
+    def get(self,request,*args,**kwargs):
+        from common.templates import get_template_user_list, get_template_anon_user_list
+
+        self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_anonymous:
+			self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
+			if self.list.community:
+				from common.templates import get_template_anon_community_list
+				self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_photo_section = self.community.is_anon_user_can_see_photo()
+			else:
+				from common.templates import get_template_anon_user_list
+				self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
+		else:
+            self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+			if self.list.community:
+				from common.templates import get_template_community_list
+				self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_photo_section = self.community.is_user_can_see_photo(request.user.pk)
+			else:
+				from common.templates import get_template_user_list
+				self.template_name = get_template_user_list(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
+        return super(LoadPhotosList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(LoadPhotosList,self).get_context_data(**kwargs)
+        context['list'] = self.list
+        context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
+        context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
+        context['is_user_can_create_photos'] = self.is_user_can_create_photos
+        return context
+
+    def get_queryset(self):
+        return self.list.get_items()
