@@ -10,7 +10,7 @@ class UserGallery(TemplateView):
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.list = self.user.get_photo_list()
+        self.list = PhotoList.objects.get(pk=self.user.get_selected_photo_list_pk())
         if request.user.pk == self.user.pk:
             self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
             self.is_user_can_see_photo_section = True
