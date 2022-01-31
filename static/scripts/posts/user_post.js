@@ -245,6 +245,7 @@ on('#ajax', 'click', '.dislike_item', function() {
 
 on('#ajax', 'click', '.delete_list', function() {
   _this = this;
+  _this.removeAttribute('tooltip');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -269,6 +270,7 @@ on('#ajax', 'click', '.delete_list', function() {
 });
 on('#ajax', 'click', '.recover_list', function() {
   _this = this;
+  _this.setAttribute('tooltip', 'Удалить список');
   parent = _this.parentElement;
   type = parent.getAttribute('data-type');
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
