@@ -254,7 +254,7 @@ on('#ajax', 'click', '.delete_list', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    hide_icons = parent.querySelectorAll(".hide_delete");
+    hide_icons = parent.parentElement.querySelectorAll(".hide_delete");
     for (var i = 0; i < hide_icons.length; i++){
       hide_icons[i].style.display = "none";
     };
@@ -278,7 +278,7 @@ on('#ajax', 'click', '.recover_list', function() {
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    hide_icons = parent.querySelectorAll(".hide_delete");
+    hide_icons = parent.parentElement.querySelectorAll(".hide_delete");
     for (var i = 0; i < hide_icons.length; i++){
       hide_icons[i].style.display = "unset";
     };
