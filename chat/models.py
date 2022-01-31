@@ -1349,6 +1349,8 @@ class Message(models.Model):
             return "<b class='i_link'>Вложения</b>"
         elif self.text:
             return self.get_text_60()
+        elif self.repost:
+            return "<b class='i_link'>Репост</b>"
         else:
             return "Нет текста!"
 
@@ -1370,7 +1372,7 @@ class Message(models.Model):
 
     def is_repost(self):
         return self.repost
-        
+
     def get_attach(self, user):
         from common.attach.message_attach import get_message_attach
         return get_message_attach(self, user)
