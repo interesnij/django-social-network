@@ -44,7 +44,7 @@
     <span class="list_pk" data-uuid="{{ list.pk }}">
       {% if is_user_can_see_post_list %}
 
-      <span class="second_list_name">{{ list.name }}: </span>
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}: </span>
       {% include 'desctop/generic/items/list_meta.html' %}
 
         {% if is_user_can_create_posts %}
