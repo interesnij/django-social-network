@@ -239,7 +239,7 @@ on('#ajax', 'click', '.dislike_item', function() {
   send_dislike(item, "/users/progs/dislike_item/?type=" + item.getAttribute("data-type"));
   dislike_reload(this.previousElementSibling, this.nextElementSibling, "item_dislikes");
 
-  main_container = document.body.querySelector(".main-container");
+  //main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
@@ -256,14 +256,14 @@ on('#ajax', 'click', '.delete_list', function() {
     hide_icons = parent.querySelectorAll(".hide_delete");
     for (var i = 0; i < hide_icons.length; i++){
       hide_icons[i].style.display = "none";
-    }
+    };
     parent.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
     list.querySelector('.list_name') ? list.querySelector('.list_name').innerHTML = "Список удален" : null;
     _this.classList.replace("delete_list", "recover_list");
     _this.innerHTML = "Восстановить список";
-    main_container = document.body.querySelector(".main-container");
-    add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+    //main_container = document.body.querySelector(".main-container");
+    //add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
   link_.send();
 });
@@ -279,7 +279,7 @@ on('#ajax', 'click', '.recover_list', function() {
     hide_icons = parent.querySelectorAll(".hide_delete");
     for (var i = 0; i < hide_icons.length; i++){
       hide_icons[i].style.display = "unset";
-    }
+    };
     second_list = document.body.querySelector('.second_list_name');
     name = second_list.getAttribute("data-name");
     second_list.innerHTML = name;
