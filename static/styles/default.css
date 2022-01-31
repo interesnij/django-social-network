@@ -1381,7 +1381,6 @@ html {
 .item_attach_circle{
   position: absolute;
   right: 15px;
-  background-color: white;
   border-radius: 50%;
   cursor: pointer;
   top: 12px;
