@@ -163,10 +163,14 @@ on('#ajax', 'click', '#toggle_case_item_repost', function() {
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
   btn.innerHTML = this.innerHTML;
-  parent = this.parentElement.parentElement.parentElement;
-  parent.querySelector("#repost_for_message").style.display = "unset";
-  parent.querySelector(".form_body").style.display = "block";
-  parent.querySelector(".collector_active").innerHTML = "";
+  form = this.parentElement.parentElement.parentElement;
+  form.querySelector("#repost_for_message").style.display = "unset";
+  form.querySelector(".form_body").style.display = "block";
+  form.querySelector(".collector_active").innerHTML = "";
+  if (form.querySelector(".copy_case")) {
+    form.querySelector(".repost_case").style.display = "block";
+    form.querySelector(".copy_case").style.display = "none";
+  }
 });
 on('#ajax', 'click', '#toggle_case_item_copy', function() {
   this.previousElementSibling.classList.replace("underline", "pointer");
@@ -175,10 +179,14 @@ on('#ajax', 'click', '#toggle_case_item_copy', function() {
   btn.removeAttribute("id");
   btn.setAttribute("id", this.getAttribute("data-flag"));
   btn.innerHTML = this.innerHTML;
-  parent = this.parentElement.parentElement.parentElement;
-  parent.querySelector("#repost_for_message").style.display = "none";
-  parent.querySelector(".form_body").style.display = "none";
-  parent.querySelector(".collector_active").innerHTML = "";
+  form = this.parentElement.parentElement.parentElement;
+  form.querySelector("#repost_for_message").style.display = "none";
+  form.querySelector(".form_body").style.display = "none";
+  form.querySelector(".collector_active").innerHTML = "";
+  if (form.querySelector(".copy_case")) {
+    form.querySelector(".repost_case").style.display = "none";
+    form.querySelector(".copy_case").style.display = "block";
+  }
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {
