@@ -346,12 +346,12 @@ class GoodList(models.Model):
 				pass
 			self.communities.remove(community)
 	def add_in_user_collections(self, user):
-		if self.creator.pk != user_id and user_id not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+		if self.creator.pk != user.pk and user.pk not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
 			from users.model.list import UserGoodListPosition
 			UserGoodListPosition.objects.create(user=user.pk, list=self.pk, position=GoodList.get_user_lists_count(user.pk))
 			self.users.add(user)
 	def remove_in_user_collections(self, user):
-		if self.creator.pk != user_id and user_id in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+		if self.creator.pk != user.pk and user.pk in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
 			from users.model.list import UserGoodListPosition
 			try:
 				UserGoodListPosition.objects.get(user=user.pk, list=self.pk).delete()
