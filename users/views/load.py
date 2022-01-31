@@ -293,6 +293,16 @@ class CommunitiesPostListsLoad(ListView):
 	def get_queryset(self):
 		return self.request.user.get_post_lists_from_staffed_comunities()
 
+class CommunitiesLoad(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		return self.request.user.get_staffed_comunities()
+
 
 class FriendsLoad(ListView):
 	template_name, paginate_by = None, 15

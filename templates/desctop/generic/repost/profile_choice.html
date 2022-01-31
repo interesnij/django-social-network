@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="custom-control custom-radio" id="copy_for_profile" style="margin-bottom:10px">
-        <input type="radio" name="u_c" value="u{{ request.user.pk }}" class="custom-control-input">
+        <input type="radio" name="u_c" value="u{{ request.user.pk }}" class="custom-control-input copy_for_profile">
         <label class="custom-control-label">В профиль</label>
       </div>
 
@@ -13,7 +13,7 @@
       </div>
       {% else %}
       <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px">
-        <input type="radio" class="custom-control-input">
+        <input type="radio" class="custom-control-input copy_for_communities">
         <label class="custom-control-label">В сообщества</label>
       </div>
       {% endif %}

@@ -188,6 +188,21 @@ on('#ajax', 'click', '#toggle_case_item_copy', function() {
     form.querySelector(".copy_case").style.display = "block";
   }
 });
+on('#ajax', 'click', '#copy_for_profile', function() {
+  this.querySelector(".copy_for_profile").setAttribute("checked", "true");
+  parent = this.parentElement;
+  parent.querySelector(".copy_for_communities").removeAttribute("checked");
+  current_block = parent.nextElementSibling;
+  current_block.querySelector(".collector").innerHTML = "";
+});
+on('#ajax', 'click', '#copy_for_communities', function() {
+  this.querySelector(".copy_for_communities").setAttribute("checked", "true");
+  parent = this.parentElement;
+  parent.querySelector(".copy_for_profile").removeAttribute("checked");
+  current_block = parent.nextElementSibling;
+  current_block.querySelector(".collector").innerHTML = "";
+  create_fullscreen("/users/load/communities/", "worker_fullscreen")
+});
 
 on('#ajax', 'click', '#repost_for_wall', function() {
   this.querySelector("#repost_radio_wall").setAttribute("checked", "true");

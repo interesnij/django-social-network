@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^smiles/$', SmilesLoad.as_view()),
     url(r'^smiles_stickers/$', SmilesStickersLoad.as_view()),
     url(r'^chats/$', ChatsLoad.as_view()),
+    url(r'^communities/$', CommunitiesLoad.as_view()),
 
     url(r'^list_include_users/$', LoadListIncludeUsers.as_view()),
     url(r'^list_exclude_users/$', LoadListExcludeUsers.as_view()),
