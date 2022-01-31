@@ -55,12 +55,11 @@
 
       {% if object.repost %}
         {% include 'desctop/chat/message/repost.html' %}
-      {% endif %}
 
       {% elif object.is_have_transfer %}
         {% include 'desctop/chat/message/transfers.html' %}
-      {% endif %}
 
+      {% endif %}
       {% endif %}
     </div>
 </div>
