@@ -301,7 +301,7 @@ class CommunitiesLoad(ListView):
 		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.request.user.get_staffed_comunities()
+		return self.request.user.get_staffed_communities()
 
 
 class FriendsLoad(ListView):
