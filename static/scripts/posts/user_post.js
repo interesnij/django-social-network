@@ -453,6 +453,31 @@ on('#ajax', 'click', '#create_repost_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '#create_copy_btn', function() {
+  form_post = this.parentElement.parentElement;
+  collector = form_post.querySelector(".collector");
+  if (!form_post.querySelector(".is_list") && !collector.innerHTML) {
+    collector.innerHTML = '<div class="response_text">⇠ <br>Выберите списки</div>';
+    return
+  }
+  else if (form_post.querySelector(".is_list") && form_post.querySelector(".copy_for_communities").checked && !collector.innerHTML) {
+    collector.innerHTML = '<div class="response_text">⇠ <br>Выберите сообщества</div>';
+    return
+  };
+  
+  form_data = new FormData(form_post);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/users/progs/create_copy/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    close_work_fullscreen();
+    toast_info("Объект копирован!")
+  }};
+  link_.send(form_data);
+});
+
 on('#ajax', 'click', '#create_list_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
   type = form_post.querySelector(".type").value;
