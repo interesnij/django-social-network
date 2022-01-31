@@ -222,7 +222,7 @@ class LoadPhotosList(ListView):
 			else:
 				from common.templates import get_template_anon_user_list
 				self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
+				self.is_user_can_see_photo_section = self.list.creator.is_anon_user_can_see_photo()
 		else:
 			self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
 			self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
@@ -233,7 +233,7 @@ class LoadPhotosList(ListView):
 			else:
 				from common.templates import get_template_user_list
 				self.template_name = get_template_user_list(self.list, "users/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
-				self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
+				self.is_user_can_see_photo_section = self.list.creator.is_user_can_see_photo(request.user.pk)
 		return super(LoadPhotosList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
