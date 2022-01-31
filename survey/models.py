@@ -219,24 +219,42 @@ class SurveyList(models.Model):
             return str(count) + " опросов"
 
     def add_in_community_collections(self, community):
-        from communities.model.list import CommunitySurveyListPosition
-        CommunitySurveyListPosition.objects.create(community=community.pk, list=self.pk, position=SurveyList.get_community_lists_count(community.pk))
-        self.communities.add(community)
+        if self.community.pk != community.pk and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.create(community=community.pk, list=self.pk, position=SurveyList.get_community_lists_count(community.pk))
+            self.communities.add(community)
     def remove_in_community_collections(self, community):
-        from communities.model.list import CommunitySurveyListPosition
-        CommunitySurveyListPosition.objects.get(community=community.pk, list=self.pk).delete()
-        self.communities.remove(user)
+        if self.community.pk != community.pk and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunitySurveyListPosition
+            try:
+                CommunitySurveyListPosition.objects.get(community=community.pk, list=self.pk).delete()
+            except:
+                pass
+            self.communities.remove(community)
     def add_in_user_collections(self, user):
-        from users.model.list import UserSurveyListPosition
-        UserSurveyListPosition.objects.create(user=user.pk, list=self.pk, position=SurveyList.get_user_lists_count(user.pk))
-        self.users.add(user)
+        if self.creator.pk != user_id and user_id not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.create(user=user.pk, list=self.pk, position=SurveyList.get_user_lists_count(user.pk))
+            self.users.add(user)
     def remove_in_user_collections(self, user):
-        from users.model.list import UserSurveyListPosition
-        UserSurveyListPosition.objects.get(user=user.pk, list=self.pk).delete()
-        self.users.remove(user)
-
-    def is_item_in_list(self, item_id):
-        return self.survey_list.filter(pk=item_id).values("pk").exists()
+        if self.creator.pk != user_id and user_id in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserSurveyListPosition
+            try:
+                UserSurveyListPosition.objects.get(user=user.pk, list=self.pk).delete()
+            except:
+                pass
+            self.users.remove(user)
+    def copy_item(pk, user_or_communities):
+        item = SurveyList.objects.get(pk=pk)
+        for object_id in user_or_communities:
+            if object_id[0] == "c":
+                from communities.models import Community
+                community = Community.objects.get(pk=object_id[1:])
+                item.add_in_community_collections(community)
+            elif object_id[0] == "u":
+                from users.models import User
+                user = User.objects.get(pk=object_id[1:])
+                item.add_in_user_collections(user)
 
     def is_not_empty(self):
         return self.survey_list.exclude(type__contains="_").values("pk").exists()
@@ -251,22 +269,9 @@ class SurveyList(models.Model):
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
-
     def get_communities_ids(self):
         communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
-
-    def is_user_can_add_list(self, user_id):
-        return self.creator.pk != user_id and user_id not in self.get_users_ids()
-
-    def is_user_can_delete_list(self, user_id):
-        return self.creator.pk != user_id and user_id in self.get_users_ids()
-
-    def is_community_can_add_list(self, community_id):
-        return self.community.pk != community_id and community_id not in self.get_communities_ids()
-
-    def is_community_can_delete_list(self, community_id):
-        return self.community.pk != community_id and community_id in self.get_communities_ids()
 
     def is_main(self):
         return self.type == self.MAIN

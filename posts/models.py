@@ -537,24 +537,42 @@ class PostsList(models.Model):
         return UserPostsListPosition.objects.get(list=self.pk)
 
     def add_in_community_collections(self, community):
-        from communities.model.list import CommunityPostsListPosition
-        CommunityPostsListPosition.objects.create(community=community.pk, list=self.pk, position=PostsList.get_community_lists_count(community.pk))
-        self.communities.add(community)
+        if self.community.pk != community.pk and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.create(community=community.pk, list=self.pk, position=PostsList.get_community_lists_count(community.pk))
+            self.communities.add(community)
     def remove_in_community_collections(self, community):
-        from communities.model.list import CommunityPostsListPosition
-        CommunityPostsListPosition.objects.get(community=community.pk, list=self.pk).delete()
-        self.communities.remove(user)
+        if self.community.pk != community.pk and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunityPostsListPosition
+            try:
+                CommunityPostsListPosition.objects.get(community=community.pk, list=self.pk).delete()
+            except:
+                pass
+            self.communities.remove(community)
     def add_in_user_collections(self, user):
-        from users.model.list import UserPostsListPosition
-        UserPostsListPosition.objects.create(user=user.pk, list=self.pk, position=PostsList.get_user_lists_count(user.pk))
-        self.users.add(user)
+        if self.creator.pk != user_id and user_id not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.create(user=user.pk, list=self.pk, position=PostsList.get_user_lists_count(user.pk))
+            self.users.add(user)
     def remove_in_user_collections(self, user):
-        from users.model.list import UserPostsListPosition
-        UserPostsListPosition.objects.get(user=user.pk, list=self.pk).delete()
-        self.users.remove(user)
-
-    def is_item_in_list(self, item_id):
-        return self.post_list.filter(pk=item_id).values("pk").exists()
+        if self.creator.pk != user_id and user_id in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserPostsListPosition
+            try:
+                UserPostsListPosition.objects.get(user=user.pk, list=self.pk).delete()
+            except:
+                pass
+            self.users.remove(user)
+    def copy_item(pk, user_or_communities):
+        item = PostsList.objects.get(pk=pk)
+        for object_id in user_or_communities:
+            if object_id[0] == "c":
+                from communities.models import Community
+                community = Community.objects.get(pk=object_id[1:])
+                item.add_in_community_collections(community)
+            elif object_id[0] == "u":
+                from users.models import User
+                user = User.objects.get(pk=object_id[1:])
+                item.add_in_user_collections(user)
 
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="PUB")
@@ -570,22 +588,9 @@ class PostsList(models.Model):
         ids = self.post_list.filter(type="FIX").values("pk")
         return [id['pk'] for id in ids]
 
-    def is_user_can_add_list(self, user_id):
-        return self.creator.pk != user_id and user_id not in self.get_users_ids()
-
-    def is_user_can_delete_list(self, user_id):
-        return self.creator.pk != user_id and user_id in self.get_users_ids()
-
-    def is_community_can_add_list(self, community_id):
-        return self.community.pk != community_id and community_id not in self.get_communities_ids()
-
-    def is_community_can_delete_list(self, community_id):
-        return self.community.pk != community_id and community_id in self.get_communities_ids()
-
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
-
     def get_communities_ids(self):
         communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
@@ -846,6 +851,26 @@ class Post(models.Model):
         return "pos" + str(self.pk)
     def is_post(self):
         return True
+
+    def copy_item(pk, lists):
+        item, count = Post.objects.get(pk=pk), 0
+        for list_pk in lists:
+            post_list = PostsList.objects.get(pk=list_pk)
+            Post.create_post(
+                creator=item.creator,
+                list=post_list,
+                attach=item.attach,
+                text=item.text,
+                category=item.category,
+                parent=item.parent,
+                comments_enabled=item.comments_enabled,
+                is_signature=item.is_signature,
+                votes_on=item.votes_on,
+                community=item.community
+            )
+            count += 1
+        item.copy += count
+        item.save(update_fields=["copy"])
 
     def get_format_text(self):
         from common.utils import hide_text

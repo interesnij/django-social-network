@@ -273,24 +273,42 @@ class MusicList(models.Model):
         return self.copy_el == self.ALL_CAN
 
     def add_in_community_collections(self, community):
-        from communities.model.list import CommunityPlayListPosition
-        CommunityPlayListPosition.objects.create(community=community.pk, list=self.pk, position=MusicList.get_community_lists_count(community.pk))
-        self.communities.add(community)
+        if self.community.pk != community.pk and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunityPlayListPosition
+            CommunityPlayListPosition.objects.create(community=community.pk, list=self.pk, position=MusicList.get_community_lists_count(community.pk))
+            self.communities.add(community)
     def remove_in_community_collections(self, community):
-        from communities.model.list import CommunityPlayListPosition
-        CommunityPlayListPosition.objects.get(community=community.pk, list=self.pk).delete()
-        self.communities.remove(user)
+        if self.community.pk != community.pk and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+            from communities.model.list import CommunityPlayListPosition
+            try:
+                CommunityPlayListPosition.objects.get(community=community.pk, list=self.pk).delete()
+            except:
+                pass
+            self.communities.remove(community)
     def add_in_user_collections(self, user):
-        from users.model.list import UserPlayListPosition
-        UserPlayListPosition.objects.create(user=user.pk, list=self.pk, position=MusicList.get_user_lists_count(user.pk))
-        self.users.add(user)
+        if self.creator.pk != user_id and user_id not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserPlayListPosition
+            UserPlayListPosition.objects.create(user=user.pk, list=self.pk, position=MusicList.get_user_lists_count(user.pk))
+            self.users.add(user)
     def remove_in_user_collections(self, user):
-        from users.model.list import UserPlayListPosition
-        UserPlayListPosition.objects.get(user=user.pk, list=self.pk).delete()
-        self.users.remove(user)
-
-    def is_item_in_list(self, item_id):
-        return self.playlist.filter(pk=item_id).values("pk").exists()
+        if self.creator.pk != user_id and user_id in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+            from users.model.list import UserPlayListPosition
+            try:
+                UserPlayListPosition.objects.get(user=user.pk, list=self.pk).delete()
+            except:
+                pass
+            self.users.remove(user)
+    def copy_item(pk, user_or_communities):
+        item = MusicList.objects.get(pk=pk)
+        for object_id in user_or_communities:
+            if object_id[0] == "c":
+                from communities.models import Community
+                community = Community.objects.get(pk=object_id[1:])
+                item.add_in_community_collections(community)
+            elif object_id[0] == "u":
+                from users.models import User
+                user = User.objects.get(pk=object_id[1:])
+                item.add_in_user_collections(user)
 
     def is_not_empty(self):
         return self.playlist.filter(Q(type="PUB")|Q(type="PRI")).values("pk").exists()
@@ -306,20 +324,9 @@ class MusicList(models.Model):
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in users]
-
     def get_communities_ids(self):
         communities = self.communities.exclude(type__contains="_").values("pk")
         return [i['pk'] for i in communities]
-
-    def is_user_can_add_list(self, user_id):
-        return self.creator.pk != user_id and user_id not in self.get_users_ids()
-    def is_user_can_delete_list(self, user_id):
-        return self.creator.pk != user_id and user_id in self.get_users_ids()
-
-    def is_community_can_add_list(self, community_id):
-        return self.community.pk != community_id and community_id not in self.get_communities_ids()
-    def is_community_can_delete_list(self, community_id):
-        return self.community.pk != community_id and community_id in self.get_communities_ids()
 
     def get_remote_image(self, image_url):
         import os
@@ -671,6 +678,23 @@ class Music(models.Model):
 
     def __str__(self):
         return self.title
+
+    def copy_item(pk, lists):
+        item, count = Music.objects.get(pk=pk), 0
+        for list_pk in lists:
+            post_list = MusicList.objects.get(pk=list_pk)
+            Music.create_track(
+                creator=item.creator,
+                list=post_list,
+                genre=item.genre,
+                title=item.title,
+                album=item.album,
+                file=item.file,
+                community=item.community
+            )
+            count += 1
+        item.copy += count
+        item.save(update_fields=["copy"])
 
     def get_code(self):
         return "mus" + str(self.pk)

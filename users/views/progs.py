@@ -1129,3 +1129,59 @@ class ChangeListPosition(View):
                 from survey.models import Survey
                 Survey.change_position(json.loads(request.body))
         return HttpResponse()
+
+
+class CopyCreate(View):
+    def post(self, request, *args, **kwargs):
+        from django.http import HttpResponse, HttpResponseBadRequest
+
+        type, lists, user_communities = request.POST.get('type'), request.POST.getlist('lists'), request.POST.getlist('u_c')
+        lists = request.POST.getlist('lists')
+        if request.is_ajax():
+
+            if lists:
+                if type[:3] == "pos":
+                    from posts.models import Post
+                    Post.copy_item(type[3:], lists)
+                elif type[:3] == "pho":
+                    from gallery.models import Photo
+                    Photo.copy_item(type[3:], lists)
+                elif type[:3] == "goo":
+                    from goods.models import Good
+                    Good.copy_item(type[3:], lists)
+                elif type[:3] == "vid":
+                    from video.models import Video
+                    Video.copy_item(type[3:], lists)
+                elif type[:3] == "doc":
+                    from docs.models import Doc
+                    Doc.copy_item(type[3:], lists)
+                elif type[:3] == "mus":
+                    from music.models import Music
+                    Music.copy_item(type[3:], lists)
+
+            elif user_communities:
+                if type[:3] == "lpo":
+                    from posts.models import PostsList
+                    PostsList.copy_item(type[3:], user_communities)
+                elif type[:3] == "lph":
+                    from gallery.models import PhotoList
+                    PhotoList.copy_item(type[3:], user_communities)
+                elif type[:3] == "lgo":
+                    from goods.models import GoodList
+                    GoodList.copy_item(type[3:], user_communities)
+                elif type[:3] == "lvi":
+                    from video.models import VideoList
+                    VideoList.copy_item(type[3:], user_communities)
+                elif type[:3] == "ldo":
+                    from docs.models import DocsList
+                    DocsList.copy_item(type[3:], user_communities)
+                elif type[:3] == "lmu":
+                    from music.models import MusicList
+                    MusicList.copy_item(type[3:], user_communities)
+                elif type[:3] == "lsu":
+                    from survey.models import SurveyList
+                    SurveyList.copy_item(type[3:], user_communities)
+
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
