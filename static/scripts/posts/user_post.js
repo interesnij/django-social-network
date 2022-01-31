@@ -259,9 +259,9 @@ on('#ajax', 'click', '.delete_list', function() {
     };
     parent.parentElement.querySelector(".second_list_name").innerHTML = "Список удален";
     list = document.body.querySelector( '[data-pk=' + '"' + type.slice(3) + '"' + ']' );
-    list.querySelector('.list_name').innerHTML = "";
+    list.querySelector('.list_name').innerHTML = "Список удален";
     _this.classList.replace("delete_list", "recover_list");
-    _this.innerHTML = "Восстановить список";
+    _this.innerHTML = "";
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat(stat_class,type.slice(3),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   }}
