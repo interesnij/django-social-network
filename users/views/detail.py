@@ -327,8 +327,8 @@ class ProfileUserView(TemplateView):
         c['user'],c['get_buttons_block'],c['common_frends'],c['is_photo_open'],\
         c['is_post_open'],c['is_community_open'],c['is_friend_open'],c['is_doc_open'],\
         c['is_video_open'],c['is_music_open'],c['is_good_open'],c['is_message_open'],\
-        c['post_list_pk'] = self.user,self.get_buttons_block,self.common_frends,\
+        = self.user,self.get_buttons_block,self.common_frends,\
         self.is_photo_open,self.is_post_open,self.is_community_open,self.is_friend_open,\
         self.is_doc_open,self.is_video_open,self.is_music_open,self.is_good_open,\
-        self.is_message_open,self.user.get_selected_post_list_pk()
+        self.is_message_open
         return c

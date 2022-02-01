@@ -53,7 +53,7 @@
     {% include 'mobile/users/profile/gallery.html' %}
   {% endif %}
 
-  <div class="load_post_list post_view_generator" list-pk="{{ post_list_pk }}"></div>
+  <div class="load_post_list post_view_generator" user-pk="{{ user.pk }}"></div>
 </div>
 
 {% endblock %}

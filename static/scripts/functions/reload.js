@@ -629,7 +629,11 @@ function if_list(block) {
   // прога подгружает списки чего либо при подгрузке страницы, а также подтягивает окна
     if (block.querySelector('.load_post_list')) {
         _block = block.querySelector('.load_post_list');
-        link = "/posts/list/" + _block.getAttribute("list-pk") + "/";
+        if (_block.getAttribute("user-pk")) {
+          link = "/posts/list/?user=" + _block.getAttribute("user-pk")
+        } else if (_block.getAttribute("community-pk")){
+          link = "/posts/list/?community=" + _block.getAttribute("community-pk")
+        };
         list_block_load(_block, ".post_container", link);
         scrolled(_block.querySelector('.list_pk'));
     } else if (block.querySelector('.is_block_post_paginate')) {

@@ -302,7 +302,15 @@ class LoadPostsList(ListView):
 	is_user_can_see_post_section, is_user_can_create_posts = None, None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		if request.GET.get("user"):
+			self.item = User.objects.get(pk=request.GET.get("user"))
+			self.post_lists = PostsList.get_user_lists(self.item.pk)
+			self.get_fixed_posts = self.item.get_fixed_posts()
+		elif request.GET.get("community"):
+			self.item = Community.objects.get(pk=request.GET.get("community"))
+			self.post_lists = PostsList.get_community_lists(self.item.pk)
+			self.get_fixed_posts = self.item.get_fixed_posts()
+		self.list = PostsList.objects.get(pk=self.item.get_selected_post_list_pk())
 		if request.user.is_anonymous:
 			self.is_user_can_see_post_list = self.list.is_anon_user_can_see_el()
 			if self.list.community:
@@ -331,6 +339,9 @@ class LoadPostsList(ListView):
 		context['is_user_can_see_post_section'] = self.is_user_can_see_post_section
 		context['is_user_can_see_post_list'] = self.is_user_can_see_post_list
 		context['is_user_can_create_posts'] = self.is_user_can_create_posts
+		context['post_lists'] = self.post_lists
+		context['get_fixed_posts'] = self.get_fixed_posts
+
 		return context
 
 	def get_queryset(self):
