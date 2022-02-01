@@ -320,12 +320,12 @@ class PhotoList(models.Model):
         return self.copy_el == self.ALL_CAN
 
     def add_in_community_collections(self, community):
-        if self.community.pk != community.pk and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+        if (self.community and self.community.pk != community.pk) and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPhotoListPosition
             self.communities.add(community)
             CommunityPhotoListPosition.objects.create(community=community.pk, list=self.pk, position=PhotoList.get_community_lists_count(community.pk))
     def remove_in_community_collections(self, community):
-        if self.community.pk != community.pk and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+        if (self.community and self.community.pk != community.pk) and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPhotoListPosition
             try:
                 CommunityPhotoListPosition.objects.get(community=community.pk, list=self.pk).delete()
@@ -333,12 +333,12 @@ class PhotoList(models.Model):
                 pass
             self.communities.remove(community)
     def add_in_user_collections(self, user):
-        if self.creator.pk != user.pk and user.pk not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+        if (self.community or self.creator.pk != user.pk) and user.pk not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
             from users.model.list import UserPhotoListPosition
             self.users.add(user)
             UserPhotoListPosition.objects.create(user=user.pk, list=self.pk, position=PhotoList.get_user_lists_count(user.pk))
     def remove_in_user_collections(self, user):
-        if self.creator.pk != user.pk and user.pk in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
+        if (self.community or self.creator.pk != user.pk) and user.pk in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
             from users.model.list import UserPhotoListPosition
             try:
                 UserPhotoListPosition.objects.get(user=user.pk, list=self.pk).delete()
