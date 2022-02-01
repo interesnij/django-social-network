@@ -202,7 +202,7 @@ on('#ajax', 'click', '#copy_for_communities', function() {
   current_block = parent.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
 
-  create_fullscreen("/users/load/communities/?type=" + form.querySelector(".item_type").value, "worker_fullscreen")
+  create_fullscreen("/users/load/communities/?type=" + this.getAttribute("data-type"), "worker_fullscreen")
 });
 
 on('#ajax', 'click', '#repost_for_wall', function() {

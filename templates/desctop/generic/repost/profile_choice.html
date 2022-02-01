@@ -24,7 +24,7 @@
         <label class="custom-control-label">Закрыто</label>
       </div>
       {% else %}
-      <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px">
+      <div class="custom-control custom-radio" id="copy_for_communities" style="margin-bottom:10px" data-type="{{ object.get_code }}">
         <input type="radio" class="custom-control-input copy_for_communities">
         <label class="custom-control-label">В сообщества</label>
       </div>
