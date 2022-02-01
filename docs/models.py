@@ -56,6 +56,13 @@ class DocsList(models.Model):
     def is_doc_list(self):
         return True
 
+    def count_reposts(self):
+        count = self.repost + self.copy
+        if count == 0:
+            return ''
+        else:
+            return count
+
     def change_position(query, community, user_id):
         if community:
             from communities.model.list import CommunityDocsListPosition
@@ -613,10 +620,11 @@ class Doc(models.Model):
         indexes = (BrinIndex(fields=['created']),)
 
     def count_reposts(self):
-        if self.repost == 0:
+        count = self.repost + self.copy
+        if count == 0:
             return ''
         else:
-            return self.repost
+            return count
 
     def get_code(self):
         return "doc" + str(self.pk)

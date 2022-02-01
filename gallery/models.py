@@ -67,6 +67,13 @@ class PhotoList(models.Model):
     def is_photo_list(self):
         return True
 
+    def count_reposts(self):
+        count = self.repost + self.copy
+        if count == 0:
+            return ''
+        else:
+            return count
+
     def change_position(query, community, user_id):
         if community:
             from communities.model.list import CommunityPhotoListPosition
@@ -846,10 +853,11 @@ class Photo(models.Model):
             photo.save(update_fields=["order"])
 
     def count_reposts(self):
-        if self.repost == 0:
+        count = self.repost + self.copy
+        if count == 0:
             return ''
         else:
-            return self.repost
+            return count
 
     def get_preview(self):
         if self.preview:

@@ -86,6 +86,13 @@ class VideoList(models.Model):
     def is_video_list(self):
         return True
 
+    def count_reposts(self):
+        count = self.repost + self.copy
+        if count == 0:
+            return ''
+        else:
+            return count
+
     def change_position(query, community, user_id):
         if community:
             from communities.model.list import CommunityVideoListPosition
@@ -843,10 +850,11 @@ class Video(models.Model):
             i.save(update_fields=["order"])
 
     def count_reposts(self):
-        if self.repost == 0:
+        count = self.repost + self.copy
+        if count == 0:
             return ''
         else:
-            return self.repost
+            return count
 
     def get_image(self):
         if self.image:

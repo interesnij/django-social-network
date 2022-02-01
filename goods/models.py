@@ -90,6 +90,13 @@ class GoodList(models.Model):
 	def __str__(self):
 		return self.name
 
+	def count_reposts(self):
+		count = self.repost + self.copy
+		if count == 0:
+			return ''
+		else:
+			return count
+
 	def get_code(self):
 		return "lgo" + str(self.pk)
 	def is_good_list(self):
@@ -889,10 +896,11 @@ class Good(models.Model):
 		else:
 			return ''
 	def count_reposts(self):
-		if self.repost > 0:
-			return self.repost
-		else:
+		count = self.repost + self.copy
+		if count == 0:
 			return ''
+		else:
+			return count
 
 	def likes(self):
 		from common.model.votes import GoodVotes
