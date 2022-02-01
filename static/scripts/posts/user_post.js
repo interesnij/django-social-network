@@ -643,7 +643,9 @@ on('#ajax', 'click', '.remove_list_in_user_collections', function() {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     parent = _this.parentElement.parentElement;
     parent.innerHTML = "";
-    parent.innerHTML = '<div class="custom-control custom-radio" id="copy_for_profile" style="margin-bottom:10px"><input type="radio" value="' + a + '" name="u_c" class="custom-control-input copy_for_profile"><label class="custom-control-label">В коллекцию</label></div>';
+    parent.setAttribute("id", "copy_for_profile");
+    parent.classList.add("custom-control", "custom-radio");
+    parent.innerHTML = '<input type="radio" value="' + a + '" name="u_c" class="custom-control-input copy_for_profile"><label class="custom-control-label">В коллекцию</label>';
   }};
 
   link_.send();
