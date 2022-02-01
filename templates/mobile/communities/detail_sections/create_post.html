@@ -1,5 +1,4 @@
 
-{% if is_user_can_work_post %}
 <div class="card mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);">
     <form id="c_form_post" name="new_post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -68,4 +67,3 @@
         </div>
     </form>
 </div>
-{% endif %}

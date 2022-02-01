@@ -47,7 +47,7 @@
       <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}: </span>
       {% include 'desctop/generic/items/list_meta.html' %}
 
-       {% if is_user_can_create_posts %}
+       {% if is_user_can_create_posts %} 
          {% include 'mobile/users/profile/new_post.html' %}
        {% elif is_user_can_create_offer_post %}
          {% include 'mobile/users/profile/new_offer_post.html' %}
