@@ -821,17 +821,16 @@ function open_video_fullscreen(url) {
 };
 
 function if_list(block) {
-    if (block.querySelector('.is_profile_post_paginate')) {
-        _block = block.querySelector('.is_profile_post_paginate');
-        link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'));
-    } else if (block.querySelector('.is_community_post_paginate')) {
-        _block = block.querySelector('.is_community_post_paginate');
-        link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'))
-    } else if (block.querySelector('.is_block_post_paginate')) {
+  if (block.querySelector('.load_post_list')) {
+      _block = block.querySelector('.load_post_list');
+      if (_block.getAttribute("user-pk")) {
+        link = "/posts/list/?user=" + _block.getAttribute("user-pk")
+      } else if (_block.getAttribute("community-pk")){
+        link = "/posts/list/?community=" + _block.getAttribute("community-pk")
+      };
+      list_block_load(_block, ".post_container", link);
+      scrolled(_block.querySelector('.list_pk'));
+  } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");
         list_load(lenta, link);

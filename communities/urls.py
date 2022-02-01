@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^members/(?P<pk>\d+)/$', CommunityMembersView.as_view(), name='community_members'),
     url(r'^friends/(?P<pk>\d+)/$', CommunityFriendsView.as_view(), name='community_friends'),
 
-    url(r'^list/(?P<pk>\d+)/(?P<list_pk>\d+)/$', CommunityPostsListView.as_view(), name="community_post_list"),
     url(r'^draft/(?P<pk>\d+)/$', PostsDraftCommunity.as_view(), name="community_draft_list"),
     url(r'^user_draft/(?P<pk>\d+)/$', PostsUserDraftCommunity.as_view(), name="community_user_draft_list"),
 
