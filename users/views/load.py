@@ -336,8 +336,8 @@ class CommunitiesLoad(ListView):
 		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
-        c = super(CommunitiesLoad,self).get_context_data(**kwargs)
-        c['list'] = self.list
+		c = super(CommunitiesLoad,self).get_context_data(**kwargs)
+		c['list'] = self.list
 		return c
 
 	def get_queryset(self):
