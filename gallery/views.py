@@ -208,14 +208,14 @@ class AddPhotosInList(View):
 
 
 class LoadPhotosList(ListView):
-	template_name = None
-	paginate_by = 15
+	template_name, community, paginate_by = None, None, 15
 
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
 		if request.user.is_anonymous:
 			self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
 			if self.list.community:
+				self.community = self.list.community
 				from common.templates import get_template_anon_community_list
 				self.template_name = get_template_anon_community_list(self.list, "communities/photos/list/anon_photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
 				self.is_user_can_see_photo_section = self.community.is_anon_user_can_see_photo()
@@ -239,6 +239,7 @@ class LoadPhotosList(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(LoadPhotosList,self).get_context_data(**kwargs)
 		context['list'] = self.list
+		context['community'] = self.community
 		context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
 		context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
 		context['is_user_can_create_photos'] = self.is_user_can_create_photos
