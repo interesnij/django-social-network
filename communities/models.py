@@ -887,7 +887,7 @@ class Community(models.Model):
         user_membership = self.memberships.get(user=user).delete()
         self.minus_member()
         user.minus_communities(1)
-        self.delete_news_subscriber_from_list(user.pk)
+        self.delete_news_subscriber_from_main_list(user.pk)
 
     def count_members(self):
         from communities.model.settings import CommunityInfo
