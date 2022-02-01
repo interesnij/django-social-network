@@ -102,6 +102,15 @@ class GoodList(models.Model):
 	def is_good_list(self):
 		return True
 
+	def is_user_list(self, user):
+		return self in user.get_good_lists()
+	def is_user_collection_list(self, user_id):
+		return user_id in self.get_users_ids()
+	def is_community_list(self, community):
+		return self in community.get_good_lists()
+	def is_community_collection_list(self, community_id):
+		return community_id in self.get_communities_ids()
+
 	def change_position(query, community, user_id):
 		if community:
 			from communities.model.list import CommunityGoodListPosition

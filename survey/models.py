@@ -60,6 +60,15 @@ class SurveyList(models.Model):
     def is_survey_list(self):
         return True
 
+    def is_user_list(self, user):
+        return self in user.get_survey_lists()
+    def is_user_collection_list(self, user_id):
+        return user_id in self.get_users_ids()
+    def is_community_list(self, community):
+        return self in community.get_survey_lists()
+    def is_community_collection_list(self, community_id):
+        return community_id in self.get_communities_ids()
+
     def count_reposts(self):
         count = self.repost + self.copy
         if count == 0:
