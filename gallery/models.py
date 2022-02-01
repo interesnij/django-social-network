@@ -322,8 +322,8 @@ class PhotoList(models.Model):
     def add_in_community_collections(self, community):
         if self.community.pk != community.pk and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPhotoListPosition
-            CommunityPhotoListPosition.objects.create(community=community.pk, list=self.pk, position=PhotoList.get_community_lists_count(community.pk))
             self.communities.add(community)
+            CommunityPhotoListPosition.objects.create(community=community.pk, list=self.pk, position=PhotoList.get_community_lists_count(community.pk))
     def remove_in_community_collections(self, community):
         if self.community.pk != community.pk and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPhotoListPosition
@@ -335,8 +335,8 @@ class PhotoList(models.Model):
     def add_in_user_collections(self, user):
         if self.creator.pk != user.pk and user.pk not in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
             from users.model.list import UserPhotoListPosition
-            UserPhotoListPosition.objects.create(user=user.pk, list=self.pk, position=PhotoList.get_user_lists_count(user.pk))
             self.users.add(user)
+            UserPhotoListPosition.objects.create(user=user.pk, list=self.pk, position=PhotoList.get_user_lists_count(user.pk))
     def remove_in_user_collections(self, user):
         if self.creator.pk != user.pk and user.pk in [i['pk'] for i in self.users.exclude(type__contains="_").values("pk")]:
             from users.model.list import UserPhotoListPosition
