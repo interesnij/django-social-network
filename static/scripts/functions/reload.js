@@ -630,7 +630,7 @@ function if_list(block) {
     if (block.querySelector('.load_post_list')) {
         _block = block.querySelector('.load_post_list');
         link = "/posts/list/" + _block.getAttribute("list-pk") + "/";
-        list_load(_block, ".post_container");
+        list_load(_block, link);
         scrolled(_block.querySelector('.list_pk'));
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
