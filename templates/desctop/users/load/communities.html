@@ -38,7 +38,7 @@
               </span>
             </div>
 
-            {% elif list|is_user_collection_list:request.user.pk %}
+            {% elif list|is_community_collection_list:request.user.pk %}
 
             <div class="media border-bottom" data-pk="c{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
