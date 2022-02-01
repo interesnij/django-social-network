@@ -13,11 +13,11 @@
     <div style="padding-top: 10px; margin-bottom: 10px; display: flex;">
       <figure>
         {% if user.s_avatar %}
-          <img style="border-radius:30px;width:30px;" alt="image" src="{{ user.s_avatar.url }}" />
+          <img style="border-radius:50%;width:80px;" alt="image" src="{{ user.s_avatar.url }}" />
           <form id="add_user_avatar">
             {% csrf_token %}
             <input type="file" id="user_avatar_upload" name="file" style="display:none">
-            <svg class="pointer previous_click" fill="currentColor" viewBox="0 0 24 24" class="svg_default pointer" style="width:30px;position: absolute;top: 92px;left: 85px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+            <svg class="pointer previous_click" fill="currentColor" viewBox="0 0 24 24" class="svg_default pointer" style="width:30px;position:absolute;top:80px;left:0px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
           </form>
         {% else %}
         <form id="add_user_avatar">
