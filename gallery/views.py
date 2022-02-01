@@ -228,6 +228,7 @@ class LoadPhotosList(ListView):
 			self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
 			self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
 			if self.list.community:
+				self.community = self.list.community
 				from common.templates import get_template_community_list
 				self.template_name = get_template_community_list(self.list, "communities/photos/list/", "photo_list.html", request.user, request.META['HTTP_USER_AGENT'])
 				self.is_user_can_see_photo_section = self.community.is_user_can_see_photo(request.user.pk)
