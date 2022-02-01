@@ -228,15 +228,7 @@ on('#ajax', 'click', '#u_repost_for_community', function() {
   parent.querySelector("#repost_radio_message").removeAttribute("checked");
   current_block = parent.nextElementSibling;
   current_block.querySelector(".collector").innerHTML = "";
-
-  form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
-  copy_case = form.querySelector("#toggle_case_item_copy");
-  if (copy_case.classList.contains("underline")) {
-    url = "/users/load/communities_post_lists/?type=" + form.querySelector(".item_type").value
-  } else {
-    url = "/users/load/communities_post_lists/"
-  };
-  create_fullscreen(url, "worker_fullscreen");
+  create_fullscreen("/users/load/communities_post_lists/", "worker_fullscreen");
 });
 on('#ajax', 'click', '#repost_for_message', function() {
   this.querySelector("#repost_radio_message").setAttribute("checked", "true");

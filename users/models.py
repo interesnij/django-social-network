@@ -873,18 +873,6 @@ class User(AbstractUser):
         from posts.models import Post
         return Post.objects.filter(creator_id=self.id, community_id=community_pk, type=Post.C_OFFER)
 
-    def get_post_lists(self):
-        from posts.models import PostsList
-        query = Q(creator_id=self.id, community__isnull=True)
-        query.add(~Q(type__contains="_"), Q.AND)
-        return PostsList.objects.filter(query)
-
-    def get_post_lists_from_staffed_comunities(self):
-        from posts.models import PostsList
-        query = Q(community__in=self.get_staffed_communities())
-        query.add(~Q(type__contains="_"), Q.AND)
-        return PostsList.objects.filter(query)
-
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
         list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
@@ -914,9 +902,25 @@ class User(AbstractUser):
         list = UserSurveyListPosition.objects.filter(user=self.pk, type=1).first()
         return list.list
 
+    def get_post_lists(self):
+        from posts.models import PostsList
+        query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PostsList.objects.filter(query)
+    def get_post_lists_from_staffed_comunities(self):
+        from posts.models import PostsList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PostsList.objects.filter(query)
+
     def get_survey_lists(self):
         from survey.models import SurveyList
         query = Q(creator_id=self.id, community__isnull=True)
+        query.add(~Q(type__contains="_"), Q.AND)
+        return SurveyList.objects.filter(query)
+    def get_survey_lists_from_staffed_comunities(self):
+        from survey.models import SurveyList
+        query = Q(community__in=self.get_staffed_communities())
         query.add(~Q(type__contains="_"), Q.AND)
         return SurveyList.objects.filter(query)
 
@@ -929,29 +933,59 @@ class User(AbstractUser):
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return PhotoList.objects.filter(query)
+    def get_photo_lists_from_staffed_comunities(self):
+        from gallery.models import PhotoList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return PhotoList.objects.filter(query)
+
     def get_video_lists(self):
         from video.models import VideoList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return VideoList.objects.filter(query)
+    def get_video_lists_from_staffed_comunities(self):
+        from video.models import VideoList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return VideoList.objects.filter(query)
+
     def get_music_lists(self):
         from music.models import MusicList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return MusicList.objects.filter(query)
+    def get_music_lists_from_staffed_comunities(self):
+        from music.models import MusicList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return MusicList.objects.filter(query)
+
     def get_good_lists(self):
         from goods.models import GoodList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return GoodList.objects.filter(query)
+    def get_good_lists_from_staffed_comunities(self):
+        from good.models import GoodList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return GoodList.objects.filter(query)
+
     def get_survey_lists(self):
         from survey.models import SurveyList
         query = Q(creator_id=self.id, community__isnull=True)
         query.add(~Q(type__contains="_"), Q.AND)
         return SurveyList.objects.filter(query)
+
     def get_doc_lists(self):
         from docs.models import DocsList
         return DocsList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
+    def get_doc_lists_from_staffed_comunities(self):
+        from doc.models import DocsList
+        query = Q(community__in=self.get_staffed_communities())
+        query.add(~Q(type__contains="_"), Q.AND)
+        return DocsList.objects.filter(query)
 
     def get_good_list(self):
         from goods.models import GoodList

@@ -266,11 +266,25 @@ class PostListsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/post_lists.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.list = request.user.get_post_lists()
+		type = request.GET.get('type')
+		if type[:3] == "pos":
+			self.lists = request.user.get_post_lists()
+		elif type[:3] == "pho":
+			self.lists = request.user.get_photo_lists()
+		elif type[:3] == "goo":
+			self.lists = request.user.get_good_lists()
+		elif type[:3] == "vid":
+			self.lists = request.user.get_video_lists()
+		elif type[:3] == "doc":
+			self.lists = request.user.get_doc_lists()
+		elif type[:3] == "mus":
+			self.lists = request.user.get_music_lists()
+		else:
+			self.lists = request.user.get_post_lists()
 		return super(PostListsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.list
+		return self.slist
 
 class ChatItemsLoad(ListView):
 	template_name, paginate_by = None, 15
@@ -288,10 +302,25 @@ class CommunitiesPostListsLoad(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("users/load/communities_post_lists.html", request.user, request.META['HTTP_USER_AGENT'])
+		type = request.GET.get('type')
+		if type[:3] == "pos":
+			self.lists = request.user.get_post_lists_from_staffed_comunities()
+		elif type[:3] == "pho":
+			self.lists = request.user.get_photo_lists_from_staffed_comunities()
+		elif type[:3] == "goo":
+			self.lists = request.user.get_good_lists_from_staffed_comunities()
+		elif type[:3] == "vid":
+			self.lists = request.user.get_video_lists_from_staffed_comunities()
+		elif type[:3] == "doc":
+			self.lists = request.user.get_doc_lists_from_staffed_comunities()
+		elif type[:3] == "mus":
+			self.lists = request.user.get_music_lists_from_staffed_comunities()
+		else:
+			self.lists = request.user.get_post_lists_from_staffed_comunities()
 		return super(CommunitiesPostListsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.request.user.get_post_lists_from_staffed_comunities()
+		return self.lists
 
 class CommunitiesLoad(ListView):
 	template_name, paginate_by = None, 15
