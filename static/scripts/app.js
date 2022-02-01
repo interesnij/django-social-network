@@ -1,11 +1,11 @@
-loadScripts('/static/scripts/functions/other.js');
+loadScripts('/static/scripts/functions/other.js?ver2');
 loadScripts('/static/scripts/functions/preview.js');
 loadScripts('/static/scripts/functions/comment_attach.js');
 loadScripts('/static/scripts/functions/post_attach.js');
 loadScripts('/static/scripts/functions/message_attach.js');
-loadScripts('/static/scripts/functions/reload.js');
+loadScripts('/static/scripts/functions/reload.js?ver2');
 
-loadScripts('/static/scripts/community/get.js');
+loadScripts('/static/scripts/community/get.js?ver2');
 loadScripts('/static/scripts/community/post.js');
 loadScripts('/static/scripts/community/manage.js');
 
@@ -29,15 +29,14 @@ loadScripts('/static/scripts/music/community_get.js');
 loadScripts('/static/scripts/music/user_post.js');
 loadScripts('/static/scripts/music/community_post.js');
 
-loadScripts('/static/scripts/posts/user_get.js');
+loadScripts('/static/scripts/posts/user_get.js?ver2');
 loadScripts('/static/scripts/posts/community_get.js');
-loadScripts('/static/scripts/posts/user_post.js');
+loadScripts('/static/scripts/posts/user_post.js?ver2');
 loadScripts('/static/scripts/posts/community_post.js');
 
-loadScripts('/static/scripts/user/claim.js');
 loadScripts('/static/scripts/user/settings.js');
-loadScripts('/static/scripts/user/connect.js');
-loadScripts('/static/scripts/user/chat.js');
+loadScripts('/static/scripts/user/connect.js?ver2');
+loadScripts('/static/scripts/user/chat.js?ver2');
 
 loadScripts('/static/scripts/video/user_get.js');
 loadScripts('/static/scripts/video/community_get.js');

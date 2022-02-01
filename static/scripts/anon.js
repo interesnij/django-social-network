@@ -1043,7 +1043,7 @@ loadScripts('/static/scripts/lib/progressive-image.js');
 loadScripts('/static/scripts/docs/community_get.js');
 loadScripts('/static/scripts/docs/user_get.js');
 loadScripts('/static/scripts/posts/community_get.js');
-loadScripts('/static/scripts/posts/user_get.js');
+loadScripts('/static/scripts/posts/user_get.js?ver2');
 loadScripts('/static/scripts/gallery/community_get.js');
 loadScripts('/static/scripts/gallery/user_get.js');
 loadScripts('/static/scripts/goods/community_get.js');
