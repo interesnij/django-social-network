@@ -1634,3 +1634,57 @@ on('#ajax', 'click', '#append_friends_to_chat_btn', function() {
       close_work_fullscreen();
     }
 });
+
+
+function create_community_input_card(name, pk, link) {
+  $span = document.createElement("span");
+  $span.setAttribute("data-pk", pk);
+  $span.classList.add("btn","btn-sm","custom_color");
+  $span.innerHTML = "<a target='_blank' href='" + link + "'>" + name + "</a><span class='remove_community_input pointer'>x<span>";
+  $span.style.margin = "2px";
+  $input = document.createElement("input");
+  $input.classList.add("list_pk");
+  $input.setAttribute("type", "hidden");
+  $input.setAttribute("name", "u_c");
+  $input.value = "c" + pk;
+  $span.append($input);
+  return $span
+};
+on('#ajax', 'click', '.communities_toggle', function() {
+  container = this.parentElement.parentElement.parentElement;
+  btn = container.querySelector(".form_btn");
+  header = container.querySelector(".card-header");
+  header_title = header.querySelector(".header_title");
+  pk = this.getAttribute("data-pk");
+  link = this.getAttribute("data-link");
+
+  if (this.querySelector(".active_svg")) {
+    input_svg = this.querySelector(".active_svg");
+    input_svg.classList.remove("active_svg");
+    input_svg.setAttribute("tooltip", "Выбрать сообщество")
+    friend_input = header.querySelector('[data-pk=' + '"' + pk + '"' + ']');
+    friend_input.remove();
+    if (!header.querySelector(".remove_community_input")) {
+      header.querySelector(".header_title").style.display = "block";
+    }
+  } else {
+    input_svg = this.querySelector(".item_attach_circle");
+    input_svg.classList.add("active_svg");
+    input_svg.setAttribute("tooltip", "Отменить")
+    header_title.style.display = "none";
+    header.append(create_community_input_card(this.querySelector("h6").innerHTML, pk, link))
+  };
+
+  count = container.querySelectorAll(".active_svg").length;
+  if (count > 1) {
+    btn_text = "Выбрать сообщества" + " (" + count + ")";
+    btn.disabled = false;
+  } else if (count == 1) {
+    btn_text = "Выбрать сообщество";
+    btn.disabled = false;
+  } else {
+    btn_text = "Выберите сообщества";
+    btn.disabled = true;
+  };
+  btn.innerHTML = btn_text;
+});
