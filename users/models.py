@@ -982,7 +982,7 @@ class User(AbstractUser):
         from docs.models import DocsList
         return DocsList.objects.filter(creator_id=self.id, community__isnull=True).exclude(type__contains="_")
     def get_doc_lists_from_staffed_comunities(self):
-        from doc.models import DocsList
+        from docs.models import DocsList
         query = Q(community__in=self.get_staffed_communities())
         query.add(~Q(type__contains="_"), Q.AND)
         return DocsList.objects.filter(query)
