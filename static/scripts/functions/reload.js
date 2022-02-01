@@ -627,16 +627,11 @@ function load_item_window() {
 
 function if_list(block) {
   // прога подгружает списки чего либо при подгрузке страницы, а также подтягивает окна
-    if (block.querySelector('.is_profile_post_paginate')) {
-        _block = block.querySelector('.is_profile_post_paginate');
-        link = "/users/detail/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block, ".post_container", link);
+    if (block.querySelector('.load_post_list')) {
+        _block = block.querySelector('.load_post_list');
+        link = "/posts/list/" + _block.getAttribute("list-pk") + "/";
+        list_block_load(_block, ".post_container");
         scrolled(_block.querySelector('.list_pk'));
-    } else if (block.querySelector('.is_community_post_paginate')) {
-        _block = block.querySelector('.is_community_post_paginate');
-        link = "/communities/list/" + document.body.querySelector(".pk_saver").getAttribute("data-pk") + "/" + _block.getAttribute("list-pk") + "/";
-        list_block_load(_block, ".post_container", link);
-        scrolled(_block.querySelector('.list_pk'))
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
         link = lenta.getAttribute("data-link");

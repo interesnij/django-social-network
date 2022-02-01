@@ -53,13 +53,7 @@
     {% include 'mobile/users/profile/gallery.html' %}
   {% endif %}
 
-  <div class="is_profile_post_paginate post_view_generator" list-pk="{{ post_list_pk }}"></div>
+  <div class="load_post_list post_view_generator" list-pk="{{ post_list_pk }}"></div>
 </div>
 
-{% load get_key %}
-<script>
-  {% if user|is_user_list:user.get_music_list_id %}
-    document.querySelector("body").classList.add('list_' + {{ user.get_music_list_id }});
-  {% endif %}
-</script>
 {% endblock %}

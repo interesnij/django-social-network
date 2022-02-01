@@ -295,3 +295,43 @@ class PostListLoadIncludeUsers(ListView):
 			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 			self.list.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 		return HttpResponse()
+
+
+class LoadPostsList(ListView):
+	template_name, community, paginate_by, is_user_can_see_post_list, \
+	is_user_can_see_post_section, is_user_can_create_posts = None, None, 15, None, None, None
+
+	def get(self,request,*args,**kwargs):
+		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
+		if request.user.is_anonymous:
+			self.is_user_can_see_post_list = self.list.is_anon_user_can_see_el()
+			if self.list.community:
+				self.community = self.list.community
+				self.template_name = get_template_anon_community_list(self.list, "communities/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_post_section = self.community.is_anon_user_can_see_post()
+			else:
+				self.template_name = get_template_anon_user_list(self.list, "users/lenta/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_post_section = self.list.creator.is_anon_user_can_see_post()
+		else:
+			self.is_user_can_see_post_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_posts = self.list.is_user_can_create_el(request.user.pk)
+			if self.list.community:
+				self.community = self.list.community
+				self.template_name = get_template_community_list(self.list, "communities/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_post_section = self.community.is_user_can_see_post(request.user.pk)
+			else:
+				self.template_name = get_template_user_list(self.list, "users/lenta/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+				self.is_user_can_see_post_section = self.list.creator.is_user_can_see_post(request.user.pk)
+		return super(LoadPostsList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(LoadPostsList,self).get_context_data(**kwargs)
+		context['list'] = self.list
+		context['community'] = self.community
+		context['is_user_can_see_post_section'] = self.is_user_can_see_post_section
+		context['is_user_can_see_post_list'] = self.is_user_can_see_post_list
+		context['is_user_can_create_posts'] = self.is_user_can_create_posts
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()
