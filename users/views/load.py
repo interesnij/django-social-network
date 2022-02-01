@@ -328,7 +328,7 @@ class CommunitiesLoad(ListView):
 	template_name, paginate_by, list = None, 15, None
 
 	def get(self,request,*args,**kwargs):
-		from commom.utils import get_list_of_type
+		from common.utils import get_list_of_type
 
 		if request.GET.get('type'):
 			self.list = get_list_of_type(request.GET.get('type'))
