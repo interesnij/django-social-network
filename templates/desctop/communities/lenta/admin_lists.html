@@ -14,7 +14,7 @@
           </div>
         </li>
         {% else %}
-          <li class="date list {% if forloop.first %}active{% else %}post_list_change pointer{% endif %}" data-type="user_post_list" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
+          <li class="date list {% if forloop.first %}active{% else %}post_list_change pointer{% endif %}" data-type="community_post_list" list-pk="{{ object.pk }}" data-pk="{{ object.pk }}">
             <div class="media">
               <a href="{% url 'user' pk=object.creator.pk %}" class="ajax">
                 <figure tooltip="{{ object.creator.get_full_name }}" flow="right">{{ object.creator.get_s_avatar|safe }}</figure>
