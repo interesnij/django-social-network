@@ -523,6 +523,8 @@ on('#ajax', 'click', '#add_list_selected_communities_btn', function() {
     final_list += '<a href="' + this.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
     final_list += '<input type="hidden" name="u_c" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
+  console.log(final_list);
+  console.log(collector);
   collector.innerHTML = "";
   collector.innerHTML = final_list;
   form.classList.remove("cool_private_form");
