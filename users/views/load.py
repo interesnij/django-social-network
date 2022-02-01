@@ -325,11 +325,20 @@ class CommunitiesPostListsLoad(ListView):
 		return self.lists
 
 class CommunitiesLoad(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, list = None, 15, None
 
 	def get(self,request,*args,**kwargs):
+		from commom.utils import get_list_of_type
+
+		if request.GET.get('type'):
+			self.list = get_list_of_type(request.GET.get('type'))
 		self.template_name = get_settings_template("users/load/communities.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(CommunitiesLoad,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+        c = super(CommunitiesLoad,self).get_context_data(**kwargs)
+        c['list'] = self.list
+		return c
 
 	def get_queryset(self):
 		return self.request.user.get_staffed_communities()

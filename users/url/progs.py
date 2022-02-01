@@ -20,7 +20,10 @@ urlpatterns = [
     url(r'^recover_comment/$', CommentRecover.as_view()),
     url(r'^create_repost/$', RepostCreate.as_view()),
     url(r'^create_claim/$', ClaimCreate.as_view()),
+
     url(r'^create_copy/$', CopyCreate.as_view()),
+    url(r'^uncopy_user_list/$', UserListUncopy.as_view()),
+    url(r'^uncopy_community_list/(?P<pk>\d+)/$', CommunityListUncopy.as_view()),
 
     url(r'^create_list/$', ListCreate.as_view()),
     url(r'^edit_list/$', ListEdit.as_view()),

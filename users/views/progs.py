@@ -1185,3 +1185,66 @@ class CopyCreate(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+class UserListUncopy(View):
+    def get(self, request, *args, **kwargs):
+        from django.http import HttpResponse
+        type = request.GET.get('type')
+
+        if type[:3] == "lpo":
+            from posts.models import PostsList
+            list = PostsList.objects.get(pk=type[3:])
+        elif type[:3] == "lph":
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=type[3:])
+        elif type[:3] == "lgo":
+            from goods.models import GoodList
+            list = GoodList.objects.get(pk=type[3:])
+        elif type[:3] == "lvi":
+            from video.models import VideoList
+            list = VideoList.objects.get(pk=type[3:])
+        elif type[:3] == "ldo":
+            from docs.models import DocsList
+            list = DocsList.objects.get(pk=type[3:])
+        elif type[:3] == "lmu":
+            from music.models import MusicList
+            list = MusicList.objects.get(pk=type[3:])
+        elif type[:3] == "lsu":
+            from survey.models import SurveyList
+            list = SurveyList.objects.get(pk=type[3:])
+        list.remove_in_user_collections(request.user)
+        return HttpResponse()
+
+class CommunityListUncopy(View):
+    def get(self, request, *args, **kwargs):
+        from django.http import HttpResponse
+        from communities.models import Community
+
+        type = request.GET.get('type')
+        community = Community.objects.get(pk=self.kwargs["pk"])
+        if not request.user.pk in community.get_administrators_ids():
+            return HttpResponse()
+
+        if type[:3] == "lpo":
+            from posts.models import PostsList
+            list = PostsList.objects.get(pk=type[3:])
+        elif type[:3] == "lph":
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=type[3:])
+        elif type[:3] == "lgo":
+            from goods.models import GoodList
+            list = GoodList.objects.get(pk=type[3:])
+        elif type[:3] == "lvi":
+            from video.models import VideoList
+            list = VideoList.objects.get(pk=type[3:])
+        elif type[:3] == "ldo":
+            from docs.models import DocsList
+            list = DocsList.objects.get(pk=type[3:])
+        elif type[:3] == "lmu":
+            from music.models import MusicList
+            list = MusicList.objects.get(pk=type[3:])
+        elif type[:3] == "lsu":
+            from survey.models import SurveyList
+            list = SurveyList.objects.get(pk=type[3:])
+        list.remove_in_community_collections(community)
+        return HttpResponse()
