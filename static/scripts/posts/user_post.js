@@ -650,6 +650,25 @@ on('#ajax', 'click', '.remove_list_in_user_collections', function() {
 
   link_.send();
 });
+on('#ajax', 'click', '.remove_list_in_community_collections', function() {
+  _this = this;
+  pk = _this.getAttribute("data-pk");
+  type = _this.getAttribute("data-type");
+  block = _this.parentElement.parentElement.parentElement;
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/users/progs/uncopy_community_list/" + pk + "/?type=" + type, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    parent = _this.parentElement;
+    parent.innerHTML = "";
+    parent.innerHTML = "Сообщество";
+    block.classList.add("communities_toggle");
+  }};
+
+  link_.send();
+});
 
 on('#ajax', 'click', '.video_load_one', function() {
   _this = this;
