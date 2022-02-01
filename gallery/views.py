@@ -208,7 +208,8 @@ class AddPhotosInList(View):
 
 
 class LoadPhotosList(ListView):
-	template_name, community, paginate_by = None, None, 15
+	template_name, community, paginate_by, is_user_can_see_photo_list, \
+	is_user_can_see_photo_section, is_user_can_create_photos = None, None, 15, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		self.list = PhotoList.objects.get(pk=self.kwargs["pk"])
