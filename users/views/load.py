@@ -285,7 +285,7 @@ class PostListsLoad(ListView):
 		return super(PostListsLoad,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.slist
+		return self.list
 
 class ChatItemsLoad(ListView):
 	template_name, paginate_by = None, 15
