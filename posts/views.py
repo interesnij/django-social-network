@@ -303,10 +303,12 @@ class LoadPostsList(ListView):
 
 	def get(self,request,*args,**kwargs):
 		if request.GET.get("user"):
+			from users.models import User
 			self.item = User.objects.get(pk=request.GET.get("user"))
 			self.post_lists = PostsList.get_user_lists(self.item.pk)
 			self.get_fixed_posts = self.item.get_fixed_posts()
 		elif request.GET.get("community"):
+			from communities.models import Community
 			self.item = Community.objects.get(pk=request.GET.get("community"))
 			self.post_lists = PostsList.get_community_lists(self.item.pk)
 			self.get_fixed_posts = self.item.get_fixed_posts()
