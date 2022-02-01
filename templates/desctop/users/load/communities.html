@@ -13,7 +13,7 @@
         <div class="is_block_paginate">
           {% for object in object_list %}
 
-            {% if list|is_community_list:request.user %}
+            {% if list|is_community_list:object.pk %}
             <div class="media pointer border-bottom" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.s_avatar %}
