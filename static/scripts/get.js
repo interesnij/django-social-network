@@ -514,7 +514,7 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
 on('#ajax', 'click', '#add_list_selected_communities_btn', function() {
   form = this.parentElement.parentElement;
   form.querySelector(".form_btn").disabled = true;
-  collector = document.body.querySelector(".collector_active");
+  collector = document.body.querySelector(".collectorrr");
   users_block = form.querySelector(".card-header");
   users_list = users_block.querySelectorAll(".custom_color");
   final_list = "Выбраны сообщества: ";
