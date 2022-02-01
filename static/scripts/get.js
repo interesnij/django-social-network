@@ -510,3 +510,21 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
   form.classList.remove("cool_private_form");
   close_work_fullscreen();
 });
+
+on('#ajax', 'click', '#add_list_selected_communities_btn', function() {
+  form = this.parentElement;
+  form.querySelector(".form_btn").disabled = true;
+  collector = document.body.querySelector(".collector_active");
+  users_block = form.querySelector(".card-header");
+  users_list = users_block.querySelectorAll(".custom_color");
+  final_list = "Выбраны сообщества: ";
+  for (var i = 0; i < users_list.length; i++){
+    a = users_list[i].querySelector("a");
+    final_list += '<a href="' + this.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
+    final_list += '<input type="hidden" name="u_c" value="' + users_list[i].getAttribute("data-pk") + '" />'
+  };
+  collector.innerHTML = "";
+  collector.innerHTML = final_list;
+  form.classList.remove("cool_private_form");
+  close_work_fullscreen();
+});
