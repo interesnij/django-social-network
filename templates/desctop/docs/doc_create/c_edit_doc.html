@@ -14,7 +14,7 @@
                     <label>Списки</label>
                     <select name="list" id="id_list">
                       {% for list in community.get_doc_lists %}
-                        <option value="{{ list.pk }}" {% if list|item_in_list:doc.pk %}selected=""{% endif %}>{{ list.name }}</option>
+                        <option value="{{ list.pk }}" {% if list.pk == doc.lost.pk %}selected=""{% endif %}>{{ list.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
