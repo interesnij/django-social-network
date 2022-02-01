@@ -9,7 +9,7 @@
       </div>
       {% elif object|is_user_collection_list:request.user.pk %}
       <div class="" style="margin-bottom:10px">
-        <label>Список в коллекции - <a class="pointer remove_list_in_user_collections">удалить</a></label>
+        <label>Список в коллекции - <a class="pointer remove_list_in_user_collections" data-pk="{{ request.user.pk }}">удалить</a></label>
       </div>
       {% else %}
       <div class="custom-control custom-radio" id="copy_for_profile" style="margin-bottom:10px">

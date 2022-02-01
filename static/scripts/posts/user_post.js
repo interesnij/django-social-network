@@ -630,6 +630,25 @@ on('#ajax', 'click', '#create_claim_btn', function() {
   link_.send(form_data);
 });
 
+on('#ajax', 'click', '.remove_list_in_user_collections', function() {
+  _this = this;
+  a = "u" + _this.getAttribute("data-pk");
+  form = _this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  input = form.querySelector(".item_type").value
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/users/progs/uncopy_user_list/?type=" + form.querySelector(".item_type").value, true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    parent = _this.parentElement.parentElement;
+    parent.innerHTML = "";
+    parent.innerHTML = '<div class="custom-control custom-radio" id="copy_for_profile" style="margin-bottom:10px"><input type="radio" value="' + a + '" name="u_c" class="custom-control-input copy_for_profile"><label class="custom-control-label">В коллекцию</label></div>';
+  }};
+
+  link_.send();
+});
+
 on('#ajax', 'click', '.video_load_one', function() {
   _this = this;
   pk = _this.getAttribute('video-pk');
