@@ -13,7 +13,7 @@
         <div class="is_block_paginate">
           {% for object in object_list %}
 
-            {% if list|is_community_list:object.pk %}
+            {% if list|is_community_list:object %}
             <div class="media pointer border-bottom" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
                 {% if object.s_avatar %}
@@ -38,7 +38,7 @@
               </span>
             </div>
 
-            {% elif list|is_community_collection_list:request.user.pk %}
+            {% elif list|is_community_collection_list:object.pk %}
 
             <div class="media border-bottom" data-pk="c{{ object.pk }}" data-link="{{ object.get_link }}" style="position:relative;margin-bottom: 5px;padding-bottom: 5px;">
               <figure>
