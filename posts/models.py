@@ -553,12 +553,12 @@ class PostsList(models.Model):
         return UserPostsListPosition.objects.get(list=self.pk)
 
     def add_in_community_collections(self, community):
-        if (self.community and self.community.pk != community.pk) and community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+        if (self.community and self.community.pk != community.pk) or community.pk not in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPostsListPosition
             self.communities.add(community)
             CommunityPostsListPosition.objects.create(community=community.pk, list=self.pk, position=PostsList.get_community_lists_count(community.pk))
     def remove_in_community_collections(self, community):
-        if (self.community and self.community.pk != community.pk) and community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
+        if (self.community and self.community.pk != community.pk) or community.pk in [i['pk'] for i in self.communities.exclude(type__contains="_").values("pk")]:
             from communities.model.list import CommunityPostsListPosition
             try:
                 CommunityPostsListPosition.objects.get(community=community.pk, list=self.pk).delete()
