@@ -1101,20 +1101,17 @@ class Message(models.Model):
         users = User.objects.filter(is_superuser=True).exclude(type__contains="_")
         _text = Message.get_format_text(text)
         _attach = Message.get_format_attach(attach)
-        objs = [
-            Message(
-                    chat_id = user.get_or_create_manager_chat_pk(),
-                    creator_id = creator_pk,
-                    voice = voice,
-                    text = _text,
-                    attach = _attach,
-                )
-                for user in users
-            ]
-        Message.objects.bulk_create(objs)
-
-        for user in users:
-            Message.create_socket(user.pk, False)
+        for u in users:
+            chat = Chat.objects.create(pk=user.get_or_create_manager_chat_pk())
+            message = Message.objects.create(
+                chat_id = chat.pk,
+                creator_id = creator_pk,
+                voice = voice,
+                text = _text,
+                attach = _attach,
+            )
+            for recipient in chat.get_recipients_2(creator_pk):
+                message.create_socket(recipient.user.pk, recipient.beep())
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
