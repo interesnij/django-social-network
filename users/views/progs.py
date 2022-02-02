@@ -1076,7 +1076,7 @@ class ChangeListPosition(View):
         user, community = User.objects.get(pk=self.kwargs["pk"]), None
         type = request.GET.get('type')
         community_id = request.GET.get('community_id')
-        if community_id:
+        if community_id and community_id != "null":
             from communities.models import Community
             community = Community.objects.get(pk=community_id)
             if not request.user.pk in community.get_administrators_ids():
