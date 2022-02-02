@@ -307,13 +307,16 @@ class LoadPostsList(ListView):
 			self.item = User.objects.get(pk=request.GET.get("user"))
 			self.post_lists = PostsList.get_user_lists(self.item.pk)
 			self.get_fixed_posts = self.item.get_fixed_posts()
+			self.list = PostsList.objects.get(pk=self.item.get_selected_post_list_pk())
 		elif request.GET.get("community"):
 			from communities.models import Community
 			self.item = Community.objects.get(pk=request.GET.get("community"))
 			self.post_lists = PostsList.get_community_lists(self.item.pk)
 			self.get_fixed_posts = self.item.get_fixed_posts()
 			self.community = self.item
-		self.list = PostsList.objects.get(pk=self.item.get_selected_post_list_pk())
+			self.list = PostsList.objects.get(pk=self.item.get_selected_post_list_pk())
+		if request.GET.get("list"):
+			self.list = PostsList.objects.get(pk=request.GET.get("list"))
 		if request.user.is_anonymous:
 			self.is_user_can_see_post_list = self.list.is_anon_user_can_see_el()
 			if self.list.community:
