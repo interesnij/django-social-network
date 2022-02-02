@@ -47,36 +47,6 @@ class WorkspaceCloseDelete(View):
         else:
             raise Http404
 
-class WorkspaceClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/planner/workspace_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.workspace = Workspace.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 38, self.workspace.pk)
-        return super(WorkspaceClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(WorkspaceClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.workspace
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.workspace = Workspace.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 38, self.workspace.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=38, object_id=self.workspace.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class WorkspaceRejectedCreate(View):
     def get(self,request,*args,**kwargs):
@@ -139,37 +109,6 @@ class BoardPlannerCloseDelete(View):
         else:
             raise Http404
 
-class BoardPlannerClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/planner/board_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.board = Board.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 39, self.board.pk)
-        return super(BoardPlannerClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(BoardPlannerClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.board
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.board = Board.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 39, self.board.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=39, object_id=self.board.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
 class BoardPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         board = Board.objects.get(pk=self.kwargs["pk"])
@@ -231,36 +170,6 @@ class ColumnPlannerCloseDelete(View):
         else:
             raise Http404
 
-class ColumnPlannerClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/planner/column_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.column = Column.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 40, self.column.pk)
-        return super(ColumnPlannerClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(ColumnPlannerClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.column
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.column = Column.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 40, self.column.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=40, object_id=self.column.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class ColumnPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
@@ -323,36 +232,6 @@ class CardPlannerCloseDelete(View):
         else:
             raise Http404
 
-class CardPlannerClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/planner/column_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.column = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 41, self.column.pk)
-        return super(CardPlannerClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(CardPlannerClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.column
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.column = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 41, self.column.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=41, object_id=self.column.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class CardPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):
@@ -415,36 +294,6 @@ class CommentPlannerCloseDelete(View):
         else:
             raise Http404
 
-class CommentPlannerClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/planner/comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.comment = ColumnCard.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 42, self.comment.pk)
-        return super(CommentPlannerClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(CommentPlannerClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.comment
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.comment = ColumnCardComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 42, self.comment.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=42, object_id=self.comment.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class CommentPlannerRejectedCreate(View):
     def get(self,request,*args,**kwargs):

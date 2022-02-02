@@ -47,36 +47,6 @@ class ForumCloseDelete(View):
         else:
             raise Http404
 
-class ForumClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/forum/forum_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.new = Forum.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 45, self.new.pk)
-        return super(ForumClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(ForumClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.new
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.new = Forum.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 45, self.new.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=45, object_id=self.new.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class ForumRejectedCreate(View):
     def get(self,request,*args,**kwargs):
@@ -101,34 +71,6 @@ class ForumUnverify(View):
         else:
             raise Http404
 
-class CommentForumClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.comment = ForumComment.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 35, self.comment.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/forum/comment_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommentForumClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommentForumClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.comment
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        comment = ForumComment.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 46, comment.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=46, object_id=comment.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class CommentForumRejectedCreate(View):
     def get(self,request,*args,**kwargs):

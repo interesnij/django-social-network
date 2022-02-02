@@ -47,36 +47,6 @@ class MessageCloseDelete(View):
         else:
             raise Http404
 
-class MessageClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/message/message_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.new = Message.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 55, self.new.pk)
-        return super(MessageClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(MessageClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.new
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.new = Message.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 55, self.new.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=55, object_id=self.new.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class MessageRejectedCreate(View):
     def get(self,request,*args,**kwargs):
@@ -100,3 +70,28 @@ class MailUnverify(View):
             return HttpResponse()
         else:
             raise Http404
+
+
+class SendManagerMessages(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        if request.user.is_administrator():
+            self.template_name = get_detect_platform_template("managers/manage_create/message/send_messages.html", request.user, request.META['HTTP_USER_AGENT'])
+        else:
+            raise Http404
+        return super(SendManagerMessages,self).get(request,*args,**kwargs)
+
+    def post(self,request,*args,**kwargs):
+        if request.is_ajax() and form.is_valid() and request.user.is_administrator():
+            from chat.models import Chat
+            form_post = form.save(commit=False)
+            Chat.get_or_create_manager_chat_and_send_message(
+                creator_pk = request.user.pk,
+                text = form_post.text,
+                voice = form_post.voice,
+                attach = request.POST.getlist('attach_items')
+            )
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()

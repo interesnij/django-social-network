@@ -47,36 +47,6 @@ class SiteCloseDelete(View):
         else:
             raise Http404
 
-class SiteClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/site/site_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.new = Site.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 6, self.new.pk)
-        return super(SiteClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(SiteClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.new
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.new = Site.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 6, self.new.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=6, object_id=self.new.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class SiteRejectedCreate(View):
     def get(self,request,*args,**kwargs):

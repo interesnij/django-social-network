@@ -131,35 +131,6 @@ class UserWarningBannerCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class UserClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 1, self.user.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/user/user_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.user
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 1, user.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=1, object_id=user.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
 class UserWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])

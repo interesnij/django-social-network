@@ -47,36 +47,6 @@ class SurveyCloseDelete(View):
         else:
             raise Http404
 
-
-class SurveyClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.survey = Survey.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 22, self.survey.pk)
-        self.template_name = get_staff_template("managers/manage_create/survey/survey_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(SurveyClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.forms import ReportForm
-
-        context = super(SurveyClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.survey
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        survey = Survey.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 22, survey.pk):
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=22, object_id=survey.pk, description=request.POST.get('description'), type=request.POST.get('type'))
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
 class SurveyRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and request.user.is_moderator():
@@ -100,35 +70,6 @@ class SurveyUnverify(View):
         else:
             raise Http404
 
-
-class ListSurveyClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 21, self.list.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/survey/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(ListSurveyClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(ListSurveyClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.list
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = SurveyList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 21, self.list.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=21, object_id=self.list.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class ListSurveyRejectedCreate(View):
     def get(self,request,*args,**kwargs):

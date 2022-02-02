@@ -48,35 +48,6 @@ class AudioCloseDelete(View):
             raise Http404
 
 
-class AudioClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.track = Music.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 26, self.track.pk)
-        self.template_name = get_staff_template("managers/manage_create/audio/audio_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(AudioClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.forms import ReportForm
-
-        context = super(AudioClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.track
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        music = Music.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 26, music.pk):
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=26, object_id=music.pk, description=request.POST.get('description'), type=request.POST.get('type'))
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
 class AudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and request.user.is_moderator():
@@ -100,35 +71,6 @@ class AudioUnverify(View):
         else:
             raise Http404
 
-
-class ListAudioClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 25, self.list.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/audio/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(ListAudioClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(ListAudioClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.list
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = MusicList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 25, self.list.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=25, object_id=self.list.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class ListAudioRejectedCreate(View):
     def get(self,request,*args,**kwargs):

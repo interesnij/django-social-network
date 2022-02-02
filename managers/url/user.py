@@ -10,6 +10,5 @@ urlpatterns = [
     url(r'^create_warning_banner/(?P<pk>\d+)/$', UserWarningBannerCreate.as_view()),
     url(r'^delete_warning_banner/(?P<pk>\d+)/$', UserWarningBannerDelete.as_view()),
     url(r'^create_rejected/(?P<pk>\d+)/$', UserRejectedCreate.as_view()),
-    url(r'^create_claim/(?P<pk>\d+)/$', UserClaimCreate.as_view()),
     url(r'^unverify/(?P<pk>\d+)/$', UserUnverify.as_view()),
 ]

@@ -47,36 +47,6 @@ class WikiCloseDelete(View):
         else:
             raise Http404
 
-class WikiClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.template_name = get_detect_platform_template("managers/manage_create/wiki/wiki_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        self.wiki = Wiki.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 56, self.wiki.pk)
-        return super(WikiClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.models import ModerationReport
-
-        context = super(WikiClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.wiki
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.wiki = Wiki.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 56, self.wiki.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=56, object_id=self.wiki.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class WikiRejectedCreate(View):
     def get(self,request,*args,**kwargs):

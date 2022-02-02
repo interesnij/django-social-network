@@ -48,35 +48,6 @@ class DocCloseDelete(View):
             raise Http404
 
 
-class DocClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.doc = Doc.objects.get(pk=self.kwargs["pk"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 18, self.doc.pk)
-        self.template_name = get_staff_template("managers/manage_create/doc/doc_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(DocClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        from managers.forms import ReportForm
-
-        context = super(DocClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.doc
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        doc = Doc.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 18, doc.pk):
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=18, object_id=doc.pk, description=request.POST.get('description'), type=request.POST.get('type'))
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
 class DocRejectedCreate(View):
     def get(self,request,*args,**kwargs):
         if request.is_ajax() and request.user.is_moderator():
@@ -100,35 +71,6 @@ class DocUnverify(View):
         else:
             raise Http404
 
-
-class ListDocClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
-        self.is_reported = ModerationReport.is_user_already_reported(request.user.pk, 17, self.list.pk)
-        self.template_name = get_detect_platform_template("managers/manage_create/doc/list_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(ListDocClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(ListDocClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.list
-        context["is_reported"] = self.is_reported
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        self.list = DocsList.objects.get(uuid=self.kwargs["uuid"])
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 17, self.list.pk):
-            description = request.POST.get('description')
-            type = request.POST.get('type')
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=17, object_id=self.list.pk, description=description, type=type)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class ListDocRejectedCreate(View):
     def get(self,request,*args,**kwargs):

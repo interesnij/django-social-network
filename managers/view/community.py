@@ -134,28 +134,6 @@ class CommunityWarningBannerCreate(TemplateView):
         else:
             return HttpResponseBadRequest()
 
-class CommunityClaimCreate(TemplateView):
-    template_name = None
-
-    def get(self,request,*args,**kwargs):
-        self.community, self.template_name = Community.objects.get(pk=self.kwargs["pk"]), get_detect_platform_template("managers/manage_create/community_claim.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(CommunityClaimCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(CommunityClaimCreate,self).get_context_data(**kwargs)
-        context["object"] = self.community
-        return context
-
-    def post(self,request,*args,**kwargs):
-        from managers.models import ModerationReport
-
-        form = ReportForm(request.POST)
-        if request.is_ajax() and not ModerationReport.is_user_already_reported(request.user.pk, 2, self.kwargs["pk"]):
-            mod = form.save(commit=False)
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=2, object_id=self.kwargs["pk"], description=mod.description, type=request.POST.get('type'))
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
 
 class CommunityWarningBannerDelete(View):
     def get(self,request,*args,**kwargs):

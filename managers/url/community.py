@@ -10,6 +10,5 @@ urlpatterns = [
     url(r'^create_warning_banner/(?P<pk>\d+)/$', CommunityWarningBannerCreate.as_view()),
     url(r'^delete_warning_banner/(?P<pk>\d+)/$', CommunityWarningBannerDelete.as_view()),
     url(r'^create_rejected/(?P<pk>\d+)/$', CommunityRejectedCreate.as_view()),
-    url(r'^create_claim/(?P<pk>\d+)/$', CommunityClaimCreate.as_view()),
     url(r'^unverify/(?P<pk>\d+)/$', CommunityUnverify.as_view())
 ]
