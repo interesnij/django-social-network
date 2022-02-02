@@ -28,14 +28,6 @@ urlpatterns = [
     url(r'^add_trainee_moderator/(?P<pk>\d+)/$', UserTraineeModeratorCreate.as_view()),
     url(r'^delete_trainee_moderator/(?P<pk>\d+)/$', UserTraineeModeratorDelete.as_view()),
 
-    url(r'^user/', include('managers.url.user')),
-    url(r'^community/', include('managers.url.community')),
-    url(r'^post/', include('managers.url.post')),
-    url(r'^good/', include('managers.url.good')),
-    url(r'^photo/', include('managers.url.photo')),
-    url(r'^video/', include('managers.url.video')),
-    url(r'^audio/', include('managers.url.audio')),
-
     url(r'^moderation_list/', include('managers.url.moderation_list')),
     url(r'^penalty_list/', include('managers.url.penalty_list')),
 
