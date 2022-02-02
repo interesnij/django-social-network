@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from managers.view.good import *
+from managers.view.message import *
 
 
 urlpatterns = [
