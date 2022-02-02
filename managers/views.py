@@ -33,11 +33,13 @@ class SendManagerMessages(TemplateView):
         return super(SendManagerMessages,self).get(request,*args,**kwargs)
 
     def post(self,request,*args,**kwargs):
+        from chat.forms import MessageForm
+
+        form = MessageForm(request.POST, request.FILES)
+
         if request.is_ajax() and form.is_valid() and request.user.is_administrator():
             from chat.models import Chat
-            from chat.forms import MessageForm
 
-            form = MessageForm(request.POST, request.FILES)
             form_post = form.save(commit=False)
             Chat.get_or_create_manager_chat_and_send_message(
                 creator_pk = request.user.pk,
