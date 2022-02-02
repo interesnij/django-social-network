@@ -543,8 +543,7 @@ class Chat(models.Model):
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
         elif self.is_manager():
-            chat_user = self.get_chat_user(user_id)
-            member = chat_user.user
+            chat_user = self.creator
             figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             chat_name = self.name
             status = ''
