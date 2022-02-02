@@ -299,8 +299,8 @@ class PostListLoadIncludeUsers(ListView):
 
 class LoadPostsList(ListView):
 	template_name, community, paginate_by, is_user_can_see_post_list, \
-	is_user_can_see_post_section, is_user_can_create_postspost_lists, \
-	post_lists = None, None, 15, None, None, None, None
+	is_user_can_see_post_section, is_user_can_create_postspost_lists,\
+	post_lists, get_fixed_posts = None, None, 15, None, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		if request.GET.get("user"):
