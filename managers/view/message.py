@@ -87,7 +87,7 @@ class SendManagerMessages(TemplateView):
             from chat.models import Chat
             from chat.forms import MessageForm
 
-            form = MessageForm()
+            form = MessageForm(request.POST, request.FILES)
             form_post = form.save(commit=False)
             Chat.get_or_create_manager_chat_and_send_message(
                 creator_pk = request.user.pk,
