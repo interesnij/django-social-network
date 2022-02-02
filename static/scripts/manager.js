@@ -7,7 +7,6 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
   _text = form.querySelector(".smile_supported").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && form.querySelector(".files_0")){
     toast_error("Напишите или прикрепите что-нибудь");
-    form.querySelector(".page_message_text").classList.add("border_red");
     return
   } else {
     this.disabled = true;
@@ -17,7 +16,7 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;
-  form_post.append($input);
+  form.append($input);
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
