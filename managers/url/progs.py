@@ -1,11 +1,8 @@
-from django.conf.urls import url, include
-from managers.views import *
+from django.conf.urls import url
+from managers.view.progs import *
 
 
 urlpatterns = [
-    url(r'^$', ManagersView.as_view(), name='managers'),
-    url(r'^high_officer/$', SuperManagersView.as_view(), name='super_managers'),
-
     url(r'^add_admin/(?P<pk>\d+)/$', UserAdministratorCreate.as_view()),
     url(r'^delete_admin/(?P<pk>\d+)/$', UserAdministratorDelete.as_view()),
     url(r'^add_advertiser/(?P<pk>\d+)/$', UserAdvertiserCreate.as_view()),
@@ -27,10 +24,4 @@ urlpatterns = [
     url(r'^delete_moderator/(?P<pk>\d+)/$', UserModeratorDelete.as_view()),
     url(r'^add_trainee_moderator/(?P<pk>\d+)/$', UserTraineeModeratorCreate.as_view()),
     url(r'^delete_trainee_moderator/(?P<pk>\d+)/$', UserTraineeModeratorDelete.as_view()),
-
-    url(r'^moderation_list/', include('managers.url.moderation_list')),
-    url(r'^penalty_list/', include('managers.url.penalty_list')),
-    url(r'^progs/', include('managers.url.progs')),
-
-    url(r'^send_messages/$', SendManagerMessages.as_view()),
 ]
