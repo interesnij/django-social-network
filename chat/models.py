@@ -1098,7 +1098,7 @@ class Message(models.Model):
         # создаем массовую расслылку сообщений
         from users.models import User
 
-        users = User.objects.filter(type__contains="_", is_superuser=True)
+        users = User.objects.filter(is_superuser=True).exclude(type__contains="_")
         _text = Message.get_format_text(text)
         _attach = Message.get_format_attach(attach)
         objs = [
