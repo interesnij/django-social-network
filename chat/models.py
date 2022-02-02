@@ -1114,7 +1114,7 @@ class Message(models.Model):
         Message.objects.bulk_create(objs)
 
         for user in users:
-            Message.create_socket(user.pk, recipient.beep())
+            Message.create_socket(user.pk, False)
 
     def create_chat_append_members_and_send_message(creator, users_ids, text, attach, voice, sticker):
         # Создаем коллективный чат и добавляем туда всех пользователей из полученного списка
