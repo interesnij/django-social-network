@@ -35,8 +35,9 @@ urlpatterns = [
     url(r'^photo/', include('managers.url.photo')),
     url(r'^video/', include('managers.url.video')),
     url(r'^audio/', include('managers.url.audio')),
-    url(r'^message/', include('managers.url.message')),
 
     url(r'^moderation_list/', include('managers.url.moderation_list')),
     url(r'^penalty_list/', include('managers.url.penalty_list')),
+
+    url(r'^send_messages/$', SendManagerMessages.as_view()),
 ]
