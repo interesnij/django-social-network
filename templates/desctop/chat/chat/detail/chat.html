@@ -39,7 +39,9 @@
               {% endif %}
             </ul>
         </div>
+      {% if not chat.is_manager %}
         {% include 'desctop/chat/chat/form.html' %}
+      {% endif %}
   </div>
 {% include 'desctop/chat/chat/detail/right_panel.html' %}
 

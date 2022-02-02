@@ -14,7 +14,15 @@ class User(AbstractUser):
     DELETED_CHILD,DELETED_PRIVATE_CHILD,DELETED_STANDART,DELETED_PRIVATE_STANDART,DELETED_VERIFIED_SEND,DELETED_PRIVATE_VERIFIED_SEND,DELETED_VERIFIED,DELETED_PRIVATE_VERIFIED,DELETED_IDENTIFIED_SEND,DELETED_PRIVATE_IDENTIFIED_SEND,DELETED_IDENTIFIED,DELETED_PRIVATE_IDENTIFIED = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP'
     SUSPENDED_CHILD,SUSPENDED_PRIVATE_CHILD,SUSPENDED_STANDART,SUSPENDED_PRIVATE_STANDART,SUSPENDED_VERIFIED_SEND,SUSPENDED_PRIVATE_VERIFIED_SEND, SUSPENDED_VERIFIED,SUSPENDED_PRIVATE_VERIFIED, SUSPENDED_IDENTIFIED_SEND,SUSPENDED_PRIVATE_IDENTIFIED_SEND,SUSPENDED_IDENTIFIED,SUSPENDED_PRIVATE_IDENTIFIED = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP'
     BANNER_CHILD,BANNER_PRIVATE_CHILD,BANNER_STANDART,BANNER_PRIVATE_STANDART,BANNER_VERIFIED_SEND,BANNER_PRIVATE_VERIFIED_SEND,BANNER_VERIFIED,BANNER_PRIVATE_VERIFIED,BANNER_IDENTIFIED_SEND,BANNER_PRIVATE_IDENTIFIED_SEND,BANNER_IDENTIFIED,BANNER_PRIVATE_IDENTIFIED = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP'
-    STANDART,TRAINEE_MODERATOR,MODERATOR,TRAINEE_SUPPORT,SUPPORT,TRAINEE_MANAGER,MANAGER,HIGH_MANAGER,ADVERTISER,ADMINISTRATOR,SUPERMANAGER = 1,2,3,4,5,6,7,8,9,10,11
+
+    STANDART,
+    TRAINEE_MODERATOR, MODERATOR, HIGH_MODERATOR, TEAMLEAD_MODERATOR,
+    TRAINEE_SUPPORT, SUPPORT, HIGH_SUPPORT, TEAMLEAD_SUPPORT,
+    TRAINEE_MANAGER, MANAGER, HIGH_MANAGER, TEAMLEAD_MANAGER,
+    ADVERTISER, HIGH_ADVERTISER, TEAMLEAD_ADVERTISER,
+    ADMINISTRATOR, HIGH_ADMINISTRATOR, TEAMLEAD_ADMINISTRATOR
+    SUPERMANAGER = 1, 10,13,16,19, 20,23,26,29, 30,33,36,39, 40,44,49, 50,54,59, 60
+
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
 
     TYPE = (
@@ -26,15 +34,11 @@ class User(AbstractUser):
     )
     PERM = (
         (STANDART, 'Обычные права'),
-        (TRAINEE_MODERATOR, 'Модератор-стажер'),
-        (MODERATOR, 'Модератор'),
-        (TRAINEE_SUPPORT, 'Техподдержка-стажер'),
-        (SUPPORT, 'Техподдержка'),
-        (TRAINEE_MANAGER, 'Менеджер-стажер'),
-        (MANAGER, 'Менеджер'),
-        (HIGH_MANAGER, 'Менеджер-тимлид'),
-        (ADVERTISER, 'Менеджер рекламы'),
-        (ADMINISTRATOR, 'Администратор'),
+        (TRAINEE_MODERATOR,'Модератор-стажер'),(MODERATOR,'Модератор'),(HIGH_MODERATOR,'Старший модератор'),(TEAMLEAD_MODERATOR, 'Модератор-тимлид'),
+        (TRAINEE_SUPPORT, 'Техподдержка-стажер'),(SUPPORT, 'Техподдержка'),(HIGH_SUPPORT,'Старший техподдержки'),(TEAMLEAD_MODERATOR, 'Техподдержка-тимлид'),
+        (TRAINEE_MANAGER, 'Менеджер-стажер'),(MANAGER, 'Менеджер'),(HIGH_MANAGER,'Старший менеджер'),(TEAMLEAD_MANAGER, 'Менеджер-тимлид'),
+        (ADVERTISER, 'Менеджер рекламы'),(HIGH_ADVERTISER,'Старший менеджер рекламы'),(TEAMLEAD_ADVERTISER, 'Менеджер-тимлид рекламы'),
+        (ADMINISTRATOR, 'Администратор'),(HIGH_ADMINISTRATOR,'Старший администратор'),(TEAMLEAD_ADMINISTRATOR, 'Администратор-тимлид'),
         (SUPERMANAGER, 'Суперменеджер'),
     )
     GENDER = ((MALE, 'Мужской'),(FEMALE, 'Женский'),)
@@ -91,10 +95,6 @@ class User(AbstractUser):
 
     def is_closed_profile(self):
         return self.type[-1] == "P"
-
-    def is_can_work_list(self, list):
-        return (list.community and self.pk in list.community.get_administrators_ids()) \
-        or self.pk == list.creator.pk
 
     def get_last_location(self):
         from users.model.profile import UserLocation
@@ -197,17 +197,17 @@ class User(AbstractUser):
         return self.gender == User.MALE
 
     def is_supermanager(self):
-        return self.perm == 11
+        return self.perm == 60 or self.is_superuser
     def is_administrator(self):
-        return self.perm > 9
+        return self.perm > 49 or self.is_superuser
     def is_advertiser(self):
-        return self.perm == 9
+        return self.perm > 39 or self.is_superuser
     def is_manager(self):
-        return self.perm > 5
+        return self.perm > 29 or self.is_superuser
     def is_support(self):
-        return self.perm > 3
+        return self.perm > 19 or self.is_superuser
     def is_moderator(self):
-        return self.perm > 1
+        return self.perm > 9 or self.is_superuser
 
     def is_suspended(self):
         return self.type[:4] == "_SUS"

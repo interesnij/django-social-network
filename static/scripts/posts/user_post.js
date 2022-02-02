@@ -664,7 +664,7 @@ on('#ajax', 'click', '.remove_list_in_community_collections', function() {
     parent = _this.parentElement;
     parent.innerHTML = "";
     parent.innerHTML = "Сообщество";
-    block.classList.add("communities_toggle");
+    block.classList.add("communities_toggle", "pointer");
   }};
 
   link_.send();
