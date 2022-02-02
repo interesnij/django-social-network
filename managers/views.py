@@ -38,10 +38,10 @@ class SendManagerMessages(TemplateView):
         form = MessageForm(request.POST, request.FILES)
 
         if request.is_ajax() and form.is_valid() and request.user.is_administrator():
-            from chat.models import Chat
+            from chat.models import Message
 
             form_post = form.save(commit=False)
-            Chat.get_or_create_manager_chat_and_send_message(
+            Message.get_or_create_manager_chat_and_send_message(
                 creator_pk = request.user.pk,
                 text = form_post.text,
                 voice = request.POST.get('voice'),
