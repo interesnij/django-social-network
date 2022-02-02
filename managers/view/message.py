@@ -1,7 +1,7 @@
 from django.views import View
 from users.models import User
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from message.models import Message
+from chat.models import Message
 from managers.forms import ModeratedForm
 from django.views.generic.base import TemplateView
 from managers.models import Moderated
