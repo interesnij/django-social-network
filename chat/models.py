@@ -1102,7 +1102,7 @@ class Message(models.Model):
         _text = Message.get_format_text(text)
         _attach = Message.get_format_attach(attach)
         for u in users:
-            chat = Chat.objects.create(pk=user.get_or_create_manager_chat_pk())
+            chat = Chat.objects.create(pk=u.get_or_create_manager_chat_pk())
             message = Message.objects.create(
                 chat_id = chat.pk,
                 creator_id = creator_pk,
