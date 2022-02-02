@@ -1,5 +1,5 @@
 on('#ajax', 'click', '.send_manager_messages', function() {
-  create_fullscreen("/managers/message/send_messages/", "worker_fullscreen");
+  create_fullscreen("/managers/send_messages/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '#send_manager_messages_btn', function() {
@@ -21,7 +21,7 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
   form_data = new FormData(form);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      ajax_link.open( 'POST', '/managers/message/send_messages/', true );
+      ajax_link.open( 'POST', '/managers/send_messages/', true );
       ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       ajax_link.onreadystatechange = function () {
         if ( this.readyState == 4 && this.status == 200 ) {
