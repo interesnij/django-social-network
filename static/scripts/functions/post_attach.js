@@ -77,6 +77,7 @@ function photo_post_attach(block, photo_pk, user_pk, src) {
   is_full_attach();
   div = create_preview_photo(src, photo_pk, user_pk)
   block.append(div);
+  create_drag_attach_items(block);
   add_file_attach()
   is_full_attach();
 };
