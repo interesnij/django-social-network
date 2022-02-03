@@ -211,11 +211,11 @@ function create_drag_attach_items(block){
 
 function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
-  $div.classList.add("photo", "drag_item", "handle");
+  $div.classList.add("photo");
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("detail_photo", "image_fit", "pointer");
+  $img.classList.add("detail_photo", "image_fit", "pointer", "drag_item", "handle");
   $img.setAttribute("src", img_src);
   $img.setAttribute('photo-pk', photo_pk);
   $img.setAttribute('data-pk', user_pk);
