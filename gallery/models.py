@@ -378,6 +378,8 @@ class PhotoList(models.Model):
         return self.type == self.LIST
     def is_have_edit(self):
         return self.is_list()
+    def is_have_add(self):
+        return self.is_list() or self.is_main()
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
