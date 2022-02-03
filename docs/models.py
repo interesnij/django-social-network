@@ -55,6 +55,11 @@ class DocsList(models.Model):
         return "ldo" + str(self.pk)
     def is_doc_list(self):
         return True
+    def get_description(self):
+        if self.community:
+            return 'Список документов сообщества "' + self.community.name + "'"
+        else:
+            return 'Список документов "' + self.creator.get_full_name_genitive()
 
     def is_user_list(self, user):
         return self in user.get_doc_lists()
