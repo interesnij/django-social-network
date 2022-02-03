@@ -102,6 +102,12 @@ class GoodList(models.Model):
 	def is_good_list(self):
 		return True
 
+	def get_description(self):
+		if self.community:
+			return 'подборку товаров сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+		else:
+			return 'подборку товаров <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
 	def is_user_list(self, user):
 		return self in user.get_good_lists()
 	def is_user_collection_list(self, user_id):
@@ -852,6 +858,12 @@ class Good(models.Model):
 		return "goo" + str(self.pk)
 	def is_good(self):
 		return True
+
+	def get_description(self):
+		if self.community:
+			return 'товар сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+		else:
+			return 'товар <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
 	def change_position(query):
 		for item in query:

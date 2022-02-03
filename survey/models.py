@@ -60,6 +60,12 @@ class SurveyList(models.Model):
     def is_survey_list(self):
         return True
 
+    def get_description(self):
+        if self.community:
+            return 'список опросов сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'список опросов <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
     def is_user_list(self, user):
         return self in user.get_survey_lists()
     def is_user_collection_list(self, user_id):
@@ -527,6 +533,12 @@ class Survey(models.Model):
         return "sur" + str(self.pk)
     def is_survey(self):
         return True
+
+    def get_description(self):
+        if self.community:
+            return 'опрос сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'опрос <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def change_position(query):
         for item in query:

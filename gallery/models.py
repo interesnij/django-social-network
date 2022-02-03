@@ -67,6 +67,12 @@ class PhotoList(models.Model):
     def is_photo_list(self):
         return True
 
+    def get_description(self):
+        if self.community:
+            return 'фотоальбом сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'фотоальбом <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
     def is_user_list(self, user):
         return self in user.get_photo_lists()
     def is_user_collection_list(self, user_id):
@@ -854,6 +860,12 @@ class Photo(models.Model):
         return "pho" + str(self.pk)
     def is_photo(self):
         return True
+
+    def get_description(self):
+        if self.community:
+            return 'фотографию сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'фотографию <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def change_position(query):
         for item in query:

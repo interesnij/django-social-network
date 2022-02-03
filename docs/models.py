@@ -645,6 +645,12 @@ class Doc(models.Model):
     def is_doc(self):
         return True
 
+    def get_description(self):
+        if self.community:
+            return 'документ сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'документ <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
     def copy_item(pk, lists):
         item, count = Doc.objects.get(pk=pk), 0
         for list_pk in lists:

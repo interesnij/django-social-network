@@ -114,6 +114,12 @@ class MusicList(models.Model):
     def is_music_list(self):
         return True
 
+    def get_description(self):
+        if self.community:
+            return 'плейлист сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'плейлист <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
     def is_user_list(self, user):
         return self in user.get_playlists()
     def is_user_collection_list(self, user_id):
@@ -716,6 +722,12 @@ class Music(models.Model):
         return "mus" + str(self.pk)
     def is_track(self):
         return True
+
+    def get_description(self):
+        if self.community:
+            return 'аудиозапись сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'аудиозапись <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def change_position(query):
         for item in query:

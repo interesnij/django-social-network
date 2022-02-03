@@ -86,6 +86,12 @@ class VideoList(models.Model):
     def is_video_list(self):
         return True
 
+    def get_description(self):
+        if self.community:
+            return 'видеоальбом сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'видеоальбом <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
+
     def is_user_list(self, user):
         return self in user.get_video_lists()
     def is_user_collection_list(self, user_id):
@@ -851,6 +857,12 @@ class Video(models.Model):
         return "vid" + str(self.pk)
     def is_video(self):
         return True
+
+    def get_description(self):
+        if self.community:
+            return 'видеозапись сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+        else:
+            return 'видеозапись <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def change_position(query):
         for item in query:
