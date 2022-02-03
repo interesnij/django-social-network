@@ -57,9 +57,9 @@ class DocsList(models.Model):
         return True
     def get_description(self):
         if self.community:
-            return 'список документов сообщества "' + self.community.name + "'"
+            return 'список документов сообщества "' + self.community.name + '"'
         else:
-            return 'список документов ' + self.creator.get_full_name_genitive()
+            return 'список документов <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def is_user_list(self, user):
         return self in user.get_doc_lists()
