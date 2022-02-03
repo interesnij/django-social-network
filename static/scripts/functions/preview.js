@@ -208,7 +208,7 @@ function create_preview_photo(img_src, photo_pk, user_pk){
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
-  $img.classList.add("detail_photo", "image_fit", "pointer", "drag_item", "handle");
+  $img.classList.add("detail_photo", "image_fit", "pointer", "handle");
   $img.setAttribute("src", img_src);
   $img.setAttribute('photo-pk', photo_pk);
   $img.setAttribute('data-pk', user_pk);
@@ -219,7 +219,7 @@ function create_preview_photo(img_src, photo_pk, user_pk){
 };
 function create_preview_message_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
-  $div.classList.add("photo", "drag_item", "handle");
+  $div.classList.add("photo", "handle");
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
@@ -234,7 +234,7 @@ function create_preview_message_photo(img_src, photo_pk, user_pk){
 };
 function create_preview_photo_list(src, title, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("bg-dark", "position-relative", "text-center", "big_mobile_element", "drag_item", "handle");
+  $div.classList.add("bg-dark", "position-relative", "text-center", "big_mobile_element", "handle");
   $div.setAttribute("photolist-pk", pk);
 
   $input = document.createElement("span");
@@ -276,7 +276,7 @@ function create_preview_photo_list(src, title, pk, count){
 
 function create_preview_video(img_src, pk, counter){
   $div = document.createElement("div");
-  $div.classList.add("video", "drag_item", "handle");
+  $div.classList.add("video", "handle");
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="vid' + pk + '">';
   $img = document.createElement("img");
@@ -296,7 +296,7 @@ function create_preview_video(img_src, pk, counter){
 
 function create_preview_video_list(name, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("drag_item", "handle");
+  $div.classList.add("handle");
   $div.style.flexBasis = "100%";
   $div.style.position = "relative";
   $div.setAttribute("videolist-pk", pk);
@@ -319,7 +319,7 @@ function create_preview_music(img_src, pk, counter){
 
   media_body = _this.querySelector(".media-body");
 
-  $div.classList.add("music", "drag_item", "handle");
+  $div.classList.add("music", "handle");
   $div.style.display = "flex";
   $div.style.margin = "5px";
   $div.style.flexBasis = "100%";
@@ -346,7 +346,7 @@ function create_preview_music(img_src, pk, counter){
 };
 function create_preview_playlist(name, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("drag_item", "handle");
+  $div.classList.add("handle");
   $div.style.flexBasis = "100%";
   $div.style.position = "relative";
   $div.setAttribute("playlist-pk", pk);
@@ -366,7 +366,7 @@ function create_preview_doc(media_body, pk){
   $figure = document.createElement("figure");
   $media = document.createElement("span");
 
-  $div.classList.add("col-md-12", "doc", "drag_item", "handle");
+  $div.classList.add("doc", "handle");
   $div.setAttribute("data-pk", pk);
   $div.style.display = "flex";
   $div.style.margin = "5px";
@@ -392,7 +392,7 @@ function create_preview_doc(media_body, pk){
 };
 function create_preview_doc_list(name, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("drag_item", "handle");
+  $div.classList.add("handle");
   $div.style.flexBasis = "100%";
   $div.style.position = "relative";
   $div.setAttribute("doclist-pk", pk);
@@ -407,7 +407,7 @@ function create_preview_doc_list(name, pk, count){
 
 function create_preview_good(img_src, pk, uuid, title){
   $div = document.createElement("div");
-  $div.classList.add("good_detail", "good", "drag_item", "handle");
+  $div.classList.add("good_detail", "good", "handle");
   $div.setAttribute('good-pk', pk);
   $div.style.cursor = "pointer";
 
@@ -427,7 +427,7 @@ function create_preview_good(img_src, pk, uuid, title){
 };
 function create_preview_good_list(name, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("drag_item", "handle");
+  $div.classList.add("handle");
   $div.style.flexBasis = "100%";
   $div.style.position = "relative";
   $div.setAttribute("goodlist-pk", pk);
@@ -442,7 +442,7 @@ function create_preview_good_list(name, pk, count){
 
 function create_preview_article(img_src, pk, title){
   $div = document.createElement("div");
-  $div.classList.add("article", "drag_item", "handle");
+  $div.classList.add("article", "handle");
   $title = document.createElement("span");
   $div.setAttribute('data-pk', pk);
   $div.style.cursor = "pointer";
@@ -469,7 +469,7 @@ function create_preview_article(img_src, pk, title){
 };
 function create_preview_article_list(name, pk, count){
   $div = document.createElement("div");
-  $div.classList.add("drag_item", "handle");
+  $div.classList.add("handle");
   $div.style.flexBasis = "100%";
   $div.style.position = "relative";
   $div.setAttribute("articlelist-pk", pk);

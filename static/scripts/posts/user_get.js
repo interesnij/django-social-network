@@ -71,9 +71,8 @@ on('#ajax', 'click', '.post_list_change', function() {
     list_block_load(block, ".span_list_pk", "/posts/list/?list=" + this.getAttribute("list-pk"));
     this.classList.remove("pointer", "post_list_change");
     this.classList.add("active");
-    try{
-      reload_list_stat(this)
-    }catch {null}
+    try{ reload_list_stat(this) }catch { null };
+    get_dragula(".drag_container");
   }
 });
 
