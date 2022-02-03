@@ -15,12 +15,20 @@
   {% endif %}
 
 <span class="load_block">
-  <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
+  <div class="media mt-3" style="padding-left: 7px;">
+    <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
+      {% csrf_token %}
     <h5 class="mt-1">
       {{ list.name }} ({{ list.count_items }})
-
+      {% if is_user_can_create_photos and list.is_have_add %}
+        <input type="file" accept="image/*" class="add_photos_in_list" name="file" style="display:none" multiple="multiple">
+        <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">
+          <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        </a>
+      {% endif %}
       {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
+    </form>
   </div>
 
   <div class="container mt-4" id="photos_container">
