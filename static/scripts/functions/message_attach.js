@@ -48,7 +48,7 @@ function remove_file_message_attach(){
 };
 
 function create_drag_attach_comment(block){
-  if (!block.classList.contains("attach_drag_post")) {
+  if (!block.classList.contains("attach_drag_message")) {
     block.classList.add("attach_drag_message");
     get_dragula(".attach_drag_message");
   }

@@ -41,7 +41,7 @@ function remove_file_dropdown(){
 };
 
 function create_drag_attach_comment(block){
-  if (!block.classList.contains("attach_drag_post")) {
+  if (!block.classList.contains("attach_drag_comment")) {
     block.classList.add("attach_drag_comment");
     get_dragula(".attach_drag_comment");
   }
