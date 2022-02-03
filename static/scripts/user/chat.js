@@ -835,7 +835,7 @@ on('#ajax', 'input', '.smile_supported', function() {
         setTimeout(function(){
           form = _this.parentElement.parentElement;
           send_draft_message (form, "/chat/user_progs/save_draft_message/" + form.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/");
-      }, 1000)
+      }, 2000)
     }
   };
 });
@@ -1227,6 +1227,7 @@ on('#ajax', 'keydown', '.message_text', function(e) {
   else if (e.keyCode == 13) {
     e.preventDefault();
   form_post = this.parentElement.parentElement;
+
   send_message (form_post, "/chat/user_progs/send_message/" + document.body.querySelector(".pk_saver").getAttribute("chat-pk") + "/")
 }});
 on('#ajax', 'keydown', '.page_message_text', function(e) {
