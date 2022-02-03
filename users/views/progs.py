@@ -746,9 +746,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/photos/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/photos/list/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/photos/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/photos/list/my_list.html',{'list': new_list})
             elif type[:3] == "lgo":
                 from goods.models import GoodList
                 new_list = GoodList.create_list(
@@ -790,9 +790,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/video/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/video/list/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/video/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/video/list/my_list.html',{'list': new_list})
             elif type[:3] == "ldo":
                 from docs.models import DocsList
                 new_list = DocsList.create_list(
@@ -808,9 +808,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/docs/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/docs/list/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/docs/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/docs/list/my_list.html',{'list': new_list})
             elif type[:3] == "lmu":
                 from music.models import MusicList
                 new_list = MusicList.create_list(
@@ -826,9 +826,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/music/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/music/list/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/music/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/music/list/my_list.html',{'list': new_list})
             elif type[:3] == "lsu":
                 from survey.models import SurveyList
                 new_list = SurveyList.create_list(
@@ -844,9 +844,9 @@ class ListCreate(TemplateView):
                     copy_el_users=request.POST.getlist("create_copy_el"),
                 )
                 if community:
-                    return render_for_platform(request, 'communities/survey/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'communities/survey/list/admin_list.html',{'list': new_list})
                 else:
-                    return render_for_platform(request, 'users/survey/list/new_list.html',{'list': new_list})
+                    return render_for_platform(request, 'users/survey/list/my_list.html',{'list': new_list})
 
             return HttpResponse()
         else:
