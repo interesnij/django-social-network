@@ -202,13 +202,6 @@ function create_preview_chat_item(_this){
   return $div
 };
 
-function create_drag_attach_items(block){
-  if (!block.classList.contains("attach_drag_item")) {
-    block.classList.add("attach_drag_item");
-    get_dragula(".attach_drag_item");
-  }
-}
-
 function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
   $div.classList.add("photo");

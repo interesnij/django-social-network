@@ -47,17 +47,24 @@ function remove_file_message_attach(){
 }, 1000)
 };
 
+function create_drag_attach_comment(block){
+  if (!block.classList.contains("attach_drag_post")) {
+    block.classList.add("attach_drag_item");
+    get_dragula(".attach_drag_item");
+  }
+};
+
 function photo_message_attach(block, photo_pk, user_pk, src) {
   is_full_message_attach();
   div = create_preview_message_photo(src, photo_pk, user_pk);
   block.append(div);
-  console.log(block.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
   if (block.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains("card_fullscreen")) {
     fullscreen_container = block.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
     fullscreen_container.style.height = "100%";
     fullscreen_container.style.top = "12px";
   };
-  add_file_message_attach()
+  create_drag_attach_comment(block);
+  add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
 };
@@ -72,12 +79,14 @@ function photo_message_upload_attach(photo_list, block){
     is_full_message_attach();
     show_message_form_send_btn()
   };
+  create_drag_attach_comment(block);
 };
 
 function photo_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_photo_list(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -87,6 +96,7 @@ function video_message_attach(block, pk, counter, src) {
   is_full_message_attach();
   div = create_preview_video(src, pk, counter);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -95,6 +105,7 @@ function video_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_video_list(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -104,6 +115,7 @@ function music_message_attach(block, pk, counter, src) {
   is_full_message_attach();
   div = create_preview_music(src, pk, counter);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -112,6 +124,7 @@ function playlist_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_playlist(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -121,6 +134,7 @@ function doc_message_attach(block, media_block, pk) {
   is_full_message_attach();
   div = create_preview_doc(media_block, pk);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -129,6 +143,7 @@ function doc_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_doc_list(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -138,6 +153,7 @@ function good_message_attach(block, src, pk, uuid, title) {
   is_full_message_attach();
   div = create_preview_good(src, pk, uuid, title);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -146,6 +162,7 @@ function good_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_good_list(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -155,6 +172,7 @@ function article_message_attach(_this, block) {
   is_full_message_attach();
   div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, title);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();
@@ -163,6 +181,7 @@ function article_list_message_attach(block, title, pk, count) {
   is_full_message_attach();
   div = create_preview_article_list(title, pk, count);
   block.append(div);
+  create_drag_attach_comment(block);
   add_file_message_attach();
   is_full_message_attach();
   show_message_form_send_btn();

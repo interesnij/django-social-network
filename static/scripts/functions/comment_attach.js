@@ -40,11 +40,19 @@ function remove_file_dropdown(){
     dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
 };
 
+function create_drag_attach_comment(block){
+  if (!block.classList.contains("attach_drag_post")) {
+    block.classList.add("attach_drag_item");
+    get_dragula(".attach_drag_item");
+  }
+};
+
 function photo_comment_attach(dropdown, photo_pk, user_pk, src) {
   is_full_dropdown();
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_photo(src, photo_pk, user_pk);
   img_block.append(div);
+  create_drag_attach_comment(block);
   add_file_dropdown()
   is_full_dropdown();
 };
@@ -53,7 +61,8 @@ function photo_list_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_photo_list(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 
@@ -66,9 +75,10 @@ function photo_comment_upload_attach(photo_list, dropdown){
     div = create_preview_photo(parent.querySelector(".progressive").getAttribute('data-href'), parent.getAttribute("photo-pk"), parent.getAttribute("data-pk"));
     block.append(div);
     img_block.append(div);
-    add_file_dropdown()
+    add_file_dropdown();
     is_full_dropdown();
   };
+  create_drag_attach_comment(block);
   close_work_fullscreen();
 };
 
@@ -77,7 +87,8 @@ function video_comment_attach(dropdown, pk, counter, src){
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_video(src, pk, counter)
   img_block.append($div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 function video_list_comment_attach(dropdown, title, pk, count) {
@@ -85,7 +96,8 @@ function video_list_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_video_list(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 
@@ -94,7 +106,8 @@ function music_comment_attach(dropdown, pk, counter, src){
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_music(src, pk, counter )
   add_file_dropdown();
-  img_block.append(div)
+  img_block.append(div);
+  create_drag_attach_comment(block);
   is_full_dropdown();
 };
 function playlist_comment_attach(dropdown, title, pk, count) {
@@ -102,7 +115,7 @@ function playlist_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_playlist(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  add_file_dropdown();
   is_full_dropdown();
 };
 
@@ -111,7 +124,8 @@ function doc_comment_attach(dropdown, media_block, pk){
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_doc(media_block, pk)
   add_file_dropdown();
-  img_block.append(div)
+  img_block.append(div);
+  create_drag_attach_comment(block);
   is_full_dropdown();
 };
 function doc_list_comment_attach(dropdown, title, pk, count) {
@@ -119,7 +133,8 @@ function doc_list_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_doc_list(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 
@@ -128,7 +143,8 @@ function good_comment_attach(dropdown, src, pk, uuid, title){
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_good(src, pk, uuid, title)
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 function good_list_comment_attach(dropdown, title, pk, count) {
@@ -136,7 +152,8 @@ function good_list_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_good_list(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 
@@ -146,7 +163,8 @@ function article_comment_attach(_this, dropdown){
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_article(_this.querySelector("img").getAttribute('data-src'), uuid, _this.parentElement.querySelector(".article_title").innerHTML)
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
 function article_list_comment_attach(dropdown, title, pk, count) {
@@ -154,6 +172,7 @@ function article_list_comment_attach(dropdown, title, pk, count) {
   img_block = dropdown.parentElement.parentElement.previousElementSibling;
   div = create_preview_article_list(title, pk, count);
   img_block.append(div);
-  add_file_dropdown()
+  create_drag_attach_comment(block);
+  add_file_dropdown();
   is_full_dropdown();
 };
