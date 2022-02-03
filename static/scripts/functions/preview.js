@@ -204,7 +204,7 @@ function create_preview_chat_item(_this){
 
 function create_preview_photo(img_src, photo_pk, user_pk){
   $div = document.createElement("div");
-  $div.classList.add("col-md-4", "photo");
+  $div.classList.add("photo", "drag_item", "handle");
   $input = document.createElement("span");
   $input.innerHTML = '<input type="hidden" name="attach_items" value="pho' + photo_pk + '">';
   $img = document.createElement("img");
