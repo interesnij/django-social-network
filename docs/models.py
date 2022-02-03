@@ -57,7 +57,7 @@ class DocsList(models.Model):
         return True
     def get_description(self):
         if self.community:
-            return 'список документов сообщества "' + self.community.name + '"'
+            return 'список документов сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
         else:
             return 'список документов <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
