@@ -4,7 +4,7 @@
       <input type="hidden" name="type" value="{{ type }}" class="item_type">
             <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">
-                <span style="font-weight:bold">Добавить {{ object.get_description }}</span>
+                <span style="font-weight:bold">Добавить {{ object.get_description|safe }}</span>
                 <br>
                 <span id="toggle_case_item_repost" class="underline" data-flag="create_repost_btn">Репост</span>
                 {% if can_copy_item %}
