@@ -80,7 +80,7 @@ function play_video_list(url, counter, video_pk){
   }, 500);
   video = document.createElement("div");
   video.classList.add("video_init");
-  document.body.querySelector("#fullscreens_container").append(video)
+  document.body.querySelector("#video_loader").append(video)
 };
 
 function create_gif_loading () {
