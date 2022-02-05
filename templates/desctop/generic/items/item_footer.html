@@ -56,8 +56,8 @@
       {% for post in object.get_window_reposts %}
 
         {% if post.community %}
-        <a href="{{ post.community.get_link }}" target="_blank" tooltip="{{ post.community.name }}" flow="up" style="padding-right:10px" community-pk="{{ post.community.pk }}">
-          <figure style="margin: 0;">
+        <a href="{{ post.community.get_link }}" target="_blank" style="padding-right:5px" community-pk="{{ post.community.pk }}">
+          <figure style="margin: 0;" tooltip="{{ post.community.name }}" flow="up">
             {% if post.community.s_avatar %}
               <img src="{{ post.community.s_avatar.url }}" style="border-radius: 40px;width:40px;" alt="image">
             {% else %}
@@ -66,8 +66,8 @@
           </figure>
         </a>
         {% else %}
-        <a href="{{ post.creator.get_link }}" target="_blank" tooltip="{{ post.creator.get_full_name }}" flow="up" style="padding-right:10px" user-pk="{{ post.creator.pk }}">
-          <figure style="margin: 0;">
+        <a href="{{ post.creator.get_link }}" target="_blank" style="padding-right:5px" user-pk="{{ post.creator.pk }}">
+          <figure style="margin: 0;" tooltip="{{ post.creator.get_full_name }}" flow="up">
             {% if post.creator.s_avatar %}
               <img src="{{ post.creator.s_avatar.url }}" style="border-radius: 40px;width:40px;" alt="image">
             {% else %}
