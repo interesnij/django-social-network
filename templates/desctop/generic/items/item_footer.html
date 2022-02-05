@@ -51,7 +51,7 @@
   <span class="repost_window">
     {% if object.count_reposts %}
   <div class="repost_pop">
-    <span class="item_reposts pointer">Поделились: {{ object.count_reposts }}</span>
+    <span class="item_reposts pointer ml-1">Поделились: {{ object.count_reposts }}</span>
     <span style="display: flex;margin: 5px;">
       {% for post in object.get_window_reposts %}
 
