@@ -3153,6 +3153,7 @@ opacity:0;
       bottom: 10px;
       top: 10px;
       overflow: auto;
+      right: 40px
     }
 }
 @media screen and (min-width: 621px) {
