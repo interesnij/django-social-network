@@ -3131,13 +3131,14 @@ opacity:0;
 
 .photo_fullscreen,
 .item_fullscreen,
-.video_fullscreen,
 .worker_fullscreen {
   position: fixed;
   width: 100%;
   overflow: auto;
 }
-
+.video_fullscreen {
+  position: fixed;
+}
 @media screen and (min-width: 621px) {
     .item_fullscreen {left: 15%;width: 60%;padding-left: 5%;padding-right: 5%;}
 }
