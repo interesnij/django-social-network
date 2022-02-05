@@ -6,6 +6,7 @@
 .load_comments_list {
   cursor: pointer;
 }
+
 .tab_badge_left_menu {
   font-size: 55% !important;
   margin-left: -2px;
@@ -3146,7 +3147,15 @@ opacity:0;
 
 
 @media screen and (min-width: 621px) {
-    .video_fullscreen{left: 10%;width: 70%;padding-left: 5%;padding-right: 5%;}
+    .video_fullscreen{
+      left: 10px;
+      right: 10px;
+      bottom: 0px;
+      top: 10px;
+      padding: 0 7px;
+      margin-bottom: 50px;
+      position: absolute;
+    }
 }
 @media screen and (min-width: 621px) {
     .video_fullscreen_resized{left:auto;right: 0;height:290px;width:360px;padding: 0;top: 50px;}
