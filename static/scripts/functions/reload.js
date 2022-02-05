@@ -66,6 +66,7 @@ function close_fullscreen() {
   if (!container.innerHTML && video_container.innerHTML) {
     video_container.innerHTML == "";
     video_container.parentElement.style.display = "none";
+    get_document_opacity_1();
     return
   };
   toggle_active_select = false;
