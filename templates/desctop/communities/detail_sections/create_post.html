@@ -30,7 +30,7 @@
                   <a class="btn btn-link btn-sm pointer menu_drop">
                     тема
                   </a>
-                  <div class="dropdown-menu" style="right: 0;left: 100px;">
+                  <div class="dropdown-menu" style="left: 100px;">
                     {% for object in user.get_post_categories %}
                     <span data-pk="{{ object.pk }}">
                       <a class="dropdown-item cat_list_select" style="padding-left: 30px;">{{ object.name }}</a>
