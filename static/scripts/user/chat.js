@@ -12,6 +12,9 @@ function remove_voice_console(form) {
 };
 
  async function get_record_stream() {
+   if (!document.body.querySelector(".mic_visual_canvas")) {
+     return
+   };
    let TIMER_VALUE = 0;
    let leftchannel = [];
    let rightchannel = [];
@@ -30,10 +33,6 @@ function remove_voice_console(form) {
    let stream = null;
    let tested = false;
    let timer_block = document.body.querySelector(".smile_supported");
-
-  if (!document.body.querySelector(".mic_visual_canvas")) {
-    return
-  };
 
   try {
     window.stream = stream = await getStream();
