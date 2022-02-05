@@ -63,8 +63,8 @@ function push_window_stat_list() {
 function close_fullscreen() {
   toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
-  try{
   _window = container.querySelector(".card_fullscreen");
+  try{
   if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
   };
@@ -94,8 +94,8 @@ function close_fullscreen() {
 function close_work_fullscreen() {
   toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
-  try{
   _window = container.querySelector(".card_fullscreen");
+  try{
   if (_window.querySelector(".cool_private_form") && !_window.querySelector(".remove_user_input")) {
     toggle_active_select = true;
   };
