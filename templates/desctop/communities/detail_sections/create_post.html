@@ -28,27 +28,6 @@
                       <a class="dropdown-item u_select_good">Товар</a>
                   </div>
                   <a class="btn btn-link btn-sm pointer menu_drop">
-                    список
-                  </a>
-                  <div class="dropdown-menu" style="right: 0;left: 100px;width: 250px;">
-                    {% for object in community.get_post_lists %}
-                      <span data-pk="{{ object.pk }}">
-                        {% if object.is_main %}
-                        <span class="dropdown-item post_list_select" style="">
-                          <span>
-                            <svg fill="currentColor" style="width:12px;height:12px;" class='svg_default' viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg><input type="hidden" class="list" name="lists" value="{{ object.pk }}">
-                          </span>
-                          {{ object.name }}
-                        </span>
-                        {% else %}
-                        <span class="dropdown-item post_list_select" style="padding-left: 30px;">
-                          {{ object.name }}
-                        </span>
-                        {% endif %}
-                      </span>
-                    {% endfor %}
-                  </div>
-                  <a class="btn btn-link btn-sm pointer menu_drop">
                     тема
                   </a>
                   <div class="dropdown-menu" style="right: 0;left: 100px;">

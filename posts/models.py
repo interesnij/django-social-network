@@ -1349,6 +1349,13 @@ class Post(models.Model):
     def get_window_reposts(self):
         return Post.objects.filter(parent=self)[0:6]
 
+    def message_reposts_count(self):
+        count = self.repost - Post.objects.filter(parent=self).values("pk").count()
+        if count < 1:
+            return ''
+        else:
+            return ', из них в сообщениях - ' + count
+
     def count_reposts(self):
         count = self.repost + self.copy
         if count == 0:
