@@ -1350,7 +1350,7 @@ class Post(models.Model):
         return Post.objects.filter(parent=self)[0:6]
 
     def message_reposts_count(self):
-        count = self.repost - Post.objects.filter(parent=self).values("pk").count()
+        count = self.repost - str(Post.objects.filter(parent=self).values("pk").count())
         if count < 1:
             return ''
         else:
