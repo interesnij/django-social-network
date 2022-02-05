@@ -39,6 +39,8 @@ class CommunityDetail(TemplateView):
                         template_name = "generic/c_template/admin_community_closed.html"
                     else:
                         template_name = "generic/c_template/community_closed.html"
+            elif request.user.is_administrator_of_community(self.c.pk):
+                template_name = "communities/detail/admin_community.html"
             elif request.user.is_member_of_community(self.c.pk):
                 self.template_name = "communities/detail/public_community.html"
                 request.user.plus_community_visited(self.c.pk)
