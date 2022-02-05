@@ -908,20 +908,29 @@ class Post(models.Model):
         self.like += count
         return self.save(update_fields=['like'])
     def minus_likes(self, count):
-        self.like -= count
-        return self.save(update_fields=['like'])
+        try:
+            self.like -= count
+            return self.save(update_fields=['like'])
+        except:
+            pass
     def plus_dislikes(self, count):
         self.dislike += count
         return self.save(update_fields=['dislike'])
     def minus_dislikes(self, count):
-        self.dislike -= count
-        return self.save(update_fields=['dislike'])
+        try:
+            self.dislike -= count
+            return self.save(update_fields=['dislike'])
+        except:
+            pass
     def plus_comments(self, count):
         self.comment += count
         return self.save(update_fields=['comment'])
     def minus_comments(self, count):
-        self.comment -= count
-        return self.save(update_fields=['comment'])
+        try:
+            self.comment -= count
+            return self.save(update_fields=['comment'])
+        except:
+            pass
     def plus_views(self, count):
         self.view += count
         return self.save(update_fields=['view'])
@@ -932,8 +941,11 @@ class Post(models.Model):
         self.repost += count
         return self.save(update_fields=['repost'])
     def minus_reposts(self, count):
-        self.repost -= count
-        return self.save(update_fields=['repost'])
+        try:
+            self.repost -= count
+            return self.save(update_fields=['repost'])
+        except:
+            pass
 
     def is_open(self):
         return self.type == self.MANAGER or self.type == self.PUBLISHED
