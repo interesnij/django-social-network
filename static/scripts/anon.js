@@ -856,6 +856,7 @@ function list_load(block, link) {
   request.open( 'GET', link, true );
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   request.onreadystatechange = function () {if ( request.readyState == 4 && request.status == 200 ) {block.innerHTML = request.responseText;}};request.send( null );
+  try{ fullscreen_resize() } catch { null };
 };
 function list_block_load(target_block, response_block, link) {
   // грузим блок response_block по ссылке link в блок target_block

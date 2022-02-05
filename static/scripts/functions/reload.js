@@ -671,7 +671,7 @@ function list_load(block, link) {
             get_dragula(".drag_container");
             get_dragula(".drag_list");
             create_pagination(block);
-            fullscreen_resize()
+            try{ fullscreen_resize() } catch { null };
         }
     };
     request.send(null);
