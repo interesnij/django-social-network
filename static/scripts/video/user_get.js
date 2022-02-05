@@ -29,7 +29,7 @@ on('#ajax', 'click', '.video_list_detail', function() {
 
 on('#ajax', 'click', '.post_video', function() {
   video_pk = this.getAttribute("video-pk");
-  uuid = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
+  pk = this.parentElement.parentElement.parentElement.getAttribute("data-pk");
   counter = this.getAttribute('video-counter') - 1;
   play_video_list("/video/user/list_post/" + pk + "/", counter, video_pk)
 });
