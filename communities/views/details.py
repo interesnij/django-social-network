@@ -18,29 +18,29 @@ class CommunityDetail(TemplateView):
         if request.user.is_authenticated:
             if request.user.type[0] == "_":
                 if request.user.is_deleted():
-                    template_name = "generic/u_template/you_deleted.html"
+                    self.template_name = "generic/u_template/you_deleted.html"
                 elif request.user.is_closed():
-                    template_name = "generic/u_template/you_closed.html"
+                    self.template_name = "generic/u_template/you_closed.html"
                 elif request.user.is_suspended():
-                    template_name = "generic/u_template/you_suspended.html"
+                    self.template_name = "generic/u_template/you_suspended.html"
             elif self.c.type[0] == "_":
                 if self.c.is_suspended():
-                    if request_user.is_administrator_of_community(community.pk):
-                        template_name = "generic/c_template/admin_community_suspended.html"
+                    if request_user.is_administrator_of_community(self.c.pk):
+                        self.template_name = "generic/c_template/admin_community_suspended.html"
                     else:
-                        template_name = "generic/c_template/community_suspended.html"
+                        self.template_name = "generic/c_template/community_suspended.html"
                 elif self.c.is_deleted():
-                    if request_user.is_administrator_of_community(community.pk):
-                        template_name = "generic/c_template/admin_community_deleted.html"
+                    if request_user.is_administrator_of_community(self.c.pk):
+                        self.template_name = "generic/c_template/admin_community_deleted.html"
                     else:
-                        template_name = "generic/c_template/community_deleted.html"
+                        self.template_name = "generic/c_template/community_deleted.html"
                 elif self.c.is_closed():
-                    if request_user.is_administrator_of_community(community.pk):
-                        template_name = "generic/c_template/admin_community_closed.html"
+                    if request_user.is_administrator_of_community(self.c.pk):
+                        self.template_name = "generic/c_template/admin_community_closed.html"
                     else:
-                        template_name = "generic/c_template/community_closed.html"
+                        self.template_name = "generic/c_template/community_closed.html"
             elif request.user.is_administrator_of_community(self.c.pk):
-                template_name = "communities/detail/admin_community.html"
+                self.template_name = "communities/detail/admin_community.html"
             elif request.user.is_member_of_community(self.c.pk):
                 self.template_name = "communities/detail/public_community.html"
                 request.user.plus_community_visited(self.c.pk)
