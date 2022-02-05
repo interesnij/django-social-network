@@ -1355,6 +1355,12 @@ class Post(models.Model):
             return ''
         else:
             return ', из них в сообщениях - ' + str(count)
+    def count_copy(self):
+        count = self.copy
+        if count == 0:
+            return ''
+        else:
+            return ', копировали - ' + str(count)
 
     def count_reposts(self):
         count = self.repost + self.copy
