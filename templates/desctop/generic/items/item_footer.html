@@ -54,14 +54,14 @@
     <span class="item_reposts pointer">Поделились: {{ object.count_reposts }}</span>
     <span style="display: flex;margin-top: 10px;">
       {% for post in object.get_window_reposts %}
-      
+
         {% if post.community %}
         <a href="{{ post.community.get_link }}" target="_blank" tooltip="{{ post.community.name }}" flow="up" style="padding-right:10px" community-pk="{{ post.community.pk }}">
           <figure style="margin: 0;">
             {% if post.community.s_avatar %}
-              <img src="{{ post.community.s_avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+              <img src="{{ post.community.s_avatar.url }}" style="border-radius: 40px;width:40px;" alt="image">
             {% else %}
-              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+              <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
             {% endif %}
           </figure>
         </a>
@@ -69,9 +69,9 @@
         <a href="{{ post.creator.get_link }}" target="_blank" tooltip="{{ post.creator.get_full_name }}" flow="up" style="padding-right:10px" user-pk="{{ post.creator.pk }}">
           <figure style="margin: 0;">
             {% if post.creator.s_avatar %}
-              <img src="{{ post.creator.s_avatar.url }}" style="border-radius: 50px;width:50px;" alt="image">
+              <img src="{{ post.creator.s_avatar.url }}" style="border-radius: 40px;width:40px;" alt="image">
             {% else %}
-              <svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
+              <svg fill="currentColor" class="svg_default svg_default_40" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/></svg>
             {% endif %}
           </figure>
         </a>
