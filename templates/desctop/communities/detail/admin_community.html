@@ -76,8 +76,8 @@
         <div class="col-12 col-md-12 col-lg-4">
             <div class="card">
               <figure class="mx-auto mb-3 avatar_figure">
-                {% if user.b_avatar %}
-                  {{ user.get_b_avatar|safe }}
+                {% if community.b_avatar %}
+                  {{ community.get_b_avatar|safe }}
                   <form id="add_user_avatar">
                     {% csrf_token %}
                     <input type="file" id="community_avatar_upload" name="file" style="display:none">
@@ -86,7 +86,7 @@
                 {% else %}
                 <form id="add_user_avatar">
                   {% csrf_token %}
-                  <input type="file" id="user_avatar_upload" name="file" style="display:none">
+                  <input type="file" id="community_avatar_upload" name="file" style="display:none">
                   <img src="/static/images/no_img/b_avatar.png" class="previous_click pointer">
                 </form>
                 {% endif %}
