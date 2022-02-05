@@ -3149,7 +3149,7 @@ opacity:0;
 
 @media screen and (min-width: 621px) {
     .video_fullscreen{
-      right: 5%;
+      left: 5%;
       bottom: 10px;
       top: 10px;
       overflow: auto;
