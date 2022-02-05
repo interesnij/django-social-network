@@ -3256,11 +3256,11 @@ opacity:0;
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  width: 300px;
-  bottom: 20px;
+  width: 275px;
+  bottom: 18px;
   margin-bottom: 10px;
   display: flex;
-  transition: 0.5s;
+  transition: 0.3s;
 }
 
 .like_window:hover,
