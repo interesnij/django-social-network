@@ -37,7 +37,7 @@ class UserPostVideoList(TemplateView):
 	def get(self,request,*args,**kwargs):
 		from posts.models import Post
 
-		self.post = Post.objects.get(pk=self.kwargs["post_pk"])
+		self.post = Post.objects.get(pk=self.kwargs["pk"])
 		self.video_list = self.post.get_attach_videos()
 		if request.user.is_authenticated:
 			self.template_name = get_template_user_item(self.post, "video/u_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
