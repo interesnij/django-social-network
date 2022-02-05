@@ -61,6 +61,13 @@ function push_window_stat_list() {
 };
 
 function close_fullscreen() {
+  container = document.body.querySelector("#fullscreens_container");
+  video_container = document.body.querySelector("#video_loader");
+  if (!container.innerHTML && video_container.innerHTML) {
+    video_container.innerHTML == "";
+    video_container.parentElement.style.display = "none";
+    return
+  };
   toggle_active_select = false;
   container = document.body.querySelector("#fullscreens_container");
   _window = container.querySelector(".card_fullscreen");
