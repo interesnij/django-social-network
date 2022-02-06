@@ -21,8 +21,7 @@ on('#ajax', 'change', '.case_all_input', function() {
   }};
   link_.upload.onprogress = function(event) {
     count = event.total / 100 * event.loaded;
-    count = count * 1;
-    document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + count + '%';
+    document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + Math.round(count) + '%';
   };
   link_.upload.onload = function() {
   document.body.querySelector("#onload_info").innerHTML = ""
