@@ -20,7 +20,8 @@ on('#ajax', 'change', '.case_all_input', function() {
     document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
   }};
   link_.upload.onprogress = function(event) {
-    count = event.total / 100 * event.loaded
+    count = event.total / 100 * event.loaded;
+    count = count * 1;
     document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + count + '%';
   };
   link_.upload.onload = function() {
