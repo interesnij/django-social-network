@@ -13,6 +13,6 @@ from tinytag import TinyTag
 
 django.setup()
 
-tag = TinyTag.get('/static/audio/event.mp3')
+tag = TinyTag.get('static/audio/event.mp3')
 print('This track is by %s.' % tag.artist)
 print('It is %f seconds long.' % tag.duration)
