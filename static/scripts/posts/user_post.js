@@ -16,9 +16,15 @@ on('#ajax', 'change', '.case_all_input', function() {
     elem = link_.responseText;
     response = document.createElement("span");
     response.innerHTML = elem;
-    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
     document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
-  }}
+  }};
+  link_.upload.onprogress = function(event) {
+    document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + event.loaded + ' байт из ' + event.total;
+  };
+  link_.upload.onload = function() {
+  document.body.querySelector("#onload_info").innerHTML = ""
+}
   link_.send(form_data);
 });
 
