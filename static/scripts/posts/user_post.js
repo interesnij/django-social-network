@@ -1,3 +1,26 @@
+on('#ajax', 'change', '.case_all_input', function() {
+  if (this.classList.contains("add_photos_in_list")) {
+    url = "/gallery/add_photos_in_list/"
+  } else if (this.classList.contains("add_tracks_in_list")) {
+    url = "/gallery/add_tracks_in_list/"
+  }
+  form = this.parentElement.parentElement;
+  pk = form.parentElement.nextElementSibling.querySelector(".is_stat_list").getAttribute("data-pk");
+  form_data = new FormData(form);
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', url + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+    document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
+  }}
+  link_.send(form_data);
+});
 
 on('body', 'click', '.photo_attach_list_remove', function() {
   block = this.parentElement.parentElement;

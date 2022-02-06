@@ -102,19 +102,25 @@ class LoadMusiclist(ListView):
 class AddTrackInList(View):
 	def post(self, request, *args, **kwargs):
 		from common.templates import render_for_platform
+		from tinytag import TinyTag
 
 		list = MusicList.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
 			tracks = []
 			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
-				track = Music.create_track(
+				tag = TinyTag.get(file)
+				try:
+					title = tag.title
+				except:
+					title = "Без названия"
+				track = Music.objects.create(
 					creator=request.user,
 					file=file,
 					list=list,
-					type="PUB",
 					title=title,
-					community=list.community
+					community=list.community,
+					duration=int(tag.duration)
 				)
 				tracks += [track,]
 			return render_for_platform(request, 'music/new_tracks.html',{'object_list': tracks, 'list': list, 'community': list.community})

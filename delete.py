@@ -19,7 +19,6 @@ print('Продолжительность', int(tag.duration))
 print('Альбом', tag.album)
 print('Название', tag.title)
 print('Жанр', tag.genre)
-
 print('Битрейт', int(tag.bitrate))
 print('Размер', tag.filesize)
 print('Номер трека в альбоме', tag.track)

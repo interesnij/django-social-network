@@ -66,25 +66,6 @@ on('#ajax', 'click', '.user_photo_restore', function() {
   post.querySelector(".card").style.opacity = "1";
 });
 
-on('#ajax', 'change', '.add_photos_in_list', function() {
-  form = this.parentElement.parentElement;
-  pk = form.parentElement.nextElementSibling.querySelector(".is_stat_list").getAttribute("data-pk");
-  form_data = new FormData(form);
-  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/gallery/add_photos_in_list/" + pk + "/", true );
-  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  link_.onreadystatechange = function () {
-  if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    document.body.querySelector(".is_block_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-    document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
-  }}
-  link_.send(form_data);
-});
-
 on('#ajax', 'change', '#user_avatar_upload', function() {
   parent = this.parentElement;
   post_with_pk_and_reload(parent, "/gallery/user_progs/add_avatar/")

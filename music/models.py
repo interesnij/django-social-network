@@ -682,7 +682,7 @@ class Music(models.Model):
     title = models.CharField(max_length=255)
     list = models.ForeignKey(MusicList, on_delete=models.SET_NULL, related_name='playlist', blank=True, null=True)
     album = models.ForeignKey(MusicAlbum, on_delete=models.SET_NULL, related_name='album_playlist', blank=True, null=True)
-    type = models.CharField(choices=TYPE, max_length=5)
+    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
     file = models.FileField(upload_to=upload_to_music_directory, blank=True, validators=[validate_file_extension], verbose_name="Аудиозапись")
     community = models.ForeignKey('communities.Community', related_name='music_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_track', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Создатель")
