@@ -109,7 +109,7 @@ class AddTrackInList(View):
 			tracks = []
 			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
-				tag = TinyTag.get(file)
+				tag = TinyTag.get(file.temporary_file_path())
 				try:
 					title = tag.title
 				except:
