@@ -106,9 +106,11 @@ class AddTrackInList(View):
 
 		list = MusicList.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
-			tracks = []
+			tracks, order, count = [], list.count, 0
 			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
+				count += 1
+				order += 1
 				tag = TinyTag.get(file.temporary_file_path())
 				title = tag.title
 				if not title:
@@ -118,10 +120,17 @@ class AddTrackInList(View):
 					file=file,
 					list=list,
 					title=title,
+					order=order,
 					community=list.community,
 					duration=int(tag.duration)
 				)
 				tracks += [track,]
+			list.count = order
+			list.save(update_fields=["count"])
+			if list.community:
+				list.community.plus_tracks(count)
+			else:
+				list.creator.plus_tracks(count)
 			return render_for_platform(request, 'music/new_tracks.html',{'object_list': tracks, 'list': list, 'community': list.community})
 		else:
 			raise Http404
