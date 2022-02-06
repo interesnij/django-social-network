@@ -1,6 +1,7 @@
 from django.views.generic.base import TemplateView
 from music.models import *
 from django.views.generic import ListView
+from django.views import View
 from common.templates import (
 								get_detect_platform_template,
 								get_template_community_list,
