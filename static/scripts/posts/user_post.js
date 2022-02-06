@@ -5,7 +5,7 @@ on('#ajax', 'change', '.case_all_input', function() {
     url = "/gallery/add_tracks_in_list/"
   }
   form = this.parentElement.parentElement;
-  pk = form.parentElement.nextElementSibling.querySelector(".is_stat_list").getAttribute("data-pk");
+  pk = form.getAttribute("data-pk");
   form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', url + pk + "/", true );
