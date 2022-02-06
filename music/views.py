@@ -117,6 +117,6 @@ class AddTrackInList(View):
 					community=list.community
 				)
 				tracks += [track,]
-			return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
+			return render_for_platform(request, 'music/new_tracks.html',{'object_list': tracks, 'list': list, 'community': list.community})
 		else:
 			raise Http404

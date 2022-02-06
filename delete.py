@@ -1,24 +1,18 @@
-STANDART,             1
+# -*- coding: utf-8 -*-
+from locale import *
+import csv,sys,os
 
-TRAINEE_MODERATOR,    10,13,16,19
-MODERATOR,
-HIGH_MODERATOR,
-TEAMLEAD_MODERATOR,
+project_dir = '../tr/tr/'
 
-TRAINEE_SUPPORT,      20,23,26,29
-SUPPORT,
-HIGH_SUPPORT,
-TEAMLEAD_SUPPORT,
+sys.path.append(project_dir)
 
-TRAINEE_MANAGER,      30,33,36,39
-MANAGER,
-HIGH_MANAGER,
-TEAMLEAD_MANAGER,
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-ADVERTISER,            40,44,49
-HIGH_ADVERTISER,
-TEAMLEAD_ADVERTISER,
+import django
+from tinytag import TinyTag
 
-ADMINISTRATOR,         50,54,59
-HIGH_ADMINISTRATOR,
-TEAMLEAD_ADMINISTRATOR,
+django.setup()
+
+tag = TinyTag.get('/static/audio/event.mp3')
+print('This track is by %s.' % tag.artist)
+print('It is %f seconds long.' % tag.duration)
