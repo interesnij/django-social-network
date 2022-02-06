@@ -46,10 +46,6 @@ on('#ajax', 'click', '.load_photo_list', function() {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&photolist=" + photolist_pk);
 });
 
-on('#ajax', 'click', '.u_photos_add', function() {
-  document.querySelector('#photos_add_window').style.display =="none";
-});
-
 on('#ajax', 'click', '.u_photo_edit', function() {
   document.querySelector('#block_description_form').style.display =="none";
 });

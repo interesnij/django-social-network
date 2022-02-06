@@ -1,6 +1,3 @@
-
-
-
 on('#ajax', 'click', '.c_photo_off_comment', function() {
   send_photo_change(this, "/gallery/community_progs/off_comment/", "c_photo_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -66,21 +63,6 @@ on('#ajax', 'click', '.community_photo_restore', function() {
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-});
-
-on('#ajax', 'click', '.c_photo_like', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = parent.getAttribute("owner-pk");
-  c_pk = parent.getAttribute("data-pk");
-  send_like(parent, "/gallery/votes/community_like/" + pk + "/" + c_pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_photo_likes");
-});
-on('#ajax', 'click', '.c_photo_dislike', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  photo_pk = parent.getAttribute("data-pk");
-  pk = parent.getAttribute("owner-pk");
-  send_dislike(parent, "/gallery/votes/community_dislike/" + photo_pk + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_photo_dislikes");
 });
 
 on('#ajax', 'click', '.mob_c_photo_off_comment', function() {

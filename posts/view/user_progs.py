@@ -7,26 +7,6 @@ from django.http import Http404
 from django.views.generic.base import TemplateView
 
 
-class AddPostsListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        from common.check.user import check_user_can_get_list
-
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-        return HttpResponse()
-
-class RemovePostsListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        from common.check.user import check_user_can_get_list
-
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-        return HttpResponse()
-
 class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, list, attach = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')

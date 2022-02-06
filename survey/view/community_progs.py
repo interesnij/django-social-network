@@ -124,20 +124,3 @@ class SurveyCommunityDetail(TemplateView):
         context["object"] = self.survey
         context["community"] = self.community
         return context
-
-
-class AddSurveyListInCommunityCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, list.community)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_community_collections(community)
-        return HttpResponse()
-
-class RemoveSurveyListFromCommunityCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, list.community)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_community_collections(community)
-        return HttpResponse()

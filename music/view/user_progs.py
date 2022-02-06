@@ -10,27 +10,6 @@ from common.templates import get_settings_template, render_for_platform
 from common.check.user import check_user_can_get_list
 
 
-
-class AddPlayListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-class RemovePlayListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
 class UserTrackRemove(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
@@ -47,28 +26,6 @@ class UserTrackAbortRemove(View):
             return HttpResponse()
         else:
             raise Http404
-
-class UserTrackCreate(TemplateView):
-    form_post = None
-
-    def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("music/music_create/u_create_track.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(UserTrackCreate,self).get(request,*args,**kwargs)
-
-    def get_context_data(self,**kwargs):
-        context = super(UserTrackCreate,self).get_context_data(**kwargs)
-        context["form_post"] = TrackForm()
-        return context
-
-    def post(self,request,*args,**kwargs):
-        form_post = TrackForm(request.POST, request.FILES)
-        self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and form_post.is_valid():
-            track = form_post.save(commit=False)
-            new_track = Music.create_track(creator=request.user, title=track.title, file=track.file, list=track.list)
-            return render_for_platform(request, 'music/music_create/u_new_track.html',{'object': new_track})
-        else:
-            return HttpResponseBadRequest()
 
 class UserTrackEdit(TemplateView):
     form_post = None

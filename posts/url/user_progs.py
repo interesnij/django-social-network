@@ -17,7 +17,4 @@ urlpatterns = [
 	url(r'^restore/(?P<pk>\d+)/$', PostUserRecover.as_view()),
 	url(r'^on_votes/(?P<pk>\d+)/$', UserOnVotesPost.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', UserOffVotesPost.as_view()),
-
-	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromUserCollections.as_view()),
 ]

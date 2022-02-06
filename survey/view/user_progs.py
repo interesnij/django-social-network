@@ -126,24 +126,3 @@ class SurveyUserDetail(TemplateView):
         context["object"] = self.survey
         context["user"] = self.user
         return context
-
-
-class AddSurveyListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-class RemoveSurveyListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()

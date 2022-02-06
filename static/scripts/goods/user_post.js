@@ -72,21 +72,6 @@ on('#ajax', 'click', '.user_good_restore', function() {
   post.querySelector(".card").style.opacity = "1";
 });
 
-on('#ajax', 'click', '.u_good_like', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute("data-pk");
-  good_pk = block.getAttribute("good-pk");
-  send_like(block, "/goods/votes/user_like/" + good_pk + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_good_likes");
-});
-on('#ajax', 'click', '.u_good_dislike', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute("data-pk");
-  good_pk = block.getAttribute("good-pk");
-  send_dislike(block, "/goods/votes/user_dislike/" + good_pk + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_good_dislikes");
-});
-
 
 on('#ajax', 'click', '#good_image', function() {
   img = this.previousElementSibling.querySelector("#id_image")

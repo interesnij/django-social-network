@@ -23,8 +23,3 @@ on('#ajax', 'click', '.user_community_create_window', function(e) {
   pk = this.getAttribute("data-pk");
   create_fullscreen("/communities/progs/add/", "worker_fullscreen");
 });
-on('#ajax', 'click', '.community_claim', function() {
-  this.parentElement.classList.remove("show");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/managers/progs_community/claim_window/" + pk + "/", "worker_fullscreen");
-});

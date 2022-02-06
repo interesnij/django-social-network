@@ -3,8 +3,7 @@ function clear_comment_dropdown(){
   dropdowns = document.body.querySelectorAll(".current_file_dropdown");
   for (var i = 0; i < dropdowns.length; i++) {
     btn = dropdowns[i].parentElement.parentElement;
-    btn.classList.remove("files_two");
-    btn.classList.remove("files_one");
+    btn.classList.remove("files_two", "files_one");
     btn.classList.add("files_null");
     btn.style.display = "block";
     dropdowns[i].classList.remove("current_file_dropdown");
@@ -22,22 +21,26 @@ function is_full_dropdown(){
     close_work_fullscreen();
   }
   if (dropdown.classList.contains("files_one") || dropdown.classList.contains("files_null")){
-    dropdown.style.display = "block"}
+    dropdown.style.display = "block"
+  }
 };
 function add_file_dropdown(){
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   if (dropdown.classList.contains("files_null")){
-    dropdown.classList.add("files_one"),
-    dropdown.classList.remove("files_null")}
+    dropdown.classList.add("files_one");
+    dropdown.classList.add("files_null")
+    }
   else if(dropdown.classList.contains("files_one")){
-    dropdown.classList.add("files_two"), dropdown.classList.remove("files_one")};
+    dropdown.classList.add("files_two");
+    dropdown.classList.remove("files_one")
+  };
 };
 function remove_file_dropdown(){
   dropdown = document.body.querySelector(".current_file_dropdown").parentElement.parentElement;
   if (dropdown.classList.contains("files_one")){
-    dropdown.classList.add("files_null"), dropdown.classList.remove("files_one")}
+    dropdown.classList.add("files_null"); dropdown.classList.remove("files_one")}
   else if(dropdown.classList.contains("files_two")){
-    dropdown.classList.add("files_one"), dropdown.classList.remove("files_two")};
+    dropdown.classList.add("files_one"); dropdown.classList.remove("files_two")};
 };
 
 function create_drag_attach_comment(block){

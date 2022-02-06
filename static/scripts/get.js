@@ -171,7 +171,6 @@ on('body', 'click', '.search_ajax', function(event) {
 
 on('body', 'click', '.ajax', function(event) {
   event.preventDefault();
-  this.querySelector(".unread_count") ? (minus_one_chat(), console.log("minus_one_chat")) : null
   var url = this.getAttribute('href');
   if (url != window.location.pathname){
     ajax_get_reload(url);

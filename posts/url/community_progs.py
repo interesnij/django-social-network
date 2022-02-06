@@ -17,7 +17,4 @@ urlpatterns = [
 	url(r'^restore/(?P<pk>\d+)/$', PostCommunityRecover.as_view()),
 	url(r'^on_votes/(?P<pk>\d+)/$', CommunityOnVotesPost.as_view()),
     url(r'^off_votes/(?P<pk>\d+)/$', CommunityOffVotesPost.as_view()),
-
-	url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPostsListInCommunityCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePostsListFromCommunityCollections.as_view()),
 ]

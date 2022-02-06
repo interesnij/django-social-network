@@ -8,29 +8,6 @@ from communities.models import Community
 from common.templates import render_for_platform
 
 
-class AddGoodListInCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_community_can_add_list(community.pk):
-            list.add_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
-class RemoveGoodListFromCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["list_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
-            list.remove_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
-
 class CommunityOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])

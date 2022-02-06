@@ -9,29 +9,6 @@ from common.templates import render_for_platform, get_community_manage_template
 from common.check.community import check_can_get_lists
 
 
-class AddPlayListInCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["list_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_community_can_add_list(community.pk):
-            list.add_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
-class RemovePlayListFromCommunityCollections(View):
-    def post(self,request,*args,**kwargs):
-        list = MusicList.objects.get(pk=self.kwargs["list_pk"])
-        community = Community.objects.get(pk=self.kwargs["pk"])
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_user_can_delete_list(community.pk):
-            list.remove_in_community_collections(community)
-            return HttpResponse()
-        else:
-            return HttpResponseBadRequest()
-
-
 class CommunityTrackRemove(View):
     def get(self, request, *args, **kwargs):
         track, c = Music.objects.get(pk=self.kwargs["track_pk"]), Community.objects.get(pk=self.kwargs["pk"])

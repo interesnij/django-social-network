@@ -9,25 +9,6 @@ from common.check.community import check_can_get_lists
 from django.views.generic.base import TemplateView
 
 
-class AddPostsListInCommunityCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        community = list.community
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_community_can_add_list(community.pk):
-            list.add_in_community_collections(community)
-        return HttpResponse()
-
-class RemovePostsListFromCommunityCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = PostsList.objects.get(pk=self.kwargs["pk"])
-        community = list.community
-        check_can_get_lists(request.user, community)
-        if request.is_ajax() and list.is_community_can_delete_list(community.pk):
-            list.remove_in_community_collections(community)
-        return HttpResponse()
-
-
 class PostCommunityCreate(View):
     def post(self,request,*args,**kwargs):
         form_post = PostForm(request.POST)

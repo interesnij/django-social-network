@@ -10,27 +10,6 @@ from django.http import Http404
 from common.templates import get_settings_template, render_for_platform, get_detect_platform_template
 
 
-class AddGoodListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-class RemoveGoodListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = GoodList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-
 class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])

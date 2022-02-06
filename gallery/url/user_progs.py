@@ -1,6 +1,5 @@
 from gallery.view.user_progs import *
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 
 
 urlpatterns=[
@@ -14,6 +13,4 @@ urlpatterns=[
 
     url(r'^add_attach_photo/$', PhotoAttachUserCreate.as_view()),
 	url(r'^add_avatar/(?P<pk>\d+)/$', UserAddAvatar.as_view()),
-    url(r'^add_list_in_collections/(?P<pk>\d+)/$', AddPhotoListInUserCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/$', RemovePhotoListFromUserCollections.as_view()),
 ]

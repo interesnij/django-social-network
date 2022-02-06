@@ -192,11 +192,7 @@ class AddPhotosInList(View):
 		from common.templates import render_for_platform
 
 		list = PhotoList.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
-			if list.community and not request.user.is_administrator_of_community(list.community.pk):
-				raise Http404
-			elif not list.creator.pk == request.user.pk:
-				raise Http404
+		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
 			photos = []
 			uploaded_file = request.FILES['file']
 			for p in request.FILES.getlist('file'):

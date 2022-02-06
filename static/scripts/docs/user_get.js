@@ -1,5 +1,3 @@
-
-
 on('#ajax', 'click', '.load_profile_doc_list', function() {
   profile_list_block_load(this, ".load_block", "/doc_list/", "load_profile_doc_list");
 });

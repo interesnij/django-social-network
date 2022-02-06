@@ -50,21 +50,6 @@ on('body', 'click', '.user_video_restore', function() {
   post.querySelector(".card").style.opacity = "1";
 });
 
-on('#video_loader', 'click', '.u_video_like', function() {
-  video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = video.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_like(video, "/video/votes/user_like/" + uuid + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_video_likes");
-});
-on('#video_loader', 'click', '.u_video_dislike', function() {
-  video = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-  uuid = video.getAttribute("data-uuid");
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  send_dislike(video, "/video/votes/user_dislike/" + uuid + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_video_dislikes");
-});
-
 on('#ajax', 'click', '#u_create_video_btn', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   form_data = new FormData(form);

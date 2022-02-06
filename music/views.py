@@ -96,3 +96,26 @@ class LoadMusiclist(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class AddTrackInList(View):
+	def post(self, request, *args, **kwargs):
+		from common.templates import render_for_platform
+
+		list = MusicList.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+			tracks = []
+			uploaded_file = request.FILES['file']
+			for file in request.FILES.getlist('file'):
+				track = Music.create_track(
+					creator=request.user,
+					file=file,
+					list=list,
+					type="PUB",
+					title=title,
+					community=list.community
+				)
+				tracks += [track,]
+			return render_for_platform(request, 'gallery/new_photos.html',{'object_list': photos, 'list': list, 'community': list.community})
+		else:
+			raise Http404

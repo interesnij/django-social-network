@@ -1,5 +1,3 @@
-
-
 on('#ajax', 'click', '.c_good_add_attach', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute('data-pk');
   create_fullscreen('/goods/community_progs/add_attach/' + pk + '/', "item_fullscreen");
@@ -58,21 +56,6 @@ on('#ajax', 'click', '.community_good_restore', function() {
   this.parentElement.parentElement.nextElementSibling.style.display = "unset";
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
-});
-
-on('#ajax', 'click', '.c_good_like', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute("data-pk");
-  good_pk = block.getAttribute("good-pk");
-  send_like(block, "/goods/votes/community_like/" + pk + "/" + good_pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "c_all_good_likes");
-});
-on('#ajax', 'click', '.c_good_dislike', function() {
-  block = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  pk = block.getAttribute("data-pk");
-  good_pk = block.getAttribute("good-pk");
-  send_dislike(block, "/goods/votes/community_dislike/" + pk + "/" + good_pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "c_all_good_dislikes");
 });
 
 on('#ajax', 'click', '#c_add_good_btn', function() {

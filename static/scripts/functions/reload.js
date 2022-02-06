@@ -558,7 +558,7 @@ function open_video_fullscreen(url) {
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
             get_document_opacity_0();
-            
+
         }
     };
     link.send();

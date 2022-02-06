@@ -1,6 +1,5 @@
 from goods.view.community_progs import *
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 
 
 urlpatterns=[
@@ -15,7 +14,4 @@ urlpatterns=[
     url(r'^edit/(?P<pk>\d+)/(?P<good_pk>\d+)$', GoodCommunityEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/(?P<good_pk>\d+)/$', CommunityGoodRecover.as_view()),
-
-    url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddGoodListInCommunityCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemoveGoodListFromCommunityCollections.as_view()),
 ]

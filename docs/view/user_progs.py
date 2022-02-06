@@ -10,26 +10,6 @@ from common.templates import get_settings_template, render_for_platform
 from common.check.user import check_user_can_get_list
 
 
-class AddDocListInUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["list_pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_add_list(request.user.pk):
-            list.add_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
-class RemoveDocListFromUserCollections(View):
-    def get(self,request,*args,**kwargs):
-        list = DocsList.objects.get(pk=self.kwargs["pk"])
-        check_user_can_get_list(request.user, list.creator)
-        if request.is_ajax() and list.is_user_can_delete_list(request.user.pk):
-            list.remove_in_user_collections(request.user)
-            return HttpResponse()
-        else:
-            return HttpResponse()
-
 class UserDocCreate(TemplateView):
     template_name = None
 

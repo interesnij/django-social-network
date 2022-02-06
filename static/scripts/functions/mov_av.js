@@ -14,7 +14,7 @@ function get_video_dop(){
   settings = [];
   if (style.href.indexOf("white") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
-  }else if (style.href.indexOf("dark-grey") != -1){
+  } else {
     settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
@@ -25,7 +25,7 @@ function get_audio_dop(){
   settings = [];
   if (style.href.indexOf("white") != -1){
     settings += ["images/audio_white",'#eeeeee','#FFFFFF']
-  }else if (style.href.indexOf("dark-grey") != -1){
+  } else {
     settings += ["images/audio_dark",'#000000','#000000']
   }
   return settings.split(',')

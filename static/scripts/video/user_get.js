@@ -1,4 +1,3 @@
-
 on('#ajax', 'click', '.u_video_add', function() {
   pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
   create_fullscreen("/video/user_progs/create_video/" + pk + "/", "item_fullscreen");

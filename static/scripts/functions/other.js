@@ -83,16 +83,6 @@ function play_video_list(url, counter, video_pk){
   document.body.querySelector("#video_loader").append(video)
 };
 
-function create_gif_loading () {
-  $load_gif = document.createElement("img");
-  $load_gif.setAttribute("src", "/static/images/preloader.gif");
-  $load_gif.style.width = "40px";
-  $load_div = document.createElement("div");
-  $load_div.classList.add("centered", "m-1");
-  $load_div.append($load_gif);
-  return $load_div
-};
-
 function fullscreen_resize() {
   container = document.body.querySelector("#fullscreens_container");
   if (container.innerHTML) {
@@ -283,33 +273,6 @@ function get_preview(response, type) {
       doc_message_attach(document.body.querySelector(".message_attach_block"), response.querySelector(".media-body"), pk)
   }
   };
-};
-
-function attach_list_for_post(_this, url) {
-    if (document.body.querySelector(".current_file_dropdown")) {
-        toast_error("Элемент прикрепляется только к постам")
-    } else if (document.body.querySelector(".attach_block")) {
-        attach_block = document.body.querySelector(".attach_block");
-        if (attach_block.classList.contains("files_0")) {
-            pk = _this.getAttribute("data-pk");
-            link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-            link_.open('GET', url + pk + "/", true);
-            link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            link_.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    attach_block.nextElementSibling.querySelector(".attach_panel").style.display = "none";
-                    elem = link_.responseText;
-                    response = document.createElement("span");
-                    response.innerHTML = elem;
-                    attach_block.insertAdjacentHTML('afterBegin', response.innerHTML);
-                    close_work_fullscreen();
-                }
-            };
-            link_.send()
-        } else {
-            toast_error("Элемент не влезает, очистите панель прикрепленеия")
-        }
-    }
 };
 
 function post_and_load_object_page(form, url_post, url_1, url_2, stat_type) {
@@ -760,17 +723,6 @@ function get_document_opacity_1() {
   overlay.style.opacity = "0";
 };
 
-function stop_body_scroll() {
-  body = document.body;
-  body.style.overflow = "hidden";
-  body.style.margimRight = "4px";
-};
-function start_body_scroll() {
-  body = document.body;
-  body.style.overflow = "auto";
-  body.style.margimRight = "0";
-};
-
 function post_update_votes(post, uuid) {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   link_.open('GET', "/posts/user_progs/update_votes/" + uuid + "/", true);
@@ -882,20 +834,6 @@ function change_position(block, el) {
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.setRequestHeader('X-CSRFToken', token);
   xmlhttp.send(JSON.stringify(post_array));
-};
-
-function scrollToBottom(id) {
-    document.querySelector(id).scrollIntoView(false);
-};
-
-function minus_one_chat() {
-    if (document.body.querySelector(".new_unread_chats")) {
-        unread_chats = document.body.querySelector(".new_unread_chats"),
-            count = unread_chats.innerHTML,
-            count * 1,
-            count -= 1,
-            count > 0 ? unread_chats.innerHTML = count : unread_chats.innerHTML = ""
-    }
 };
 
 function minus_new_followers() {

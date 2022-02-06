@@ -66,21 +66,6 @@ on('#ajax', 'click', '.user_photo_restore', function() {
   post.querySelector(".card").style.opacity = "1";
 });
 
-on('#ajax', 'click', '.u_photo_like', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  u_pk = parent.getAttribute("owner-pk");
-  pk = parent.getAttribute("data-pk");
-  send_like(parent, "/gallery/votes/user_like/" + u_pk + "/" + pk + "/");
-  like_reload(this.nextElementSibling, this.nextElementSibling.nextElementSibling.nextElementSibling, "u_all_photo_likes");
-});
-on('#ajax', 'click', '.u_photo_dislike', function() {
-  parent = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-  u_pk = parent.getAttribute("owner-pk");
-  pk = parent.getAttribute("data-pk");
-  send_dislike(parent, "/gallery/votes/user_dislike/" + u_pk + "/" + pk + "/");
-  dislike_reload(this.previousElementSibling, this.nextElementSibling, "u_all_photo_dislikes");
-});
-
 on('#ajax', 'change', '.add_photos_in_list', function() {
   form = this.parentElement.parentElement;
   pk = form.parentElement.nextElementSibling.querySelector(".is_stat_list").getAttribute("data-pk");

@@ -1,10 +1,4 @@
 
-
-on('#ajax', 'click', '.c_doc_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/docs/community_progs/create_doc/" + pk + "/", "worker_fullscreen");
-});
-
 on('body', 'click', '.c_doc_remove', function() {
   saver = this.parentElement.parentElement.parentElement;
   pk = saver.getAttribute("data-pk")

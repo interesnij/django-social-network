@@ -9,7 +9,4 @@ urlpatterns=[
     url(r'^restore/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyCommunityRecover.as_view()),
     url(r'^vote/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', CommunitySurveyVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/(?P<survey_pk>\d+)/$', SurveyCommunityDetail.as_view()),
-
-    url(r'^add_list_in_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', AddSurveyListInCommunityCollections.as_view()),
-    url(r'^remove_list_from_collections/(?P<pk>\d+)/(?P<list_pk>\d+)/$', RemovSurveyListFromCommunityCollections.as_view()),
 ]

@@ -1,5 +1,3 @@
-
-
 on('body', 'click', '#c_create_track_btn', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
