@@ -14,8 +14,8 @@ from tinytag import TinyTag
 django.setup()
 
 tag = TinyTag.get('static/audio/8mm - Around The Sun.mp3')
-print('Исполнитель.' % tag.artist)
-print('Продолжительность' % tag.duration)
-print('Альбом.' % tag.album)
-print('Название' % tag.title)
-print('Жанр' % tag.genre)
+print('Исполнитель.', tag.artist)
+print('Продолжительность', tag.duration)
+print('Альбом.', tag.album)
+print('Название', tag.title)
+print('Жанр', tag.genre)
