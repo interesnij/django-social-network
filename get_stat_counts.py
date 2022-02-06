@@ -52,5 +52,5 @@ for community in Community.objects.all():
     profile.tracks = Music.objects.filter(type="PUB", community_id=community.pk).values("pk").count()
     profile.videos = Video.objects.filter(type="PUB", community_id=community.pk).values("pk").count()
     profile.docs = Doc.objects.filter(type="PUB", community_id=community.pk).values("pk").count()
-    profile.members = community.get_members().values("pk").count()
+    profile.members = community.get_members(community.pk).values("pk").count()
     profile.save()
