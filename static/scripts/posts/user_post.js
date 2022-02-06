@@ -2,8 +2,8 @@ on('#ajax', 'change', '.case_all_input', function() {
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
-    url = "/gallery/add_tracks_in_list/"
-  }
+    url = "/music/add_tracks_in_list/"
+  };
   form = this.parentElement.parentElement;
   pk = form.getAttribute("data-pk");
   form_data = new FormData(form);
