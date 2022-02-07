@@ -97,7 +97,7 @@ class AddDocInList(View):
 					list=list,
 					title=title,
 					order=order,
-					community=list.community)
+					community=list.community
 				)
 				docs += [doc,]
 			list.count = order
