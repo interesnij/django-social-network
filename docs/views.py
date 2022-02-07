@@ -92,7 +92,7 @@ class AddDocInList(View):
 					creator=request.user,
 					file=file,
 					list=list,
-					title=file.filename,
+					title=file.name,
 					order=order,
 					community=list.community
 				)
