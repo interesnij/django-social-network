@@ -9,6 +9,7 @@ from common.templates import (
 								get_template_anon_community_list,
 								get_template_user_list,
 								get_template_anon_user_list,
+								get_settings_template
 							)
 
 
