@@ -12,7 +12,7 @@ from common.model.other import Stickers
 class PhotoList(models.Model):
     MAIN, LIST, WALL, AVATAR = 'MAI', 'LIS', 'WAL', 'AVA'
     DELETED = '_DEL'
-    CLOSED, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOW', '_CLOA'
+    CLOSED, CLOSED_WALL, CLOSED_AVATAR, CLOSED_MAIN = '_CLO', '_CLOW', '_CLOA', '_CLOM'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),
