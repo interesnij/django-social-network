@@ -1,15 +1,10 @@
 on('#ajax', 'click', '.load_profile_doc_list', function() {
   profile_list_block_load(this, ".load_block", "/doc_list/", "load_profile_doc_list");
 });
-
 on('#ajax', 'click', '.load_attach_doc_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_doc_list_load/", "load_attach_doc_list");
 });
 
-on('#ajax', 'click', '.u_doc_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/docs/user_progs/create_doc/" + pk + "/", "worker_fullscreen");
-});
 on('body', 'click', '.u_doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');

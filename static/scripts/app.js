@@ -9,10 +9,8 @@ loadScripts('/static/scripts/community/get.js?ver2');
 loadScripts('/static/scripts/community/post.js');
 loadScripts('/static/scripts/community/manage.js');
 
-loadScripts('/static/scripts/docs/user_get.js');
-loadScripts('/static/scripts/docs/community_get.js');
-loadScripts('/static/scripts/docs/user_post.js');
-loadScripts('/static/scripts/docs/community_post.js');
+loadScripts('/static/scripts/docs/get.js');
+loadScripts('/static/scripts/docs/post.js');
 
 loadScripts('/static/scripts/gallery/user_get.js');
 loadScripts('/static/scripts/gallery/community_get.js');

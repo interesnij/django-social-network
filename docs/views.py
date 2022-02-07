@@ -149,7 +149,7 @@ class DocEdit(TemplateView):
 
 		if request.is_ajax() and form_post.is_valid():
 			_doc = form_post.save(commit=False)
-			doc.title=_doc.title
+			doc.title = _doc.title
 			doc.save(update_fields=["title"])
 			return render_for_platform(request, 'users/docs/doc.html',{'object': doc})
 		else:
