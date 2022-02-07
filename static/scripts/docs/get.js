@@ -5,7 +5,7 @@ on('#ajax', 'click', '.load_attach_doc_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_doc_list_load/", "load_attach_doc_list");
 });
 
-on('body', 'click', '.u_doc_edit', function() {
+on('body', 'click', '.doc_edit', function() {
   parent = this.parentElement.parentElement.parentElement;
   blocks = document.body.querySelectorAll('.col-sm-12');
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_doc")}

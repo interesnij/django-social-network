@@ -1,11 +1,3 @@
-on('#ajax', 'click', '.track_edit', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  blocks = document.body.querySelectorAll('.col-sm-12');
-  for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_track")}
-
-  parent.parentElement.parentElement.parentElement.classList.add("edited_track")
-  create_fullscreen("/musiс/edit_track/" + parent.getAttribute("data-pk") +"/", "item_fullscreen");
-});
 
 on('#ajax', 'click', '#edit_track_btn', function() {
   form = this.parentElement.parentElement.parentElement;
