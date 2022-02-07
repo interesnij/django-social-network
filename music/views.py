@@ -172,9 +172,9 @@ class TrackEdit(TemplateView):
         form_post = EditTrackForm(request.POST, instance=track)
 
         if request.is_ajax() and form_post.is_valid():
-            _track = form_post.save(commit=False)
-            track.title=_track.title
+			_track = form_post.save(commit=False)
+			track.title=_track.title
 			track.save(update_fields=["title"])
-            return render_for_platform(request, 'users/music/track.html',{'object': track})
-        else:
-            return HttpResponseBadRequest()
+			return render_for_platform(request, 'users/music/track.html',{'object': track})
+		else:
+			return HttpResponseBadRequest()
