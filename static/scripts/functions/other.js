@@ -819,7 +819,7 @@ function get_image_priview(ggg, img) {
 };
 
 /// ФУНКЦИИ СМЕНЫ ПОРЯДКА ЭЛЕМЕНТОВ
-function change_position(block, el) {
+function change_position(el) {
   parent = el.parentElement;
   array = parent.querySelectorAll(".drag_item");
   len = array.length + 1;
