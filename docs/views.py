@@ -88,15 +88,11 @@ class AddDocInList(View):
 			for file in request.FILES.getlist('file'):
 				count += 1
 				order += 1
-				tag = TinyTag.get(file.temporary_file_path())
-				title = tag.title
-				if not title:
-					title = "Без названия"
 				doc = Doc.objects.create(
 					creator=request.user,
 					file=file,
 					list=list,
-					title=title,
+					title=file.filename,
 					order=order,
 					community=list.community
 				)
