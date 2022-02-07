@@ -12,4 +12,10 @@ class TrackForm(forms.ModelForm):
 
 	class Meta:
 		model = Music
-		fields = ['file'] 
+		fields = ['file']
+
+class EditTrackForm(forms.ModelForm):
+
+	class Meta:
+		model = Music
+		fields = ['title']

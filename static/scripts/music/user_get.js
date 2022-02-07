@@ -15,8 +15,3 @@ on('#ajax', 'click', '.load_music_list', function() {
   create_fullscreen("/music/load_list/" + playlist_pk + "/", "item_fullscreen");
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&playlist=" + playlist_pk);
 });
-
-on('#ajax', 'click', '.u_track_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/music/user_progs/create_track/" + pk + "/", "worker_fullscreen");
-});

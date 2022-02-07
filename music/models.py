@@ -61,14 +61,12 @@ class MusicAlbum(models.Model):
 
 
 class MusicList(models.Model):
-    MAIN, LIST, MANAGER = 'MAI','LIS','MAN',
-    DELETED, DELETED_MANAGER = '_DEL','_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
+    MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN = 'MAI','LIS','_DEL','_CLO','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
-        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),
+        (DELETED, 'Удалённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -338,8 +336,6 @@ class MusicList(models.Model):
         return self.playlist.filter(type="PUB")
     def get_6_items(self):
         return self.playlist.filter(type="PUB")[:6]
-    def get_manager_items(self):
-        return self.playlist.filter(type="MAN")
     def count_items(self):
         return self.playlist.filter(Q(type="PUB")|Q(type="PRI")).values("pk").count()
 
@@ -519,8 +515,6 @@ class MusicList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = MusicList.DELETED
-        elif self.type == "MAN":
-            self.type = MusicList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -536,8 +530,6 @@ class MusicList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = MusicList.LIST
-        elif self.type == "_DELM":
-            self.type = MusicList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -556,8 +548,6 @@ class MusicList(models.Model):
             self.type = MusicList.CLOSED
         elif self.type == "MAI":
             self.type = MusicList.CLOSED_MAIN
-        elif self.type == "MAN":
-            self.type = MusicList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -575,8 +565,6 @@ class MusicList(models.Model):
             self.type = MusicList.LIST
         elif self.type == "_CLOM":
             self.type = MusicList.MAIN
-        elif self.type == "_CLOM":
-            self.type = MusicList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPlayListPosition
@@ -669,11 +657,9 @@ class UserTempMusicList(models.Model):
 
 
 class Music(models.Model):
-    PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PUBLISHED, DELETED, CLOSED = 'PUB','_DEL','_CLO'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
     )
     image = ProcessedImageField(format='JPEG', blank=True, options={'quality': 100}, upload_to=upload_to_music_directory, processors=[Transpose(), ResizeToFit(width=100, height=100)])
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -783,61 +769,13 @@ class Music(models.Model):
         )
         self.save()
 
-    @classmethod
-    def create_track(cls, creator, title, file, list, community=None):
-        from common.processing.music import get_music_processing
-
-        list.count += 1
-        list.save(update_fields=["count"])
-        track = cls.objects.create(creator=creator,order=list.count,list=list,title=title,file=file)
-        if community:
-            community.plus_tracks(1)
-        else:
-            creator.plus_tracks(1)
-        get_music_processing(track, Music.PUBLISHED)
-        #   if community:
-        #       from common.notify.progs import community_send_notify, community_send_wall
-        #       from notify.models import Notify, Wall
-
-        #       Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="MUS", object_id=track.pk, verb="ITE")
-        #       community_send_wall(track.pk, creator.pk, community.pk, None, "create_c_track_wall")
-        #       for user_id in community.get_member_for_notify_ids():
-        #           Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-        #           community_send_notify(track.pk, creator.pk, user_id, community.pk, None, "create_c_track_notify")
-        #       from common.notify.progs import user_send_notify, user_send_wall
-        #       from notify.models import Notify, Wall
-
-        #       Wall.objects.create(creator_id=creator.pk, type="MUS", object_id=track.pk, verb="ITE")
-        #       user_send_wall(track.pk, None, "create_u_track_wall")
-        #       for user_id in creator.get_user_main_news_ids():
-        #           Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="MUS", object_id=track.pk, verb="ITE")
-        #           user_send_notify(track.pk, creator.pk, user_id, None, "create_u_track_notify")
-        return track
-
-    def edit_track(self, title, file, list):
-        from common.processing.music  import get_music_processing
-
-        self.title = title
-        self.file = file
-        if self.list.pk != list.pk:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
-            list.count += 1
-            list.save(update_fields=["count"])
-        self.list = list
-        return self.save()
-
     def delete_item(self, community):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Music.DELETED
-        elif self.type == "PRI":
-            self.type = MusicDELETED_PRIVATE
-        elif self.type == "MAN":
-            self.type = Music.DELETED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_tracks(1)
+        if self.community:
+            self.community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
         self.list.count -= 1
@@ -846,17 +784,13 @@ class Music(models.Model):
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_item(self, community):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Music.PUBLISHED
-        elif self.type == "_DELP":
-            self.type = Music.PRIVATE
-        elif self.type == "_DELM":
-            self.type = Music.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_tracks(1)
+        if self.community:
+            self.community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
         self.list.count += 1
@@ -866,17 +800,13 @@ class Music(models.Model):
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_item(self, community):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Music.CLOSED
-        elif self.type == "PRI":
-            self.type = Music.CLOSED_PRIVATE
-        elif self.type == "MAN":
-            self.type = Music.CLOSED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_tracks(1)
+        if self.community:
+            self.community.minus_tracks(1)
         else:
             self.creator.minus_tracks(1)
         self.list.count -= 1
@@ -885,38 +815,17 @@ class Music(models.Model):
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_item(self, community):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Music.PUBLISHED
-        elif self.type == "_CLOP":
-            self.type = Music.PRIVATE
-        elif self.type == "_CLOM":
-            self.type = Music.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_tracks(1)
+        if self.community:
+            self.community.plus_tracks(1)
         else:
             self.creator.plus_tracks(1)
         self.list.count += 1
         self.list.save(update_fields=["count"])
-        if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
-
-    def make_private(self):
-        from notify.models import Notify, Wall
-        self.type = Music.PRIVATE
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="C")
-    def make_publish(self):
-        from notify.models import Notify, Wall
-        self.type = Music.PUBLISHED
-        self.save(update_fields=['type'])
         if Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
         if Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").exists():

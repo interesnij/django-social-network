@@ -39,14 +39,13 @@ class GoodSubCategory(models.Model):
 
 
 class GoodList(models.Model):
-	MAIN, LIST, MANAGER = 'MAI','LIS','MAN',
-	DELETED, DELETED_MANAGER = '_DEL','_DELM'
-	CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
+	MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN = 'MAI','LIS','_DEL','_CLO','_CLOMA'
 	ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
 	TYPE = (
-		(MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
-		(DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-		(CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+		(MAIN, 'Основной'),(LIST, 'Пользовательский'),
+		(DELETED, 'Удалённый'),
+		(CLOSED_MAIN, 'Закрытый основной'),
+		(CLOSED, 'Закрытый'),
 		)
 
 	PERM = (
@@ -730,28 +729,10 @@ class GoodList(models.Model):
 		self.save()
 		return self
 
-	def make_private(self):
-		from notify.models import Notify, Wall
-		self.type = GoodList.PRIVATE
-		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
-		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
-	def make_publish(self):
-		from notify.models import Notify, Wall
-		self.type = GoodList.LIST
-		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
-		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
 	def delete_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "LIS":
 			self.type = GoodList.DELETED
-		elif self.type == "MAN":
-			self.type = GoodList.DELETED_MANAGER
 		self.save(update_fields=['type'])
 		if self.community:
 			from communities.model.list import CommunityGoodListPosition
@@ -767,8 +748,6 @@ class GoodList(models.Model):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = GoodList.LIST
-		elif self.type == "_DELM":
-			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
 		if self.community:
 			from communities.model.list import CommunityGoodListPosition
@@ -787,8 +766,6 @@ class GoodList(models.Model):
 			self.type = GoodList.CLOSED
 		elif self.type == "MAI":
 			self.type = GoodList.CLOSED_MAIN
-		elif self.type == "MAN":
-			self.type = GoodList.CLOSED_MANAGER
 		self.save(update_fields=['type'])
 		if self.community:
 			from communities.model.list import CommunityGoodListPosition
@@ -806,8 +783,6 @@ class GoodList(models.Model):
 			self.type = GoodList.LIST
 		elif self.type == "_CLOM":
 			self.type = GoodList.MAIN
-		elif self.type == "_CLOM":
-			self.type = GoodList.MANAGER
 		self.save(update_fields=['type'])
 		if self.community:
 			from communities.model.list import CommunityGoodListPosition
@@ -822,11 +797,9 @@ class GoodList(models.Model):
 
 
 class Good(models.Model):
-	DRAFT, PUBLISHED, MANAGER, DELETED, CLOSED = '_DRA','PUB','MAN','_DEL','_CLO'
-	DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
+	DRAFT, PUBLISHED, DELETED, CLOSED = '_DRA','PUB','_DEL','_CLO'
 	TYPE = (
-		(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-		(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+		(DRAFT, 'Черновик'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
 	)
 	title = models.CharField(max_length=200, verbose_name="Название")
 	sub_category = models.ForeignKey(GoodSubCategory, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Подкатегория")
@@ -1052,29 +1025,10 @@ class Good(models.Model):
 				GoodImage.objects.create(good=good, image=image)
 		return self.save()
 
-	def make_private(self):
-		from notify.models import Notify, Wall
-		self.type = Good.PRIVATE
-		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def make_publish(self):
-		from notify.models import Notify, Wall
-		self.type = Good.PUBLISHED
-		self.save(update_fields=['type'])
-		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
-			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="R")
-
 	def delete_item(self, community):
 		from notify.models import Notify, Wall
 		if self.type == "PUB":
 			self.type = Good.DELETED
-		elif self.type == "MAN":
-			self.type = Good.DELETED_MANAGER
 		self.save(update_fields=['type'])
 		if community:
 			community.minus_goods(1)
@@ -1090,8 +1044,6 @@ class Good(models.Model):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = Good.PUBLISHED
-		elif self.type == "_DELM":
-			self.type = Good.MANAGER
 		self.save(update_fields=['type'])
 		if community:
 			community.plus_goods(1)
@@ -1108,8 +1060,6 @@ class Good(models.Model):
 		from notify.models import Notify, Wall
 		if self.type == "PUB":
 			self.type = Good.CLOSED
-		elif self.type == "MAN":
-			self.type = Good.CLOSED_MANAGER
 		self.save(update_fields=['type'])
 		if community:
 			community.minus_goods(1)
@@ -1125,8 +1075,6 @@ class Good(models.Model):
 		from notify.models import Notify, Wall
 		if self.type == "_CLO":
 			self.type = Good.PUBLISHED
-		elif self.type == "_CLOM":
-			self.type = Good.MANAGER
 		self.save(update_fields=['type'])
 		if community:
 			community.plus_goods(1)

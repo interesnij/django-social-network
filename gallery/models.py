@@ -10,14 +10,14 @@ from common.model.other import Stickers
 
 
 class PhotoList(models.Model):
-    MAIN, LIST, WALL, AVATAR, MANAGER = 'MAI', 'LIS', 'WAL', 'AVA', 'MAN'
-    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOM', '_CLOMA', '_CLOW', '_CLOA'
+    MAIN, LIST, WALL, AVATAR = 'MAI', 'LIS', 'WAL', 'AVA'
+    DELETED = '_DEL'
+    CLOSED, CLOSED_WALL, CLOSED_AVATAR = '_CLO', '_CLOW', '_CLOA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),(MANAGER, 'Созданный персоналом'),
-        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),
+        (DELETED, 'Удалённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -379,7 +379,8 @@ class PhotoList(models.Model):
     def is_have_edit(self):
         return self.is_list()
     def is_have_add(self):
-        return self.is_list() or self.is_main()
+        if self.is_list() or self.is_main():
+            return True
     def is_open(self):
         return self.type[0] != "_"
     def is_deleted(self):
@@ -724,8 +725,6 @@ class PhotoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = PhotoList.DELETED
-        elif self.type == "MAN":
-            self.type = PhotoList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPhotoListPosition
@@ -741,8 +740,6 @@ class PhotoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PhotoList.LIST
-        elif self.type == "_DELM":
-            self.type = PhotoList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPhotoListPosition
@@ -761,8 +758,6 @@ class PhotoList(models.Model):
             self.type = PhotoList.CLOSED
         elif self.type == "MAI":
             self.type = PhotoList.CLOSED_MAIN
-        elif self.type == "MAN":
-            self.type = PhotoList.CLOSED_MANAGER
         elif self.type == "AVA":
             self.type = PhotoList.CLOSED_AVATAR
         elif self.type == "WAL":
@@ -784,8 +779,6 @@ class PhotoList(models.Model):
             self.type = PhotoList.LIST
         elif self.type == "_CLOM":
             self.type = PhotoList.MAIN
-        elif self.type == "_CLOM":
-            self.type = PhotoList.MANAGER
         elif self.type == "_CLOW":
             self.type = PhotoList.WALL
         elif self.type == "_CLOA":
@@ -804,11 +797,10 @@ class PhotoList(models.Model):
 
 
 class Photo(models.Model):
-    PUBLISHED, MANAGER, DELETED, CLOSED, MESSAGE = 'PUB','MAN','_DEL','_CLO','_MES'
-    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
+    PUBLISHED, DELETED, CLOSED, MESSAGE = 'PUB','_DEL','_CLO','_MES'
+    CLOSED_MANAGER = '_CLOM'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),(MESSAGE, 'Загруженный в сообщениях'),
-        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MESSAGE, 'Загруженный в сообщениях'),
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
@@ -986,32 +978,13 @@ class Photo(models.Model):
         from users.models import User
         return User.objects.filter(id__in=[i['user_id'] for i in PhotoVotes.objects.filter(parent_id=self.pk, vote=-1).values("user_id")[0:6]])
 
-    def make_private(self):
-        from notify.models import Notify, Wall
-        self.type = Photo.PRIVATE
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def make_publish(self):
-        from notify.models import Notify, Wall
-        self.type = Photo.PUBLISHED
-        self.save(update_fields=['type'])
-        if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
-            Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
-        if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
-            Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
-
-    def delete_item(self, community):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Photo.DELETED
-        elif self.type == "MAN":
-            self.type = Photo.DELETED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_photos(1)
+        if self.community:
+            self.community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
         self.list.count -= 1
@@ -1020,15 +993,13 @@ class Photo(models.Model):
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_item(self, community):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Photo.PUBLISHED
-        elif self.type == "_DELM":
-            self.type = Photo.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_photos(1)
+        if self.community:
+            self.community.plus_photos(1)
         else:
             self.creator.plus_photos(1)
         self.list.count += 1
@@ -1038,15 +1009,13 @@ class Photo(models.Model):
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_item(self, community):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Photo.CLOSED
-        elif self.type == "MAN":
-            self.type = Photo.CLOSED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_photos(1)
+        if self.community:
+            self.community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
         self.list.count -= 1
@@ -1055,15 +1024,13 @@ class Photo(models.Model):
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_item(self, community):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Photo.PUBLISHED
-        elif self.type == "_CLOM":
-            self.type = Photo.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_photos(1)
+        if self.community:
+            self.community.plus_photos(1)
         else:
             self.creator.plus_photos(1)
         self.list.count += 1

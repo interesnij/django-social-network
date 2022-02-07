@@ -134,3 +134,47 @@ class AddTrackInList(View):
 			return render_for_platform(request, 'music/new_tracks.html',{'object_list': tracks, 'list': list, 'community': list.community})
 		else:
 			raise Http404
+
+
+class TrackRemove(View):
+    def get(self, request, *args, **kwargs):
+        track = Music.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and (track.creator.pk == request.user.pk or track.list.creator.pk == request.user.pk):
+            track.delete_track()
+            return HttpResponse()
+        else:
+            raise Http404
+class TrackRestore(View):
+    def get(self,request,*args,**kwargs):
+        track = Music.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and (track.creator.pk == request.user.pk or track.list.creator.pk == request.user.pk):
+            track.restore_track()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class TrackEdit(TemplateView):
+    form_post = None
+
+    def get(self,request,*args,**kwargs):
+        self.track = Music.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_settings_template("music/music_create/edit_track.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(TrackEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(TrackEdit,self).get_context_data(**kwargs)
+        context["form_post"] = TrackForm(instance=self.track)
+        context["track"] = self.track
+        return context
+
+    def post(self,request,*args,**kwargs):
+        track = Music.objects.get(pk=self.kwargs["pk"])
+        form_post = EditTrackForm(request.POST, instance=track)
+
+        if request.is_ajax() and form_post.is_valid():
+            _track = form_post.save(commit=False)
+            track.title=_track.title
+			track.save(update_fields=["title"])
+            return render_for_platform(request, 'users/music/track.html',{'object': track})
+        else:
+            return HttpResponseBadRequest()

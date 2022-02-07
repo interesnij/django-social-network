@@ -8,15 +8,12 @@ from django.db.models import Q
 
 
 class Article(models.Model):
-    PUBLISHED, PRIVATE, MANAGER, DELETED, CLOSED = 'PUB','PRI','MAN','_DEL','_CLO'
-    DELETED_PRIVATE, DELETED_MANAGER, CLOSED_PRIVATE, CLOSED_MANAGER = '_DELP','_DELM','_CLOP','_CLOM'
+    PUBLISHED, DELETED, CLOSED = 'PUB','_DEL','_CLO'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(PRIVATE, 'Приватно'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_PRIVATE, 'Удалённый приватный'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_PRIVATE, 'Закрытый приватный'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
     )
     title = models.CharField(max_length=100, blank=False, null=False, verbose_name="Заголовок" )
     g_image = ProcessedImageField(verbose_name='Главное изображение', blank=False, format='JPEG',options={'quality': 80}, processors=[ResizeToFill(1024, 700)],upload_to='articles/%Y/%m/%d')
-    #content = RichTextUploadingField(config_name='default',external_plugin_resources=[('youtube','/static/ckeditor_plugins/youtube/youtube/','plugin.js',)],)
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     #community = models.ForeignKey('communities.Community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")

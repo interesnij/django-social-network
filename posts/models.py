@@ -8,15 +8,15 @@ from common.model.other import Stickers
 
 
 class PostsList(models.Model):
-    MAIN, LIST, MANAGER, DRAFT, TEST = 'MAI','LIS','MAN','_DRA','_T'
-    DELETED, DELETED_MANAGER = '_DEL','_DELM'
-    CLOSED, CLOSED_MAIN, CLOSED_MANAGER = '_CLO','_CLOM','_CLOMA'
+    MAIN, LIST, DRAFT, TEST = 'MAI','LIS','_DRA','_T'
+    DELETED = '_DEL'
+    CLOSED, CLOSED_MAIN = '_CLO','_CLOM'
 
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),(DRAFT, 'Предложка'),
-        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(DRAFT, 'Предложка'),
+        (DELETED, 'Удалённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -598,8 +598,6 @@ class PostsList(models.Model):
 
     def get_items(self):
         return self.post_list.select_related('creator').only('creator__id', 'created').filter(list=self,type="PUB")
-    def get_manager_items(self):
-        return self.post_list.filter(type="MAN")
     def count_items(self):
         return self.post_list.filter(type="PUB").values("pk").count()
 
@@ -726,8 +724,6 @@ class PostsList(models.Model):
 
         if self.type == "LIS":
             self.type = PostsList.DELETED
-        elif self.type == "MAN":
-            self.type = PostsList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostsListPosition
@@ -743,8 +739,6 @@ class PostsList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = PostsList.LIST
-        elif self.type == "_DELM":
-            self.type = PostsList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostsListPosition
@@ -763,8 +757,6 @@ class PostsList(models.Model):
             self.type = PostsList.CLOSED
         elif self.type == "MAI":
             self.type = PostsList.CLOSED_MAIN
-        elif self.type == "MAN":
-            self.type = PostsList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostsListPosition
@@ -782,8 +774,6 @@ class PostsList(models.Model):
             self.type = PostsList.LIST
         elif self.type == "_CLOM":
             self.type = PostsList.MAIN
-        elif self.type == "_CLOM":
-            self.type = PostsList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityPostsListPosition
@@ -828,11 +818,11 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, MANAGER, DELETED, CLOSED, REPOST = "_COF","_UOF","_CDR","_COF","FIX",'PUB','MAN','_DEL','_CLO','_REP'
-    DELETED_C_OFFER, DELETED_U_OFFER, DELETED_MANAGER, CLOSED_MANAGER = '_DCOF','_DUOF','_DELM','_CLOM'
+    C_OFFER, U_OFFER, CREATOR_DRAFT, OFFER_DRAFT, FIXED, PUBLISHED, DELETED, CLOSED, REPOST = "_COF","_UOF","_CDR","_COF","FIX",'PUB','_DEL','_CLO','_REP'
+    DELETED_C_OFFER, DELETED_U_OFFER, CLOSED_MANAGER = '_DCOF','_DUOF','_CLOM'
     TYPE = (
-        (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),(REPOST, 'Репост'),
+        (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
+        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(REPOST, 'Репост'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
@@ -1162,15 +1152,13 @@ class Post(models.Model):
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_item(self, community):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Post.DELETED
-        elif self.type == "MAN":
-            self.type = Post.DELETED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_posts(1)
+        if self.community:
+            self.community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
         self.list.count -= 1
@@ -1179,15 +1167,13 @@ class Post(models.Model):
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_item(self, community):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Post.PUBLISHED
-        elif self.type == "_DELM":
-            self.type = Post.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_posts(1)
+        if self.community:
+            self.community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
         self.list.count += 1
@@ -1197,15 +1183,13 @@ class Post(models.Model):
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="R")
 
-    def close_item(self, comunity):
+    def close_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Post.CLOSED
-        elif self.type == "MAN":
-            self.type = Post.CLOSED_MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.minus_posts(1)
+        if self.community:
+            self.community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
         self.list.count -= 1
@@ -1214,15 +1198,13 @@ class Post(models.Model):
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
-    def abort_close_item(self, community):
+    def abort_close_item(self):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Post.PUBLISHED
-        elif self.type == "_CLOM":
-            self.type = Post.MANAGER
         self.save(update_fields=['type'])
-        if community:
-            community.plus_posts(1)
+        if self.community:
+            self.community.plus_posts(1)
         else:
             self.creator.plus_posts(1)
         self.list.count += 1
@@ -1236,22 +1218,6 @@ class Post(models.Model):
     def create_parent_post(cls, creator, community, attach):
         post = cls.objects.create(creator=creator, community=community, attach=attach, type=Post.REPOST)
         return post
-
-    def get_u_new_parent(self, user):
-        from common.attach.post_attach import get_u_news_parent
-        return get_u_news_parent(self.parent, user)
-
-    def get_c_new_parent(self, user):
-        from common.attach.post_attach import get_c_news_parent
-        return get_c_news_parent(self.parent, user)
-
-    def get_u_post_parent(self, user):
-        from common.attach.post_attach import get_u_posts_parent
-        return get_u_posts_parent(self.parent, user)
-
-    def get_c_post_parent(self, user):
-        from common.attach.post_attach import get_c_posts_parent
-        return get_c_posts_parent(self.parent, user)
 
     def get_attach(self, user):
         from common.attach.post_elements import get_post_attach
@@ -1288,7 +1254,6 @@ class Post(models.Model):
     def likes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__gt=0)
-
     def dislikes(self):
         from common.model.votes import PostVotes
         return PostVotes.objects.filter(parent_id=self.pk, vote__lt=0)
@@ -1423,8 +1388,6 @@ class Post(models.Model):
                 if item[:3] == "vid":
                     query.append(item[3:])
         return Video.objects.filter(id__in=query)
-    def is_private(self):
-        return self.type == self.PRIVATE
 
     def get_edit_attach(self, user):
         from common.attach.post_elements import get_post_edit
