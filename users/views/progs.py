@@ -1121,7 +1121,7 @@ class ChangeListPosition(View):
                 Video.change_position(json.loads(request.body))
             elif type == "doc":
                 from docs.models import Doc
-                Docs.change_position(json.loads(request.body))
+                Doc.change_position(json.loads(request.body))
             elif type == "mus":
                 from music.models import Music
                 Music.change_position(json.loads(request.body))
