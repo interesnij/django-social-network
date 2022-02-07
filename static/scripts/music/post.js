@@ -11,7 +11,7 @@ on('#ajax', 'click', '#edit_track_btn', function() {
   } else { this.disabled = true };
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/music/user_progs/edit_track/" + pk + "/", true );
+  link_.open( 'POST', "/music/edit_track/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
