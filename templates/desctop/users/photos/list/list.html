@@ -29,7 +29,7 @@
       </form>
     </div>
 
-  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/load_list_photos/{{ photo_list_pk }}/"></div>
+  <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/load_list_photos/{{ list.pk }}/"></div>
 
   {% else %}
     {% include 'desctop/generic/centered/private_page.html' %}
