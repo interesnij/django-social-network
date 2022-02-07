@@ -1,4 +1,4 @@
-<li style="padding-bottom:10px">
+<li style="padding:5px" data-pk="{{ object.pk }}">
     <div class="media" music-counter="{{ object.order }}" style="align-items: unset;position: relative;">
         <figure>
           <a class="pointer music_list_item">
@@ -21,16 +21,19 @@
                   <a class="btn_default drop pointer">
                     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                   </a>
-                    <div class="dropdown-menu dropdown-menu-right" data-type="mus{{ object.pk }}" style="top: 25px;">
-                        <span class="dropdown-item create_repost">Добавить</span>
-                        {% if request.user.is_moderator %}
-                          <span class="dropdown-item create_close">Закрыть</span>
-                        {% else %}
-                          <span class="dropdown-item create_claim">Пожаловаться</span>
-                        {% endif %}
-                        <span class="dropdown-item copy_link">Копировать ссылку</span>
-
-                    </div>
+                  <div class="dropdown-menu dropdown-menu-right" data-type="mus{{ object.pk }}" style="top: 25px;">
+                    <span class="dropdown-item create_repost">Добавить</span>
+                    {% if request.user.pk == object.creator.pk and not object.community %}
+                      <span class="dropdown-item track_edit">Изменить</span>
+                    {% elif request.user.pk == object.list.creator.pk %}
+                      <span class="dropdown-item track_remove">Удалить</span>
+                    {% elif request.user.is_moderator %}
+                      <span class="create_close">Закрыть</span>
+                    {% else %}
+                      <span class="create_claim">Пожаловаться</span>
+                    {% endif %}
+                    <span class="dropdown-item copy_link">Копировать ссылку</span>
+                  </div>
                 </div>
               </span>
         </div>

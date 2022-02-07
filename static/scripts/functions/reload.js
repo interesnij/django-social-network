@@ -6,7 +6,7 @@ function get_dragula(block) {
       return handle.classList.contains('handle')
     }})
     //.on('drag', function (el) {console.log("drag!");})
-    .on('drop', function (el) {console.log(el); change_position(el)})
+    .on('drop', function (el) {change_position(el)})
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 };

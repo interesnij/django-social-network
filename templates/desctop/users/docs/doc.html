@@ -1,8 +1,8 @@
-<li class="list-group-item drag_item" style="padding-bottom:10px" data-pk="{{ object.pk }}">
+<li class="list-group-item drag_item" style="padding:5px" data-pk="{{ object.pk }}">
     <div class="media" style="align-items: unset;position: relative;">
         <div class="media-body doc_media_body">
             <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
-            <span class="small {% if request.user.pk == list.creator.pk %}handle drag_item{% endif %}">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+            <span class="small {% if request.user.pk == list.creator.pk %}handle{% endif %}">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
             <span class='span_btn' data-pk="{{ object.pk }}">
                 <div class="dropdown" style="position: inherit;">
                     <a class="btn_default drop pointer">
@@ -14,8 +14,8 @@
                     <div class="dropdown-menu dropdown-menu-right" data-type="doc{{ object.pk }}" style="top: 25px;">
                       <span class="dropdown-item create_repost">Добавить</span>
                       {% if request.user.pk == object.creator.pk and not object.community %}
-                        <span class="dropdown-item u_doc_edit">Изменить</span>
-                        <span class="dropdown-item u_doc_remove">Удалить</span>
+                        <span class="dropdown-item doc_edit">Изменить</span>
+                        <span class="dropdown-item doc_remove">Удалить</span>
                       {% elif request.user.is_moderator %}
                         <span class="create_close">Закрыть</span>
                       {% else %}
