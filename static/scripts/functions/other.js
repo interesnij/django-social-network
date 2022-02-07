@@ -822,6 +822,7 @@ function get_image_priview(ggg, img) {
 function change_position(el) {
   parent = el.parentElement;
   array = parent.querySelectorAll(".drag_item");
+  console.log(array);
   len = array.length + 1;
   token = document.body.getAttribute("data-csrf");
   post_array = []
