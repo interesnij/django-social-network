@@ -822,7 +822,7 @@ class Post(models.Model):
     DELETED_C_OFFER, DELETED_U_OFFER, CLOSED_MANAGER = '_DCOF','_DUOF','_CLOM'
     TYPE = (
         (C_OFFER, 'Предложка сообщества'),(U_OFFER, 'Предложка пользователя'),(CREATOR_DRAFT, 'Черновик владельца'),(OFFER_DRAFT, 'Черновик предложки'),(FIXED, 'Закреплен'), (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
-        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(DELETED_MANAGER, 'Удалённая предложка пользователя'),(REPOST, 'Репост'),
+        (DELETED_C_OFFER, 'Удалённая предложка сообщества'),(REPOST, 'Репост'),
     )
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
 
