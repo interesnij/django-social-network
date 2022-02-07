@@ -12,9 +12,9 @@ class SurveyList(models.Model):
     MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN = 'MAI','LIS','_DEL','_CLO','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
-        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),
+        (DELETED, 'Удалённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -492,13 +492,13 @@ class SurveyList(models.Model):
 
 
 class Survey(models.Model):
-    MANAGER, PUBLISHED = 'PUB','MAN'
-    DELETED, DELETED_MANAGER = '_DEL', '_DELM'
-    CLOSED, CLOSED_MANAGER = '_CLO', '_CLOM'
+    PUBLISHED = 'PUB'
+    DELETED = '_DEL'
+    CLOSED = '_CLO'
     TYPE = (
-        (MANAGER, 'Созданный персоналом'),(PUBLISHED, 'Опубликовано'),
-        (DELETED, 'Удалено'),(DELETED_MANAGER, 'Удален менеджерский'),
-        (CLOSED, 'Закрыто модератором'),(CLOSED_MANAGER, 'Закрыт менеджерский'),
+        (PUBLISHED, 'Опубликовано'),
+        (DELETED, 'Удалено'),
+        (CLOSED, 'Закрыто модератором'),
     )
     title = models.CharField(max_length=250, verbose_name="Название")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
