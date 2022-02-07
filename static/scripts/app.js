@@ -24,10 +24,8 @@ loadScripts('/static/scripts/goods/community_get.js');
 loadScripts('/static/scripts/goods/user_post.js');
 loadScripts('/static/scripts/goods/community_post.js');
 
-loadScripts('/static/scripts/music/user_get.js');
-loadScripts('/static/scripts/music/community_get.js');
-loadScripts('/static/scripts/music/user_post.js');
-loadScripts('/static/scripts/music/community_post.js');
+loadScripts('/static/scripts/music/get.js');
+loadScripts('/static/scripts/music/post.js');
 
 loadScripts('/static/scripts/posts/user_get.js?ver2');
 loadScripts('/static/scripts/posts/community_get.js');

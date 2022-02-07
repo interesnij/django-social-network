@@ -591,10 +591,11 @@ class Doc(models.Model):
     file = models.FileField(upload_to=upload_to_doc_directory, validators=[validate_file_extension], verbose_name="Документ")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     list = models.ForeignKey(DocsList, on_delete=models.SET_NULL, related_name='docs_list', blank=True, null=True)
-    type = models.CharField(choices=TYPE, max_length=5)
-    type_2 = models.CharField(choices=TYPE_2, max_length=5)
+    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
+    type_2 = models.CharField(choices=TYPE_2, default=FILE, max_length=5)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doc_creator', null=False, blank=False, verbose_name="Создатель")
     community = models.ForeignKey('communities.Community', related_name='doc_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
+
     order = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
@@ -661,50 +662,6 @@ class Doc(models.Model):
         mime_type = magic.from_buffer(file.read(1024), mime=True)
         file.seek(initial_pos)
         return mime_type
-
-    @classmethod
-    def create_doc(cls, creator, title, file, list, community, type_2):
-        from common.processing.doc import get_doc_processing
-
-        list.count += 1
-        list.save(update_fields=["count"])
-        doc = cls.objects.create(creator=creator,order=list.count,title=title,list=list,file=file,community=community, type_2=type_2)
-        get_doc_processing(doc, Doc.PUBLISHED)
-        if community:
-            from common.notify.progs import community_send_notify, community_send_wall
-            from notify.models import Notify, Wall
-
-            community.plus_docs(1)
-
-            Wall.objects.create(creator_id=creator.pk, community_id=community.pk, type="DOC", object_id=doc.pk, verb="ITE")
-            community_send_wall(doc.pk, creator.pk, community.pk, None, "create_c_doc_wall")
-            for user_id in community.get_member_for_notify_ids():
-                Notify.objects.create(creator_id=creator.pk, community_id=community.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
-                community_send_notify(doc.pk, creator.pk, user_id, community.pk, None, "create_c_doc_notify")
-        else:
-            from common.notify.progs import user_send_notify, user_send_wall
-            from notify.models import Notify, Wall
-
-            Wall.objects.create(creator_id=creator.pk, type="DOC", object_id=doc.pk, verb="ITE")
-            user_send_wall(doc.pk, None, "create_u_doc_wall")
-            for user_id in creator.get_user_main_news_ids():
-                Notify.objects.create(creator_id=creator.pk, recipient_id=user_id, type="DOC", object_id=doc.pk, verb="ITE")
-                user_send_notify(doc.pk, creator.pk, user_id, None, "create_u_doc_notify")
-            creator.plus_docs(1)
-        return doc
-
-    def edit_doc(self, title, list, file):
-        from common.processing.doc  import get_doc_processing
-
-        if self.list.pk != list.pk:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
-            list.count += 1
-            list.save(update_fields=["count"])
-        self.title = title
-        self.list = list
-        self.file = file
-        return self.save()
 
     def make_private(self):
         from notify.models import Notify, Wall

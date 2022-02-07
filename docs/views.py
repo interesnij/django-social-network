@@ -1,5 +1,7 @@
 from docs.models import DocsList, Doc
+from django.views import View
 from django.views.generic import ListView
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.templates import (
 								get_template_community_item,
 								get_template_anon_community_item,
@@ -71,3 +73,83 @@ class LoadDocList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class AddDocInList(View):
+	def post(self, request, *args, **kwargs):
+		from common.templates import render_for_platform
+		from tinytag import TinyTag
+
+		list = DocsList.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+			docs, order, count = [], list.count, 0
+			uploaded_file = request.FILES['file']
+			for file in request.FILES.getlist('file'):
+				count += 1
+				order += 1
+				tag = TinyTag.get(file.temporary_file_path())
+				title = tag.title
+				if not title:
+					title = "Без названия"
+				doc = Doc.objects.create(
+					creator=request.user,
+					file=file,
+					list=list,
+					title=title,
+					order=order,
+					community=list.community)
+				)
+				docs += [doc,]
+			list.count = order
+			list.save(update_fields=["count"])
+			if list.community:
+				list.community.plus_docs(count)
+			else:
+				list.creator.plus_docs(count)
+			return render_for_platform(request, 'docs/new_docs.html',{'object_list': docs, 'list': list, 'community': list.community})
+		else:
+			raise Http404
+
+
+class DocRemove(View):
+    def get(self, request, *args, **kwargs):
+        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and (doc.creator.pk == request.user.pk or doc.list.creator.pk == request.user.pk):
+            doc.delete_doc()
+            return HttpResponse()
+        else:
+            raise Http404
+class DocRestore(View):
+    def get(self,request,*args,**kwargs):
+        doc = Doc.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and (doc.creator.pk == request.user.pk or doc.list.creator.pk == request.user.pk):
+            doc.restore_doc()
+            return HttpResponse()
+        else:
+            raise Http404
+
+class DocEdit(TemplateView):
+	form_post = None
+
+	def get(self,request,*args,**kwargs):
+		self.doc = Doc.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_settings_template("docs/doc_create/edit_doc.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(DocEdit,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(DocEdit,self).get_context_data(**kwargs)
+		context["form_post"] = EditDocForm(instance=self.doc)
+		context["doc"] = self.doc
+		return context
+
+	def post(self,request,*args,**kwargs):
+		doc = Doc.objects.get(pk=self.kwargs["pk"])
+		form_post = EditDocForm(request.POST, instance=doc)
+
+		if request.is_ajax() and form_post.is_valid():
+			_doc = form_post.save(commit=False)
+			doc.title=_doc.title
+			doc.save(update_fields=["title"])
+			return render_for_platform(request, 'users/docs/doc.html',{'object': doc})
+		else:
+			return HttpResponseBadRequest()

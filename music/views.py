@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from music.models import *
 from django.views.generic import ListView
 from django.views import View
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.templates import (
 								get_detect_platform_template,
 								get_template_community_list,
@@ -163,7 +164,7 @@ class TrackEdit(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(TrackEdit,self).get_context_data(**kwargs)
-		context["form_post"] = TrackForm(instance=self.track)
+		context["form_post"] = EditTrackForm(instance=self.track)
 		context["track"] = self.track
 		return context
 
