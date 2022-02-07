@@ -4,7 +4,7 @@ on('#ajax', 'click', '.track_edit', function() {
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_track")}
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_track")
-  create_fullscreen("/musiс/edit_track/" + parent.getAttribute("data-pk") +"/", "item_fullscreen");
+  create_fullscreen("/music/edit_track/" + parent.getAttribute("data-pk") +"/", "item_fullscreen");
 });
 
 on('#ajax', 'click', '.load_profile_playlist', function() {
