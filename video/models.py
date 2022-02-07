@@ -35,9 +35,9 @@ class VideoList(models.Model):
     MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN = 'MAI','LIS','_DEL','_CLO','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
-        (MAIN, 'Основной'),(LIST, 'Пользовательский'),(MANAGER, 'Созданный персоналом'),
-        (DELETED, 'Удалённый'),(DELETED_MANAGER, 'Удалённый менеджерский'),
-        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (MAIN, 'Основной'),(LIST, 'Пользовательский'),
+        (DELETED, 'Удалённый'),
+        (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
@@ -791,11 +791,10 @@ class VideoList(models.Model):
 
 
 class Video(models.Model):
-    PUBLISHED, MANAGER, DELETED, CLOSED = 'PUB','MAN','_DEL','_CLO'
+    PUBLISHED, DELETED, CLOSED = 'PUB','_DEL','_CLO'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MANAGER, 'Созданный персоналом'),
-        (DELETED_MANAGER, 'Удалённый менеджерский'),(CLOSED_MANAGER, 'Закрытый менеджерский'),
+        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
     )
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
