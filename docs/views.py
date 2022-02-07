@@ -135,12 +135,15 @@ class DocEdit(TemplateView):
 		return super(DocEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from docs.forms import DocForm
 		context = super(DocEdit,self).get_context_data(**kwargs)
 		context["form_post"] = DocForm(instance=self.doc)
 		context["doc"] = self.doc
 		return context
 
 	def post(self,request,*args,**kwargs):
+		from docs.forms import DocForm
+		
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		form_post = DocForm(request.POST, instance=doc)
 

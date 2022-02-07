@@ -164,12 +164,15 @@ class TrackEdit(TemplateView):
 		return super(TrackEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
+		from music.forms import EditTrackForm
 		context = super(TrackEdit,self).get_context_data(**kwargs)
 		context["form_post"] = EditTrackForm(instance=self.track)
 		context["track"] = self.track
 		return context
 
 	def post(self,request,*args,**kwargs):
+		from music.forms import EditTrackForm
+		
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		form_post = EditTrackForm(request.POST, instance=track)
 
