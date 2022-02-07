@@ -143,7 +143,8 @@ class DocEdit(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		from docs.forms import DocForm
-		
+		import json
+
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		form_post = DocForm(request.POST, instance=doc)
 
@@ -152,6 +153,6 @@ class DocEdit(TemplateView):
 			doc.title = _doc.title
 			doc.type_2 = _doc.type_2
 			doc.save(update_fields=["title", "type_2"])
-			return render_for_platform(request, 'users/docs/doc.html',{'object': doc})
+			return HttpResponse(json.dumps({"title": doc.title}), content_type="application/json")
 		else:
 			return HttpResponseBadRequest()

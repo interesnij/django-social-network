@@ -172,7 +172,8 @@ class TrackEdit(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		from music.forms import EditTrackForm
-		
+		import json
+
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		form_post = EditTrackForm(request.POST, instance=track)
 
@@ -180,6 +181,6 @@ class TrackEdit(TemplateView):
 			_track = form_post.save(commit=False)
 			track.title=_track.title
 			track.save(update_fields=["title"])
-			return render_for_platform(request, 'users/music/track.html',{'object': track})
+			return HttpResponse(json.dumps({"title": track.title}), content_type="application/json") 
 		else:
 			return HttpResponseBadRequest()

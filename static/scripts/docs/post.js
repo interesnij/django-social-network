@@ -52,11 +52,9 @@ on('#ajax', 'click', '#edit_doc_btn', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
     toast_info("Документ изменен!")
     close_work_fullscreen();
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    track = document.body.querySelector(".edited_doc");
-    track.innerHTML = response.innerHTML;
+    jsonResponse = JSON.parse(link_.responseText);
+    doc = document.body.querySelector(".edited_doc");
+    doc.querySelector("h6").innerHTML = jsonResponse.title;
   }};
 
   link_.send(form_data);
