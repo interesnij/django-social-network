@@ -14,4 +14,4 @@ class DocForm(forms.ModelForm):
 
 	class Meta:
 		model = Doc
-		fields = ['title', 'file', 'list', 'type_2',]
+		fields = ['title', 'type_2',]

@@ -11,7 +11,7 @@ on('body', 'click', '.u_doc_edit', function() {
   for (var i = 0; i < blocks.length; i++) {blocks[i].classList.remove("edited_doc")}
 
   parent.parentElement.parentElement.parentElement.classList.add("edited_doc")
-  create_fullscreen("/docs/user_progs/edit_doc/" + parent.getAttribute("data-pk") +"/", "worker_fullscreen");
+  create_fullscreen("/docs/edit_doc/" + parent.getAttribute("data-pk") +"/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {

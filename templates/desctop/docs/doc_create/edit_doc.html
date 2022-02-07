@@ -1,5 +1,5 @@
 {% load get_key %}
-    <form class="is_stat_list" data-pk="{{ doc.pk }}" data-type="edit_user_doc">
+    <form class="is_stat_list" data-pk="{{ doc.pk }}" data-type="edit_doc">
       {% csrf_token %}
         <div class="card">
             <div class="card-header border-bottom">
@@ -11,25 +11,13 @@
                     <input type="text" value="{{ doc.title }}" name="title" class="form-control" id="id_title">
                   </div>
                   <div class="form-group">
-                    <label>Списки</label>
-                    <select name="list" id="id_list">
-                      {% for list in request.user.get_doc_lists %}
-                        <option value="{{ list.pk }}" {% if list|item_in_list:doc.pk %}selected=""{% endif %}>{{ list.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Файл</label>
-                    {{ form_post.file }}
-                  </div>
-                  <div class="form-group">
                     <label>Тип</label>
                     {{ form_post.type_2 }}
                   </div>
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-                <button type="button" class="btn btn-sm btn-success float-right" id="u_edit_doc_btn">Создать</button>
+                <button type="button" class="btn btn-sm btn-success float-right" id="edit_doc_btn">Создать</button>
             </div>
         </div>
     </form>

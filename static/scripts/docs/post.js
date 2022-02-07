@@ -32,3 +32,32 @@ on('body', 'click', '.doc_restore', function() {
   }};
   link.send();
 });
+
+on('#ajax', 'click', '#edit_doc_btn', function() {
+  form = this.parentElement.parentElement.parentElement;
+  pk = form.getAttribute("data-pk");
+  form_data = new FormData(form);
+
+  if (!form.querySelector("#id_title").value){
+    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Название - обязательное поле!");
+    return
+  } else { this.disabled = true };
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/docs/edit_doc/" + pk + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    toast_info("Документ изменен!")
+    close_work_fullscreen();
+    elem = link_.responseText;
+    response = document.createElement("span");
+    response.innerHTML = elem;
+    track = document.body.querySelector(".edited_doc");
+    track.innerHTML = response.innerHTML;
+  }};
+
+  link_.send(form_data);
+});

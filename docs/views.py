@@ -135,18 +135,19 @@ class DocEdit(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(DocEdit,self).get_context_data(**kwargs)
-		context["form_post"] = EditDocForm(instance=self.doc)
+		context["form_post"] = DocForm(instance=self.doc)
 		context["doc"] = self.doc
 		return context
 
 	def post(self,request,*args,**kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
-		form_post = EditDocForm(request.POST, instance=doc)
+		form_post = DocForm(request.POST, instance=doc)
 
 		if request.is_ajax() and form_post.is_valid():
 			_doc = form_post.save(commit=False)
 			doc.title = _doc.title
-			doc.save(update_fields=["title"])
+			doc.type_2 = _doc.type_2
+			doc.save(update_fields=["title", "type_2"])
 			return render_for_platform(request, 'users/docs/doc.html',{'object': doc})
 		else:
 			return HttpResponseBadRequest()
