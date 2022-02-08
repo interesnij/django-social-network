@@ -37,6 +37,9 @@ on('#ajax', 'change', '.case_all_input', function() {
     url = "/music/add_tracks_in_list/"
   } else if (this.classList.contains("add_docs_in_list")) {
     url = "/docs/add_docs_in_list/"
+  } else if (this.classList.contains("add_video_in_list")) {
+    url = "/video/add_video_in_list/";
+    case_video = true;
   };
 
   form = this.parentElement.parentElement;
@@ -52,16 +55,28 @@ on('#ajax', 'change', '.case_all_input', function() {
       elem = link_.responseText;
       response = document.createElement("span");
       response.innerHTML = elem;
-      document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-      document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
+      if (case_video) {
+        block = document.body.querySelector(".i_wont_reload");
+        block.innerHTML = response.innerHTML
+      } else {
+        document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+        document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
+      }
   }};
   link_.upload.onprogress = function(event) {
     count = event.loaded / event.total * 100;
-    document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + Math.round(count) + '%';
+    try {
+      document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + Math.round(count) + '%'
+    } catch { null }
   };
   link_.upload.onload = function() {
-    document.body.querySelector("#onload_info").innerHTML = ""
-  }
+    try {
+      info = document.body.querySelector("#onload_info");
+      if (case_video) {
+        info.innerHTML = "Видео загружено!"
+      } else { info.innerHTML = "" }
+    } catch { null }
+  };
   link_.send(form_data);
 });
 

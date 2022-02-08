@@ -1,6 +1,5 @@
-on('#ajax', 'click', '.u_video_add', function() {
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/video/user_progs/create_video/" + pk + "/", "item_fullscreen");
+on('#ajax', 'click', '.add_video', function() {
+  create_fullscreen("/video/add_video/" + this.parentElement.parentElement + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_profile_video_list', function() {
@@ -65,7 +64,7 @@ on('body', 'click', '.video_fullscreen_normal', function() {
 });
 
 on('body', 'click', '#video_holder', function() {
-ggg = this;
-img = this.previousElementSibling.querySelector("#id_image");
-get_image_priview(ggg, img)
+  ggg = this;
+  img = this.previousElementSibling.querySelector("#id_image");
+  get_image_priview(ggg, img)
 });

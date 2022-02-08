@@ -11,7 +11,8 @@ from common.templates import (
 								get_template_anon_community_list,
 								get_template_user_list,
 								get_template_anon_user_list,
-								get_settings_template
+								get_settings_template,
+								render_for_platform
 							)
 
 
@@ -78,19 +79,47 @@ class LoadVideoList(ListView):
 
 
 class VideoCreate(TemplateView):
-    template_name, form_post  = None, None
-    def get(self,request,*args,**kwargs):
-        self.template_name = get_settings_template("video/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(VideoCreate,self).get(request,*args,**kwargs)
+	template_name  = None
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("video/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+		return super(VideoCreate,self).get(request,*args,**kwargs)
 
-    def post(self,request,*args,**kwargs):
-        from video.forms import VideoForm
+	def get_context_data(self,**kwargs):
+		context = super(VideoCreate,self).get_context_data(**kwargs)
+		context["list"] = self.list
+		return context
 
-        self.form_post = VideoForm(request.POST, request.FILES)
-        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
-            video = self.form_post.save(commit=False)
-            new_video = video.create_video(creator=request.user,image=video.image, title=video.title,file=video.file,description=video.description,list=list,comments_enabled=video.comments_enabled,votes_on=video.votes_on,community=community)
-            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
-        else:
-            return HttpResponseBadRequest()
+	def post(self,request,*args,**kwargs):
+		list = VideoList.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+			file = request.FILES.get('file')
+			uri = request.POST.get('uri')
+
+			if file:
+				new_video = Video.objects.create(creator=request.user,title=file.name,file=file,order=list.count + 1, community=list.community)
+
+			list.count += 1
+			list.save(update_fields=["count"])
+
+			return render_for_platform(request, 'video/edit_video.html',{'video': new_video})
+		else:
+			return HttpResponseBadRequest()
+
+
+class VideoEdit(View):
+	def post(self,request,*args,**kwargs):
+		from video.forms import VideoForm
+
+		video = Video.objects.get(pk=self.kwargs["pk"])
+		form_post = VideoForm(request.POST, request.FILES, instance=video)
+		if request.is_ajax() and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
+			_video = form_post.save(commit=False)
+			video.title = _video.title
+			video.description = _video.description
+			video.image = _video.image
+			video.votes_on = _video.votes_on
+			video.comments_enabled = _video.comments_enabled
+			return render_for_platform(request, 'users/video/main_list/video.html',{'object': video})
+		else:
+			return HttpResponseBadRequest()

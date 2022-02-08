@@ -1,11 +1,4 @@
 
-on('#ajax', 'click', '.u_video_create_window', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/video/user_progs/create_video/" + pk + "/", "item_fullscreen");
-  open_fullscreen("/video/user_progs/create_video/" + pk + "/", loader);
-});
-
 on('#video_loader', 'click', '.u_video_off_comment', function() {
   send_photo_change(this, "/video/user_progs/off_comment/", "u_video_on_comment", "Вкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -15,10 +8,6 @@ on('#video_loader', 'click', '.u_video_on_comment', function() {
   send_photo_change(this, "/video/user_progs/on_comment/", "u_video_off_comment", "Выкл. комментарии");
   post = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   post.querySelector(".load_video_comments").style.display = "unset"
-});
-
-on('#ajax', 'click', '.u_video_edit', function() {
-  this.parentElement.nextElementSibling.style.display = "block"
 });
 
 on('#video_loader', 'click', '.u_video_off_votes', function() {
@@ -50,44 +39,46 @@ on('body', 'click', '.user_video_restore', function() {
   post.querySelector(".card").style.opacity = "1";
 });
 
-on('#ajax', 'click', '#u_create_video_btn', function() {
-  form = this.parentElement.parentElement.parentElement.parentElement;
-  form_data = new FormData(form);
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
 
-  if (!form.querySelector("#id_title").value){
-    form.querySelector("#id_title").style.border = "1px #FF0000 solid";
-    toast_error("Название - обязательное поле!");
-  } else if (!form.querySelector("#id_uri").value){
-    form.querySelector("#id_uri").style.border = "1px #FF0000 solid";
-    toast_error("Ссылка на видео - обязательное поле!")
-  } else if (!form.querySelector("#id_image").value){
-    form.querySelector("#video_holder").style.border = "1px #FF0000 solid";
-    toast_error("Фотография на обложку обязательна!")
-  } else if (!form.querySelector("#id_list").value){
-    form.querySelector("#id_list").style.border = "1px #FF0000 solid";
-    toast_error("Выберите список!")
-  } else {this.disabled = true}
+on('#ajax', 'click', '#edit_video_btn', function() {
+  form_post = this.parentElement.parentElement.parentElement;
+  text_val = form_post.querySelector(".smile_supported");
+  _val = format_text(text_val);
+  _text = _val.innerHTML;
+
+  $input = document.createElement("input");
+  $input.setAttribute("name", "description");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = _text;
+  form_post.append($input);
+  form_data = new FormData(form_post);
+
+  lenta_load = document.body.querySelector(".is_paginate");
+  pk = form_post.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/user_progs/create_video/" + pk + "/", true );
+  link_.open( 'POST', "/video/edit_video/" + pk + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
     elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    span1 = response.querySelector('.span1');
-    if (span1.classList.contains(document.body.querySelector(".uuid_saver").getAttribute("data-uuid"))){
-      container = document.body.querySelector(".is_paginate");
-      container.insertAdjacentHTML('afterBegin', response.innerHTML);
-      container.querySelector(".items_empty") ? container.querySelector(".items_empty").style.display = "none" : null;
-      toast_info("Видео создано!")
-    } else{
-      toast_info("Видео создано!")
+    new_post = document.createElement("span");
+    new_post.innerHTML = elem;
+    lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
+    lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    //main_container = document.body.querySelector(".main-container");
+    //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+  } else {
+        new_post = document.createElement("span");
+        new_post.innerHTML = link_.responseText;
+        if (new_post.querySelector(".exception_value")){
+          text = new_post.querySelector(".exception_value").innerHTML;
+          toast_info(text)
+        }
     }
-    close_work_fullscreen();
-  } else {this.disabled = false}};
+  };
+
   link_.send(form_data);
 });

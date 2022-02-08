@@ -85,7 +85,6 @@ class AddDocInList(View):
 		list = DocsList.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
 			docs, order, count = [], list.count, 0
-			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
 				count += 1
 				order += 1

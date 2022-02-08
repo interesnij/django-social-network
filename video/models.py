@@ -791,25 +791,27 @@ class VideoList(models.Model):
 
 
 class Video(models.Model):
-    PUBLISHED, DELETED, CLOSED = 'PUB','_DEL','_CLO'
+    PUBLISHED, DELETED, CLOSED, UPLOAD = 'PUB','_DEL','_CLO','_UPL'
     DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
-        (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
+        (UPLOAD, 'Загружен'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
     )
     image = ProcessedImageField(format='JPEG',
                                 options={'quality': 90},
                                 upload_to=upload_to_video_directory,
+                                blank=True,
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     description = models.CharField(max_length=500, blank=True, verbose_name="Описание")
     title = models.CharField(max_length=255, verbose_name="Название")
+    uri = models.CharField(max_length=255, blank=True, verbose_name="Название")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     list = models.ForeignKey(VideoList, on_delete=models.SET_NULL, related_name='video_list', blank=True, null=True)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
+    type = models.CharField(choices=TYPE, default=UPLOAD, max_length=5)
     file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
     community = models.ForeignKey('communities.Community', related_name='video_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 

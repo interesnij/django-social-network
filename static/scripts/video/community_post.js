@@ -38,9 +38,3 @@ on('body', 'click', '.community_video_restore', function() {
   post.querySelector(".order-2").style.display = "unset";
   post.querySelector(".card").style.opacity = "1";
 });
-
-on('#ajax', 'click', '.c_video_create_window', function(e) {
-  e.preventDefault();
-  pk = document.body.querySelector(".pk_saver").getAttribute("data-pk");
-  create_fullscreen("/video/community_progs/create_video/" + pk + "/", "item_fullscreen");
-});

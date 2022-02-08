@@ -1,44 +1,27 @@
+<div class="i_wont_reload">
 <form class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_video">
     {% csrf_token %}
-    <input class="hidden create_video_hide_file" type="file" name="file" accept="video/mp4,video/x-m4v,video/*" id="id_file">
-      <div class="card">
+      <div class="card" data-pk="{{ list.pk }}">
           <div class="card-header border-bottom">
-              <h6 class="content-color-primary mb-0 create_header"></h6>
+              <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
           </div>
           <div class="card-body">
             <div class="form-group">
-              <label>Название</label>
-              <input type="text" name="title" class="form-control" id="id_title">
+              <input type="file" class="case_all_input add_video_in_list" accept="video/mp4,video/x-m4v,video/*" name="file" style="display:none">
+              <button class="btn btn-sm border previous_click">
+                Выбрать файл
+              </button>
             </div>
             <div class="form-group">
-              <label>Описание видеозаписи</label>
-              <div contenteditable="true" class="form-control smile_supported"></div>
-            </div>
-            <div class="form-group">
-              <div class="hide_image">
-                <input type="file" name="image" accept="image/*" id="id_image">
-              </div>
-              <div id="video_holder" class="border pointer">
-                <h4>Обложка</h4>
-                <i>(обязательно)</i>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="id_comments_enabled22">
-                <label class="custom-control-label" for="id_comments_enabled22">Комментарии включены</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="votes_on" class="custom-control-input" checked id="id_votes_on22">
-                <label class="custom-control-label" for="id_votes_on22">Комментарии включены</label>
-              </div>
+              <button class="btn btn-sm border uri_click">
+                Добавить с другого сайта
+              </button>
             </div>
           </div>
           <div class="card-footer">
               <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-              <button type="button" class="btn btn-sm btn-success float-right" id="create_video_btn">Создать</button>
+              <button type="button" class="hidden btn btn-sm btn-success float-right" id="add_video_btn">Добавить</button>
           </div>
       </div>
   </form>
+</div>

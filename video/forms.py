@@ -7,10 +7,22 @@ class VideoListForm(forms.ModelForm):
 		model = VideoList
 		fields = ['name', 'description']
 
+class VideoUploadForm(forms.ModelForm):
+	class Meta:
+		model = Video
+		fields = ['uri', 'file']
+
+
 class VideoForm(forms.ModelForm):
 	class Meta:
 		model = Video
-		fields = ['title', 'description', 'image', 'votes_on', 'comments_enabled', 'file']
+		fields = [
+			'title',
+			'description',
+			'image',
+			'votes_on',
+			'comments_enabled',
+			]
 
 class EditVideoForm(forms.ModelForm):
 	class Meta:
