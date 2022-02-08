@@ -72,3 +72,22 @@ class LoadVideoList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class VideoCreate(TemplateView):
+    template_name, form_post  = None, None
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_settings_template("video/create_video.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(VideoCreate,self).get(request,*args,**kwargs)
+
+    def post(self,request,*args,**kwargs):
+        from video.forms import VideoForm
+
+        self.form_post = VideoForm(request.POST, request.FILES)
+        self.list = VideoList.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and self.form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
+            video = self.form_post.save(commit=False)
+            new_video = video.create_video(creator=request.user,image=video.image, title=video.title,file=video.file,description=video.description,list=list,comments_enabled=video.comments_enabled,votes_on=video.votes_on,community=community)
+            return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
+        else:
+            return HttpResponseBadRequest()

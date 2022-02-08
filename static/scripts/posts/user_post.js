@@ -1,4 +1,30 @@
+on('#ajax', 'change', '.add_video_in_list', function() {
+  form = this.parentElement.parentElement;
+  pk = form.getAttribute("data-pk");
+
+  create_fullscreen("/video/add_video/" + pk + "/");
+
+  form_data = new FormData(form);
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+
+  link.open( 'POST', "/video/add_video/" + pk + "/", true )
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+  }};
+  link.upload.onprogress = function(event) {
+    count = event.loaded / event.total * 100;
+    document.body.querySelector(".create_header").innerHTML = 'Загружено ' + Math.round(count) + '%';
+  };
+  link.upload.onload = function() {
+    document.body.querySelector(".create_header").innerHTML = "Видеозапись загружена!"
+  }
+  link.send(form_data);
+});
+
 on('#ajax', 'change', '.case_all_input', function() {
+  case_video = false;
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
@@ -6,28 +32,30 @@ on('#ajax', 'change', '.case_all_input', function() {
   } else if (this.classList.contains("add_docs_in_list")) {
     url = "/docs/add_docs_in_list/"
   };
+
   form = this.parentElement.parentElement;
   pk = form.getAttribute("data-pk");
   form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', url + pk + "/", true );
+
+  link_.open( 'POST', url + pk + "/", true )
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    elem = link_.responseText;
-    response = document.createElement("span");
-    response.innerHTML = elem;
-    document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-    document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
+      elem = link_.responseText;
+      response = document.createElement("span");
+      response.innerHTML = elem;
+      document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
+      document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
   }};
   link_.upload.onprogress = function(event) {
     count = event.loaded / event.total * 100;
     document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + Math.round(count) + '%';
   };
   link_.upload.onload = function() {
-  document.body.querySelector("#onload_info").innerHTML = ""
-}
+    document.body.querySelector("#onload_info").innerHTML = ""
+  }
   link_.send(form_data);
 });
 
