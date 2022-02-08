@@ -482,7 +482,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   users_list = users_block.querySelectorAll(".custom_color");
   final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
-    a = users_list[i].querySelector("a");
+    users_list[i].querySelector(".remove_list_input").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
