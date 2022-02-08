@@ -9,8 +9,8 @@ on('body', 'click', '.doc_remove', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     div = document.createElement("div");
-    div.classList.add("col-sm-12");
-    div.style.padding = "20px";
+    div.classList.add("col-12");
+    div.style.padding = "10px";
     div.style.display =  "block";
     div.innerHTML = "Документ удален. <span class='doc_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
     item = saver.parentElement.parentElement.parentElement;

@@ -36,9 +36,9 @@ on('#ajax', 'click', '.track_remove', function() {
   link.onreadystatechange = function () {
   if ( link.readyState == 4 && link.status == 200 ) {
     div = document.createElement("div");
-    div.classList.add("col-md-6", "col-sm-12");
-    div.style.padding = "20px";
-    div.style.display =  "block";
+    div.classList.add("col-12");
+    div.style.padding = "10px";
+    div.style.display = "block";
     div.innerHTML = "Аудиозапись удалена. <span class='track_restore pointer underline' data-pk='" + pk + "'>Восстановить</span>";
     item = saver.parentElement.parentElement.parentElement;
     item.style.display = "none"; item.parentElement.insertBefore(div, item)
