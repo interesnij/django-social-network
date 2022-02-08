@@ -17,23 +17,18 @@
           </div>
           {% include 'desctop/users/video/main_list/my_lists.html' %}
           <span class="load_block">
-            <div class="media mt-3" style="padding-left: 7px;">
-              <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-type="lvi{{ list.pk }}" data-pk="{{ list.pk }}">
-                {% csrf_token %}
+            <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" data-type="lvi{{ list.pk }}" data-pk="{{ list.pk }}" style="padding-left: 7px;">
               <h5 class="mt-1">
                 {{ list.name }} ({{ list.count_items }})
 
                 {% if is_user_can_create_videos %}
-                  <input type="file" accept="video/mp4,video/x-m4v,video/*" class="add_video_in_list video_file" name="file" style="display:none">
-                  <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">
+                  <a class="pointer video_upload_click hide_delete" tooltip="Добавить фото" flow="up">
                     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
                   </a>
                 {% endif %}
 
                 {% include 'desctop/generic/items/list_meta.html' %}
               </h5>
-              <span id="onload_info"></span>
-              </form>
             </div>
           <div class="card mb-2">
               <div class="card-body">

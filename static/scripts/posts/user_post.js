@@ -1,8 +1,13 @@
-on('#ajax', 'change', '.add_video_in_list', function() {
+on('#ajax', 'click', '.video_upload_click', function() {
   form = this.parentElement.parentElement;
   pk = form.getAttribute("data-pk");
+  create_fullscreen("/video/add_video/" + pk + "/", "worker_fullscreen");
+  document.body.querySelector(".create_video_hide_file").click()
+})
 
-  create_fullscreen("/video/add_video/" + pk + "/");
+on('#ajax', 'change', '.create_video_hide_file', function() {
+  form = this.parentElement.parentElement.parentElement;
+  pk = form.getAttribute("data-pk");
 
   form_data = new FormData(form);
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
