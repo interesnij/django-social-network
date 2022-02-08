@@ -13,24 +13,25 @@ class UserGallery(TemplateView):
         self.list = PhotoList.objects.get(pk=self.user.get_selected_photo_list_pk())
 
         if self.user.pk == request.user.pk:
-			if request.user.pk == self.list.creator.pk:
-				self.is_user_can_see_photo_section = True
-				self.is_user_can_see_photo_list = True
-				self.is_user_can_create_photos = True
-			else:
-				self.is_user_can_see_photo_section = True
-				self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
-				self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
-		else:
-			self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
-			self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
-			self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
-		if request.user.is_anonymous:
-			self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-			self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
-			self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
-		else:
-			self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+            if request.user.pk == self.list.creator.pk:
+                self.is_user_can_see_photo_section = True
+                self.is_user_can_see_photo_list = True
+                self.is_user_can_create_photos = Tru
+            else:
+                self.is_user_can_see_photo_section = True
+                self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+                self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+        else:
+            self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
+            self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+
+        if request.user.is_anonymous:
+            self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
+            self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
+        else:
+            self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
         return super(UserGallery,self).get(request,*args,**kwargs)
 
