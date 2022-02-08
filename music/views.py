@@ -141,19 +141,16 @@ class AddTrackInList(View):
 class TrackRemove(View):
     def get(self, request, *args, **kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (track.creator.pk == request.user.pk or track.list.creator.pk == request.user.pk):
-            track.delete_track()
-            return HttpResponse()
-        else:
-            raise Http404
+        if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
+        	track.delete_track()
+		return HttpResponse()
+
 class TrackRestore(View):
     def get(self,request,*args,**kwargs):
         track = Music.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (track.creator.pk == request.user.pk or track.list.creator.pk == request.user.pk):
-            track.restore_track()
-            return HttpResponse()
-        else:
-            raise Http404
+        if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
+        	track.restore_track()
+		return HttpResponse()
 
 class TrackEdit(TemplateView):
 	form_post = None
@@ -177,10 +174,10 @@ class TrackEdit(TemplateView):
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		form_post = EditTrackForm(request.POST, instance=track)
 
-		if request.is_ajax() and form_post.is_valid():
+		if request.is_ajax() and form_post.is_valid() and track.is_user_can_edit_delete_item(request.user):
 			_track = form_post.save(commit=False)
 			track.title=_track.title
 			track.save(update_fields=["title"])
-			return HttpResponse(json.dumps({"title": track.title}), content_type="application/json") 
+			return HttpResponse(json.dumps({"title": track.title}), content_type="application/json")
 		else:
 			return HttpResponseBadRequest()

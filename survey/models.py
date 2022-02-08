@@ -532,6 +532,13 @@ class Survey(models.Model):
     def is_survey(self):
         return True
 
+    def is_user_can_edit_delete_item(self, user):
+        if self.community and user.is_staff_of_community(self.community.pk):
+            return True
+        elif self.creator.pk == user.pk or self.list.creator.pk == user.pk:
+            return True
+        return False
+
     def get_description(self):
         if self.community:
             return 'опрос сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'

@@ -112,19 +112,15 @@ class AddDocInList(View):
 class DocRemove(View):
     def get(self, request, *args, **kwargs):
         doc = Doc.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (doc.creator.pk == request.user.pk or doc.list.creator.pk == request.user.pk):
-            doc.delete_doc()
-            return HttpResponse()
-        else:
-            raise Http404
+		if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
+        	doc.delete_doc()
+        return HttpResponse()
 class DocRestore(View):
     def get(self,request,*args,**kwargs):
         doc = Doc.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and (doc.creator.pk == request.user.pk or doc.list.creator.pk == request.user.pk):
-            doc.restore_doc()
-            return HttpResponse()
-        else:
-            raise Http404
+        if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
+        	doc.restore_doc()
+        return HttpResponse()
 
 class DocEdit(TemplateView):
 	form_post = None
@@ -148,7 +144,7 @@ class DocEdit(TemplateView):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		form_post = DocForm(request.POST, instance=doc)
 
-		if request.is_ajax() and form_post.is_valid():
+		if request.is_ajax() and form_post.is_valid() and doc.is_user_can_edit_delete_item(request.user):
 			_doc = form_post.save(commit=False)
 			doc.title = _doc.title
 			doc.type_2 = _doc.type_2
