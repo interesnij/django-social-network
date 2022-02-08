@@ -6,7 +6,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
   } else if (!form.querySelector("#sub_category").value){
     form.querySelector("#sub_category").style.border = "1px #FF0000 solid";
     toast_error("Тематика - обязательное поле!")
-  } else {this.disabled = true};
+  } else { this.disabled = true };
 
   	form_data = new FormData(form);
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -25,7 +25,7 @@ on('#ajax', 'click', '#add_community_btn', function() {
             if_list(rtr);
             window.history.pushState(null, "vfgffgfgf", "/public" + pk + "/");
             close_work_fullscreen()
-        }
+        } else { this.disabled = false }
       }
       ajax_link.send(form_data);
 });

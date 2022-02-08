@@ -1,5 +1,3 @@
-
-
 on('#ajax', 'click', '#community_article_add', function() {
   pk = this.getAttribute('data-pk');
   create_fullscreen("/article/c_article_window/" + pk + "/", "item_fullscreen");

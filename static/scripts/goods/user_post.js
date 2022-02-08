@@ -1,5 +1,3 @@
-
-
 on('#ajax', 'change', '.goods_category', function() {
   var val = this.value;
   if (val == '') {

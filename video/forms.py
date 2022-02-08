@@ -7,16 +7,12 @@ class VideoListForm(forms.ModelForm):
 		model = VideoList
 		fields = ['name', 'description']
 
-
 class VideoForm(forms.ModelForm):
-	description = forms.CharField( label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '4'}))
 	class Meta:
 		model = Video
-		fields = ['title', 'description', 'image', 'list', 'comments_enabled', 'uri']
+		fields = ['title', 'description', 'image', 'votes_on', 'comments_enabled', 'file']
 
-class CommentForm(forms.ModelForm):
-	text = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control text-comment form-control-rounded'}))
-
+class EditVideoForm(forms.ModelForm):
 	class Meta:
-		model = VideoComment
-		fields = ['text']
+		model = Video
+		fields = ['title', 'description', 'image', 'votes_on', 'comments_enabled']

@@ -801,16 +801,15 @@ class Video(models.Model):
                                 upload_to=upload_to_video_directory,
                                 processors=[ResizeToFit(width=500, upscale=False)],
                                 verbose_name="Обложка")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
     description = models.CharField(max_length=500, blank=True, verbose_name="Описание")
     title = models.CharField(max_length=255, verbose_name="Название")
-    uri = models.CharField(max_length=255, verbose_name="Ссылка на видео")
     uuid = models.UUIDField(default=uuid.uuid4, verbose_name="uuid")
     list = models.ForeignKey(VideoList, on_delete=models.SET_NULL, related_name='video_list', blank=True, null=True)
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="video_creator", on_delete=models.CASCADE, verbose_name="Создатель")
-    type = models.CharField(choices=TYPE, max_length=5)
+    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
     file = models.FileField(blank=True, upload_to=upload_to_video_directory, validators=[validate_file_extension], verbose_name="Видеозапись")
     community = models.ForeignKey('communities.Community', related_name='video_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
@@ -840,7 +839,6 @@ class Video(models.Model):
                 list=post_list,
                 description=item.description,
                 title=item.title,
-                uri=item.uri,
                 file=item.file,
                 comments_enabled=item.comments_enabled,
                 votes_on=item.votes_on,
@@ -974,14 +972,12 @@ class Video(models.Model):
         return VideoComment.objects.filter(item_id=self.pk, parent__isnull=True)
 
     @classmethod
-    def create_video(cls, creator, image, title, file, uri, description, list, comments_enabled, votes_on, community):
+    def create_video(cls, creator, image, title, file, description, list, comments_enabled, votes_on, community):
         from common.processing.video import get_video_processing
 
         list.count += 1
         list.save(update_fields=["count"])
-        video = cls.objects.create(creator=creator,image=image, order=list.count,list=list,title=title,file=file,uri=uri,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
-
-        get_video_processing(video, Video.PUBLISHED)
+        video = cls.objects.create(creator=creator,image=image, order=list.count,list=list,title=title,file=file,description=description,comments_enabled=comments_enabled,votes_on=votes_on)
         if community:
             from common.notify.progs import community_send_notify, community_send_wall
             from notify.models import Notify, Wall
@@ -1004,12 +1000,11 @@ class Video(models.Model):
             creator.plus_videos(1)
         return video
 
-    def edit_video(self, title, file, uri, description, lists, comments_enabled, votes_on):
+    def edit_video(self, title, file, description, lists, comments_enabled, votes_on):
         from common.processing.video import get_video_processing
 
         self.title = title
         self.file = file
-        self.uri = uri
         if self.list.pk != list.pk:
             self.list.count -= 1
             self.list.save(update_fields=["count"])
@@ -1025,7 +1020,7 @@ class Video(models.Model):
         if self.file:
             return self.file.url
         else:
-            return self.uri
+            return "/static/images/demo_video/travel.mp4"
 
     def make_private(self):
         from notify.models import Notify, Wall
@@ -1048,8 +1043,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.DELETED
-        elif self.type == "MAN":
-            self.type = Video.DELETED_MANAGER
         self.save(update_fields=['type'])
         if community:
             community.minus_videos(1)
@@ -1065,8 +1058,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Video.PUBLISHED
-        elif self.type == "_DELM":
-            self.type = Video.MANAGER
         self.save(update_fields=['type'])
         if community:
             community.plus_videos(1)
@@ -1083,8 +1074,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.CLOSED
-        elif self.type == "MAN":
-            self.type = Video.CLOSED_MANAGER
         self.save(update_fields=['type'])
         self.list.count -= 1
         self.list.save(update_fields=["count"])
@@ -1100,8 +1089,6 @@ class Video(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_CLO":
             self.type = Video.PUBLISHED
-        elif self.type == "_CLOM":
-            self.type = Video.MANAGER
         self.save(update_fields=['type'])
         self.list.count += 1
         self.list.save(update_fields=["count"])
@@ -1115,7 +1102,7 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_open(self):
-        return self.type == self.MANAGER or self.type == self.PUBLISHED
+        return self.type == self.PUBLISHED
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):

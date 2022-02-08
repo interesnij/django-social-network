@@ -421,8 +421,8 @@ function music_onReady(){console.log("Аудио плеер готов");}
 
         console.log("Воспроизводится трек: " + title);
         document.title = title;
-        if(document.querySelector(".user_status")){
-          document.querySelector(".user_status").innerHTML = title;
+        if (document.body.querySelector(".user_status")){
+          document.body.querySelector(".user_status").innerHTML = title;
         }
         try {video_player.pause()} catch {null}
     };

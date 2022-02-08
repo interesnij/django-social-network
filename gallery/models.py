@@ -870,7 +870,7 @@ class Photo(models.Model):
 
     def change_position(query):
         for item in query:
-            phone = Photo.objects.get(pk=item['key'])
+            photo = Photo.objects.get(pk=item['key'])
             photo.order = item['value']
             photo.save(update_fields=["order"])
 
