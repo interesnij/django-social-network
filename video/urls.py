@@ -6,6 +6,8 @@ urlpatterns = [
     url(r'^$', AllVideoView.as_view()),
     url(r'^load_list/(?P<pk>\d+)/$', LoadVideoList.as_view(), name="load_video_list"),
 
+    url(r'^add_video/(?P<pk>\d+)/$', VideoCreate.as_view()),
+
     url(r'^user/', include('video.url.user')),
     url(r'^community/', include('video.url.community')),
 
