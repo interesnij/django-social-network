@@ -56,7 +56,7 @@ on('#ajax', 'change', '.case_all_input', function() {
       response = document.createElement("span");
       response.innerHTML = elem;
 
-      if (!case_video) { {
+      if (!case_video) {
         document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
         document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
       }
