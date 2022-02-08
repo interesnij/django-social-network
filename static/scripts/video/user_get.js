@@ -1,5 +1,5 @@
 on('#ajax', 'click', '.add_video', function() {
-  create_fullscreen("/video/add_video/" + this.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
+  create_fullscreen("/video/add_video_in_list/" + this.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
 
 on('#ajax', 'click', '.load_profile_video_list', function() {
