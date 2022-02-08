@@ -42,7 +42,7 @@
             <ul class="is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="doc" data-community-id="{{ list.community.pk }}">
                 {% if object_list %}
                 {% for object in object_list %}
-                  {% include 'desctop/communities/docs/admin_doc.html' %}
+                  {% include 'desctop/communities/docs/doc.html' %}
                 {% endfor %}
                 {% if page_obj.has_next %}
                 <div class="load centered m-1 next_page_list" data-link="{% url 'community_docs' pk=community.pk %}?page={{ page_obj.next_page_number }}">

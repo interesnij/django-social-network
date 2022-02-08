@@ -9,3 +9,7 @@ def is_you_block(request_user, user_id):
 @register.filter
 def is_can_work_list(request_user, list):
     return request_user.is_can_work_list(list)
+
+@register.filter
+def is_user_can_edit_delete(obj, request_user):
+    return obj.is_user_can_edit_delete_item(request_user)

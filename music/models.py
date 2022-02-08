@@ -776,7 +776,7 @@ class Music(models.Model):
         )
         self.save()
 
-    def delete_item(self, community):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Music.DELETED

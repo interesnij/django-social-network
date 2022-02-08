@@ -1,3 +1,5 @@
+{% load user %}
+
 <li class="list-group-item drag_item" style="padding:5px" data-pk="{{ object.pk }}">
     <div class="media" style="align-items: unset;position: relative;">
         <div class="media-body doc_media_body">
@@ -13,7 +15,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" data-type="doc{{ object.pk }}" style="top: 25px;">
                       <span class="dropdown-item create_repost">Добавить</span>
-                      {% if request.user.pk == object.creator.pk and not object.community %}
+                      {% if object|is_user_can_edit_delete:request.user %}
                         <span class="dropdown-item doc_edit">Изменить</span>
                         <span class="dropdown-item doc_remove">Удалить</span>
                       {% elif request.user.is_moderator %}

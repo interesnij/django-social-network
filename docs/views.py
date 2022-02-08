@@ -113,13 +113,13 @@ class DocRemove(View):
 	def get(self, request, *args, **kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
-			doc.delete_doc()
+			doc.delete_item()
 		return HttpResponse()
 class DocRestore(View):
 	def get(self,request,*args,**kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
-			doc.restore_doc()
+			doc.restore_item()
 		return HttpResponse()
 
 class DocEdit(TemplateView):

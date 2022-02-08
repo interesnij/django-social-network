@@ -1,3 +1,5 @@
+{% load user %}
+
 <li style="padding:5px" data-pk="{{ object.pk }}">
     <div class="media" music-counter="{{ object.order }}" style="align-items: unset;position: relative;">
         <figure>
@@ -23,9 +25,8 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" data-type="mus{{ object.pk }}" style="top: 25px;">
                     <span class="dropdown-item create_repost">Добавить</span>
-                    {% if request.user.pk == object.creator.pk and not object.community %}
+                    {% if object|is_user_can_edit_delete:request.user %}
                       <span class="dropdown-item track_edit">Изменить</span>
-                    {% elif request.user.pk == object.list.creator.pk %}
                       <span class="dropdown-item track_remove">Удалить</span>
                     {% elif request.user.is_moderator %}
                       <span class="create_close">Закрыть</span>

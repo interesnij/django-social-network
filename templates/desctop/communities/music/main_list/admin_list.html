@@ -43,7 +43,7 @@
                 {% if object_list %}
                     <ul data-pk="{{ list.pk }}" class="is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="mus" data-community-id="{{ list.community.pk }}">
                       {% for object in object_list %}
-                        {% include 'desctop/communities/music/admin_track.html' %}
+                        {% include 'desctop/communities/music/track.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
                       <div class="load centered m-1 next_page_list" data-link="{% url 'community_music' pk=community.pk %}?page={{ page_obj.next_page_number }}">

@@ -142,14 +142,14 @@ class TrackRemove(View):
 	def get(self, request, *args, **kwargs):
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
-			track.delete_track()
+			track.delete_item()
 		return HttpResponse()
 
 class TrackRestore(View):
 	def get(self,request,*args,**kwargs):
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
-			track.restore_track()
+			track.restore_item()
 		return HttpResponse()
 
 class TrackEdit(TemplateView):
