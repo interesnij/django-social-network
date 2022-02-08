@@ -120,6 +120,7 @@ class VideoEdit(View):
 			video.image = _video.image
 			video.votes_on = _video.votes_on
 			video.comments_enabled = _video.comments_enabled
+			video.type = Video.PUBLISHED
 			return render_for_platform(request, 'users/video/main_list/video.html',{'object': video})
 		else:
 			return HttpResponseBadRequest()
