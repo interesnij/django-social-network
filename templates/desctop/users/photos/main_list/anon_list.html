@@ -10,7 +10,7 @@
 
 <div class="main-container mt-3 pk_saver" data-pk="{{ user.pk }}" data-type="user_photos">
 {% if is_user_can_see_photo_section %}
-<div class="container mt-4">
+<div class="container">
     {% include 'desctop/users/photos/main_list/lists.html' %}
 </div>
 
@@ -22,7 +22,7 @@
   </h5>
 </div>
 
-<div class="container mt-4" id="photos_container">
+<div class="container" id="photos_container">
   <div class="row is_block_paginate is_paginate drag_container is_stat_list" data-pk="{{ photo_list_pk }}" data-type="pho" data-community-id="{{ list.community.pk }}" id="list_photos_container" data-link="/gallery/load_list_photos/{{ photo_list_pk }}/"></div>
 </div>
 </span>
