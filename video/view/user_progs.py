@@ -4,7 +4,7 @@ from video.models import Video, VideoComment, VideoList
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from django.views.generic import ListView
-from video.forms import VideoForm, CommentForm
+from video.forms import VideoForm
 from rest_framework.exceptions import PermissionDenied
 from common.templates import get_settings_template, render_for_platform
 
