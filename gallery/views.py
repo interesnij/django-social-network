@@ -21,15 +21,14 @@ class PhotoDetail(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.photo = Photo.objects.get(pk=self.kwargs["pk"])
 		self.list = self.photo.list
+		self.photos = self.list.get_items()
 		if self.photo.community:
 			self.community = self.photo.community
-			self.photos = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_community_item(self.photo, "gallery/c_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:
 				self.template_name = get_template_anon_community_item(self.photo, "gallery/c_photo/photo/anon_photo.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
-			self.photos = self.list.get_items()
 			if request.user.is_authenticated:
 				self.template_name = get_template_user_item(self.photo, "gallery/u_photo/photo/", "photo.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

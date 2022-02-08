@@ -812,7 +812,7 @@ class Photo(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='photo_creator', null=False, blank=False, verbose_name="Создатель")
     comments_enabled = models.BooleanField(default=True, verbose_name="Разрешить комментарии")
     votes_on = models.BooleanField(default=True, verbose_name="Реакции разрешены")
-    type = models.CharField(choices=TYPE, max_length=5)
+    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
     community = models.ForeignKey('communities.Community', related_name='photo_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     comment = models.PositiveIntegerField(default=0, verbose_name="Кол-во комментов")
@@ -925,8 +925,6 @@ class Photo(models.Model):
         list.count += 1
         list.save(update_fields=["count"])
         photo = cls.objects.create(creator=creator,list=list, order=list.count,preview=image,file=image,community=community)
-
-        get_photo_processing(photo, Photo.PUBLISHED)
         if community:
             community.plus_photos(1)
             community_id = community.pk
