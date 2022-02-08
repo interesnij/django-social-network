@@ -30,7 +30,7 @@ on('#ajax', 'change', '.create_video_hide_file', function() {
 });
 
 on('#ajax', 'change', '.case_all_input', function() {
-  case_video = false;
+  case_video = false, id_video_upload_start = false;
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
@@ -55,15 +55,20 @@ on('#ajax', 'change', '.case_all_input', function() {
       elem = link_.responseText;
       response = document.createElement("span");
       response.innerHTML = elem;
-      if (case_video) {
-        block = document.body.querySelector(".i_wont_reload");
-        block.innerHTML = response.innerHTML
-      } else {
+
+      if (!case_video) { {
         document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
         document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
       }
   }};
   link_.upload.onprogress = function(event) {
+    if (case_video) {
+      if (!id_video_upload_start) {
+        id_video_upload_start = true;
+        block = document.body.querySelector(".i_wont_reload");
+        block.innerHTML = '<form><div class="card"><div class="card-header border-bottom"><h6 class="content-color-primary mb-0" id="onload_info"></h6></div><div class="card-body"><div class="form-group"><label>Название</label><input type="text" name="title" class="form-control" id="id_title"></div><div class="form-group"><label>Описание видеозаписи</label><div contenteditable="true" class="form-control smile_supported"></div></div><div class="form-group"><div class="hide_image"><input type="file" name="image" accept="image/*" id="id_image"></div><div id="video_holder" class="border pointer"><img class="img-fluid rounded" src="/static/images/no_img/list.jpg" alt="img" style="height: 100px;"></div></div><div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="id_comments_enabled22"><label class="custom-control-label" for="id_comments_enabled22">Комментарии включены</label></div></div><div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" name="votes_on" checked class="custom-control-input" id="id_votes_on22"><label class="custom-control-label" for="id_votes_on22">Комментарии включены</label></div></div></div><div class="card-footer"><button class="btn btn-sm border item_fullscreen_hide">Отмена</button><button type="button" class="btn btn-sm btn-success float-right" id="edit_video_btn">Готово</button></div></div></form>'
+      }
+    };
     count = event.loaded / event.total * 100;
     try {
       document.body.querySelector("#onload_info").innerHTML = 'Загружено ' + Math.round(count) + '%'
