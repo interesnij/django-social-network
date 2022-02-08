@@ -5,30 +5,40 @@ from common.templates import get_template_user_list, get_template_anon_user_list
 
 
 class UserGallery(TemplateView):
-    template_name, is_user_can_see_photo_section = None, None
+    template_name, is_user_can_see_photo_section, is_user_can_see_photo_list, is_user_can_create_photos = None, None, None, None
 
     def get(self,request,*args,**kwargs):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(pk=self.user.get_selected_photo_list_pk())
-        if request.user.pk == self.user.pk:
-            self.get_lists = PhotoList.get_user_staff_lists(self.user.pk)
-            self.is_user_can_see_photo_section = True
-        else:
-            self.get_lists = PhotoList.get_user_lists(self.user.pk)
-            self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
-        if request.user.is_anonymous:
-            self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
-        else:
-            self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+
+        if self.user.pk == request.user.pk:
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_photo_section = True
+				self.is_user_can_see_photo_list = True
+				self.is_user_can_create_photos = True
+			else:
+				self.is_user_can_see_photo_section = True
+				self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+		else:
+			self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
+			self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/photos/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
+			self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/photos/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
         self.count_lists = PhotoList.get_user_lists_count(self.user.pk)
         return super(UserGallery,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
         c = super(UserGallery,self).get_context_data(**kwargs)
-        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'], c['photo_list_pk'] = self.user, \
-        self.list, self.get_lists, self.count_lists, self.is_user_can_see_photo_section, self.user.get_selected_photo_list_pk()
+        c['user'], c['list'], c['get_lists'], c['count_lists'], c['is_user_can_see_photo_section'], \
+        c['photo_list_pk'], c['is_user_can_see_photo_list'], c['is_user_can_create_photos'] = self.user, self.list, self.get_lists, self.count_lists, \
+        self.is_user_can_see_photo_section, self.user.get_selected_photo_list_pk(), self.is_user_can_see_photo_list, self.is_user_can_create_photos
         return c
 
 class UserCommunities(ListView):
