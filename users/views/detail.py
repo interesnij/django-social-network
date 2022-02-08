@@ -11,7 +11,7 @@ class UserGallery(TemplateView):
         from gallery.models import PhotoList
         self.user = User.objects.get(pk=self.kwargs["pk"])
         self.list = PhotoList.objects.get(pk=self.user.get_selected_photo_list_pk())
-        self.get_lists = MusicList.get_user_lists(self.user.pk)
+        self.get_lists = PhotoList.get_user_lists(self.user.pk)
 
         if self.user.pk == request.user.pk:
             if request.user.pk == self.list.creator.pk:
