@@ -483,7 +483,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
     a = users_list[i].querySelector("a");
-    final_list += a;
+    final_list += a.innerHTML;
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
   collector.innerHTML = "";
