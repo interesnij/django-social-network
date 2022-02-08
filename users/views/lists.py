@@ -71,25 +71,39 @@ class UserVideoList(ListView):
 
 
 class UserPhotoList(TemplateView):
-	template_name, is_user_can_see_photo_section = None, None
+	template_name, is_user_can_see_photo_section, is_user_can_see_photo_list, is_user_can_create_photos = None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from gallery.models import PhotoList
 
 		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), PhotoList.objects.get(uuid=self.kwargs["uuid"])
-		if request.user.pk == self.list.creator.pk:
-			self.is_user_can_see_photo_section = True
-		elif request.user.pk == self.user.pk:
-			self.is_user_can_see_photo_section = True
-		if request.user.is_anonymous:
-			self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		if self.user.pk == request.user.pk:
+            if request.user.pk == self.list.creator.pk:
+                self.is_user_can_see_photo_section = True
+                self.is_user_can_see_photo_list = True
+                self.is_user_can_create_photos = True
+            else:
+                self.is_user_can_see_photo_section = True
+                self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+                self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+        else:
+            self.is_user_can_see_photo_section = self.user.is_user_can_see_photo(request.user.pk)
+            self.is_user_can_see_photo_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_photos = self.list.is_user_can_create_el(request.user.pk)
+
+        if request.user.is_anonymous:
+            self.template_name = get_template_anon_user_list(self.list, "users/photos/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_photo_section = self.user.is_anon_user_can_see_photo()
+            self.is_user_can_see_photo_list = self.list.is_anon_user_can_see_el()
+        else:
+            self.template_name = get_template_user_list(self.list, "users/photos/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserPhotoList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		c = super(UserPhotoList,self).get_context_data(**kwargs)
-		c['user'], c['list'], c['is_user_can_see_photo_section'] = self.user, self.list, self.is_user_can_see_photo_section
+		c['user'], c['list'], c['is_user_can_see_photo_section'], \
+		c['is_user_can_see_photo_list'], c['is_user_can_create_photos'] = self.user, \
+		self.list, self.is_user_can_see_photo_section, self.is_user_can_see_photo_list, self.is_user_can_create_photos
 		return c
 
 
