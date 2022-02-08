@@ -1,9 +1,5 @@
 on('#ajax', 'click', '.video_upload_click', function() {
-  form = this.parentElement.parentElement;
-  pk = form.getAttribute("data-pk");
-  create_fullscreen("/video/add_video/" + pk + "/", "worker_fullscreen");
-  setTimeout(
-    document.body.querySelector(".create_video_hide_file").click(), 2000);
+  document.body.querySelector(".add_video_in_list").click()
 })
 
 on('#ajax', 'change', '.create_video_hide_file', function() {
