@@ -1,11 +1,11 @@
 <div class="i_wont_reload">
 <form class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_video">
     {% csrf_token %}
-      <div class="card" data-pk="{{ list.pk }}">
+      <div class="card">
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
           </div>
-          <div class="card-body">
+          <div class="card-body" data-pk="{{ list.pk }}">
             <div class="form-group">
               <input type="file" class="case_all_input add_video_in_list" accept="video/mp4,video/x-m4v,video/*" name="file" style="display:none">
               <a class="btn btn-sm border previous_click" style="width:100%">
