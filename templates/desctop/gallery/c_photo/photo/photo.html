@@ -28,11 +28,11 @@
 
     <span id="btn_console" data-type="pho{{ object.pk }}">
       {% if request.user.is_moderator %}
-        <span class="create_close">Закрыть</span>
+        <span class="create_close pointer">Закрыть</span>
       {% else %}
-        <span class="create_claim">Пожаловаться</span>
+        <span class="create_claim pointer">Пожаловаться</span>
       {% endif %}
-      <span class="copy_link">Скопировать ссылку</span>
+      <span class="copy_link pointer">Скопировать ссылку</span>
     </span>
   </div>
     <div class="col-lg-4 col-md-5 col-sm-12 order-2 ">
