@@ -1,11 +1,11 @@
 <div class="i_wont_reload">
-<form class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_video">
+<div class="is_stat_list" data-pk="{{ request.user.pk }}" data-type="create_video">
     {% csrf_token %}
       <div class="card">
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
           </div>
-          <div class="card-body" data-pk="{{ list.pk }}">
+          <form class="card-body" data-pk="{{ list.pk }}">
             <div class="form-group">
               <input type="file" class="case_all_input add_video_in_list" accept="video/mp4,video/x-m4v,video/*" name="file" style="display:none">
               <a class="btn btn-sm border previous_click" style="width:100%">
@@ -17,11 +17,11 @@
                 Добавить с другого сайта
               </a>
             </div>
-          </div>
-          <div class="card-footer">
-              <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-              <button type="button" class="hidden btn btn-sm btn-success float-right" id="add_video_btn">Добавить</button>
+            <div class="card-footer">
+                <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
+                <button type="button" class="hidden btn btn-sm btn-success float-right" id="add_video_btn">Добавить</button>
+            </div>
+            </form>
           </div>
       </div>
-  </form>
 </div>
