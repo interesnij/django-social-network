@@ -38,7 +38,12 @@ on('#ajax', 'change', '.case_all_input', function() {
     case_video = true;
   };
 
-  form = this.parentElement.parentElement;
+  if (case_video) {
+    form = document.body.querySelector(".i_wont_upload_video")
+  }
+  else {
+    form = this.parentElement.parentElement
+  };
   pk = form.getAttribute("data-pk");
   form_data = new FormData(form);
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
