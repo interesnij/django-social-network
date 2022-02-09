@@ -58,7 +58,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   pk = form_post.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/edit_video/?pk=" + pk, true );
+  link_.open( 'POST', "/video/edit_video/", true ); 
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

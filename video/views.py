@@ -114,7 +114,7 @@ class VideoEdit(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("video/edit_video.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.video = Video.objects.get(pk=self.GET.get("pk"))
+		self.video = Video.objects.get(pk=request.GET.get("pk"))
 		return super(VideoEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -125,7 +125,7 @@ class VideoEdit(TemplateView):
 	def post(self,request,*args,**kwargs):
 		from video.forms import VideoForm
 
-		video = Video.objects.get(pk=self.GET.get("pk"))
+		video = Video.objects.get(pk=request.POST.get("pk"))
 		form_post = VideoForm(request.POST, request.FILES, instance=video)
 		if request.is_ajax() and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
 			_video = form_post.save(commit=False)

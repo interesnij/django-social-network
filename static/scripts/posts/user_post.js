@@ -50,7 +50,7 @@ on('#ajax', 'change', '.case_all_input', function() {
   if ( this.readyState == 4 && this.status == 200 ) {
       if (case_video) {
         jsonResponse = JSON.parse(link_.responseText);
-        document.body.querySelector("#upload_video_form").setAttribute("data-pk", jsonResponse.pk)
+        document.body.querySelector("#upload_video_pk").setAttribute("value", jsonResponse.pk)
       }
       else {
         elem = link_.responseText;
