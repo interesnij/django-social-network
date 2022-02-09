@@ -31,13 +31,12 @@ on('#ajax', 'change', '.case_all_input', function() {
   } else if (this.classList.contains("add_docs_in_list")) {
     url = "/docs/add_docs_in_list/"
   } else if (this.classList.contains("add_video_in_list")) {
-    url = "/video/add_video_in_list/";
-    case_video = true;
     if (_this.files[0].type != "video/mp4") {
       toast_info("Пока работаем только с mp4");
       return
-    }
-    console.log(_this.files[0].type)
+    };
+    url = "/video/add_video_in_list/";
+    case_video = true;
   };
 
   form = this.parentElement.parentElement
