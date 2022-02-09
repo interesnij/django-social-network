@@ -22,8 +22,8 @@ def validate_file_extension(value):
     from django.conf import settings
 
     ext = os.path.splitext(value.name)[1]
-    valid_extensions = ['.mp4','.mpeg4']
-    if not ext in valid_extensions:
-        raise ValidationError('Допустимы форматы: mp4, mpeg4!')
-    if value.size > settings.VIDEO_FILE_MAX_SIZE:
-        raise ValidationError('Размер не более 10 МБ!')
+    valid_extensions = ['.mp4','.avi','.mpeg4']
+    #if not ext in valid_extensions:
+    #    raise ValidationError('Допустимы форматы: mp4, mpeg4!')
+    #if value.size > settings.VIDEO_FILE_MAX_SIZE:
+    #    raise ValidationError('Размер не более 10 МБ!')
