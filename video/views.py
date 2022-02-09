@@ -110,11 +110,12 @@ class VideoCreate(TemplateView):
 
 
 class VideoEdit(TemplateView):
-	template_name  = None
+	template_name, video  = None, None
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("video/edit_video.html", request.user, request.META['HTTP_USER_AGENT'])
-		self.video = Video.objects.get(pk=request.GET.get("pk"))
+		if request.GET.get("pk"):
+			self.video = Video.objects.get(pk=request.GET.get("pk"))
 		return super(VideoEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
