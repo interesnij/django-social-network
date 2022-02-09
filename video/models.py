@@ -1019,11 +1019,12 @@ class Video(models.Model):
         return self.save()
 
     def get_uri(self):
-        #if self.file:
-        #    return "https://трезвый.рус" + self.file.url
-        #elif self.uri:
-            #return self.uri
-        return "https://трезвый.рус/static/images/demo_video/travel.mp4"
+        if self.file:
+            return "https://трезвый.рус" + self.file.url
+        elif self.uri:
+            return self.uri
+        else:
+            return "https://трезвый.рус/static/images/demo_video/travel.mp4"
 
     def make_private(self):
         from notify.models import Notify, Wall
