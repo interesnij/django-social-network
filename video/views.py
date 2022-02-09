@@ -119,11 +119,13 @@ class VideoCreate(TemplateView):
         			'fps': 15
     				}
 				})
+				for timecode in conv:
+					pass
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
 					title=file.name,
-					file=conv,
+					file=file,
 					order=list.count + 1,
 					community=list.community
 				)
