@@ -130,7 +130,7 @@ LOCALE_PATHS = (
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 REST_AUTH_REGISTER_SERIALIZERS = {
