@@ -1020,7 +1020,7 @@ class Video(models.Model):
 
     def get_uri(self):
         if self.file:
-            return "/static/images/demo_video/travel.mp4"
+            return "static/images/demo_video/travel.mp4"
         elif self.uri:
             return self.uri
         else:
