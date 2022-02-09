@@ -1,7 +1,10 @@
 on('#ajax', 'click', '.add_video', function() {
   create_fullscreen("/video/add_video_in_list/" + this.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
-
+on('#ajax', 'click', '.uri_click', function() {
+  this.nextElementSibling.style.display = "block";
+  fullscreen_resize()
+});
 on('#ajax', 'click', '.load_profile_video_list', function() {
   profile_list_block_load(this, ".load_block", "/video_list/", "load_profile_video_list");
 });
