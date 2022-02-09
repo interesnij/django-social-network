@@ -94,3 +94,35 @@ on('#ajax', 'click', '#edit_video_btn', function() {
 
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '#add_video_btn', function() {
+  form_post = this.parentElement.parentElement;
+  if (!form_post.querySelector("#id_uri").value) {
+    form_post.querySelector("#id_uri").style.border = "1px #FF0000 solid";
+    toast_error("Введите адрес видеозаписи!");
+    return
+  }
+  else { this.disabled = true };
+
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/video/add_video_in_list/" + form_post.getAttribute("data-pk") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( this.readyState == 4 && this.status == 200 ) {
+    close_work_fullscreen(); 
+    create_fullscreen("/video/edit_video/", "worker_fullscreen");
+    //main_container = document.body.querySelector(".main-container");
+    //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
+  } else {
+        new_post = document.createElement("span");
+        new_post.innerHTML = link_.responseText;
+        if (new_post.querySelector(".exception_value")){
+          text = new_post.querySelector(".exception_value").innerHTML;
+          toast_info(text)
+        }
+    }
+  };
+
+  link_.send(form_data);
+});

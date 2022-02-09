@@ -832,6 +832,18 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+    def get_remote_image(self, image_url):
+        import os
+        from django.core.files import File
+        from urllib import request
+
+        result = request.urlretrieve(image_url)
+        self.image.save(
+            os.path.basename(image_url),
+            File(open(result[0], 'rb'))
+        )
+        self.save()
+
     def copy_item(pk, lists):
         item, count = Video.objects.get(pk=pk), 0
         for list_pk in lists:

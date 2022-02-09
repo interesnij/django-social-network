@@ -100,30 +100,6 @@ class VideoCreate(TemplateView):
 			uri = request.POST.get('uri')
 
 			if file:
-				#from converter import Converter
-				#c = Converter()
-
-				#path = file.temporary_file_path()
-
-				#info = c.probe(path)
-				#conv = c.convert(path, "/tmp/output.mp4", {
-				#'format': 'mkv',
-				#'audio': {
-				#	'codec': 'mp3',
-				#	'samplerate': 11025,
-				#	'channels': 2
-				#	},
-				#'video': {
-        		#	'codec': 'h264',
-        		#	'width': info.video.video_width,
-        		#	'height': info.video.video_height,
-        		#	'fps': 15
-    			#	}
-				#})
-				#for timecode in conv:
-				#	print("")
-				#return HttpResponse
-				#file.temporary_file_path() =
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
@@ -132,10 +108,35 @@ class VideoCreate(TemplateView):
 					order=list.count + 1,
 					community=list.community
 				)
+				list.count += 1
+				list.save(update_fields=["count"])
+				return HttpResponse(json.dumps({"pk": str(new_video.pk)}),content_type="application/json")
+			elif uri:
+				from common.templates import render_for_platform
+				import requests
+				from bs4 import BeautifulSoup
 
-			list.count += 1
-			list.save(update_fields=["count"])
-			return HttpResponse(json.dumps({"pk": str(new_video.pk)}),content_type="application/json")
+				if "youtube" in uri:
+					r = requests.get(uri)
+					soup = BeautifulSoup(r.content, 'html.parser')
+					_title = soup.find('h1', class_='title').text
+					_description = soup.find('div', class_='style-scope ytd-video-secondary-info-renderer').text
+					_url = "https://img.youtube.com/vi/" + uri[uri.find("=") + 1:] + "/0.jpg"
+
+				new_video = Video.objects.create(
+					creator=request.user,
+					list=list,
+					title=_title,
+					uri=uri,
+					order=list.count + 1,
+					community=list.community,
+					description=_description
+				)
+				
+				new_video.get_remote_image(_url)
+				list.count += 1
+				list.save(update_fields=["count"])
+				return render_for_platform(request, 'video/edit_video_uri.html',{'video': new_video, 'list': list})
 		else:
 			return HttpResponseBadRequest()
 
