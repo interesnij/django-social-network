@@ -100,11 +100,30 @@ class VideoCreate(TemplateView):
 			uri = request.POST.get('uri')
 
 			if file:
+				from converter import Converter
+				c = Converter()
+				_file = None
+
+				info = c.probe(file)
+				conv = c.convert(file, _file, {
+				'format': 'mp4',
+				'audio': {
+					'codec': 'mp3',
+					'samplerate': 11025,
+					'channels': 2
+					},
+				'video': {
+        			'codec': 'h264',
+        			'width': info.video.video_width,
+        			'height': info.video.video_height,
+        			'fps': 15
+    				}
+				})
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
 					title=file.name,
-					file=file,
+					file=_file,
 					order=list.count + 1,
 					community=list.community
 				)
