@@ -23,7 +23,7 @@ on('#ajax', 'change', '.create_video_hide_file', function() {
 });
 
 on('#ajax', 'change', '.case_all_input', function() {
-  case_video = false, id_video_upload_start = false;
+  _this = this, case_video = false, id_video_upload_start = false, is_video_edit_window_loaded = false;
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
@@ -66,6 +66,12 @@ on('#ajax', 'change', '.case_all_input', function() {
         close_work_fullscreen();
         id_video_upload_start = true;
         create_fullscreen("/video/edit_video/", "worker_fullscreen");
+      }
+      if (!is_video_edit_window_loaded) {
+        try {
+          document.body.querySelector("#id_title").innerHTML = _this.files[0].name;
+          is_video_edit_window_loaded = true
+        } catch { null }
       }
     };
     count = event.loaded / event.total * 100;

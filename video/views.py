@@ -114,7 +114,13 @@ class VideoEdit(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_settings_template("video/edit_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.video = Video.objects.get(pk=self.GET.get("pk"))
 		return super(VideoEdit,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(VideoEdit,self).get_context_data(**kwargs)
+		context["video"] = self.video
+		return context
 
 	def post(self,request,*args,**kwargs):
 		from video.forms import VideoForm
