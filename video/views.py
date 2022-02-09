@@ -120,7 +120,7 @@ class VideoCreate(TemplateView):
     				}
 				})
 				for timecode in conv:
-					pass
+					print("")
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
