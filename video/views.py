@@ -106,7 +106,7 @@ class VideoCreate(TemplateView):
 				path = file.temporary_file_path()
 				info = c.probe(path)
 				conv = c.convert(path, "/tmp/output.mp4", {
-				'format': 'mp4',
+				'format': 'mkv',
 				'audio': {
 					'codec': 'mp3',
 					'samplerate': 11025,
