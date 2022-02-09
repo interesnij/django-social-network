@@ -284,7 +284,6 @@ button {
   width: auto !important;
 }
 .smile_supported {
-  height: auto !important;
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px
