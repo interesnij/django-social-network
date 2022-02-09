@@ -23,7 +23,7 @@ on('#ajax', 'change', '.create_video_hide_file', function() {
 });
 
 on('#ajax', 'change', '.case_all_input', function() {
-  _this = this, case_video = false, id_video_upload_start = false, is_video_edit_window_loaded = false;
+  _this = this, case_video = false, id_video_upload_start = false, is_video_edit_window_loaded = true;
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
   } else if (this.classList.contains("add_tracks_in_list")) {
@@ -71,14 +71,14 @@ on('#ajax', 'change', '.case_all_input', function() {
         id_video_upload_start = true;
         create_fullscreen("/video/edit_video/", "worker_fullscreen");
       }
-      //if (!is_video_edit_window_loaded) {
+      if (is_video_edit_window_loaded) {
         try {
           title = document.body.querySelector("#id_title");
           title.value = _this.files[0].name;
           title.select();
-          is_video_edit_window_loaded = true
+          is_video_edit_window_loaded = false
         } catch { null }
-      //}
+      }
     };
     count = event.loaded / event.total * 100;
     try {
