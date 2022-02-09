@@ -118,6 +118,7 @@ class VideoCreate(TemplateView):
 
 				if "youtube" in uri:
 					r = requests.get(uri)
+					data = r.text
 					soup = BeautifulSoup(r.content, 'html.parser')
 					_title = soup.find('h1', class_='title').text
 					_description = soup.find('div', class_='style-scope ytd-video-secondary-info-renderer').text
@@ -132,7 +133,7 @@ class VideoCreate(TemplateView):
 					community=list.community,
 					description=_description
 				)
-				
+
 				new_video.get_remote_image(_url)
 				list.count += 1
 				list.save(update_fields=["count"])
