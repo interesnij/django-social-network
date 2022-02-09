@@ -42,6 +42,17 @@ on('body', 'click', '.user_video_restore', function() {
 
 on('#ajax', 'click', '#edit_video_btn', function() {
   form_post = this.parentElement.parentElement.parentElement;
+  if (!form_post.querySelector("#id_title").value) {
+    form_post.querySelector("#id_title").style.border = "1px #FF0000 solid";
+    toast_error("Напишите название видеозаписи!");
+    return
+  }
+  else if (!form_post.querySelector(".smile_supported").innerHTML) {
+    form_post.querySelector(".smile_supported").style.border = "1px #FF0000 solid";
+    toast_error("Напишите описание видеозаписи!");
+    return
+  } else { this.disabled = true };
+  
   text_val = form_post.querySelector(".smile_supported");
   _val = format_text(text_val);
   _text = _val.innerHTML;
@@ -58,7 +69,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
   pk = form_post.getAttribute("data-pk");
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/video/edit_video/", true ); 
+  link_.open( 'POST', "/video/edit_video/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

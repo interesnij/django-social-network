@@ -85,7 +85,8 @@ on('#ajax', 'change', '.case_all_input', function() {
     try {
       info = document.body.querySelector("#onload_info");
       if (case_video) {
-        info.innerHTML = "Видео загружено!"
+        info.innerHTML = "Видео загружено!";
+        document.body.querySelector("#edit_video_btn").classList.remove("hidden")
       } else { info.innerHTML = "" }
     } catch { null }
   };

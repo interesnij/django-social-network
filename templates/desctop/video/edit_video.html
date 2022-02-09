@@ -1,4 +1,5 @@
 <form id="upload_video_form">
+  {% csrf_token %}
   <input type="hidden" id="upload_video_pk" name="video_pk" >
       <div class="card">
           <div class="card-header border-bottom">
@@ -36,7 +37,7 @@
           </div>
           <div class="card-footer">
               <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
-              <button type="button" class="btn btn-sm btn-success float-right" id="edit_video_btn">Готово</button>
+              <button type="button" class="btn hidden btn-sm btn-success float-right" id="edit_video_btn">Готово</button>
           </div>
       </div>
   </form>
