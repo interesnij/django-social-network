@@ -71,14 +71,14 @@ on('#ajax', 'change', '.case_all_input', function() {
         id_video_upload_start = true;
         create_fullscreen("/video/edit_video/", "worker_fullscreen");
       }
-      if (!is_video_edit_window_loaded) {
+      //if (!is_video_edit_window_loaded) {
         try {
           title = document.body.querySelector("#id_title");
           title.value = _this.files[0].name;
           title.select();
           is_video_edit_window_loaded = true
         } catch { null }
-      }
+      //}
     };
     count = event.loaded / event.total * 100;
     try {
