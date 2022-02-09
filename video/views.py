@@ -100,35 +100,35 @@ class VideoCreate(TemplateView):
 			uri = request.POST.get('uri')
 
 			if file:
-				from converter import Converter
-				c = Converter()
+				#from converter import Converter
+				#c = Converter()
 
-				path = file.temporary_file_path()
+				#path = file.temporary_file_path()
 
-				info = c.probe(path)
-				conv = c.convert(path, "/tmp/output.mp4", {
-				'format': 'mkv',
-				'audio': {
-					'codec': 'mp3',
-					'samplerate': 11025,
-					'channels': 2
-					},
-				'video': {
-        			'codec': 'h264',
-        			'width': info.video.video_width,
-        			'height': info.video.video_height,
-        			'fps': 15
-    				}
-				})
-				for timecode in conv:
-					print("")
-				return HttpResponse
+				#info = c.probe(path)
+				#conv = c.convert(path, "/tmp/output.mp4", {
+				#'format': 'mkv',
+				#'audio': {
+				#	'codec': 'mp3',
+				#	'samplerate': 11025,
+				#	'channels': 2
+				#	},
+				#'video': {
+        		#	'codec': 'h264',
+        		#	'width': info.video.video_width,
+        		#	'height': info.video.video_height,
+        		#	'fps': 15
+    			#	}
+				#})
+				#for timecode in conv:
+				#	print("")
+				#return HttpResponse
 				#file.temporary_file_path() =
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
 					title=file.name,
-					file="/tmp/output.mp4",
+					file=file,
 					order=list.count + 1,
 					community=list.community
 				)

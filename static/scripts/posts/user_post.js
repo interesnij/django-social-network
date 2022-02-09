@@ -33,6 +33,7 @@ on('#ajax', 'change', '.case_all_input', function() {
   } else if (this.classList.contains("add_video_in_list")) {
     url = "/video/add_video_in_list/";
     case_video = true;
+    console.log(_this.files[0].type)
   };
 
   form = this.parentElement.parentElement
