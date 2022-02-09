@@ -39,6 +39,7 @@ on('#ajax', 'change', '.case_all_input', function() {
   if (form.getAttribute("data-pk")) {
     url = url + form.getAttribute("data-pk") + "/"
   };
+  form_data = new FormData(form);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
