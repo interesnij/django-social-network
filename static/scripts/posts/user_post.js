@@ -69,7 +69,9 @@ on('#ajax', 'change', '.case_all_input', function() {
       }
       if (!is_video_edit_window_loaded) {
         try {
-          document.body.querySelector("#id_title").innerHTML = _this.files[0].name;
+          title = document.body.querySelector("#id_title");
+          title.value = _this.files[0].name;
+          title.select();
           is_video_edit_window_loaded = true
         } catch { null }
       }
