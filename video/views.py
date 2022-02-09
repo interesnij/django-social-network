@@ -100,7 +100,14 @@ class VideoCreate(TemplateView):
 			uri = request.POST.get('uri')
 
 			if file:
-				new_video = Video.objects.create(creator=request.user,title=file.name,file=file,order=list.count + 1, community=list.community)
+				new_video = Video.objects.create(
+					creator=request.user,
+					list=list,
+					title=file.name,
+					file=file,
+					order=list.count + 1,
+					community=list.community
+				)
 
 			list.count += 1
 			list.save(update_fields=["count"])
