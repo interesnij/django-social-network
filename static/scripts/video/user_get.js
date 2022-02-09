@@ -3,6 +3,7 @@ on('#ajax', 'click', '.add_video', function() {
 });
 on('#ajax', 'click', '.uri_click', function() {
   this.nextElementSibling.style.display = "block";
+  this.parentElement.nextElementSibling.querySelector("#add_video_btn").style.display = "block";
   fullscreen_resize()
 });
 on('#ajax', 'click', '.load_profile_video_list', function() {
