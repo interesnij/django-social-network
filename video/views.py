@@ -103,9 +103,9 @@ class VideoCreate(TemplateView):
 				from converter import Converter
 				c = Converter()
 				_file = None
-
-				info = c.probe(file)
-				conv = c.convert(file, _file, {
+				path = file.temporary_file_path()
+				info = c.probe(path)
+				conv = c.convert(path, _file, {
 				'format': 'mp4',
 				'audio': {
 					'codec': 'mp3',
