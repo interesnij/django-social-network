@@ -4,7 +4,6 @@
           <div class="card-header border-bottom">
               <h6 class="content-color-primary mb-0">Загрузка в мои видео</h6>
           </div>
-          <div class="i_wont_reload">
           <form class="card-body i_wont_upload_video" data-pk="{{ list.pk }}">
             {% csrf_token %}
             <div class="form-group">
@@ -17,12 +16,12 @@
               <a class="btn btn-sm border uri_click" style="width:100%">
                 Добавить с другого сайта
               </a>
+              <input type="text" class="form-control" name="uri" style="display:none">
             </div>
             <div class="card-footer">
                 <button class="btn btn-sm border item_fullscreen_hide">Отмена</button>
                 <button type="button" class="hidden btn btn-sm btn-success float-right" id="add_video_btn">Добавить</button>
             </div>
-            </form>
-          </div>
+          </form>
       </div>
 </div>
