@@ -52,7 +52,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
     toast_error("Напишите описание видеозаписи!");
     return
   } else { this.disabled = true };
-  
+
   text_val = form_post.querySelector(".smile_supported");
   _val = format_text(text_val);
   _text = _val.innerHTML;
@@ -79,6 +79,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
     new_post.innerHTML = elem;
     lenta_load.insertAdjacentHTML('afterBegin', new_post.innerHTML);
     lenta_load.querySelector(".items_empty") ? lenta_load.querySelector(".items_empty").style.display = "none" : null;
+    close_work_fullscreen();
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   } else {
