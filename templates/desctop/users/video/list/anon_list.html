@@ -16,24 +16,11 @@
             </div>
           </div>
 
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1">{{ list.name }} ({{ list.count_items }})</h6>
-                    <p class="">Видеоролики
-                    {% include 'desctop/generic/user/user_gen.html' %}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
             <span class="load_block">
 
             <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
               <h5 class="mt-1">
-                {{ list.name }} ({{ list.count_items }})
+                <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                 <span class="pointer badge badge-light-primary copy_link">Копировать ссылку</span>
               </h5>
             </div>

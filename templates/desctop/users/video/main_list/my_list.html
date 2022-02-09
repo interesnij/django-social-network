@@ -19,7 +19,7 @@
           <span class="load_block">
             <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" data-type="lvi{{ list.pk }}" data-pk="{{ list.pk }}" style="padding-left: 7px;">
               <h5 class="mt-1">
-                {{ list.name }} ({{ list.count_items }})
+                <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
 
                 {% if is_user_can_create_videos %}
                   <a class="pointer add_video hide_delete" tooltip="Добавить видеозапись" flow="up">

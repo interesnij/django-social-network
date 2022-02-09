@@ -16,7 +16,7 @@ csc
   <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
     {% csrf_token %}
     <h5 class="mt-1">
-      {{ list.name }} ({{ list.count_items }})
+      <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
       {% if is_user_can_create_photos and list.is_have_add %}
         <input type="file" accept="image/*" class="case_all_input add_photos_in_list" name="file" style="display:none" multiple="multiple">
         <a class="pointer previous_click hide_delete" tooltip="Добавить фото" flow="up">

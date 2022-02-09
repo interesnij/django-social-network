@@ -17,22 +17,12 @@
               <button class="btn btn-sm border" type="button">Искать</button>
             </div>
           </div>
-          <div class="card mb-2">
-              <div class="card-body" style="padding: 10px;padding-bottom: 0;">
-                <div style="display:flex">
-                  <svg fill="currentColor" class="svg_default" style="width:50px;height:50px" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
-                  <div class="media-body" style="margin-left: 10px;">
-                    <h6 class="my-0 mt-1"><span class="playlist_name">{{ list.name }}</span>&nbsp;({{ list.count_items }})</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
             <span class="load_block">
               <div class="media mt-3" style="padding-left: 7px;">
                 <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-type="lph{{ list.pk }}" data-pk="{{ list.pk }}">
                   {% csrf_token %}
                 <h5 class="mt-1">
-                  {{ list.name }} ({{ list.count_items }})
+                  <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                   {% if is_user_can_create_tracks %}
                     <input type="file" accept="mp3/*" class="case_all_input add_tracks_in_list" name="file" style="display:none" multiple="multiple">
                     <a class="pointer previous_click hide_delete" tooltip="Добавить аудиозапись" flow="up">
