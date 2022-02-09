@@ -1,6 +1,3 @@
-on('#ajax', 'click', '.video_upload_click', function() {
-  document.body.querySelector(".add_video_in_list").click()
-})
 
 on('#ajax', 'change', '.create_video_hide_file', function() {
   form = this.parentElement.parentElement.parentElement;
@@ -38,26 +35,26 @@ on('#ajax', 'change', '.case_all_input', function() {
     case_video = true;
   };
 
-  if (case_video) {
-    form = document.body.querySelector(".i_wont_upload_video")
-  }
-  else {
-    form = this.parentElement.parentElement
+  form = this.parentElement.parentElement
+  if (form.getAttribute("data-pk")) {
+    url = url + form.getAttribute("data-pk") + "/"
   };
-  pk = form.getAttribute("data-pk");
-  form_data = new FormData(form);
+
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
 
-  link_.open( 'POST', url + pk + "/", true )
+  link_.open( 'POST', url, true )
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-      elem = link_.responseText;
-      response = document.createElement("span");
-      response.innerHTML = elem;
-
-      if (!case_video) {
+      if (case_video) {
+        jsonResponse = JSON.parse(link_.responseText);
+        document.body.querySelector("#upload_video_form").setAttribute("data-pk", jsonResponse.pk)
+      }
+      else {
+        elem = link_.responseText;
+        response = document.createElement("span");
+        response.innerHTML = elem;
         document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
         document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
       }
@@ -65,9 +62,9 @@ on('#ajax', 'change', '.case_all_input', function() {
   link_.upload.onprogress = function(event) {
     if (case_video) {
       if (!id_video_upload_start) {
+        close_work_fullscreen();
         id_video_upload_start = true;
-        block = document.body.querySelector(".i_wont_reload");
-        block.innerHTML = '<form><div class="card"><div class="card-header border-bottom"><h6 class="content-color-primary mb-0" id="onload_info"></h6></div><div class="card-body"><div class="form-group"><label>Название</label><input type="text" name="title" class="form-control" id="id_title"></div><div class="form-group"><label>Описание видеозаписи</label><div contenteditable="true" class="form-control smile_supported"></div></div><div class="form-group"><div class="hide_image"><input type="file" name="image" accept="image/*" id="id_image"></div><div id="video_holder" class="border pointer"><img class="img-fluid rounded" src="/static/images/no_img/list.jpg" alt="img" style="height: 100px;"></div></div><div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" name="comments_enabled" class="custom-control-input" checked id="id_comments_enabled22"><label class="custom-control-label" for="id_comments_enabled22">Комментарии включены</label></div></div><div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" name="votes_on" checked class="custom-control-input" id="id_votes_on22"><label class="custom-control-label" for="id_votes_on22">Комментарии включены</label></div></div></div><div class="card-footer"><button class="btn btn-sm border item_fullscreen_hide">Отмена</button><button type="button" class="btn btn-sm btn-success float-right" id="edit_video_btn">Готово</button></div></div></form>'
+        create_fullscreen("/video/edit_video/", "worker_fullscreen");
       }
     };
     count = event.loaded / event.total * 100;

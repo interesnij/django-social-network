@@ -111,7 +111,7 @@ class VideoEdit(View):
 	def post(self,request,*args,**kwargs):
 		from video.forms import VideoForm
 
-		video = Video.objects.get(pk=self.kwargs["pk"])
+		video = Video.objects.get(pk=self.GET.get("pk"))
 		form_post = VideoForm(request.POST, request.FILES, instance=video)
 		if request.is_ajax() and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
 			_video = form_post.save(commit=False)
@@ -121,6 +121,7 @@ class VideoEdit(View):
 			video.votes_on = _video.votes_on
 			video.comments_enabled = _video.comments_enabled
 			video.type = Video.PUBLISHED
+			video.save()
 			return render_for_platform(request, 'users/video/main_list/video.html',{'object': video})
 		else:
 			return HttpResponseBadRequest()
