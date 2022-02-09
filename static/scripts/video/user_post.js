@@ -103,6 +103,7 @@ on('#ajax', 'click', '#add_video_btn', function() {
     return
   }
   else { this.disabled = true };
+  form_data = new FormData(form_post);
 
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/video/add_video_in_list/" + form_post.getAttribute("data-pk") + "/", true );
@@ -110,7 +111,7 @@ on('#ajax', 'click', '#add_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    close_work_fullscreen(); 
+    close_work_fullscreen();
     create_fullscreen("/video/edit_video/", "worker_fullscreen");
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
