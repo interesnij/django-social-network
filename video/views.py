@@ -91,6 +91,8 @@ class VideoCreate(TemplateView):
 		return context
 
 	def post(self,request,*args,**kwargs):
+		import json
+
 		list = VideoList.objects.get(pk=self.kwargs["pk"])
 		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
 			file = request.FILES.get('file')
@@ -101,13 +103,18 @@ class VideoCreate(TemplateView):
 
 			list.count += 1
 			list.save(update_fields=["count"])
-
-			return render_for_platform(request, 'video/edit_video.html',{'video': new_video})
+			return HttpResponse(json.dumps({"pk": str(new_video.pk)}),content_type="application/json")
 		else:
 			return HttpResponseBadRequest()
 
 
-class VideoEdit(View):
+class VideoEdit(TemplateView):
+	template_name  = None
+
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_settings_template("video/edit_video.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(VideoEdit,self).get(request,*args,**kwargs)
+
 	def post(self,request,*args,**kwargs):
 		from video.forms import VideoForm
 
