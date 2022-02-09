@@ -19,4 +19,6 @@ python -m pip install django-redis
 BeautifulSoup4
 lxml
 
-Мы остановились на формировании программ при сохранении объектов, добавляя создание экземляра Wall и экземпляров Notify
+sudo add-apt-repository ppa:savoury1/ffmpeg4
+sudo apt-get update
+sudo apt-get install ffmpeg

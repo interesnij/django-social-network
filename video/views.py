@@ -102,10 +102,10 @@ class VideoCreate(TemplateView):
 			if file:
 				from converter import Converter
 				c = Converter()
-				_file = None
+
 				path = file.temporary_file_path()
 				info = c.probe(path)
-				conv = c.convert(path, _file, {
+				conv = c.convert(path, "/tmp/output.mp4", {
 				'format': 'mp4',
 				'audio': {
 					'codec': 'mp3',
@@ -123,7 +123,7 @@ class VideoCreate(TemplateView):
 					creator=request.user,
 					list=list,
 					title=file.name,
-					file=_file,
+					file=conv,
 					order=list.count + 1,
 					community=list.community
 				)
