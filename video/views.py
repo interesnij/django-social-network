@@ -119,7 +119,7 @@ class VideoCreate(TemplateView):
 				if "youtube" in uri:
 					r = requests.get(uri)
 					data = r.text
-					soup = BeautifulSoup(r.content, 'html.parser')
+					soup = BeautifulSoup(html, 'lxml')
 					_title = soup.find('h1').text
 					_description = soup.find('div', class_='style-scope ytd-video-secondary-info-renderer').text
 					_url = "https://img.youtube.com/vi/" + uri[uri.find("=") + 1:] + "/0.jpg"
