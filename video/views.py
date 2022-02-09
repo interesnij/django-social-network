@@ -1,6 +1,7 @@
 from video.models import VideoList, Video
 from django.views.generic import ListView
 from django.views.generic.base import TemplateView
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.views import View
 from common.templates import (
 								get_template_community_item,
