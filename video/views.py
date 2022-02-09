@@ -123,7 +123,7 @@ class VideoCreate(TemplateView):
 				for timecode in conv:
 					print("")
 				return HttpResponse
-				file.temporary_file_path() =
+				#file.temporary_file_path() =
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
