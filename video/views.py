@@ -125,7 +125,7 @@ class VideoCreate(TemplateView):
 					creator=request.user,
 					list=list,
 					title=file.name,
-					file=file,
+					file="/tmp/output.mp4",
 					order=list.count + 1,
 					community=list.community
 				)
