@@ -809,17 +809,14 @@ function open_video_fullscreen(url) {
 
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            elem = link.responseText;
-            try {
-              count_items = container.querySelectorAll(".card_fullscreen").length
-            } catch {count_items = 0};
-            block.parentElement.style.zIndex = 100 + count_items;
-            block.parentElement.style.display = "block";
-            block.innerHTML = elem;
-
-            block = document.body.querySelector("#video_loader")
-            block.parentElement.style.display = "block";
-            block.innerHTML = elem;
+          elem = link.responseText;
+          block = document.body.querySelector("#video_loader");
+          try {
+            count_items = container.querySelectorAll(".card_fullscreen").length
+          } catch {count_items = 0};
+          block.parentElement.style.zIndex = 100 + count_items;
+          block.parentElement.style.display = "block";
+          block.innerHTML = elem;
         }
     };
     link.send();
