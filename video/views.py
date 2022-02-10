@@ -115,8 +115,8 @@ class VideoCreate(TemplateView):
 				from common.templates import render_for_platform
 				import requests
 				from bs4 import BeautifulSoup
-				import lxml
 				from lxml import etree
+				import urllib
 
 				if "youtube" in uri:
 					r = requests.get(uri)
