@@ -1,3 +1,36 @@
+on('body', 'click', '.comment_delete', function() {
+  saver = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  type = this.parentElement.getAttribute("data-type");
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/users/progs/delete_comment/?type=" + type, true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    div = document.createElement("div");
+    div.classList.add("col-12");
+    div.style.padding = "10px";
+    div.style.display = "block";
+    div.innerHTML = "Комментарий удалён. <span class='comment_recover pointer underline' data-type='" + type + "'>Восстановить</span>";
+    saver.style.display = "none"; saver.parentElement.insertBefore(div, saver)
+  }};
+  link.send( );
+});
+on('body', 'click', '.comment_recover', function() {
+  type = this.getAttribute("data-type");
+  block = this.parentElement; next = block.nextElementSibling;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/users/progs/recover_comment/?type=" + type", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    next.style.display = "block";
+  }};
+  link.send();
+});
+
 
 on('#ajax', 'change', '.create_video_hide_file', function() {
   form = this.parentElement.parentElement.parentElement;
