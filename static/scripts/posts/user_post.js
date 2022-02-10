@@ -521,10 +521,11 @@ on('#ajax', 'click', '.photo_load_one', function() {
   photo_pk = _this.parentElement.getAttribute('photo-pk');
   user_pk = _this.parentElement.getAttribute('data-pk');
   src = _this.parentElement.getAttribute("data-href");
-  if (document.body.querySelector(".current_file_dropdown")){
-    check_photo_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.parentElement.previousElementSibling, _this, photo_pk) ? null : (photo_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_pk, user_pk, src), close_work_fullscreen())
-  } else if (document.body.querySelector(".attach_block")){
+  if (document.body.querySelector(".attach_block")){
     check_photo_in_block(document.body.querySelector(".attach_block"), _this, photo_pk) ? null : (photo_post_attach(document.body.querySelector(".attach_block"), photo_pk, user_pk, src), close_work_fullscreen())
+  }
+  else if (document.body.querySelector(".current_file_dropdown")){
+    check_photo_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.parentElement.previousElementSibling, _this, photo_pk) ? null : (photo_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, photo_pk, user_pk, src), close_work_fullscreen())
   } else if (document.body.querySelector(".message_attach_block")){
     check_photo_in_block(document.body.querySelector(".message_attach_block"), _this, photo_pk) ? null : (close_work_fullscreen(), photo_message_attach(document.body.querySelector(".message_attach_block"), photo_pk, user_pk, src))
   }
