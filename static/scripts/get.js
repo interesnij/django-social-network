@@ -84,12 +84,12 @@ on('#ajax', 'click', '.smile_dropdown', function() {
   block.classList.toggle("show");
 });
 
-on('#ajax', 'click', '.comment_btn', function() {
+on('body', 'click', '.comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   send_comment(form, form.parentElement.previousElementSibling, '/users/progs/add_comment/')
 });
 
-on('#ajax', 'click', '.reply_comment_btn', function() {
+on('body', 'click', '.reply_comment_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
   send_comment(form, block, '/users/progs/reply_comment/')
@@ -98,7 +98,7 @@ on('#ajax', 'click', '.reply_comment_btn', function() {
   block.classList.add("replies_open")
 });
 
-on('#ajax', 'click', '.reply_parent_btn', function() {
+on('body', 'click', '.reply_parent_btn', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
   block = form.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   send_comment(form, block, '/users/progs/reply_comment/')
