@@ -482,7 +482,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   users_list = users_block.querySelectorAll(".custom_color");
   final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
-    users_list[i].querySelector(".remove_list_input").remove();
+    users_list[i].querySelector(".pointer").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
@@ -500,9 +500,8 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
   users_list = users_block.querySelectorAll(".custom_color");
   final_list = "Выбраны получатели: ";
   for (var i = 0; i < users_list.length; i++){
-    users_list[i].querySelector(".remove_list_input").remove();
+    users_list[i].querySelector(".pointer").remove();
     final_list += users_list[i].innerHTML;
-    final_list += '<a href="' + a.getAttribute("href") + '" target="_blank">' + a.innerHTML + '</a>'
     final_list += '<input type="hidden" name="chat_items" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
   collector.innerHTML = "";
@@ -519,7 +518,7 @@ on('#ajax', 'click', '#add_list_selected_communities_btn', function() {
   users_list = users_block.querySelectorAll(".custom_color");
   final_list = "Выбраны сообщества: ";
   for (var i = 0; i < users_list.length; i++){
-    users_list[i].querySelector(".remove_list_input").remove();
+    users_list[i].querySelector(".pointer").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="u_c" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
