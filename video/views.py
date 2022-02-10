@@ -115,12 +115,13 @@ class VideoCreate(TemplateView):
 				from common.templates import render_for_platform
 				import requests
 				from bs4 import BeautifulSoup
+				import lxml
+				from lxml import etree
 
 				if "youtube" in uri:
 					r = requests.get(uri)
-					soup = BeautifulSoup(r.text, 'lxml')
-					_title = soup.find('yt-formatted-string', class_='watch-title metadata-updateable-title').text
-					_description = soup.find('span', class_='content style-scope ytd-video-secondary-info-renderer').text
+					youtube = etree.HTML(urllib.urlopen(uri).read())
+					_title = youtube.xpath("//span[@id='eow-title']/@title")
 					_url = "https://img.youtube.com/vi/" + uri[uri.find("=") + 1:] + "/0.jpg"
 
 				new_video = Video.objects.create(
@@ -130,7 +131,7 @@ class VideoCreate(TemplateView):
 					uri=uri,
 					order=list.count + 1,
 					community=list.community,
-					description=_description
+					#description=_description
 				)
 
 				new_video.get_remote_image(_url)
