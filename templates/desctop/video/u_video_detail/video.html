@@ -2,7 +2,7 @@
 
 <div id="video_player"></div>
 
-<div id="info_video"></div>
+<div id="info_video" class="mr-1 ml-1"></div>
 
 <ul id="video_playlists" style="display:none;">
 		<li data-source="my_playlist" data-playlist-name="Основной плейлист" data-thumbnail-path="/static/images/demo_video/p-html.jpg">
@@ -14,7 +14,7 @@
 
 <ul id="my_playlist" style="display:none;" class="">
 	<li data-thumb-source="{{ object.get_image }}"
-			data-video-source="{{ object.uri }}"
+			{{ object.get_uri|safe }}
 			data-poster-source="{{ object.get_image }}"
 			data-video-uuid="{{ object.uuid }}" class="video_playlist_li">
 	<div data-video-short-description="">

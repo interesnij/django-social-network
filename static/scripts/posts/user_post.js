@@ -227,7 +227,7 @@ on('body', 'click', '.comment_edit', function() {
 
 on('body', 'click', '.comment_edit_btn', function() {
   form = this.parentElement.parentElement.parentElement
-  _text = post.querySelector(".smile_supported").innerHTML;
+  _text = form.querySelector(".smile_supported").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){
     toast_error("Напишите или прикрепите что-нибудь");
     form.querySelector(".text-comment").style.border = "1px #FF0000 solid";

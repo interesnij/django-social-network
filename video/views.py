@@ -158,6 +158,11 @@ class VideoEdit(TemplateView):
 		form_post = VideoForm(request.POST, request.FILES, instance=video)
 		if request.is_ajax() and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
 			_video = form_post.save(commit=False)
+			if video.type == Video.UPLOAD:
+				if video.community:
+					video.community.plus_videos(1)
+				else:
+					video.creator.plus_videos(1)
 			video.title = _video.title
 			video.description = _video.description
 			video.image = _video.image
