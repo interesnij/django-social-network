@@ -120,7 +120,7 @@ class VideoCreate(TemplateView):
 					r = requests.get(uri)
 					s = BeautifulSoup(r.text, "html.parser")
 					_title = s.select('.watch-title')
-					_title = title[0].getText()
+					_title = _title[0].getText()
 					_url = "https://img.youtube.com/vi/" + uri[uri.find("=") + 1:] + "/0.jpg"
 
 				new_video = Video.objects.create(
