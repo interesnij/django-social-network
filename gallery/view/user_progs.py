@@ -55,7 +55,7 @@ class UserPhotoDelete(View):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.delete_item(None)
+            photo.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -65,7 +65,7 @@ class UserPhotoRecover(View):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user:
-            photo.restore_item(None)
+            photo.restore_item()
             return HttpResponse()
         else:
             raise Http404

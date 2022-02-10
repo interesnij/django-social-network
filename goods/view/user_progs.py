@@ -14,7 +14,7 @@ class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
-            good.delete_item(None)
+            good.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -24,7 +24,7 @@ class UserGoodRecover(View):
         good = Good.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and good.creator == request.user:
             good.restore_item()
-            return HttpResponse(None)
+            return HttpResponse()
         else:
             raise Http404
 

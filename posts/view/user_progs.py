@@ -168,7 +168,7 @@ class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.delete_item(None)
+            post.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -177,7 +177,7 @@ class PostUserRecover(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and request.user.pk == post.creator.pk:
-            post.restore_item(None)
+            post.restore_item()
             return HttpResponse()
         else:
             raise Http404

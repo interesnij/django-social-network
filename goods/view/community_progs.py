@@ -72,7 +72,7 @@ class CommunityGoodDelete(View):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
         c = good.community
         if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
-            good.delete_item(c)
+            good.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -82,7 +82,7 @@ class CommunityGoodRecover(View):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
         c = good.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            good.restore_item(c)
+            good.restore_item()
             return HttpResponse()
         else:
             raise Http404

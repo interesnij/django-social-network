@@ -1058,13 +1058,13 @@ class Video(models.Model):
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
-    def delete_item(self, community):
+    def delete_item(self):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Video.DELETED
         self.save(update_fields=['type'])
-        if community:
-            community.minus_videos(1)
+        if self.community:
+            self.community.minus_videos(1)
         else:
             self.creator.minus_videos(1)
         self.list.count -= 1
@@ -1073,13 +1073,13 @@ class Video(models.Model):
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
-    def restore_item(self, community):
+    def restore_item(self):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = Video.PUBLISHED
         self.save(update_fields=['type'])
-        if community:
-            community.plus_videos(1)
+        if self.community:
+            self.community.plus_videos(1)
         else:
             self.creator.plus_videos(1)
         self.list.count += 1
@@ -1424,9 +1424,7 @@ class VideoComment(models.Model):
         elif self.type == "EDI":
             self.type = VideoComment.EDITED_DELETED
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+
         if self.parent:
             self.parent.item.comment -= 1
             self.parent.item.save(update_fields=["comment"])
@@ -1446,9 +1444,7 @@ class VideoComment(models.Model):
         elif self.type == "_DELE":
             self.type = VideoComment.EDITED
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+
         if self.parent:
             self.parent.item.comment += 1
             self.parent.item.save(update_fields=["comment"])
@@ -1469,9 +1465,7 @@ class VideoComment(models.Model):
         elif self.type == "EDI":
             self.type = VideoComment.EDITED_CLOSED
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count -= 1
-            list.save(update_fields=["count"])
+
         if self.parent:
             self.parent.item.comment -= 1
             self.parent.item.save(update_fields=["comment"])
@@ -1491,9 +1485,7 @@ class VideoComment(models.Model):
         elif self.type == "_CLOE":
             self.type = VideoComment.EDITED
         self.save(update_fields=['type'])
-        for list in self.get_lists():
-            list.count += 1
-            list.save(update_fields=["count"])
+
         if self.parent:
             self.parent.item.comment += 1
             self.parent.item.save(update_fields=["comment"])

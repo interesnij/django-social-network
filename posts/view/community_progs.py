@@ -224,7 +224,7 @@ class PostCommunityDelete(View):
         post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.delete_item(c)
+            post.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -234,7 +234,7 @@ class PostCommunityRecover(View):
         post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
         if request.is_ajax() and request.user.is_staff_of_community(c.pk):
-            post.restore_item(c)
+            post.restore_item()
             return HttpResponse()
         else:
             raise Http404

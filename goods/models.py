@@ -1032,13 +1032,13 @@ class Good(models.Model):
 				GoodImage.objects.create(good=good, image=image)
 		return self.save()
 
-	def delete_item(self, community):
+	def delete_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "PUB":
 			self.type = Good.DELETED
 		self.save(update_fields=['type'])
-		if community:
-			community.minus_goods(1)
+		if self.community:
+			self.community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
 		self.list.count -= 1
@@ -1047,13 +1047,13 @@ class Good(models.Model):
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
-	def restore_item(self, community):
+	def restore_item(self):
 		from notify.models import Notify, Wall
 		if self.type == "_DEL":
 			self.type = Good.PUBLISHED
 		self.save(update_fields=['type'])
-		if community:
-			community.plus_goods(1)
+		if self.community:
+			self.community.plus_goods(1)
 		else:
 			self.creator.plus_goods(1)
 		self.list.count += 1

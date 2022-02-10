@@ -43,7 +43,7 @@ class CommunityPhotoDelete(View):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.delete_item(community)
+            photo.delete_item()
             return HttpResponse()
         else:
             raise Http404
@@ -53,7 +53,7 @@ class CommunityPhotoRecover(View):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
         if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
-            photo.restore_item(community)
+            photo.restore_item()
             return HttpResponse()
         else:
             raise Http404
