@@ -830,7 +830,7 @@ class Video(models.Model):
         ordering = ["-order"]
 
     def __str__(self):
-        return self.title
+        return self.creator.get_full_name()
 
     def get_remote_image(self, image_url):
         import os
