@@ -168,7 +168,7 @@ on('#ajax', 'click', '#u_add_post_btn', function() {
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.comment_edit', function() {
+on('body', 'click', '.comment_edit', function() {
   _this = this;
   clear_comment_dropdown();
 
@@ -192,7 +192,7 @@ on('#ajax', 'click', '.comment_edit', function() {
   link.send( null );
 });
 
-on('#ajax', 'click', '.comment_edit_btn', function() {
+on('body', 'click', '.comment_edit_btn', function() {
   form = this.parentElement.parentElement.parentElement
   _text = form_post.querySelector(".smile_supported").innerHTML;
   if (_text.replace(/<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/g,'').trim() == "" && !form.querySelector(".img_block").firstChild){

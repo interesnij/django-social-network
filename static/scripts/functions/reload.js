@@ -146,7 +146,14 @@ function create_fullscreen(url, type_class) {
     try {prev_window.querySelector(".next_item").style.display = "none"} catch {null}
   };
 
-  try {count_items = container.querySelectorAll(".card_fullscreen").length} catch {count_items = 0};
+  try {
+    if (document.body.querySelector(".video_fullscreen").style.display =="none") {
+      count_items = container.querySelectorAll(".card_fullscreen").length
+    } else {
+      count_items = container.querySelectorAll(".card_fullscreen").length + 1
+    }
+  }
+  catch {count_items = 0};
 
   $parent_div = document.createElement("div");
   $parent_div.classList.add("card_fullscreen", "mb-3", "border", type_class);
@@ -554,7 +561,11 @@ function open_video_fullscreen(url) {
     link.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             elem = link.responseText;
-            block = document.body.querySelector("#video_loader")
+            block = document.body.querySelector("#video_loader");
+            try {
+              count_items = container.querySelectorAll(".card_fullscreen").length
+            } catch {count_items = 0};
+            block.parentElement.style.zIndex = 100 + count_items;
             block.parentElement.style.display = "block";
             block.innerHTML = elem;
         }
