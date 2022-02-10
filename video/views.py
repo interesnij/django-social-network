@@ -115,13 +115,11 @@ class VideoCreate(TemplateView):
 				from common.templates import render_for_platform
 				import requests
 				from bs4 import BeautifulSoup
-				from lxml import etree
-				import urllib.request as ur
 
 				if "youtube" in uri:
 					r = requests.get(uri)
-					youtube = etree.HTML(ur.urlopen(uri).read())
-					_title = youtube.xpath("//span[@id='eow-title']/@title")
+					s = BeautifulSoup(r.text, "html.parser")
+					_title = s.find("span", class_="watch-title").text.replace("\n", "")
 					_url = "https://img.youtube.com/vi/" + uri[uri.find("=") + 1:] + "/0.jpg"
 
 				new_video = Video.objects.create(
