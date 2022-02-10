@@ -115,6 +115,7 @@ on('#ajax', 'click', '#add_video_btn', function() {
     new_post = document.createElement("span");
     new_post.innerHTML = link_.responseText;
     block.innerHTML = new_post.innerHTML;
+    fullscreen_resize();
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   } else {
