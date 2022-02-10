@@ -1,4 +1,4 @@
-on('#ajax', 'click', '.load_comments_list', function() {
+on('body', 'click', '.load_comments_list', function() {
   clear_comment_dropdown();
   block = this.parentElement.parentElement.parentElement.parentElement;
   block_comments = block.querySelector(".load_comments");
@@ -12,13 +12,13 @@ on('#ajax', 'click', '.load_comments_list', function() {
   }
 });
 
-on('#ajax', 'click', '.create_repost', function() {
+on('body', 'click', '.create_repost', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   create_fullscreen("/users/progs/create_repost/?type=" + type, "worker_fullscreen");
   clear_attach_block();
 });
-on('#ajax', 'click', '.create_claim', function() {
+on('body', 'click', '.create_claim', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   dropdowns = document.body.querySelectorAll(".dropdown-menu");
@@ -28,30 +28,30 @@ on('#ajax', 'click', '.create_claim', function() {
   create_fullscreen("/users/progs/create_claim/?type=" + type, "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.create_list', function() {
+on('body', 'click', '.create_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
   create_fullscreen("/users/progs/create_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
 });
-on('#ajax', 'click', '.edit_list', function() {
+on('body', 'click', '.edit_list', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
   community_id = parent.getAttribute('data-community-id');
   create_fullscreen("/users/progs/edit_list/?type=" + type + "&community_id=" + community_id, "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.comment_likes', function() {
+on('body', 'click', '.comment_likes', function() {
   create_fullscreen("/comments/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 on('#ajax', 'click', '.comment_dislikes', function() {
   create_fullscreen("/comments/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
-on('#ajax', 'click', '.item_likes', function() {
+on('body', 'click', '.item_likes', function() {
   create_fullscreen("/items/likes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
-on('#ajax', 'click', '.item_dislikes', function() {
+on('body', 'click', '.item_dislikes', function() {
   create_fullscreen("/items/dislikes/?type=" + this.parentElement.parentElement.parentElement.getAttribute("data-type"), "worker_fullscreen");
 });
 
