@@ -1,4 +1,4 @@
-on('body', 'click', '.comment_delete', function() {
+on('#ajax', 'click', '.comment_delete', function() {
   saver = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   type = this.parentElement.getAttribute("data-type");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -16,7 +16,7 @@ on('body', 'click', '.comment_delete', function() {
   }};
   link.send( );
 });
-on('body', 'click', '.comment_recover', function() {
+on('#ajax', 'click', '.comment_recover', function() {
   type = this.getAttribute("data-type");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
