@@ -1329,7 +1329,9 @@ class VideoComment(models.Model):
         from common.model.votes import VideoCommentVotes
         from django.http import HttpResponse
 
-        if not self.get_item().votes_on or not self.get_item().list.is_user_can_see_comment(user.pk) or not self.list.is_user_can_see_el(user.pk):
+        item = self.get_item()
+
+        if not item.votes_on or not item.list.is_user_can_see_comment(user.pk) or not item.list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
 
@@ -1373,7 +1375,9 @@ class VideoComment(models.Model):
         from common.model.votes import VideoCommentVotes
         from django.http import HttpResponse
 
-        if not self.get_item().votes_on or not self.get_item().list.is_user_can_see_comment(user.pk) or not self.list.is_user_can_see_el(user.pk):
+        item = self.get_item()
+
+        if not item.votes_on or not item.list.is_user_can_see_comment(user.pk) or not item.list.is_user_can_see_el(user.pk):
             from django.http import Http404
             raise Http404
 
