@@ -519,11 +519,10 @@ on('#ajax', 'click', '#add_list_selected_communities_btn', function() {
   final_list = "Выбраны сообщества: ";
   for (var i = 0; i < users_list.length; i++){
     users_list[i].querySelector("span").remove();
+    users_list[i].querySelector(".list_pk").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="u_c" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
-  console.log(final_list);
-  console.log(collector.parentElement);
   collector.innerHTML = "";
   collector.innerHTML = final_list;
   form.classList.remove("cool_private_form");
