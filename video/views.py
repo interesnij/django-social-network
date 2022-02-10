@@ -112,6 +112,7 @@ class VideoCreate(TemplateView):
 				list.save(update_fields=["count"])
 				return HttpResponse(json.dumps({"pk": str(new_video.pk)}),content_type="application/json")
 			elif uri:
+				_url = None
 				from common.templates import render_for_platform
 				import requests
 				from bs4 import BeautifulSoup
