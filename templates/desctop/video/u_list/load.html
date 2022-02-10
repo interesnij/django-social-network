@@ -16,7 +16,7 @@
 <ul id="my_playlist" style="display:none;" class="">
 {% for object in object_list %}
 	<li data-thumb-source="{{ object.get_image }}"
-			{{ object.get_uri|safe }} 
+			{{ object.get_uri|safe }}
 			data-poster-source="{{ object.get_image }}"
 			data-video-uuid="{{ object.uuid }}" class="video_playlist_li">
 	<div data-video-short-description="">
@@ -25,7 +25,7 @@
 				<p class="fwduvp-thumbnail-description">{% if object.description %}{{ object.description }}{% else %}Без описания{% endif %}</p>
 			</div>
 		</div>
-		{% if forloop.first %}
+		{% if forloop.last %}
 		<ul data-ads="">
 			<li data-source="https://трезвый.рус/static/images/demo_video/fwd-1080p.mp4"
 					data-time-start="00:00:15"
