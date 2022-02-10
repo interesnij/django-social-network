@@ -115,27 +115,17 @@ class VideoCreate(TemplateView):
 				from common.templates import render_for_platform
 				import requests
 				from bs4 import BeautifulSoup
-				import urllib.request
-				import simplejson
 
 				if "youtube" in uri:
-					#r = requests.get(uri)
-					#s = BeautifulSoup(r.text, "html.parser")
 					id = uri[uri.find("=") + 1:]
-					_url = 'http://gdata.youtube.com/feeds/api/videos/%s?alt=json&v=2' % id
-					_json = simplejson.load(urllib.request.urlopen(_url))
-
-					_title = _json['entry']['title']['$t']
 					_url = "https://img.youtube.com/vi/" + id + "/0.jpg"
 
 				new_video = Video.objects.create(
 					creator=request.user,
 					list=list,
-					title=_title,
 					uri=uri,
 					order=list.count + 1,
 					community=list.community,
-					#description=_description
 				)
 
 				new_video.get_remote_image(_url)
