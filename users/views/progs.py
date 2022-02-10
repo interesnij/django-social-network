@@ -309,8 +309,9 @@ class RepostCreate(TemplateView):
 
         self.type = request.GET.get('type')
         self.item = get_item_of_type(self.type)
-
-        if self.type[0] == "l":
+        if self.type[:3] == "use" or self.type[:3] == "com":
+            pass
+        elif self.type[0] == "l":
             self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
         elif not self.type[0] == "l":
             self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
