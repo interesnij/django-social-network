@@ -308,18 +308,28 @@ class RepostCreate(TemplateView):
         from common.check.community import check_can_get_lists
 
         self.type = request.GET.get('type')
-        self.item = get_item_of_type(self.type)
-        if self.type[:3] == "use" or self.type[:3] == "com":
-            pass
-        elif self.type[0] == "l":
-            self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
-        elif not self.type[0] == "l":
-            self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
+        if self.type[0] == "u":
+            from users.models import User
+            self.item = User.objects.get(pk=type[3:])
+            case = 1
+        elif self.type[0] == "c":
+            from communities.models import Community
+            self.item = Community.objects.get(pk=type[3:])
+            case = 2
+        else:
+            self.item = get_item_of_type(self.type)
+            case = 3
+        if case == 3:
+            if self.type[0] == "l":
+                self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
+            elif case == 3 and not self.type[0] == "l":
+                self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
+            if self.item.community:
+                check_can_get_lists(request.user, self.item.community)
+            elif self.item.creator.pk != request.user.pk:
+                check_user_can_get_list(request.user, self.item.creator)
         self.template_name = get_detect_platform_template("generic/repost/repost.html", request.user, request.META['HTTP_USER_AGENT'])
-        if self.item.community:
-            check_can_get_lists(request.user, self.item.community)
-        elif self.item.creator.pk != request.user.pk:
-            check_user_can_get_list(request.user, self.item.creator)
+
         return super(RepostCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
@@ -383,6 +393,12 @@ class RepostCreate(TemplateView):
             elif type[:3] == "sur":
                 from survey.models import Survey
                 item, t, i =  Survey.objects.get(pk=type[3:]), "SUR", "survey"
+            elif type[:3] == "use":
+                from user.models import User
+                item, t, i =  User.objects.get(pk=type[3:]), "USE", "user"
+            elif type[:3] == "com":
+                from communities.models import Community
+                item, t, i =  Community.objects.get(pk=type[3:]), "COM", "community"
 
         form_post, attach, lists, chat_items, count, creator = PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
         if request.is_ajax() and form_post.is_valid():
