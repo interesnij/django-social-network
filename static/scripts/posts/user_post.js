@@ -357,7 +357,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('body', 'click', '.like_item', function() {
+on('#ajax', 'click', '.like_item', function() {
   _this = this;
   item = _this.parentElement;
   send_like(item, "/users/progs/like_item/?type=" + item.getAttribute("data-type"));
@@ -365,7 +365,7 @@ on('body', 'click', '.like_item', function() {
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
-on('body', 'click', '.dislike_item', function() {
+on('#ajax', 'click', '.dislike_item', function() {
   _this = this;
   item = _this.parentElement;
   send_dislike(item, "/users/progs/dislike_item/?type=" + item.getAttribute("data-type"));
@@ -427,7 +427,7 @@ on('body', 'click', '.recover_list', function() {
   link_.send();
 });
 
-on('body', 'click', '.like2', function() {
+on('#ajax', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
   send_like(item, "/users/progs/like_comment/?type=" + item.getAttribute("data-type"));
@@ -435,7 +435,7 @@ on('body', 'click', '.like2', function() {
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
-on('body', 'click', '.dislike2', function() {
+on('#ajax', 'click', '.dislike2', function() {
   _this = this;
   item = _this.parentElement;
   send_dislike(item, "/users/progs/dislike_comment/?type=" + item.getAttribute("data-type"));
