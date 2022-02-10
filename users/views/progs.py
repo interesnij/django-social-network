@@ -310,11 +310,11 @@ class RepostCreate(TemplateView):
         self.type = request.GET.get('type')
         if self.type[0] == "u":
             from users.models import User
-            self.item = User.objects.get(pk=type[3:])
+            self.item = User.objects.get(pk=self.type[3:])
             case = 1
         elif self.type[0] == "c":
             from communities.models import Community
-            self.item = Community.objects.get(pk=type[3:])
+            self.item = Community.objects.get(pk=self.type[3:])
             case = 2
         else:
             self.item = get_item_of_type(self.type)
