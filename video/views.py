@@ -131,7 +131,7 @@ class VideoCreate(TemplateView):
 				new_video.get_remote_image(_url)
 				list.count += 1
 				list.save(update_fields=["count"])
-				return render_for_platform(request, 'video/edit_video_uri.html',{'video': new_video, 'list': list})
+				return render_for_platform(request, 'video/edit_video_uri.html',{'video': new_video})
 		else:
 			return HttpResponseBadRequest()
 

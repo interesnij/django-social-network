@@ -1,6 +1,5 @@
 <form id="upload_video_form">
   {% csrf_token %}
-  <img class="img-fluid rounded" src="{{ video.image.url }}" alt="img" style="height: 100%;">
   <input type="hidden" id="upload_video_pk" name="pk" value="{{ video.pk }}">
       <div class="card">
           <div class="card-header border-bottom">

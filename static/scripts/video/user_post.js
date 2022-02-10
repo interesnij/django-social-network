@@ -97,6 +97,7 @@ on('#ajax', 'click', '#edit_video_btn', function() {
 
 on('#ajax', 'click', '#add_video_btn', function() {
   form_post = this.parentElement.parentElement;
+  block = form_post.parentElement.parentElement.parentElement;
   if (!form_post.querySelector("#id_uri").value) {
     form_post.querySelector("#id_uri").style.border = "1px #FF0000 solid";
     toast_error("Введите адрес видеозаписи!");
@@ -111,8 +112,9 @@ on('#ajax', 'click', '#add_video_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-    close_work_fullscreen();
-    create_fullscreen("/video/edit_video/", "worker_fullscreen");
+    new_post = document.createElement("span");
+    new_post.innerHTML = link_.responseText;
+    block.innerHTML = new_post.innerHTML;
     //main_container = document.body.querySelector(".main-container");
     //add_list_in_all_stat("created_user_post",new_post.querySelector(".pag").getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"))
   } else {
