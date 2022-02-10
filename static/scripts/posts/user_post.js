@@ -70,8 +70,8 @@ on('#ajax', 'change', '.case_all_input', function() {
         close_work_fullscreen();
         id_video_upload_start = true;
         create_fullscreen("/video/edit_video/", "worker_fullscreen");
-        fullscreen_resize()
-      }
+        //fullscreen_resize()
+      };
       if (is_video_edit_window_loaded) {
         try {
           title = document.body.querySelector("#id_title");
