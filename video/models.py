@@ -1032,9 +1032,12 @@ class Video(models.Model):
 
     def get_uri(self):
         if self.file:
-            return "https://трезвый.рус" + self.file.url
+            return 'data-video-source="https://трезвый.рус' + self.file.url + '"'
         elif self.uri:
-            return self.uri
+            if "vimeo" in self.uri:
+                return 'data-vimeo-source="' + self.uri + '"'
+            else:
+                return 'data-video-source="' + self.uri + '"'
         else:
             return "https://трезвый.рус/static/images/demo_video/travel.mp4"
 
