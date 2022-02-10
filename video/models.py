@@ -1035,7 +1035,7 @@ class Video(models.Model):
             return 'data-video-source="https://трезвый.рус' + self.file.url + '"'
         elif self.uri:
             if "vimeo" in self.uri:
-                return 'data-vimeo-source="' + self.uri + '"'
+                return 'data-video-source="' + self.uri + '"'
             else:
                 return 'data-video-source="' + self.uri + '"'
         else:
