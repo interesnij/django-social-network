@@ -1283,8 +1283,10 @@ class VideoComment(models.Model):
         return self.video_comment_replies.filter(Q(type=VideoComment.EDITED)|Q(type=VideoComment.PUBLISHED)).values("pk").count()
 
     def likes(self):
+        from common.model.votes import VideoCommentVotes
         return VideoCommentVotes.objects.filter(item=self, vote__gt=0)
     def dislikes(self):
+        from common.model.votes import VideoCommentVotes
         return VideoCommentVotes.objects.filter(item=self, vote__lt=0)
 
     def likes_count(self):
