@@ -1,4 +1,4 @@
-on('#ajax', 'click', '.comment_delete', function() {
+on('body', 'click', '.comment_delete', function() {
   saver = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   type = this.parentElement.getAttribute("data-type");
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -16,11 +16,11 @@ on('#ajax', 'click', '.comment_delete', function() {
   }};
   link.send( );
 });
-on('#ajax', 'click', '.comment_recover', function() {
+on('body', 'click', '.comment_recover', function() {
   type = this.getAttribute("data-type");
   block = this.parentElement; next = block.nextElementSibling;
   link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/users/progs/recover_comment/?type=" + type", true );
+  link.open( 'GET', "/users/progs/recover_comment/?type=" + type, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link.onreadystatechange = function () {
@@ -55,7 +55,7 @@ on('#ajax', 'change', '.create_video_hide_file', function() {
   link.send(form_data);
 });
 
-on('#ajax', 'change', '.case_all_input', function() {
+on('body', 'change', '.case_all_input', function() {
   _this = this, case_video = false, id_video_upload_start = false, is_video_edit_window_loaded = true;
   if (this.classList.contains("add_photos_in_list")) {
     url = "/gallery/add_photos_in_list/"
@@ -357,7 +357,7 @@ on('#ajax', 'click', '.u_post_on_votes', function() {
   add_list_in_all_stat("on_votes_user_post",post.getAttribute("data-pk"),main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
 
-on('#ajax', 'click', '.like_item', function() {
+on('body', 'click', '.like_item', function() {
   _this = this;
   item = _this.parentElement;
   send_like(item, "/users/progs/like_item/?type=" + item.getAttribute("data-type"));
@@ -365,7 +365,7 @@ on('#ajax', 'click', '.like_item', function() {
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
-on('#ajax', 'click', '.dislike_item', function() {
+on('body', 'click', '.dislike_item', function() {
   _this = this;
   item = _this.parentElement;
   send_dislike(item, "/users/progs/dislike_item/?type=" + item.getAttribute("data-type"));
@@ -427,7 +427,7 @@ on('body', 'click', '.recover_list', function() {
   link_.send();
 });
 
-on('#ajax', 'click', '.like2', function() {
+on('body', 'click', '.like2', function() {
   _this = this;
   item = _this.parentElement;
   send_like(item, "/users/progs/like_comment/?type=" + item.getAttribute("data-type"));
@@ -435,7 +435,7 @@ on('#ajax', 'click', '.like2', function() {
   main_container = document.body.querySelector(".main-container");
   //add_list_in_all_stat("dislike_user_post_comment",comment_pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
 });
-on('#ajax', 'click', '.dislike2', function() {
+on('body', 'click', '.dislike2', function() {
   _this = this;
   item = _this.parentElement;
   send_dislike(item, "/users/progs/dislike_comment/?type=" + item.getAttribute("data-type"));
