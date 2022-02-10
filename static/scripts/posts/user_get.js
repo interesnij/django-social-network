@@ -213,7 +213,7 @@ on('#ajax', 'click', '#repost_for_wall', function() {
 
   form = parent.parentElement.parentElement.parentElement.parentElement.parentElement;
   copy_case = form.querySelector("#toggle_case_item_copy");
-  if (copy_case.classList.contains("underline")) {
+  if (copy_case && copy_case.classList.contains("underline")) {
     url = "/users/load/post_lists/?type=" + form.querySelector(".item_type").value
   } else {
     url = "/users/load/post_lists/"
