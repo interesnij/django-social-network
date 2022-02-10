@@ -2,8 +2,8 @@
   <div class="blog-header-img">
       <img style="width: 100%;object-fit: cover;height: 200px;" src="{{ object.get_image }}" alt="">
   </div>
-  <div class="card-body">
-    <h5 class="text-truncate w-100">{{ object.title }}</h5>
-    <span class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</span>
+  <div class="media-body">
+    <a class="mb-0">{{ object.title }}</a>
+    <p class="small">{{ object.get_created }} | {{ object.visits_count_ru }}</p>
   </div>
 </div>
