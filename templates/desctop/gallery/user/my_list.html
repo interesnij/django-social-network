@@ -8,7 +8,6 @@
     {% csrf_token %}
     <h5 class="mt-1">
       <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
-       - фотоальбом
        <a href="{{ list.creator.get_link }}" class="ajax">
          {{ list.creator.get_full_name }}
        </a>
