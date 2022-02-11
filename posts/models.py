@@ -399,7 +399,9 @@ class PostsList(models.Model):
         return False
 
     def is_user_can_see_el(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.can_see_el == self.ALL_CAN:
                 return True
             elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
