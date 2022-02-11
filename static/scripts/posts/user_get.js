@@ -22,7 +22,7 @@ on('#ajax', 'click', '.load_posts_list', function() {
     owner_pk = card.getAttribute("owner-pk");
   };
 
-  create_fullscreen("/posts/load_list/" + postlist_pk + "/", "item_fullscreen");
+  create_fullscreen("/posts/load_list/?list=" + postlist_pk, "item_fullscreen");
   if (owner_pk) {
     window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&postlist=" + postlist_pk);
   }
