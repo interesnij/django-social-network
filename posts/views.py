@@ -20,36 +20,6 @@ class PostsView(ListView):
 		return Post.objects.only("pk")
 
 
-class LoadPostsList(ListView):
-	template_name, community = None, None
-
-	def get(self,request,*args,**kwargs):
-		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-		self.posts = self.list.get_items()
-		if self.list.community:
-			self.community = self.list.community
-			if request.user.is_authenticated:
-				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.posts = self.list.get_items()
-				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			if request.user.is_authenticated:
-				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(LoadPostsList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(LoadPostsList,self).get_context_data(**kwargs)
-		context["list"] = self.list
-		context["community"] = self.community
-		return context
-
-	def get_queryset(self):
-		return self.posts
-
-
 class LoadPost(TemplateView):
 	template_name, community = None, None
 
@@ -110,35 +80,6 @@ class LoadFixPost(TemplateView):
 		c["next"] = self.posts.filter(pk__gt=self.post.pk).order_by('pk').first()
 		c["prev"] = self.posts.filter(pk__lt=self.post.pk).order_by('-pk').first()
 		return c
-
-
-class LoadPostsList(ListView):
-	template_name, community, paginate_by = None, None, 10
-
-	def get(self,request,*args,**kwargs):
-		self.list = PostsList.objects.get(pk=self.kwargs["pk"])
-		if self.list.community:
-			self.community = self.list.community
-			if request.user.is_authenticated:
-				self.template_name = get_template_community_list(self.list, "posts/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_anon_community_list(self.list, "posts/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		else:
-			if request.user.is_authenticated:
-				self.template_name = get_template_user_list(self.list, "posts/user/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
-			else:
-				self.template_name = get_template_anon_user_list(self.list, "posts/user/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(LoadPostsList,self).get(request,*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(LoadPostsList,self).get_context_data(**kwargs)
-		context["list"] = self.list
-		context["community"] = self.community
-		return context
-
-	def get_queryset(self):
-		return self.list.get_items()
-
 
 class PostListLoadIncludeUsers(ListView):
 	template_name, users = None, []
