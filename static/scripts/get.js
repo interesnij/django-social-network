@@ -483,6 +483,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
     users_list[i].querySelector("span").remove();
+    users_list[i].querySelector(".list_pk").remove(); 
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
@@ -501,6 +502,7 @@ on('#ajax', 'click', '#add_list_selected_chats_items_btn', function() {
   final_list = "Выбраны получатели: ";
   for (var i = 0; i < users_list.length; i++){
     users_list[i].querySelector("span").remove();
+    users_list[i].querySelector(".list_pk").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="chat_items" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };

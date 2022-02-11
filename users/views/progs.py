@@ -458,7 +458,7 @@ class RepostCreate(TemplateView):
                     check_user_can_get_list(request.user, item.creator)
 
                 from common.processing.post import repost_message_send
-                repost_message_send(item, type, attach, item.community, request)
+                repost_message_send(item, type, attach, request)
 
             item.repost += count
             item.save(update_fields=["repost"])
