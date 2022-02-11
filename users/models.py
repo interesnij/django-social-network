@@ -310,7 +310,7 @@ class User(AbstractUser):
             return self.s_avatar.url
         except:
             return "/static/images/no_img/list.jpg"
-    def get_b_avatar(self):
+    def get_bb_avatar(self):
         try:
             return self.b_avatar.url
         except:
