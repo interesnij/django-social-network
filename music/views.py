@@ -50,18 +50,18 @@ class LoadMusiclist(ListView):
 	template_name, c, paginate_by, is_user_can_see_music_section, is_user_can_see_music_list, is_user_can_create_tracks = None, None, 10, None, None, None
 
 	def get(self,request,*args,**kwargs):
-		self.list = Musiclist.objects.get(pk=self.kwargs["pk"])
+		self.list = MusicList.objects.get(pk=self.kwargs["pk"])
 		if self.list.community:
 			self.c = self.list.community
 			if request.user.is_authenticated:
 				if request.user.is_staff_of_community(self.c.pk):
-					self.get_lists = Musiclist.get_community_staff_lists(self.c.pk)
+					self.get_lists = MusicList.get_community_staff_lists(self.c.pk)
 					self.is_user_can_see_music_section = True
 					self.is_user_can_create_tracks = True
 					self.is_user_can_see_music_list = True
 					self.template_name = get_template_community_list(self.list, "music/community/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 				else:
-					self.get_lists = Musiclist.get_community_lists(self.c.pk)
+					self.get_lists = MusicList.get_community_lists(self.c.pk)
 					self.is_user_can_see_music_section = self.c.is_user_can_see_music(request.user.pk)
 					self.is_user_can_see_music_list = self.list.is_user_can_see_el(request.user.pk)
 					self.is_user_can_create_tracks = self.list.is_user_can_create_el(request.user.pk)
@@ -69,7 +69,7 @@ class LoadMusiclist(ListView):
 				self.template_name = get_template_anon_community_list(self.list, "music/community/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 				self.is_user_can_see_music_section = self.c.is_anon_user_can_see_music()
 				self.is_user_can_see_music_list = self.list.is_anon_user_can_see_el()
-				self.get_lists = Musiclist.get_community_lists(self.c.pk)
+				self.get_lists = MusicList.get_community_lists(self.c.pk)
 		else:
 			if request.user.is_authenticated:
 				if request.user.pk == self.list.creator.pk:
