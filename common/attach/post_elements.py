@@ -122,11 +122,24 @@ def get_post_attach(post, user):
                 else:
                     creator, name, add, remove, repost = playlist.creator, playlist.creator.get_full_name_genitive(), "u_add_music_list", "u_remove_music_list", "u_ucm_music_list_repost"
                 if playlist.image:
-                    image = '<img src="' + playlist.image.url + '" style="width:120px;height:120px;" alt="image">'
+                    image = '<img src="' + img_src + '" style="width:120px;height:120px;" alt="image">'
                 else:
                     image = '<svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
                 repost_svg, add_svg = '', ''
                 block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" playlist-pk="', str(playlist.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+            except:
+                pass
+        elif item[:3] == "lpo":
+            try:
+                from posts.models import PostsList
+                list = PostsList.objects.get(pk=item[3:])
+                if list.type[0] == "_":
+                    pass
+                if list.community:
+                    creator, name, img_src = list.community, ": " + list.community.name, list.community.get_bb_avatar()
+                else:
+                    creator, name, img_src = list.creator, list.creator.get_full_name_genitive(), list.community.get_bb_avatar()
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" postlist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_posts_list pointer"><img src="' + img_src + '" style="width:120px;height:120px;" alt="image"></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_posts_list pointer">', list.name, '</h6><p>Плейлист <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Записей: ', str(list.count_items()), '</p></div></div></div></div>'])
             except:
                 pass
         elif item[:3] == "ldo":
