@@ -7,29 +7,17 @@
             </div>
           </div>
           <span class="load_block">
-
             <div class="media mt-3" style="padding-left: 7px;">
-              <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
-                {% csrf_token %}
               <h5 class="mt-1">
                 <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
-                {% if is_user_can_create_docs %}
-                <input type="file" class="case_all_input add_docs_in_list" name="file" style="display:none" multiple="multiple">
-                <a class="pointer previous_click hide_delete" tooltip="Добавить документ" flow="up">
-                  <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-                </a>
-                {% endif %}
-                {% include 'desctop/generic/items/list_meta.html' %}
               </h5>
-              <span id="onload_info"></span>
-              </form>
             </div>
           <div class="card mb-2">
               <div class="card-body">
                     <ul class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_doc_list">
                       {% if object_list %}
                       {% for object in object_list %}
-                        {% include 'desctop/users/docs/doc.html' %}
+                        {% include 'desctop/communities/docs/anon_doc.html' %}
                       {% endfor %}
                       {% if page_obj.has_next %}
                       <div class="load centered m-1 next_page_list" data-link="{% url 'load_doc_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
