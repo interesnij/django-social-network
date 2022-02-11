@@ -15,10 +15,17 @@ on('body', 'click', '.doc_edit', function() {
 });
 
 on('#ajax', 'click', '.load_doc_list', function() {
-  card = this.parentElement.parentElement.parentElement;
-  doclist_pk = card.getAttribute("doclist-pk");
-  owner_pk = card.getAttribute("owner-pk");
+  if (this.getAttribute("doclist-pk")) {
+    doclist_pk = card.getAttribute("doclist-pk");
+    owner_pk = null
+  } else {
+    card = this.parentElement.parentElement.parentElement;
+    doclist_pk = card.getAttribute("doclist-pk");
+    owner_pk = card.getAttribute("owner-pk");
+  };
 
   create_fullscreen("/docs/load_list/" + doclist_pk + "/", "item_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk);
+  if (owner_pk) {
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk);
+  }
 });

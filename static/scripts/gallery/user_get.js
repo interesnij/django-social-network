@@ -37,11 +37,18 @@ on('#ajax', 'click', '.u_photo_priview', function() {
 });
 
 on('#ajax', 'click', '.load_photo_list', function() {
-  card = this.parentElement.parentElement;
-  photolist_pk = card.getAttribute("photolist-pk");
-  owner_pk = card.getAttribute("owner-pk");
+  if (this.getAttribute("photolist-pk")) {
+    photolist_pk = card.getAttribute("photolist-pk");
+    owner_pk = null
+  } else {
+    card = this.parentElement.parentElement;
+    photolist_pk = card.getAttribute("photolist-pk");
+    owner_pk = card.getAttribute("owner-pk");
+  };
   create_fullscreen("/gallery/load_list/" + photolist_pk + "/", "item_fullscreen");
+  if (owner_pk) {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&photolist=" + photolist_pk);
+  }
 });
 
 on('#ajax', 'click', '.u_photo_edit', function() {

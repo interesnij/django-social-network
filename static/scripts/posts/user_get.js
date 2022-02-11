@@ -12,6 +12,22 @@ on('body', 'click', '.load_comments_list', function() {
   }
 });
 
+on('#ajax', 'click', '.load_post_list', function() {
+  if (this.getAttribute("postlist-pk")) {
+    postlist_pk = card.getAttribute("postlist-pk");
+    owner_pk = null
+  } else {
+    card = this.parentElement.parentElement.parentElement;
+    postlist_pk = card.getAttribute("postlist-pk");
+    owner_pk = card.getAttribute("owner-pk");
+  };
+
+  create_fullscreen("/posts/load_list/" + postlist_pk + "/", "item_fullscreen");
+  if (owner_pk) {
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&postlist=" + postlist_pk);
+  }
+});
+
 on('body', 'click', '.create_repost', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');

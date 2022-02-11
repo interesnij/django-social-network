@@ -14,12 +14,19 @@ on('#ajax', 'click', '.load_attach_video_list', function() {
 });
 
 on('#ajax', 'click', '.load_video_list', function() {
-  card = this.parentElement.parentElement.parentElement;
-  videolist_pk = card.getAttribute("videolist-pk");
-  owner_pk = card.getAttribute("owner-pk");
+  if (this.getAttribute("videolist-pk")) {
+    videolist_pk = card.getAttribute("videolist-pk");
+    owner_pk = null
+  } else {
+    card = this.parentElement.parentElement.parentElement;
+    videolist_pk = card.getAttribute("videolist-pk");
+    owner_pk = card.getAttribute("owner-pk");
+  };
 
   create_fullscreen("/video/load_list/" + videolist_pk + "/", "item_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
+  if (owner_pk) {
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
+  }
 });
 
 on('#ajax', 'click', '.video_list_detail', function() {

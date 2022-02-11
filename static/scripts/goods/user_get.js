@@ -14,6 +14,16 @@ on('#ajax', 'click', '.good_detail', function() {
 });
 
 on('#ajax', 'click', '.load_good_list', function() {
-  parent = this.parentElement.parentElement.parentElement;
-  create_fullscreen("/goods/load_list/" + parent.getAttribute("goodlist-pk") + "/", "item_fullscreen");
+  if (this.getAttribute("goodlist-pk")) {
+    goodlist_pk = card.getAttribute("goodlist-pk");
+    owner_pk = null
+  } else {
+    card = this.parentElement.parentElement.parentElement;
+    goodlist_pk = card.getAttribute("goodlist-pk");
+    owner_pk = card.getAttribute("owner-pk");
+  };
+  create_fullscreen("/goods/load_list/" + goodlist_pk + "/", "item_fullscreen");
+  if (owner_pk) {
+    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&goodlist=" + goodlist_pk);
+  }
 });
