@@ -170,7 +170,7 @@ def get_post_attach(post, user):
                     creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_good_list", "u_remove_good_list", "u_ucm_good_list_repost"
                 share, add = '', ''
 
-                block = ''.join([block, '<div owner-pk="', str(creator.pk), '" goodlist-pk="', str(list.pk), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 load_good_list pointer"><a>', list.name, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="load_good_list pointer image_fit_small" src="', list.get_cover(), '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
+                block = ''.join([block, '<div goodlist-pk="', str(list.pk), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h4 class="content-color-primary mb-0 load_good_list pointer"><a>', list.name, '</a></h4></div><span class="small">', share, add, '</span></div><div class="align-items-center no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="load_good_list pointer image_fit_small" src="', list.name, '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
             except:
                 pass
         elif item[:3] == "lvi":
@@ -185,7 +185,7 @@ def get_post_attach(post, user):
                     creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_video_list", "u_remove_video_list", "u_ucm_video_list_repost"
                 image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
                 repost_svg, add_svg = '', ''
-                
+
                 block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" videolist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
             except:
                 pass
