@@ -18,6 +18,7 @@
                   <a class="col">
                     <figure class="mx-auto mb-3 avatar_figure">
                       {% if user.b_avatar %}
+                      <img src="/static/images/no_img/{{ user.b_avatar.url }}" class="previous_click pointer">
                         {{ user.get_b_avatar|safe }}
                         <form id="add_user_avatar">
                           {% csrf_token %}
