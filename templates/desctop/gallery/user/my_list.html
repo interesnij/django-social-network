@@ -6,8 +6,8 @@
 <div class="media mt-3" style="padding-left: 7px;" data-type="lph{{ list.pk }}">
   <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
     {% csrf_token %}
-    <span class="i_link">
-    Фотоальбом <a href="{{ list.creator.get_link }}" class="ajax underline font-weight">
+    <span class="text_support">
+    Фотоальбом <a href="{{ list.creator.get_link }}" class="ajax i_link font-weight">
       {{ list.creator.get_full_name_genitive }}
     </a>
     </span>
