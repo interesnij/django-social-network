@@ -178,9 +178,9 @@ def get_comment_attach(comment, user):
                 if list.type[0] == "_":
                     pass
                 if list.community:
-                    creator, name, img_src = list.community, list.community.name, list.community.get_b_avatar()
+                    creator, name, img_src = list.community, list.community.name, list.community.get_bb_avatar()
                 else:
-                    creator, name, img_src = list.creator, list.creator.get_full_name(), list.creator.get_b_avatar()
+                    creator, name, img_src = list.creator, list.creator.get_full_name(), list.creator.get_bb_avatar()
                 share, add = '', ''
 
                 block = ''.join([block, '<div owner-pk="', str(creator.pk), '" goodlist-pk="', str(list.pk), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h6 class="content-color-primary mb-0 load_good_list pointer"><a>', list.name, '</a></h6></div><span class="small">', share, add, '</span></div><div class="centered no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="load_good_list pointer image_fit_small" src="', img_src, '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
