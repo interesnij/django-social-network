@@ -17,7 +17,7 @@
           {% include 'desctop/generic/items/list_meta.html' %}
 
            <span></span>
-            <span class="post_stream drag_container is_paginate" data-type="pos">
+            <span class="post_stream drag_container is_paginate is_block_paginate" data-type="pos">
               {% for object in object_list %}
                 {% include 'desctop/posts/post_community/anon_post.html' %}
               {% endfor %}

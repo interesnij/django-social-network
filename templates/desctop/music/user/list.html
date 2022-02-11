@@ -33,7 +33,7 @@
           <div class="card mb-2">
               <div class="card-body">
                 {% if object_list %}
-                    <ul data-pk="{{ list.pk }}" class="is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="mus" data-community-id="{{ list.community.pk }}">
+                    <ul data-pk="{{ list.pk }}" class="is_paginate is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="mus" data-community-id="{{ list.community.pk }}">
                       {% for object in object_list %}
                         {% include 'desctop/users/music/track.html' %}
                       {% endfor %}
