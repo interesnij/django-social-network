@@ -8,14 +8,14 @@
           </a>
         </figure>
         <div class="media-body" style="line-height: 0.4;">
-            <h6 class="music_list_item pointer" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
+            <h6 class="music_list_item pointer mb-1" style="width: 84%;overflow: hidden;"><a>{{ object.title }}</a></h6>
             {% if object.album %}
 
             {% else %}
               {% if object.community %}
-                <a class="ajax" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>
+                <a class="ajax small" href="{% url 'community_detail' pk=object.community.pk %}">{{ object.community.name }}</a>
               {% else %}
-                <a class="ajax" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator.get_full_name }}</a>
+                <a class="ajax small" href="{% url 'user' pk=object.creator.pk %}">{{ object.creator.get_full_name }}</a>
               {% endif %}
             {% endif %}
               <span class='span_btn' style="float:right;margin-top: -25px;display:flex" data-pk="{{ object.pk }}">
