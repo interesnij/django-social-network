@@ -632,12 +632,18 @@ class Community(models.Model):
         self.save(update_fields=['b_avatar'])
         return self.b_avatar
 
+    def get_b_avatar(self):
+        if self.get_avatar_pk():
+            return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + str(self.get_avatar_pk()) + '">'
+        else:
+            return '<img src="/static/images/no_img/b_avatar.png" />'
+
     def get_avatar(self):
         try:
             return self.s_avatar.url
         except:
             return "/static/images/no_img/list.jpg"
-    def get_b_avatar(self):
+    def get_bb_avatar(self):
         try:
             return self.b_avatar.url
         except:
