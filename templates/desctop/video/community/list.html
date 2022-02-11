@@ -7,12 +7,13 @@
           </div>
 
             <span class="load_block">
+              <span class="text_support">
+              Видеоальбом <a href="{{ list.community.get_link }}" class="ajax i_link font-weight">
+                - {{ list.community.name }}
+              </a>
+              </span>
               <div class="media mt-3 uuid_saver" data-pk="{{ list.pk }}" data-uuid="{{ list.uuid }}" style="padding-left: 7px;">
-                <span class="text_support">
-                Видеоальбом <a href="{{ list.community.get_link }}" class="ajax i_link font-weight">
-                  - {{ list.community.name }}
-                </a>
-                </span>
+
                 <h5 class="mt-1">
                   <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                   {% if is_user_can_create_videos %}

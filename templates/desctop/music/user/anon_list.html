@@ -7,12 +7,12 @@
             </div>
           </div>
             <span class="load_block">
+              <span class="text_support">
+              Плейлист <a href="{{ list.creator.get_link }}" class="ajax i_link font-weight">
+                {{ list.creator.get_full_name_genitive }}
+              </a>
+              </span>
               <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" data-type="lph{{ list.pk }}" data-pk="{{ list.pk }}" style="padding-left: 7px;">
-                <span class="text_support">
-                Плейлист <a href="{{ list.creator.get_link }}" class="ajax i_link font-weight">
-                  {{ list.creator.get_full_name_genitive }}
-                </a>
-                </span>
                 <h5 class="mt-1">
                   <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                 </h5>

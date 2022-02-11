@@ -7,13 +7,12 @@
             </div>
           </div>
           <span class="load_block">
-
+            <span class="text_support">
+            Список документов <a href="{{ list.creator.get_link }}" class="ajax i_link font-weight">
+              {{ list.creator.get_full_name_genitive }}
+            </a>
+            </span>
             <div class="media mt-3" style="padding-left: 7px;">
-              <span class="text_support">
-              Список документов <a href="{{ list.creator.get_link }}" class="ajax i_link font-weight">
-                {{ list.creator.get_full_name_genitive }}
-              </a>
-              </span>
               <form class="uuid_saver" data-uuid="{{ list.uuid }}" data-pk="{{ list.pk }}">
                 {% csrf_token %}
               <h5 class="mt-1">
