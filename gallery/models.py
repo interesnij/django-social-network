@@ -171,7 +171,9 @@ class PhotoList(models.Model):
         return User.objects.filter(id__in=self.get_copy_el_include_users_ids())
 
     def is_user_can_see_el(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.can_see_el == self.ALL_CAN:
                 return True
             elif self.can_see_el == self.CREATOR and user_id == self.community.creator.pk:
@@ -202,7 +204,9 @@ class PhotoList(models.Model):
         return self.can_see_el == self.ALL_CAN
 
     def is_user_can_see_comment(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.can_see_comment == self.ALL_CAN:
                 return True
             elif self.can_see_comment == self.CREATOR and user_id == self.community.creator.pk:
@@ -233,7 +237,9 @@ class PhotoList(models.Model):
         return self.can_see_comment == self.ALL_CAN
 
     def is_user_can_create_el(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.create_el == self.ALL_CAN:
                 return True
             elif self.create_el == self.CREATOR and user_id == self.community.creator.pk:
@@ -264,7 +270,9 @@ class PhotoList(models.Model):
         return self.create_el == self.ALL_CAN
 
     def is_user_can_create_comment(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.create_comment == self.ALL_CAN:
                 return True
             elif self.create_comment == self.CREATOR and user_id == self.community.creator.pk:
@@ -295,7 +303,9 @@ class PhotoList(models.Model):
         return self.create_comment == self.ALL_CAN
 
     def is_user_can_copy_el(self, user_id):
-        if self.community:
+        if self.creator.pk == user_id:
+            return True
+        elif self.community:
             if self.copy_el == self.ALL_CAN:
                 return True
             elif self.copy_el == self.CREATOR and user_id == self.community.creator.pk:
