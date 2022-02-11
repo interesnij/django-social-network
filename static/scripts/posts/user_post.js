@@ -93,7 +93,7 @@ on('body', 'change', '.case_all_input', function() {
         elem = link_.responseText;
         response = document.createElement("span");
         response.innerHTML = elem;
-        lenta = form.parentElement.parentElement.parentElement.querySelector(".is_paginate");
+        lenta = form.parentElement.parentElement.parentElement.querySelector(".row");
         lenta.insertAdjacentHTML('afterBegin', response.innerHTML);
         lenta.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
       }
