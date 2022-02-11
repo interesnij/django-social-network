@@ -12,7 +12,7 @@ def get_post_list_processing(list, type):
     list.save(update_fields=['type'])
     return list
 
-def repost_message_send(obj, type, community, request):
+def repost_message_send(obj, type, attach, community, request):
     from chat.models import Message, Chat
     from users.models import User
     from posts.forms import PostForm
@@ -20,7 +20,6 @@ def repost_message_send(obj, type, community, request):
     from django.http import HttpResponse
 
     connections = request.POST.getlist("chat_items")
-    attach = request.POST.getlist("attach_items")
 
     form_post = PostForm(request.POST)
     count = 0

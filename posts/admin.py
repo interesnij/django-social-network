@@ -6,8 +6,10 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_display = [
                     'creator',
-                    #'community',
+                    'community',
                     'created',
+                    'type',
+                    'attach',
                     ]
     list_filter = ['created',]
 

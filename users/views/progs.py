@@ -351,7 +351,16 @@ class RepostCreate(TemplateView):
         from posts.models import PostsList, Post
 
         type = request.POST.get('type')
-        if type[0] == "l":
+        if type[0] == "u":
+            from users.models import User
+            item = User.objects.get(pk=type[3:])
+            case = 1
+        elif type[0] == "c":
+            from communities.models import Community
+            item = Community.objects.get(pk=type[3:])
+            case = 2
+        elif type[0] == "l":
+            case = 3
             if type[:3] == "lpo":
                 item, t, i = PostsList.objects.get(pk=type[3:]), "POL", "post"
             elif type[:3] == "lph":
@@ -373,6 +382,7 @@ class RepostCreate(TemplateView):
                 from survey.models import SurveyList
                 item, t, i =  SurveyList.objects.get(pk=type[3:]), "SUL", "survey"
         else:
+            case = 3
             if type[:3] == "pos":
                 item, t, i =  Post.objects.get(pk=type[3:]), "POS", "post"
             elif type[:3] == "pho":
@@ -405,10 +415,10 @@ class RepostCreate(TemplateView):
             post = form_post.save(commit=False)
             if type[:3] == "pos":
                 parent = item
-            else:
+            if case == 3:
                 parent = Post.create_parent_post(creator=item.creator, community=item.community, attach=type)
             if lists:
-                if item.community:
+                if case == 3 and item.community:
                     from common.notify.notify import community_notify, community_wall
                     check_can_get_lists(request.user, item.community)
 
@@ -423,7 +433,7 @@ class RepostCreate(TemplateView):
                             community_notify(creator, parent.community, None, parent.pk, t, "create_" + i + "_notify", "RE")
                             community_wall(creator, parent.community, None, parent.pk, t, "create_" + i + "_wall", "RE")
                         count += 1
-                else:
+                elif case == 3:
                     from common.notify.notify import user_notify, user_wall
                     if item.creator.pk != request.user.pk:
                         check_user_can_get_list(request.user, item.creator)
@@ -442,13 +452,13 @@ class RepostCreate(TemplateView):
                 creator.plus_posts(count)
 
             elif chat_items:
-                if item.community:
+                if case == 3 and item.community:
                     check_can_get_lists(request.user, item.community)
-                elif item.creator.pk != request.user.pk:
+                elif case == 3 and item.creator.pk != request.user.pk:
                     check_user_can_get_list(request.user, item.creator)
 
                 from common.processing.post import repost_message_send
-                repost_message_send(item, type, item.community, request)
+                repost_message_send(item, type, attach, item.community, request)
 
             item.repost += count
             item.save(update_fields=["repost"])
