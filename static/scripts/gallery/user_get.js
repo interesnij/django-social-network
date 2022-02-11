@@ -38,7 +38,7 @@ on('#ajax', 'click', '.u_photo_priview', function() {
 
 on('#ajax', 'click', '.load_photo_list', function() {
   if (this.getAttribute("photolist-pk")) {
-    photolist_pk = card.getAttribute("photolist-pk");
+    photolist_pk = this.getAttribute("photolist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement;

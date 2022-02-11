@@ -15,7 +15,7 @@ on('#ajax', 'click', '.load_attach_video_list', function() {
 
 on('#ajax', 'click', '.load_video_list', function() {
   if (this.getAttribute("videolist-pk")) {
-    videolist_pk = card.getAttribute("videolist-pk");
+    videolist_pk = this.getAttribute("videolist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement.parentElement;

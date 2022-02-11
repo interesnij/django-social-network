@@ -16,7 +16,7 @@ on('body', 'click', '.doc_edit', function() {
 
 on('#ajax', 'click', '.load_doc_list', function() {
   if (this.getAttribute("doclist-pk")) {
-    doclist_pk = card.getAttribute("doclist-pk");
+    doclist_pk = this.getAttribute("doclist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement.parentElement;

@@ -15,7 +15,7 @@ on('#ajax', 'click', '.good_detail', function() {
 
 on('#ajax', 'click', '.load_good_list', function() {
   if (this.getAttribute("goodlist-pk")) {
-    goodlist_pk = card.getAttribute("goodlist-pk");
+    goodlist_pk = this.getAttribute("goodlist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement.parentElement;

@@ -17,7 +17,7 @@ on('#ajax', 'click', '.load_attach_playlist', function() {
 
 on('#ajax', 'click', '.load_music_list', function() {
   if (this.getAttribute("playlist-pk")) {
-    playlist_pk = card.getAttribute("playlist-pk");
+    playlist_pk = this.getAttribute("playlist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement.parentElement;

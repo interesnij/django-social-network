@@ -14,7 +14,7 @@ on('body', 'click', '.load_comments_list', function() {
 
 on('#ajax', 'click', '.load_posts_list', function() {
   if (this.getAttribute("postlist-pk")) {
-    postlist_pk = card.getAttribute("postlist-pk");
+    postlist_pk = this.getAttribute("postlist-pk");
     owner_pk = null
   } else {
     card = this.parentElement.parentElement.parentElement;
