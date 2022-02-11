@@ -8,6 +8,11 @@
           </div>
             <span class="load_block">
               <div class="media mt-3 uuid_saver" data-uuid="{{ list.uuid }}" data-type="lph{{ list.pk }}" data-pk="{{ list.pk }}" style="padding-left: 7px;">
+                <span class="text_support">
+                Плейлист <a href="{{ list.community.get_link }}" class="ajax i_link font-weight">
+                  {{ list.community.name }}
+                </a>
+                </span>
                 <h5 class="mt-1">
                   <span class="second_list_name" data-name="{{ list.name }}">{{ list.name }}</span> ({{ list.count_items }})
                 </h5>
