@@ -167,19 +167,19 @@ def get_message_attach(message, user):
             except:
                 pass
         elif item[:3] == "lph":
-            try:
-                from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
-                    pass
-                if list.community:
-                    creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
-                else:
-                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
-                    share_svg, add_svg = '', ''
-                block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" owner-pk="', str(creator.pk), '" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
-            except:
+            #try:
+            from gallery.models import PhotoList
+            list = PhotoList.objects.get(pk=item[3:])
+            if list.type[0] == "_":
                 pass
+            if list.community:
+                creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
+            else:
+                creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
+                share_svg, add_svg = '', ''
+            block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" owner-pk="', str(creator.pk), '" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
+            #except:
+            #    pass
         elif item[:3] == "lgo":
             try:
                 from goods.models import GoodList
