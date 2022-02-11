@@ -636,7 +636,12 @@ class Community(models.Model):
         try:
             return self.s_avatar.url
         except:
-            return None
+            return "/static/images/no_img/list.jpg"
+    def get_b_avatar(self):
+        try:
+            return self.b_avatar.url
+        except:
+            return "/static/images/no_img/list.jpg"
 
     def get_music_count(self):
         return self.community_info.tracks
