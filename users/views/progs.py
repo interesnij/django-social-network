@@ -415,7 +415,7 @@ class RepostCreate(TemplateView):
             post = form_post.save(commit=False)
             if type[:3] == "pos":
                 parent = item
-            if case == 3:
+            elif case == 3:
                 parent = Post.create_parent_post(creator=item.creator, community=item.community, attach=type)
             if lists:
                 if case == 3 and item.community:
