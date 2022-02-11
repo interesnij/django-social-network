@@ -93,8 +93,9 @@ on('body', 'change', '.case_all_input', function() {
         elem = link_.responseText;
         response = document.createElement("span");
         response.innerHTML = elem;
-        document.body.querySelector(".is_paginate").insertAdjacentHTML('afterBegin', response.innerHTML);
-        document.body.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
+        lenta = form.parentElement.parentElement.parentElement.querySelector(".is_paginate");
+        lenta.insertAdjacentHTML('afterBegin', response.innerHTML);
+        lenta.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
       }
   }};
   link_.upload.onprogress = function(event) {
