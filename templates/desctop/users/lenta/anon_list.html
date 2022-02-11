@@ -48,7 +48,7 @@
             {% include 'desctop/posts/post_user/anon_post.html' %}
           {% endfor %}
           {% if page_obj.has_next %}
-          <div class="load centered m-1 next_page_list" data-link="{% url 'user_post_list' pk=user.pk list_pk=list.pk %}?page={{ page_obj.next_page_number }}">
+          <div class="load centered m-1 next_page_list" data-link="{% url 'load_post_list' pk=list.pk %}?page={{ page_obj.next_page_number }}">
               <img src="/static/images/preloader.gif">
           </div>
           {% endif %}
