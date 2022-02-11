@@ -29,7 +29,7 @@ def repost_message_send(obj, type, attach, request):
         if type[:3] == "pos":
             repost = obj
         else:
-            repost = Post.create_parent_post(creator=obj.creator, community=community, attach=type)
+            repost = Post.create_parent_post(creator=obj.creator, community=obj.community, attach=type)
         for object_id in connections:
             if object_id[0] == "c":
                 chat = Chat.objects.get(pk=object_id[1:])
