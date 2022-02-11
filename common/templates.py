@@ -307,8 +307,8 @@ def get_template_user_list(list, folder, template, request_user, user_agent):
         template_name = get_fine_user_item(request_user, list, folder, template)
     elif user.type[0] == "_":
         template_name = get_fine_user(user)
-    elif user.pk == request_user.pk:
-        template_name = folder + "my_" + template
+    #elif user.pk == request_user.pk:
+    #    template_name = folder + "my_" + template
     elif request_user.is_blocked_with_user_with_id(user_id=user.pk):
         template_name = "generic/u_template/block_user.html"
     elif user.is_closed_profile() and not (request_user.is_followers_user_with_id(user_id=user.pk) or request_user.is_connected_with_user_with_id(user_id=user.pk)):
@@ -343,8 +343,8 @@ def get_template_community_item(item, folder, template, request_user, user_agent
         template_name = get_fine_community(community, request_user)
     elif item.type[0] == "_" or list.type[0] == "_":
         template_name = get_fine_community_item(request_user, community, item, folder, template)
-    elif request_user.is_administrator_of_community(community.pk):
-        template_name = folder + "admin_" + template
+    #elif request_user.is_administrator_of_community(community.pk):
+    #    template_name = folder + "admin_" + template
     elif community.is_private():
         template_name = "generic/c_template/private_community.html"
     elif request_user.is_banned_from_community(community.pk):
