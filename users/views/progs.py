@@ -320,6 +320,7 @@ class RepostCreate(TemplateView):
             self.item = get_item_of_type(self.type)
             case = 3
         if case == 3:
+            self.community = self.item.community
             if self.type[0] == "l":
                 self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
             elif case == 3 and not self.type[0] == "l":
@@ -339,7 +340,7 @@ class RepostCreate(TemplateView):
         context["form"] = PostForm()
         context["object"] = self.item
         context["can_copy_item"] = self.can_copy_item
-        context["community"] = self.item.community
+        context["community"] = self.community
         context["type"] = self.type
         return context
 
