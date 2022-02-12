@@ -16,7 +16,7 @@ loadScripts('/static/scripts/gallery/user_get.js');
 loadScripts('/static/scripts/gallery/user_post.js');
 loadScripts('/static/scripts/gallery/community_post.js');
 
-loadScripts('/static/scripts/goods/user_get.js'); 
+loadScripts('/static/scripts/goods/user_get.js');
 loadScripts('/static/scripts/goods/user_post.js');
 loadScripts('/static/scripts/goods/community_post.js');
 
@@ -33,7 +33,6 @@ loadScripts('/static/scripts/user/connect.js?ver2');
 loadScripts('/static/scripts/user/chat.js?ver2');
 
 loadScripts('/static/scripts/video/user_get.js');
-loadScripts('/static/scripts/video/community_get.js');
 loadScripts('/static/scripts/video/user_post.js');
 loadScripts('/static/scripts/video/community_post.js');
 
