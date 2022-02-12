@@ -412,15 +412,19 @@ class RepostCreate(TemplateView):
 
         form_post, attach, lists, chat_items, count, creator = PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
         if request.is_ajax() and form_post.is_valid():
+            if case == 3 and item.community:
+                check_can_get_lists(request.user, item.community)
+            elif case == 3 and item.creator.pk != request.user.pk:
+                check_user_can_get_list(request.user, item.creator)
+
             post = form_post.save(commit=False)
             if type[:3] == "pos":
                 parent = item
-            elif case == 3:
+            else:
                 parent = Post.create_parent_post(creator=item.creator, community=item.community, attach=type)
             if lists:
                 if case == 3 and item.community:
                     from common.notify.notify import community_notify, community_wall
-                    check_can_get_lists(request.user, item.community)
 
                     for list_pk in lists:
                         post_list = PostsList.objects.get(pk=list_pk)
@@ -433,10 +437,8 @@ class RepostCreate(TemplateView):
                             community_notify(creator, parent.community, None, parent.pk, t, "create_" + i + "_notify", "RE")
                             community_wall(creator, parent.community, None, parent.pk, t, "create_" + i + "_wall", "RE")
                         count += 1
-                elif case == 3:
+                else:
                     from common.notify.notify import user_notify, user_wall
-                    if item.creator.pk != request.user.pk:
-                        check_user_can_get_list(request.user, item.creator)
 
                     for list_pk in lists:
                         post_list = PostsList.objects.get(pk=list_pk)
@@ -452,12 +454,8 @@ class RepostCreate(TemplateView):
                 creator.plus_posts(count)
 
             elif chat_items:
-                if case == 3 and item.community:
-                    check_can_get_lists(request.user, item.community)
-                elif case == 3 and item.creator.pk != request.user.pk:
-                    check_user_can_get_list(request.user, item.creator)
-
                 from common.processing.post import repost_message_send
+
                 repost_message_send(item, type, attach, request)
             if case == 3:
                 item.repost += count
