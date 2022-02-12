@@ -13,12 +13,12 @@
     <div class="col-lg-4 col-md-5 order-1">
       <div class="">
         <div class="card mb-3">
-          <div class="card-body">
+          <div class="">
               <div class="row align-items-center no-gutters">
                   <a class="col">
-                    <figure class="mx-auto mb-3 avatar_figure">
+                    <figure class="mx-auto mb-2 avatar_figure">
                       {% if user.b_avatar %}
-                        {{ user.get_b_avatar|safe }} 
+                        {{ user.get_b_avatar|safe }}
                         <form id="add_user_avatar">
                           {% csrf_token %}
                           <input type="file" id="user_avatar_upload" name="file" style="display:none">
@@ -35,7 +35,7 @@
                   </a>
               </div>
               <span class="centered">
-                  <a class="btn btn-sm border ajax" href="{% url 'user_general_form' %}">Редактировать</a>
+                  <a class="ajax" href="{% url 'user_general_form' %}">Редактировать</a>
               </span>
           </div>
         </div>
