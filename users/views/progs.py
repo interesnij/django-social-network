@@ -452,8 +452,11 @@ class RepostCreate(TemplateView):
                             user_wall(creator, post_list.community.pk, parent.pk, t, "create_" + i + "_wall", "CRE")
                         else:
                             post.create_post(creator=creator, list=post_list, attach=attach, text=post.text, category=post.category, parent=parent, comments_enabled=post.comments_enabled, is_signature=False, votes_on=post.votes_on, community=None)
-                            user_notify(creator,None, parent.pk, t, "create_" + i + "_notify", "RE")
-                            user_wall(creator, None, parent.pk, t, "create_" + i + "_wall", "RE")
+                            try:
+                                user_notify(creator,None, parent.pk, t, "create_" + i + "_notify", "RE")
+                                user_wall(creator, None, parent.pk, t, "create_" + i + "_wall", "RE")
+                            except:
+                                pass
                             count += 1
                 creator.plus_posts(count)
 
