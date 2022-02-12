@@ -778,10 +778,6 @@ nav {
     }
 }
 
-.attach_container:first-child {
-  margin-top:10px
-}
-
 #signup select{
 -webkit-appearance: none;
   -moz-appearance: none;
@@ -972,7 +968,8 @@ ul{
 }
 
 .attach_container{
-  display: flex; flex-wrap: wrap; padding-top: 7px
+  display: flex;
+  flex-wrap: wrap;
 }
 .attach_container div:nth-child(1),
 .attach_container div:nth-child(2),
