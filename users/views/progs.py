@@ -459,9 +459,9 @@ class RepostCreate(TemplateView):
 
                 from common.processing.post import repost_message_send
                 repost_message_send(item, type, attach, request)
-
-            item.repost += count
-            item.save(update_fields=["repost"])
+            if case == 3:
+                item.repost += count
+                item.save(update_fields=["repost"])
 
             return HttpResponse()
         else:
