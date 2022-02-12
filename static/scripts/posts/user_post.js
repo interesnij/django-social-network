@@ -691,7 +691,7 @@ on('#ajax', 'click', '#create_list_btn', function() {
       rtr.innerHTML = ajax.innerHTML;
       window.scrollTo(0,0);
       document.title = new_post.querySelector('title').innerHTML;
-      window.history.pushState({route: url}, "network", url);
+      window.history.pushState({route: new_post.location.href}, "network", new_post.location.href);
     };
     close_work_fullscreen();
   }};

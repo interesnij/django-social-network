@@ -64,6 +64,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def get_description(self):
+        return '<a href="' + self.get_link() + '" target="_blank">' + self.get_full_name_genitive() + '</a>'
+
     def is_can_work_list(self, list):
         return (list.community and self.pk in list.community.get_administrators_ids()) \
         or self.pk == list.creator.pk

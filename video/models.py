@@ -86,7 +86,7 @@ class VideoList(models.Model):
 
     def get_description(self):
         if self.community:
-            return 'видеоальбом сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+            return 'видеоальбом сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'
         else:
             return 'видеоальбом <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
@@ -886,7 +886,7 @@ class Video(models.Model):
 
     def get_description(self):
         if self.community:
-            return 'видеозапись сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+            return 'видеозапись сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'
         else:
             return 'видеозапись <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 

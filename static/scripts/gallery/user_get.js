@@ -5,6 +5,14 @@ on('#ajax', 'click', '.load_attach_photo_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_photo_list_load/", "load_attach_photo_list");
 });
 
+on('#ajax', 'click', '.photo_priview', function() {
+  pk = this.getAttribute('photo-pk');
+  create_fullscreen("/gallery/preview_photo/" + pk + "/", "photo_fullscreen");
+});
+on('#ajax', 'click', '.photo_edit', function() {
+  document.querySelector('#block_description_form').style.display =="none";
+});
+
 on('#ajax', 'click', '.detail_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
@@ -31,11 +39,6 @@ on('body', 'click', '.chat_photo', function() {
   create_fullscreen("/gallery/chat_photo/" + pk + "/" + photo_pk + "/", "photo_fullscreen");
 });
 
-on('#ajax', 'click', '.u_photo_priview', function() {
-  pk = this.getAttribute('photo-pk');
-  create_fullscreen("/gallery/user/preview_photo/" + pk + "/", "photo_fullscreen");
-});
-
 on('#ajax', 'click', '.load_photo_list', function() {
   if (this.getAttribute("photolist-pk")) {
     photolist_pk = this.getAttribute("photolist-pk");
@@ -49,8 +52,4 @@ on('#ajax', 'click', '.load_photo_list', function() {
   if (owner_pk) {
   window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&photolist=" + photolist_pk);
   }
-});
-
-on('#ajax', 'click', '.u_photo_edit', function() {
-  document.querySelector('#block_description_form').style.display =="none";
 });

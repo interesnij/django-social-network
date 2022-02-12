@@ -7,8 +7,8 @@ on('#ajax', 'click', '.load_attach_survey_list', function() {
   profile_list_block_attach(this, ".load_block", "/u_survey_list_load/", "load_attach_survey_list");
 });
 
-on('#ajax', 'click', '.u_add_survey', function() {
-  create_fullscreen('/survey/user_progs/add/', "worker_fullscreen");
+on('#ajax', 'click', '.add_survey', function() {
+  create_fullscreen('/survey/add_survey/', "worker_fullscreen");
 });
 
 on('#ajax', 'click', '#need_time_end', function() {

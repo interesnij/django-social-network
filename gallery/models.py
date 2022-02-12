@@ -69,7 +69,7 @@ class PhotoList(models.Model):
 
     def get_description(self):
         if self.community:
-            return 'фотоальбом сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+            return 'фотоальбом сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'
         else:
             return 'фотоальбом <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
@@ -874,7 +874,7 @@ class Photo(models.Model):
 
     def get_description(self):
         if self.community:
-            return 'фотографию сообщества <a href="' + self.creator.get_link() + '" target="_blank">' + self.community.name + '</a>'
+            return 'фотографию сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'
         else:
             return 'фотографию <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 

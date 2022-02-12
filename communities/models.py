@@ -80,6 +80,9 @@ class Community(models.Model):
     def __str__(self):
         return self.name
 
+    def get_description(self):
+        return 'сообщество <a href="' + self.get_link() + '" target="_blank">' + self.name + '</a>'
+
     def get_code(self):
         return "com" + str(self.pk)
 

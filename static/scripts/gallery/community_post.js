@@ -9,10 +9,6 @@ on('#ajax', 'click', '.c_photo_on_comment', function() {
   post.querySelector(".load_photo_comments").style.display = "unset"
 });
 
-on('#ajax', 'click', '.c_photo_edit', function() {
-  this.parentElement.nextElementSibling.style.display = "block"
-});
-
 on('#ajax', 'click', '.c_photo_description', function() {
   form = this.parentElement.parentElement.parentElement;
   form_data = new FormData(form.querySelector(".c_photo_description_form"));
