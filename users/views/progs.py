@@ -300,7 +300,7 @@ class ListRecover(View):
         return HttpResponse()
 
 class RepostCreate(TemplateView):
-    template_name, community, can_copy_item = None, None, None
+    template_name, community, can_copy_item, i, t = None, None, None, None, None
 
     def get(self,request,*args,**kwargs):
         from common.utils import get_item_of_type
