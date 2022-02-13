@@ -76,7 +76,7 @@ class AddSurveyInList(TemplateView):
 			answers = request.POST.getlist("answers")
 			if not answers:
 				HttpResponse("not ansvers")
-				new_survey = survey.create_survey(
+			new_survey = survey.create_survey(
 					title=survey.title,
 					image=survey.image,
 					creator=request.user,
