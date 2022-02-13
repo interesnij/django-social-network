@@ -206,7 +206,9 @@ def get_post_attach(post, user):
             elif item[:3] == "use":
                 #try:
                 from users.models import User
-                user = User.objects.get(pk=item[3:]).exclude(type__contains="_")
+                user = User.objects.get(pk=item[3:])
+                if user.type[0] == "_":
+                    pass
                 span_btn = ''
 
                 image = '<img src="' + user.get_bb_avatar() + '" alt="img" >'
