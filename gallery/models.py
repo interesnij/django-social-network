@@ -503,7 +503,7 @@ class PhotoList(models.Model):
             return query
         except:
             query = Q(Q(community_id=community_pk)|Q(communities__id=community_pk))
-            query.add(Q(Q(type="LIS")|Q(type="MAI")), Q.AND)
+            query.add(~Q(type__contains="_"), Q.AND)
             return cls.objects.filter(query)
     @classmethod
     def get_community_lists_count(cls, community_pk):
