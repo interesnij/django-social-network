@@ -214,7 +214,21 @@ def get_post_attach(post, user):
                 image = '<img src="' + user.get_bb_avatar() + '" alt="img" >'
                 repost_svg, add_svg = '', ''
 
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="ajax" href="', user.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', user.get_link(), '" class="my-0 mt-1 ajax">', user.get_full_name(), '</a><p>', user.get_online_status(), '<br>Друзей: ', str(user.profile.friends), '</p></div></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', user.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', user.get_link(), '" class="my-0 mt-1 ajax">', user.get_full_name(), '</a><p>', user.get_online_status(), '<br>Друзей: ', str(user.profile.friends), '</p></div></div></div></div>'])
+                #except:
+                #    pass
+            elif item[:3] == "com":
+                #try:
+                from communities.models import Community
+                community = Community.objects.get(pk=item[3:])
+                if community.type[0] == "_":
+                    pass
+                span_btn = ''
+
+                image = '<img src="' + community.get_bb_avatar() + '" alt="img" >'
+                repost_svg, add_svg = '', ''
+
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', commuity.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', commuity.get_link(), '" class="my-0 mt-1 ajax">', commuity.name, '</a><p>', commuity.description, '<br>Подписчиков: ', str(commuity.community_info.members), '</p></div></div></div></div>'])
                 #except:
                 #    pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
