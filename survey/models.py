@@ -514,7 +514,7 @@ class Survey(models.Model):
     is_no_edited = models.BooleanField(verbose_name="Запрет отмены голоса", default=False)
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
     image = ProcessedImageField(verbose_name='Главное изображение', blank=True, format='JPEG',options={'quality': 90}, processors=[Transpose(), ResizeToFit(512,512)],upload_to=upload_to_user_directory)
-    type = models.CharField(choices=TYPE, max_length=5)
+    type = models.CharField(choices=TYPE, default=PUBLISHED, max_length=5)
     time_end = models.DateTimeField(null=True, blank=True, verbose_name="Дата окончания")
     list = models.ForeignKey(SurveyList, on_delete=models.CASCADE, related_name='survey_list', verbose_name="Список")
     community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
