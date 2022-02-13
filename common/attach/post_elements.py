@@ -205,7 +205,7 @@ def get_post_attach(post, user):
                     pass
             elif item[:3] == "use":
                 #try:
-                from user.models import User
+                from users.models import User
                 user = User.objects.get(pk=item[3:]).exclude(type__contains="_")
                 span_btn = ''
 
