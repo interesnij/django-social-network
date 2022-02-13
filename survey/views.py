@@ -80,7 +80,6 @@ class AddSurveyInList(TemplateView):
 					title=survey.title,
 					image=survey.image,
 					creator=request.user,
-					order=survey.order,
 					is_anonymous=survey.is_anonymous,
 					is_multiple=survey.is_multiple,
 					is_no_edited=survey.is_no_edited,
@@ -118,7 +117,6 @@ class SurveyEdit(TemplateView):
 			new_survey = survey.edit_survey(
 				title=survey.title,
 				image=survey.image,
-				order=survey.order,
 				is_anonymous=survey.is_anonymous,
 				is_multiple=survey.is_multiple,
 				is_no_edited=survey.is_no_edited,
