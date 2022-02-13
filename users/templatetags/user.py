@@ -13,3 +13,7 @@ def is_can_work_list(request_user, list):
 @register.filter
 def is_user_can_edit_delete(obj, request_user):
     return obj.is_user_can_edit_delete_item(request_user)
+
+@register.filter
+def is_user_voted(survey, request_user_id):
+    return survey.is_user_voted(request_user_id)
