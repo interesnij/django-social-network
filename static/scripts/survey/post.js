@@ -13,11 +13,11 @@ on('#ajax', 'click', '#add_survey_btn', function() {
     toast_error("Название - обязательное поле!");
   } else if (!val){
     for (var i = 0; i < selectedOptions.length; i++) {selectedOptions[i].style.border = "1px #FF0000 solid"};
-    toast_error("Напишите варианты ответов!");
+    toast_error("Задайте варианты ответов!");
     return
   } else {this.disabled = true}
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/survey/add_survey/", true );
+  link_.open( 'POST', "/survey/add_survey_in_list/" + form_post.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
