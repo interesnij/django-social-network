@@ -92,61 +92,62 @@ class AddSurveyInList(TemplateView):
 
 
 class SurveyEdit(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.survey = Survey.objects.get(pk=self.kwargs["pk"])
-        self.template_name = get_detect_platform_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(SurveyUserEdit,self).get(request,*args,**kwargs)
+	def get(self,request,*args,**kwargs):
+		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
+		self.template_name = get_detect_platform_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(SurveyUserEdit,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        from survey.forms import SurveyForm
-        context = super(SurveyEdit,self).get_context_data(**kwargs)
-        context["survey"] = self.survey
-        context["form_post"] = SurveyForm(instance=self.survey)
-        return context
+	def get_context_data(self,**kwargs):
+		from survey.forms import SurveyForm
+		context = super(SurveyEdit,self).get_context_data(**kwargs)
+		context["survey"] = self.survey
+		context["form_post"] = SurveyForm(instance=self.survey)
+		return context
 
-    def post(self,request,*args,**kwargs):
-        from survey.forms import SurveyForm
+	def post(self,request,*args,**kwargs):
+		from survey.forms import SurveyForm
+
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
-        form = SurveyForm(request.POST,request.FILES,instance=survey)
-        if request.is_ajax() and form.is_valid() and survey.list.is_user_can_create_el(request.user.pk):
-            survey = form.save(commit=False)
-            new_survey = survey.edit_survey(
-                                            title=survey.title,
-                                            image=survey.image,
-                                            order=survey.order,
-                                            is_anonymous=survey.is_anonymous,
-                                            is_multiple=survey.is_multiple,
-                                            is_no_edited=survey.is_no_edited,
-                                            time_end=survey.time_end,
-                                            answers=answers,
-                                            )
-        else:
-            return HttpResponseBadRequest()
+		form = SurveyForm(request.POST,request.FILES,instance=survey)
+		if request.is_ajax() and form.is_valid() and survey.list.is_user_can_create_el(request.user.pk):
+			survey = form.save(commit=False)
+			new_survey = survey.edit_survey(
+				title=survey.title,
+				image=survey.image,
+				order=survey.order,
+				is_anonymous=survey.is_anonymous,
+				is_multiple=survey.is_multiple,
+				is_no_edited=survey.is_no_edited,
+				time_end=survey.time_end,
+				answers=answers,
+			)
+		else:
+			return HttpResponseBadRequest()
 
 
 class SurveyDelete(View):
-    def get(self, request, *args, **kwargs):
-        survey = Survey.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
-            survey.delete_item()
-        return HttpResponse()
+	def get(self, request, *args, **kwargs):
+		survey = Survey.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+			survey.delete_item()
+		return HttpResponse()
 
 class SurveyRecover(View):
-    def get(self, request, *args, **kwargs):
-        survey = Survey.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
-            survey.restore_item()
-        return HttpResponse()
+	def get(self, request, *args, **kwargs):
+		survey = Survey.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+			survey.restore_item()
+		return HttpResponse()
 
 
 class SurveyVote(View):
-    def get(self, request, **kwargs):
-        answer = Answer.objects.get(pk=self.kwargs["pk"])
-        if answer.list.is_user_can_see_el(request.user.pk):
+	def get(self, request, **kwargs):
+		answer = Answer.objects.get(pk=self.kwargs["pk"])
+		if answer.list.is_user_can_see_el(request.user.pk):
 			answer.vote(request.user, None)
-        return HttpResponse()
+		return HttpResponse()
 
 
 class SurveyDetail(TemplateView):
