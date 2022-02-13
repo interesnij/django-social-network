@@ -9,7 +9,9 @@
         <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
         <br>
         <h4 class="">{{ object.title }}</h4>
-        <p class="content-color-primary underline">{{ object.creator }}</p>
+        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
+          {{ object.creator }}
+        </a>
         {% if object.time_end %}
           <p class="content-color-primary">До {{ object.time_end }}</p>
         {% endif %}
