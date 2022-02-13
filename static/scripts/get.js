@@ -52,10 +52,6 @@ on('#ajax', 'click', '.load_next_list_comments', function() {
     ajax_link.send()
 });
 
-on('#ajax', 'click', '.u_add_survey', function() {
-  create_fullscreen('/survey/user_progs/add/', "worker_fullscreen");
-});
-
 on('#ajax', 'click', '.show_post_text', function() {
   shower = this.parentElement.querySelector(".show_post_text");
   shower.nextElementSibling.nextElementSibling.style.display = "unset";
@@ -483,7 +479,7 @@ on('#ajax', 'click', '#add_list_selected_lists_btn', function() {
   final_list = "Выбраны списки: ";
   for (var i = 0; i < users_list.length; i++){
     users_list[i].querySelector("span").remove();
-    users_list[i].querySelector(".list_pk").remove(); 
+    users_list[i].querySelector(".list_pk").remove();
     final_list += users_list[i].innerHTML;
     final_list += '<input type="hidden" name="lists" value="' + users_list[i].getAttribute("data-pk") + '" />'
   };
