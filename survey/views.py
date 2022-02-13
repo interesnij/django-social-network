@@ -147,7 +147,7 @@ class SurveyVote(View):
 	def get(self, request, **kwargs):
 		answer = Answer.objects.get(pk=self.kwargs["pk"])
 		if answer.list.is_user_can_see_el(request.user.pk):
-			answer.vote_it(request.user, None)
+			answer.vote_it(request.user)
 		return HttpResponse()
 
 

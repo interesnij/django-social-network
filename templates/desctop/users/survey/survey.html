@@ -1,3 +1,5 @@
+{% load user %}
+
 <div class="card" style="flex: 0 0 100%;">
   <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
       <figure class="background-img">
@@ -16,17 +18,35 @@
           <p class="content-color-primary">До {{ object.time_end }}</p>
         {% endif %}
         <br>
+
         {% for answer in object.get_answers %}
-        <div class="lite_color answer_style">
-          <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
-          <span class="progress_span_r">{{ answer.text }}</span>
-          <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
-        </div>
+
+          {% if object|is_user_voted:request.user.pk %}
+          <div class="lite_color answer_style survey_vote {{ object.is_multiple }}">
+            <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+            <span class="progress_span_r">{{ answer.text }}</span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+              {{ answer.get_count }}
+            </span>
+          </div>
+
+          {% else %}
+
+          <div class="lite_color answer_style">
+            <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+            <span class="progress_span_r">{{ answer.text }}</span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              {{ answer.get_count }}
+            </span>
+          </div>
+
+          {% endif %}
         {% endfor %}
         {% if object.is_have_votes %}
           {{ object.get_users }}
         {% else %}
-          Пока никто не голосовал. Станьте первым!
+          Пока никто не голосовал.
         {% endif %}
       </div>
   </div>

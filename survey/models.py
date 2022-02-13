@@ -655,8 +655,6 @@ class Survey(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Survey.DELETED
-        elif self.type == "MAN":
-            self.type = Survey.DELETED_MANAGER
         self.save(update_fields=['type'])
         self.list.count -= 1
         self.list.save(update_fields=["count"])
@@ -668,8 +666,6 @@ class Survey(models.Model):
         from notify.models import Notify, Wall
         if self.type == "TDEL":
             self.type = Survey.PUBLISHED
-        elif self.type == "TDELM":
-            self.type = Survey.MANAGER
         self.save(update_fields=['type'])
         self.list.count += 1
         self.list.save(update_fields=["count"])
@@ -682,8 +678,6 @@ class Survey(models.Model):
         from notify.models import Notify, Wall
         if self.type == "PUB":
             self.type = Survey.CLOSED
-        elif self.type == "MAN":
-            self.type = Survey.CLOSED_MANAGER
         self.save(update_fields=['type'])
         self.list.count -= 1
         self.list.save(update_fields=["count"])
@@ -695,8 +689,6 @@ class Survey(models.Model):
         from notify.models import Notify, Wall
         if self.type == "TCLO":
             self.type = Survey.PUBLISHED
-        elif self.type == "TCLOM":
-            self.type = Survey.MANAGER
         self.save(update_fields=['type'])
         self.list.count += 1
         self.list.save(update_fields=["count"])
@@ -748,7 +740,7 @@ class Answer(models.Model):
         self.vote -= count
         return self.save(update_fields=['vote'])
 
-    def vote_it(self, user, community):
+    def vote_it(self, user):
         import json
         from datetime import datetime
         from django.http import HttpResponse
@@ -766,15 +758,18 @@ class Answer(models.Model):
             if not survey.is_multiple and user.is_voted_of_survey(survey.pk):
                 user.get_vote_of_survey(survey.pk).delete()
             SurveyVote.objects.create(answer=answer, user=user.user)
-            if community:
+            if survey.community:
                 from common.notify.notify import community_notify, community_wall
+
+                community = survey.community
                 community_notify(user, community, None, survey.pk, "SUR", "c_survey_vote_notify", "SVO")
                 community_wall(user, community, None, survey.pk, "SUR", "c_survey_vote_wall", "SVO")
             else:
                 from common.notify.notify import user_notify, user_wall
+
                 user_notify(user, None, survey.pk, "SUR", "u_survey_vote_notify", "SVO")
                 user_wall(user, None, survey.pk, "SUR", "u_survey_vote_wall", "SVO")
-        return HttpResponse(json.dumps({"votes": survey.get_votes_count()}), content_type="application/json")
+        return HttpResponse(json.dumps({"votes": survey.get_votes_count(), "procent":self.get_procent()}), content_type="application/json")
 
 
 class SurveyVote(models.Model):
