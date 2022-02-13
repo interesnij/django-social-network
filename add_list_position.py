@@ -35,3 +35,8 @@ for community in Community.objects.all():
     if not SurveyList.objects.filter(community=community, type=SurveyList.MAIN).exists():
         list = SurveyList.objects.create(creator=community.creator, community=community, type=SurveyList.MAIN)
         CommunitySurveyListPosition.objects.create(list=list.pk, community=community.pk)
+
+for list in SurveyList.objects.all():
+    if not list.name:
+        list.name = "Основной список"
+        list.save(update_fields=["name"])
