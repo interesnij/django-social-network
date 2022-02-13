@@ -21,7 +21,7 @@
 
         {% for answer in object.get_answers %}
 
-          {% if object|is_user_voted:request.user.pk %}
+          {% if not object|is_user_voted:request.user.pk %}
           <div class="lite_color answer_style survey_vote {{ object.is_multiple }}">
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
