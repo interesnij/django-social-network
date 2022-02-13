@@ -203,6 +203,18 @@ def get_post_attach(post, user):
                     block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="', survey_detail,  '"pointer">', survey.title, '</h4><a class="underline ajax" href="', creator.get_link(), '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
                 except:
                     pass
+            elif item[:3] == "use":
+                try:
+                    from user.models import User
+                    user = User.objects.get(pk=item[3:]).exclude(type__contains="_")
+                    span_btn = ''
+
+                    image = '<img src="' + user.get_bb_avatar() + '" alt="img"'
+                    repost_svg, add_svg = '', ''
+
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="ajax" href="', user.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', user.get_link(), '" class="my-0 mt-1 ajax">', user.get_full_name(), '</a><p>', user.get_online_status(), '<br>Друзей: ', str(user.profile.friends), '</p></div></div></div></div>'])
+                except:
+                    pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 
