@@ -182,6 +182,43 @@ class UserDocs(ListView):
         return self.list.get_items()
 
 
+class UserSurveys(ListView):
+    template_name, paginate_by, is_user_can_see_survey_section, is_user_can_see_survey_list, is_user_can_create_surveys = None, 15, None, None, None
+
+    def get(self,request,*args,**kwargs):
+        from survey.models import SurveyList
+
+        self.user = User.objects.get(pk=self.kwargs["pk"])
+        self.list = SurveyList.objects.get(pk=self.user.get_selected_survey_list_pk())
+        if request.user.pk == self.user.pk:
+            self.get_lists = SurveyList.get_user_lists(self.user.pk)
+            self.is_user_can_see_survey_section = True
+            self.is_user_can_create_surveys = True
+            self.is_user_can_see_survey_list = True
+        elif request.user.is_authenticated:
+            self.is_user_can_see_survey_section = self.user.is_user_can_see_survey(request.user.pk)
+            self.is_user_can_see_survey_list = self.list.is_user_can_see_el(request.user.pk)
+            self.is_user_can_create_surveys = self.list.is_user_can_create_el(request.user.pk)
+            self.get_lists = SurveyList.get_user_lists(self.user.pk)
+        self.count_lists = SurveyList.get_user_lists_count(self.user.pk)
+        if request.user.is_anonymous:
+            self.template_name = get_template_anon_user_list(self.list, "users/surveys/main_list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.is_user_can_see_survey_section = self.user.is_anon_user_can_see_survey()
+            self.is_user_can_see_survey_list = self.list.is_anon_user_can_see_el()
+            self.get_lists = SurveyList.get_user_lists(self.user.pk)
+        else:
+            self.template_name = get_template_user_list(self.list, "users/surveys/main_list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(UserSurveys,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        c = super(UserSurveys,self).get_context_data(**kwargs)
+        c['user'], c['list'], c['count_lists'], c['get_lists'], c['is_user_can_see_survey_section'], c['is_user_can_see_survey_section'], c['is_user_can_create_surveys'] = self.user, self.list, self.count_lists, self.get_lists, self.is_user_can_see_survey_section, self.is_user_can_see_survey_list, self.is_user_can_create_surveys
+        return c
+
+    def get_queryset(self):
+        return self.list.get_items()
+
+
 class UserGoods(ListView):
     template_name, paginate_by, is_user_can_see_good_section, is_user_can_see_good_list, is_user_can_create_goods = None, 15, None, None, None
 

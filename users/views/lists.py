@@ -234,6 +234,48 @@ class UserDocsList(ListView):
 		return self.list.get_items()
 
 
+class UserSurveyList(ListView):
+	template_name, paginate_by, is_user_can_see_survey_section, is_user_can_see_survey_list, is_user_can_create_surveys = None, 15, None, None, None
+
+	def get(self,request,*args,**kwargs):
+		from survey.models import SurveyList
+
+		self.user, self.list = User.objects.get(pk=self.kwargs["pk"]), SurveyList.objects.get(uuid=self.kwargs["uuid"])
+
+		if self.user.pk == request.user.pk:
+			if request.user.pk == self.list.creator.pk:
+				self.is_user_can_see_survey_section = True
+				self.is_user_can_see_survey_list = True
+				self.is_user_can_create_surveys = True
+			else:
+				self.is_user_can_see_survey_section = True
+				self.is_user_can_see_survey_list = self.list.is_user_can_see_el(request.user.pk)
+				self.is_user_can_create_surveys = self.list.is_user_can_create_el(request.user.pk)
+		else:
+			self.is_user_can_see_survey_section = self.user.is_user_can_see_survey(request.user.pk)
+			self.is_user_can_see_survey_list = self.list.is_user_can_see_el(request.user.pk)
+			self.is_user_can_create_surveys = self.list.is_user_can_create_el(request.user.pk)
+		if request.user.is_anonymous:
+			self.template_name = get_template_anon_user_list(self.list, "users/surveys/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.is_user_can_see_survey_section = self.user.is_anon_user_can_see_survey()
+			self.is_user_can_see_survey_list = self.list.is_anon_user_can_see_el()
+		else:
+			self.template_name = get_template_user_list(self.list, "users/surveys/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(UserSurveyList,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(UserSurveyList,self).get_context_data(**kwargs)
+		context['user'] = self.user
+		context['list'] = self.list
+		context['is_user_can_see_survey_section'] = self.is_user_can_see_survey_section
+		context['is_user_can_see_survey_list'] = self.is_user_can_see_survey_list
+		context['is_user_can_create_surveys'] = self.is_user_can_create_surveys
+		return context
+
+	def get_queryset(self):
+		return self.list.get_items()
+
+
 class AllFeaturedUsersList(ListView):
 	template_name, paginate_by = None, 15
 
