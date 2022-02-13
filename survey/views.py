@@ -62,6 +62,7 @@ class AddSurveyInList(TemplateView):
 		from survey.forms import SurveyForm
 		context = super(AddSurveyInList,self).get_context_data(**kwargs)
 		context["form"] = SurveyForm()
+		context["list"] = self.list
 		return context
 
 	def post(self,request,*args,**kwargs):
