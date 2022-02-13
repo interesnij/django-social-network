@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^u_music_list_load/(?P<uuid>[0-9a-f-]+)/$', UserLoadMusicList.as_view(), name="u_music_list_load"),
 
     url(r'^u_article_load/$', UserLoadArticle.as_view()),
+
     url(r'^u_survey_load/$', UserLoadSurvey.as_view(), name="u_survey_load"),
     url(r'^u_survey_list_load/(?P<uuid>[0-9a-f-]+)/$', UserLoadSurveyList.as_view(), name="u_survey_list_load"),
 
