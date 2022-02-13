@@ -211,7 +211,7 @@ def get_post_attach(post, user):
                     pass
                 span_btn = ''
 
-                image = '<img src="' + user.get_bb_avatar() + '" alt="img" >'
+                image = '<img src="' + user.get_bb_avatar() + '" alt="img" style="width: 80px;">'
                 repost_svg, add_svg = '', ''
 
                 block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', user.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', user.get_link(), '" class="my-0 mt-1 ajax">', user.get_full_name(), '</a><p>', user.get_online_status(), '<br>Друзей: ', str(user.profile.friends), '</p></div></div></div></div>'])
@@ -225,7 +225,7 @@ def get_post_attach(post, user):
                     pass
                 span_btn = ''
 
-                image = '<img src="' + community.get_bb_avatar() + '" alt="img" >'
+                image = '<img src="' + community.get_bb_avatar() + '" alt="img" style="width: 120px;">'
                 repost_svg, add_svg = '', ''
                 if community.description:
                     description = community.description
