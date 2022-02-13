@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^edit/(?P<pk>\d+)/$', SurveyEdit.as_view()),
     url(r'^delete/(?P<pk>\d+)/$', SurveyDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', SurveyRecover.as_view()),
-    url(r'^vote/(?P<survey>\d+)/$', UserSurveyVote.as_view()),
+    url(r'^vote/(?P<survey>\d+)/$', SurveyVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/$', SurveyDetail.as_view()),
 ]
