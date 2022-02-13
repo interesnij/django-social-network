@@ -9,7 +9,7 @@
         <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
         <br>
         <h4 class="">{{ object.title }}</h4>
-        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
+        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax mb-2">
           {{ object.creator }}
         </a>
         {% if object.time_end %}
