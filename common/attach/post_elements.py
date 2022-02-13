@@ -228,7 +228,7 @@ def get_post_attach(post, user):
                 image = '<img src="' + community.get_bb_avatar() + '" alt="img" >'
                 repost_svg, add_svg = '', ''
 
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', commuity.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', commuity.get_link(), '" class="my-0 mt-1 ajax">', commuity.name, '</a><p>', commuity.description, '<br>Подписчиков: ', str(commuity.community_info.members), '</p></div></div></div></div>'])
+                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', commuity.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', commuity.get_link(), '" class="my-0 mt-1 ajax">', community.name, '</a><p>', community.description, '<br>Подписчиков: ', str(commuity.community_info.members), '</p></div></div></div></div>'])
                 #except:
                 #    pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
