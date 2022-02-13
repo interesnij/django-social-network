@@ -2,7 +2,7 @@ def get_post_attach(post, user):
     block, video_counter, music_counter = '', 0, 0
     for item in post.attach.split(","):
         if item[0] == "l":
-            elif item[:3] == "lmu":
+            if item[:3] == "lmu":
                 try:
                     from music.models import MusicList
                     playlist = MusicList.objects.get(pk=item[3:])
@@ -21,18 +21,18 @@ def get_post_attach(post, user):
                 except:
                     pass
             elif item[:3] == "lpo":
-                #try:
-                from posts.models import PostsList
-                list = PostsList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
+                try:
+                    from posts.models import PostsList
+                    list = PostsList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                    if list.community:
+                        creator, name, img_src = list.community, ": " + list.community.name, list.community.get_bb_avatar()
+                    else:
+                        creator, name, img_src = list.creator, list.creator.get_full_name_genitive(), list.creator.get_bb_avatar()
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" postlist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_posts_list pointer"><img src="' + img_src + '" style="width:120px;height:120px;" alt="image"></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_posts_list pointer">', list.name, '</h6><p>Список записей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Записей: ', str(list.count_items()), '</p></div></div></div></div>'])
+                except:
                     pass
-                if list.community:
-                    creator, name, img_src = list.community, ": " + list.community.name, list.community.get_bb_avatar()
-                else:
-                    creator, name, img_src = list.creator, list.creator.get_full_name_genitive(), list.creator.get_bb_avatar()
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" postlist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_posts_list pointer"><img src="' + img_src + '" style="width:120px;height:120px;" alt="image"></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_posts_list pointer">', list.name, '</h6><p>Список записей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Записей: ', str(list.count_items()), '</p></div></div></div></div>'])
-                #except:
-                #    pass
             elif item[:3] == "ldo":
                 try:
                     from docs.models import DocsList
