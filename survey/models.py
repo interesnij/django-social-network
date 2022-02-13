@@ -575,12 +575,6 @@ class Survey(models.Model):
     def minus_votes(self, count):
         self.vote -= count
         return self.save(update_fields=['vote'])
-    def plus_voters(self, count):
-        self.voter += count
-        return self.save(update_fields=['voter'])
-    def minus_voters(self, count):
-        self.voter -= count
-        return self.save(update_fields=['voter'])
 
     @classmethod
     def create_survey(cls, title, list, image, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
@@ -754,7 +748,7 @@ class Answer(models.Model):
         self.vote -= count
         return self.save(update_fields=['vote'])
 
-    def vote(self, user, community):
+    def vote_it(self, user, community):
         import json
         from datetime import datetime
         from django.http import HttpResponse
