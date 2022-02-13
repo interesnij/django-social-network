@@ -1,5 +1,5 @@
-from django.conf.urls import url, include
-from survey.views import SurveyView, LoadSurveyList
+from django.conf.urls import url
+from survey.views import *
 
 
 urlpatterns = [
