@@ -21,8 +21,8 @@
 
         {% for answer in object.get_answers %}
 
-          {% if not object|is_user_voted:request.user.pk %}
-          <div class="lite_color answer_style survey_vote {{ object.is_multiple }}">
+          {% if object|is_user_voted:request.user.pk %}
+          <div class="lite_color answer_style">
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
             <span class="progress_span_l" style="margin-left: auto;">
@@ -33,7 +33,7 @@
 
           {% else %}
 
-          <div class="lite_color answer_style">
+          <div class="lite_color answer_style survey_vote {{ object.is_multiple }}">
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
             <span class="progress_span_l" style="margin-left: auto;">
