@@ -638,7 +638,7 @@ class Survey(models.Model):
             return False
 
     def get_answers(self):
-        return self.survey.only("text")
+        return Survey.objects.filter(survey_id=self.pk)
 
     def get_all_count(self):
         if self.vote > 0:
