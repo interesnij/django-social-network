@@ -54,7 +54,7 @@ class AddSurveyInList(TemplateView):
 	template_name = None
 
 	def get(self,request,*args,**kwargs):
-		self.template_name = get_detect_platform_template("survey/add.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("survey/add.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
 		return super(AddSurveyInList,self).get(request,*args,**kwargs)
 
@@ -96,7 +96,7 @@ class SurveyEdit(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
-		self.template_name = get_detect_platform_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.template_name = get_settings_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(SurveyUserEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
@@ -156,7 +156,7 @@ class SurveyDetail(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
 		if self.survey.is_user_can_see_el(request.user.pk):
-			self.template_name = get_detect_platform_template("survey/survey.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_settings_template("survey/survey.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			raise Http404
 		return super(SurveyDetail,self).get(request,*args,**kwargs)
