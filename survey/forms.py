@@ -11,7 +11,7 @@ class SurveyForm(forms.ModelForm):
 			"is_anonymous",
 			"is_multiple",
 			"is_no_edited",
-			"is_no_edited",
+			"time_end",
 		]
 
 class SurveyListForm(forms.ModelForm):
