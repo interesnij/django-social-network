@@ -583,7 +583,7 @@ class Survey(models.Model):
         return self.save(update_fields=['voter'])
 
     @classmethod
-    def create_survey(cls, title, image, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
+    def create_survey(cls, title, list, image, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
         list.count += 1
         list.save(update_fields=["count"])
         survey = cls.objects.create(title=title,order=list.count,list=list,image=image,creator=creator,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)

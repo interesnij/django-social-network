@@ -80,6 +80,7 @@ class AddSurveyInList(TemplateView):
 					title=survey.title,
 					image=survey.image,
 					creator=request.user,
+					list=list,
 					is_anonymous=survey.is_anonymous,
 					is_multiple=survey.is_multiple,
 					is_no_edited=survey.is_no_edited,
