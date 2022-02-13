@@ -11,7 +11,7 @@ class SurveyAdmin(admin.ModelAdmin):
     list_display = ['title', 'is_anonymous', 'is_multiple', 'is_no_edited', 'time_end']
     inlines = [
         AnswerInline,
-        VoteInline,
+        #VoteInline,
     ]
     search_fields = ('title',)
 
