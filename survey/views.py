@@ -1,5 +1,8 @@
-from django.views.generic import ListView
 from survey.models import SurveyList, Survey
+from django.views import View
+from django.views.generic import ListView
+from django.views.generic.base import TemplateView
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from common.templates import (
 								get_template_community_item,
 								get_template_anon_community_item,
@@ -9,15 +12,14 @@ from common.templates import (
 								get_template_anon_community_list,
 								get_template_user_list,
 								get_template_anon_user_list,
+								get_settings_template
 							)
-
 
 class SurveyView(ListView):
 	template_name = "survey.html"
 
 	def get_queryset(self):
 		return Survey.objects.only("pk")
-
 
 
 class LoadSurveyList(ListView):
@@ -46,3 +48,119 @@ class LoadSurveyList(ListView):
 
 	def get_queryset(self):
 		return self.list.get_items()
+
+
+class AddSurveyInList(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.template_name = get_detect_platform_template("survey/add.html", request.user, request.META['HTTP_USER_AGENT'])
+		self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
+		return super(AddSurveyInList,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from survey.forms import SurveyForm
+        context = super(AddSurveyInList,self).get_context_data(**kwargs)
+        context["form"] = SurveyForm()
+        return context
+
+    def post(self,request,*args,**kwargs):
+        from survey.forms import SurveyForm
+
+        list = SurveyList.objects.get(pk=self.kwargs["pk"])
+        self.form = SurveyForm(request.POST,request.FILES)
+        if request.is_ajax() and self.form.is_valid() and list.is_user_can_create_el(request.user.pk):
+            survey = self.form.save(commit=False)
+            answers = request.POST.getlist("answers")
+            if not answers:
+                HttpResponse("not ansvers")
+            new_survey = survey.create_survey(
+                                            title=survey.title,
+                                            image=survey.image,
+                                            creator=request.user,
+                                            order=survey.order,
+                                            is_anonymous=survey.is_anonymous,
+                                            is_multiple=survey.is_multiple,
+                                            is_no_edited=survey.is_no_edited,
+                                            time_end=survey.time_end,
+                                            answers=answers,
+                                            community=list.community,
+                                            )
+            return render_for_platform(request, 'users/survey/survey.html',{'object': new_survey})
+        else:
+            return HttpResponseBadRequest("")
+
+
+class SurveyEdit(TemplateView):
+    template_name = None
+
+    def get(self,request,*args,**kwargs):
+        self.survey = Survey.objects.get(pk=self.kwargs["pk"])
+        self.template_name = get_detect_platform_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
+        return super(SurveyUserEdit,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        from survey.forms import SurveyForm
+        context = super(SurveyEdit,self).get_context_data(**kwargs)
+        context["survey"] = self.survey
+        context["form_post"] = SurveyForm(instance=self.survey)
+        return context
+
+    def post(self,request,*args,**kwargs):
+        from survey.forms import SurveyForm
+		survey = Survey.objects.get(pk=self.kwargs["pk"])
+        form = SurveyForm(request.POST,request.FILES,instance=survey)
+        if request.is_ajax() and form.is_valid() and survey.list.is_user_can_create_el(request.user.pk):
+            survey = form.save(commit=False)
+            new_survey = survey.edit_survey(
+                                            title=survey.title,
+                                            image=survey.image,
+                                            order=survey.order,
+                                            is_anonymous=survey.is_anonymous,
+                                            is_multiple=survey.is_multiple,
+                                            is_no_edited=survey.is_no_edited,
+                                            time_end=survey.time_end,
+                                            answers=answers,
+                                            )
+        else:
+            return HttpResponseBadRequest()
+
+
+class SurveyDelete(View):
+    def get(self, request, *args, **kwargs):
+        survey = Survey.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+            survey.delete_item()
+        return HttpResponse()
+
+class SurveyRecover(View):
+    def get(self, request, *args, **kwargs):
+        survey = Survey.objects.get(pk=self.kwargs["pk"])
+        if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+            survey.restore_item()
+        return HttpResponse()
+
+
+class SurveyVote(View):
+    def get(self, request, **kwargs):
+        answer = Answer.objects.get(pk=self.kwargs["pk"])
+        if answer.list.is_user_can_see_el(request.user.pk):
+			answer.vote(request.user, None)
+        return HttpResponse()
+
+
+class SurveyDetail(TemplateView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
+		if self.survey.is_user_can_see_el(request.user.pk):
+			self.template_name = get_detect_platform_template("survey/survey.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(SurveyDetail,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+        context = super(SurveyDetail,self).get_context_data(**kwargs)
+        context["object"] = self.survey
+        return context

@@ -6,6 +6,10 @@ urlpatterns = [
     url(r'^$', SurveyView.as_view()),
     url(r'^load_list/(?P<pk>\d+)/$', LoadSurveyList.as_view(), name="load_survey_list"),
 
-    url(r'^user_progs/', include('survey.url.user_progs')),
-	#url(r'^community_progs/', include('survey.url.community_progs')),
+    url(r'^add_survey_in_list/(?P<pk>\d+)/$', AddSurveyInList.as_view()),
+    url(r'^edit/(?P<pk>\d+)/$', SurveyEdit.as_view()),
+    url(r'^delete/(?P<pk>\d+)/$', SurveyDelete.as_view()),
+    url(r'^restore/(?P<pk>\d+)/$', SurveyRecover.as_view()),
+    url(r'^vote/(?P<survey>\d+)/$', UserSurveyVote.as_view()),
+    url(r'^detail/(?P<pk>\d+)/$', SurveyDetail.as_view()),
 ]

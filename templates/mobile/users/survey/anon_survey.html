@@ -1,8 +1,31 @@
-<li class="list-group-item" style="padding:5px">
-    <div class="media" style="align-items: unset;position: relative;">
-        <div class="media-body doc_media_body">
-            <h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="{{ object.file.url }}" target="_blank" rel="nofollow">{{ object.title }}</a></h6>
-            <span class="small">{{ object.file.size|filesizeformat }} | {{ object.get_mime_type }}</span>
+<div class="card" style="flex: 0 0 100%;">
+  <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
+      <figure class="background-img">
+        {% if object.image %}
+          <img src="{{ object.image.url }}" alt="user image">
+        {% endif %}
+      </figure>
+      <div class="container" style="list-style-type:none">
+        <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+        <br>
+        <h4 class="">{{ object.title }}</h4>
+        <p class="content-color-primary underline">{{ object.creator }}</p>
+        {% if object.time_end %}
+          <p class="content-color-primary">До {{ object.time_end }}</p>
+        {% endif %}
+        <br>
+        {% for answer in object.get_answers %}
+        <div class="lite_color answer_style">
+          <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+          <span class="progress_span_r">{{ answer.text }}</span>
+          <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
         </div>
-    </div>
-</li>
+        {% endfor %}
+        {% if object.is_have_votes %}
+          {{ object.get_users }}
+        {% else %}
+          Пока никто не голосовал.
+        {% endif %}
+      </div>
+  </div>
+</div>

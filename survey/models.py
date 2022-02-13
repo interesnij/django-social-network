@@ -583,16 +583,12 @@ class Survey(models.Model):
         return self.save(update_fields=['voter'])
 
     @classmethod
-    def create_survey(cls, title, image, list, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
-        from common.processing.survey import get_survey_processing
-
-        _list = SurveyList.objects.get(pk=list)
-        _list.count += 1
-        _list.save(update_fields=["count"])
-        survey = cls.objects.create(title=title,order=_list.count,list=_list,image=image,creator=creator,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
+    def create_survey(cls, title, image, creator, is_anonymous, is_multiple, is_no_edited, time_end, answers, community):
+        list.count += 1
+        list.save(update_fields=["count"])
+        survey = cls.objects.create(title=title,order=list.count,list=list,image=image,creator=creator,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
         for answer in answers:
             Answer.objects.create(survey=survey, text=answer)
-        get_survey_processing(survey, Survey.PUBLISHED)
         if community:
             from common.notify.progs import community_send_notify, community_send_wall
             from notify.models import Notify, Wall
@@ -613,18 +609,11 @@ class Survey(models.Model):
                 user_send_notify(survey.pk, creator.pk, user_id, None, "create_u_survey_notify")
         return survey
 
-    def edit_survey(self, title, image, list, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
-        from common.processing.survey  import get_survey_processing
+    def edit_survey(self, title, image, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
+        from common.processing.survey import get_survey_processing
 
-        get_survey_processing(self, Survey.PUBLISHED)
         self.title = title
         self.image = image
-        if self.list.pk != list.pk:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
-            list.count += 1
-            list.save(update_fields=["count"])
-        self.list = list
         self.order = order
         self.is_anonymous = is_anonymous
         self.is_multiple = is_multiple
