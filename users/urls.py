@@ -31,6 +31,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/photos/$', UserGallery.as_view(), name='user_gallery'),
     url(r'^(?P<pk>\d+)/photo_list/(?P<uuid>[0-9a-f-]+)/$', UserPhotoList.as_view(), name='user_photo_list'),
 
-    url(r'^(?P<pk>\d+)/surveys/$', UserSurveys.as_view(), name='user_survey'),
+    url(r'^(?P<pk>\d+)/survey/$', UserSurveys.as_view(), name='user_survey'),
     url(r'^(?P<pk>\d+)/survey_list/(?P<uuid>[0-9a-f-]+)/$', UserSurveyList.as_view(), name='user_survey_list'),
 ]

@@ -256,11 +256,11 @@ class UserSurveyList(ListView):
 			self.is_user_can_see_survey_list = self.list.is_user_can_see_el(request.user.pk)
 			self.is_user_can_create_surveys = self.list.is_user_can_create_el(request.user.pk)
 		if request.user.is_anonymous:
-			self.template_name = get_template_anon_user_list(self.list, "users/surveys/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_anon_user_list(self.list, "users/survey/list/anon_list.html", request.user, request.META['HTTP_USER_AGENT'])
 			self.is_user_can_see_survey_section = self.user.is_anon_user_can_see_survey()
 			self.is_user_can_see_survey_list = self.list.is_anon_user_can_see_el()
 		else:
-			self.template_name = get_template_user_list(self.list, "users/surveys/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_template_user_list(self.list, "users/survey/list/", "list.html", request.user, request.META['HTTP_USER_AGENT'])
 		return super(UserSurveyList,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
