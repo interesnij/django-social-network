@@ -168,6 +168,7 @@ def create_user_models(user):
     from music.models import MusicList
     from posts.models import PostsList
     from video.models import VideoList
+    from survey.models import SurveyList
     from users.model.list import (
                                     UserPhotoListPosition,
                                     UserGoodListPosition,
@@ -175,6 +176,7 @@ def create_user_models(user):
                                     UserPostsListPosition,
                                     UserDocsListPosition,
                                     UserVideoListPosition,
+                                    UserSurveyListPosition,
                                     ListUC,
                                 )
     doc_list = DocsList.objects.create(creator=user, type=DocsList.MAIN, name="Основной список")
@@ -199,6 +201,9 @@ def create_user_models(user):
     video_list = VideoList.objects.create(creator=user, type=VideoList.MAIN, name="Основной список")
     UserVideoListPosition.objects.create(user=user.pk, list=video_list.pk, position=1)
 
+    survey_list = SurveyList.objects.create(creator=user, type=SurveyList.MAIN, name="Основной список")
+    UserSurveyListPosition.objects.create(user=user.pk, list=survey_list.pk, position=1)
+
     ListUC.objects.create(type=1, owner=user.pk, name="Основной список")
 
 
@@ -209,6 +214,7 @@ def create_community_models(community):
     from music.models import MusicList
     from posts.models import PostsList
     from video.models import VideoList
+    from survey.models import SurveyList
     from communities.model.list import (
                                     CommunityPhotoListPosition,
                                     CommunityGoodListPosition,
@@ -216,6 +222,7 @@ def create_community_models(community):
                                     CommunityPostsListPosition,
                                     CommunityDocsListPosition,
                                     CommunityVideoListPosition,
+                                    UserSurveyListPosition,
                                 )
     doc_list = DocsList.objects.create(creator=community.creator, community=community, type=DocsList.MAIN, name="Основной список")
     CommunityDocsListPosition.objects.create(community=community.pk, list=doc_list.pk, position=1)
@@ -235,6 +242,9 @@ def create_community_models(community):
 
     music_list = MusicList.objects.create(creator=community.creator, community=community, type=MusicList.MAIN, name="Основной список")
     CommunityPlayListPosition.objects.create(community=community.pk, list=music_list.pk, position=1)
+
+    survey_list = SurveyList.objects.create(creator=community.creator, community=community, type=SurveyList.MAIN, name="Основной список")
+    CommunitySurveyListPosition.objects.create(community=community.pk, list=survey_list.pk, position=1)
 
     video_list = VideoList.objects.create(creator=community.creator, community=community, type=VideoList.MAIN, name="Основной список")
     CommunityVideoListPosition.objects.create(community=community.pk, list=video_list.pk, position=1)

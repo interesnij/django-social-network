@@ -520,7 +520,6 @@ class Survey(models.Model):
     community = models.ForeignKey('communities.Community', related_name='survey_community', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Сообщество")
 
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
-    voter = models.PositiveIntegerField(default=0, verbose_name="Кол-во людей")
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
 
