@@ -51,44 +51,44 @@ class LoadSurveyList(ListView):
 
 
 class AddSurveyInList(TemplateView):
-    template_name = None
+	template_name = None
 
-    def get(self,request,*args,**kwargs):
-        self.template_name = get_detect_platform_template("survey/add.html", request.user, request.META['HTTP_USER_AGENT'])
+	def get(self,request,*args,**kwargs):
+		self.template_name = get_detect_platform_template("survey/add.html", request.user, request.META['HTTP_USER_AGENT'])
 		self.list = SurveyList.objects.get(pk=self.kwargs["pk"])
 		return super(AddSurveyInList,self).get(request,*args,**kwargs)
 
-    def get_context_data(self,**kwargs):
-        from survey.forms import SurveyForm
-        context = super(AddSurveyInList,self).get_context_data(**kwargs)
-        context["form"] = SurveyForm()
-        return context
+	def get_context_data(self,**kwargs):
+		from survey.forms import SurveyForm
+		context = super(AddSurveyInList,self).get_context_data(**kwargs)
+		context["form"] = SurveyForm()
+		return context
 
-    def post(self,request,*args,**kwargs):
-        from survey.forms import SurveyForm
+	def post(self,request,*args,**kwargs):
+		from survey.forms import SurveyForm
 
-        list = SurveyList.objects.get(pk=self.kwargs["pk"])
-        self.form = SurveyForm(request.POST,request.FILES)
-        if request.is_ajax() and self.form.is_valid() and list.is_user_can_create_el(request.user.pk):
-            survey = self.form.save(commit=False)
-            answers = request.POST.getlist("answers")
-            if not answers:
-                HttpResponse("not ansvers")
-            new_survey = survey.create_survey(
-                                            title=survey.title,
-                                            image=survey.image,
-                                            creator=request.user,
-                                            order=survey.order,
-                                            is_anonymous=survey.is_anonymous,
-                                            is_multiple=survey.is_multiple,
-                                            is_no_edited=survey.is_no_edited,
-                                            time_end=survey.time_end,
-                                            answers=answers,
-                                            community=list.community,
-                                            )
-            return render_for_platform(request, 'users/survey/survey.html',{'object': new_survey})
-        else:
-            return HttpResponseBadRequest("")
+		list = SurveyList.objects.get(pk=self.kwargs["pk"])
+		self.form = SurveyForm(request.POST,request.FILES)
+		if request.is_ajax() and self.form.is_valid() and list.is_user_can_create_el(request.user.pk):
+			survey = self.form.save(commit=False)
+			answers = request.POST.getlist("answers")
+			if not answers:
+				HttpResponse("not ansvers")
+				new_survey = survey.create_survey(
+					title=survey.title,
+					image=survey.image,
+					creator=request.user,
+					order=survey.order,
+					is_anonymous=survey.is_anonymous,
+					is_multiple=survey.is_multiple,
+					is_no_edited=survey.is_no_edited,
+					time_end=survey.time_end,
+					answers=answers,
+					community=list.community,
+				)
+			return render_for_platform(request, 'users/survey/survey.html',{'object': new_survey})
+		else:
+			return HttpResponseBadRequest()
 
 
 class SurveyEdit(TemplateView):
