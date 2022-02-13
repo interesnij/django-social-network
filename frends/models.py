@@ -69,6 +69,7 @@ class ConnectPerm(models.Model):
 
     can_see_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит документы и списки")
     can_see_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит музыку и списки")
+    can_see_survey = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит опросы и списки")
 
     can_see_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит записи и списки")
     can_see_post_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто видит комменты к записям")
@@ -93,23 +94,24 @@ class ConnectPerm(models.Model):
     can_copy_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует документы и списки")
     can_copy_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто копирует музыку и списки")
 
-    can_create_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает записи и списки, работает с ними")
+    can_create_post = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает записи, работает с ними")
     can_create_post_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к записям")
 
     can_create_photo = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает фото и списки, работает с ними")
     can_create_photo_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к фото")
 
-    can_create_good = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает товары и списки, работает с ними")
+    can_create_good = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает товары, работает с ними")
     can_create_good_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к товарам")
 
-    can_create_video = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает видео и списки, работает с ними")
+    can_create_video = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает видео, работает с ними")
     can_create_video_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к видео")
 
-    can_create_planner = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает рабочие пространства и доски, работает с ними")
+    can_create_planner = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает доски, работает с ними")
     can_create_planner_comment = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает комменты к задачам")
 
-    can_create_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает документы и списки, работает с ними")
-    can_create_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает музыку и списки, работает с ними")
+    can_create_doc = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает документы, работает с ними")
+    can_create_music = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает музыку, работает с ними")
+    can_create_survey = models.PositiveSmallIntegerField(choices=ITEM, default=0, verbose_name="Кто создает опросы, работает с ними")
 
     class Meta:
         verbose_name = 'Исключения/Включения target_user'

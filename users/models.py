@@ -1526,6 +1526,21 @@ class User(AbstractUser):
         elif private.can_see_good == 18:
             return user_pk in self.get_can_see_good_include_users_ids()
         return False
+    def is_user_can_see_survey(self, user_pk):
+        private = self.profile_private
+        if private.can_see_survey == 1:
+            return True
+        elif private.can_see_survey == 6 and self.pk == user_pk:
+            return True
+        elif private.can_see_survey == private.FRIENDS and user_pk in self.get_all_friends_ids():
+            return True
+        elif private.can_see_survey == private.EACH_OTHER and user_pk in self.get_friend_and_friend_of_friend_ids():
+            return True
+        elif private.can_see_survey == 17:
+            return not user_pk in self.get_can_see_survey_exclude_users_ids()
+        elif private.can_see_survey == 18:
+            return user_pk in self.get_can_see_survey_include_users_ids()
+        return False
     def is_user_can_send_message(self, user_pk):
         private = self.profile_private
         if private.can_send_message == 1:

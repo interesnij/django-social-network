@@ -138,6 +138,7 @@ class CommunityPrivate2(models.Model):
     can_see_settings = models.PositiveSmallIntegerField(choices=PERM, default=3, verbose_name="Кто видит настройки")
     can_see_log = models.PositiveSmallIntegerField(choices=PERM, default=3, verbose_name="Кто видит логи")
     can_see_stat = models.PositiveSmallIntegerField(choices=PERM, default=3, verbose_name="Кто видит статистику")
+    can_see_survey = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит опросы")
 
     @receiver(post_save, sender=Community)
     def create_model(sender, instance, created, **kwargs):
