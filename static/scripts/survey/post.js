@@ -136,7 +136,15 @@ on('#ajax', 'click', '.survey_unvote', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
-    console.log(elem);
+    list = elem.split(";");
+    for (var i = 0; i < list.length; i++) {
+      values = list[i].split(",");
+      console.log("pk ", values[0])
+      console.log("votes ", values[1])
+      console.log("% ", values[2]);
+      console.log("===========");
+    }
+
     toast_info("Ваш голос удален!")
   };
 
