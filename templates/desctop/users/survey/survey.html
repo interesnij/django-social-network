@@ -7,6 +7,8 @@
           <img src="{{ object.image.url }}" alt="user image">
         {% endif %}
       </figure>
+      <form>
+        {% csrf_token %}
       <div class="container">
         <br>
         <h4>{{ object.title }}</h4>
@@ -65,5 +67,6 @@
           <button class="btn hidden btn-sm float-left border votes_remove">Отмена</button>
           <button id="add_vote_survey_btn" data-pk="{{ object.pk }}" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button>
       </div>
+      </form>
   </div>
 </div>
