@@ -46,26 +46,37 @@ on('#ajax', 'click', '#add_survey_btn', function() {
 });
 
 on('#ajax', 'click', '.survey_vote', function() {
-  _this = this;
+  _this = this; is_have_vote = false;
   parent = _this.parentElement;
+  answers = parent.querySelectorAll(".lite_color");
   if (_this.classList.contains("False")) {
-    answers = parent.querySelectorAll(".lite_color");
     for (var i = 0; i < answers.length; i++) {
       answers[i].querySelector(".vote_svg").innerHTML = "";
      };
-
+     is_have_vote = true
   } else {
     null
   };
-  _this.querySelector(".vote_svg").innerHTML = '<input type="hidden" name="votes" value="' + _this.getAttribute("data-pk") + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
-  footer = parent.parentElement.nextElementSibling
-  footer.querySelector(".votes_remove").classList.remove("hidden");
-  footer.querySelector(".float-right").classList.remove("hidden");
+  if (_this.querySelector(".vote_svg").innerHTML) {
+    _this.querySelector(".vote_svg").innerHTML = ''
+    for (var i = 0; i < answers.length; i++) {
+      if (answers[i].querySelector(".vote_svg").innerHTML) {
+        is_have_vote = true
+      }
+     };
+  } else {
+    _this.querySelector(".vote_svg").innerHTML = '<input type="hidden" name="votes" value="' + _this.getAttribute("data-pk") + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+  };
+  if (is_have_vote) {
+    footer = parent.nextElementSibling
+    footer.querySelector(".votes_remove").classList.remove("hidden");
+    footer.querySelector(".float-right").classList.remove("hidden")
+  }
 });
 
 on('#ajax', 'click', '.votes_remove', function() {
   _this = this;
-  block = _this.parentElement.previousElementSibling;
+  block = _this.previousElementSibling;
   answers = block.querySelectorAll(".lite_color");
   for (var i = 0; i < answers.length; i++) {
     answers[i].querySelector(".vote_svg").innerHTML = "";
