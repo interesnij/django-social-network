@@ -148,7 +148,14 @@ class SurveyVote(View):
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
 		answers = request.POST.getlist("votes")
 		if survey.list.is_user_can_see_el(request.user.pk):
-			survey.votes_create(request.user, answers)
+			return survey.votes_create(request.user, answers)
+		return HttpResponse()
+
+class SurveyUnVote(View):
+	def post(self, request, **kwargs):
+		survey = Survey.objects.get(pk=self.kwargs["pk"])
+		if survey.list.is_user_can_see_el(request.user.pk):
+			return survey.votes_delete(request.user)
 		return HttpResponse()
 
 

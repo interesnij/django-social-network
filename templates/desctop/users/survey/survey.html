@@ -17,8 +17,11 @@
                   <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
               </svg>
           </a>
-          <div class="dropdown-menu dropdown-menu-right" data-type="sur{{ object.pk }}" style="top:6px;right:-10px;"> 
+          <div class="dropdown-menu dropdown-menu-right" data-pk="{{ object.pk }}" data-type="sur{{ object.pk }}" style="top:6px;right:-10px;">
             <span class="dropdown-item create_repost">Добавить</span>
+            {% if not object.is_no_edited and object|is_user_voted:request.user.pk %}
+              <span class="dropdown-item survey_unvote">Удалить голос</span>
+            {% endif %}
             {% if object|is_user_can_edit_delete:request.user %}
               <span class="dropdown-item survey_edit">Изменить</span>
               <span class="dropdown-item survey_remove">Удалить</span>

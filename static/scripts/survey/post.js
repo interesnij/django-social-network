@@ -121,3 +121,19 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
   };
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '#add_vote_survey_btn', function() {
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/survey/unvote/" + this.parentElement.getAttribute("data-pk") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    elem = link_.responseText;
+    console.log(elem);
+    toast_info("Ваш голос удален!")
+  };
+
+  };
+  link_.send();
+});

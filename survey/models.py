@@ -733,6 +733,8 @@ class Survey(models.Model):
 
         return HttpResponse(data)
     def votes_delete(self, user):
+        from django.http import HttpResponse
+
         if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
             pass
         data = []
@@ -743,7 +745,9 @@ class Survey(models.Model):
                 answer.save(update_fields=["vote"])
             except:
                 pass
-            data.append(answer.pk, ",", answer.get_votes_count() , ",", answer.get_procent())
+            data.append(answer.pk + "," + answer.get_votes_count() + "," + answer.get_procent())
+        self.vote -= 1
+        self.save(update_fields=["vote"])
         return HttpResponse(data)
 
 

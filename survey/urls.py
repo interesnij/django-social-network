@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', SurveyDelete.as_view()),
     url(r'^restore/(?P<pk>\d+)/$', SurveyRecover.as_view()),
     url(r'^vote/(?P<pk>\d+)/$', SurveyVote.as_view()),
+    url(r'^unvote/(?P<pk>\d+)/$', SurveyUnVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/$', SurveyDetail.as_view()),
 ]
