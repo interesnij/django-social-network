@@ -10,9 +10,11 @@
       <div class="container">
         <br>
         <h4>{{ object.title }}</h4>
-        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
-          {{ object.creator }}
-        </a>
+        <p>
+          <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
+            {{ object.creator }}
+          </a>
+        </p>
         {% if object.time_end %}
           <p class="content-color-primary">До {{ object.time_end }}</p>
         {% endif %}

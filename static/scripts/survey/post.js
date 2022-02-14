@@ -55,10 +55,8 @@ on('#ajax', 'click', '.survey_vote', function() {
 
      if (_this.querySelector(".vote_svg").innerHTML) {
        _this.querySelector(".vote_svg").innerHTML = '';
-       console.log("This vote remove");
        if (parent.querySelector("input")) {
          is_have_vote = true;
-         console.log("Survey have vote!")
        } else { is_have_vote = false; }
      } else {
        for (var i = 0; i < answers.length; i++) {
@@ -75,7 +73,6 @@ on('#ajax', 'click', '.survey_vote', function() {
       _this.querySelector(".vote_svg").innerHTML = '';
       if (parent.querySelector("input")) {
         is_have_vote = true;
-        console.log("Survey have vote!")
       } else { is_have_vote = false; }
     } else {
       is_have_vote = true;
@@ -103,4 +100,24 @@ on('#ajax', 'click', '.votes_remove', function() {
   };
   _this.classList.add("hidden");
   _this.nextElementSibling.classList.add("hidden");
+});
+
+on('#ajax', 'click', '#add_vote_survey_btn', function() {
+  form_post = this.parentElement.parentElement;
+  form_data = new FormData(form_post);
+
+  this.disabled = true;
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'POST', "/survey/vote/" + this.getAttribute("data-pk") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    elem = link_.responseText;
+    console.log(elem);
+    toast_info("Вы проголосовали!")
+  };
+
+} else { this.disabled = false }};
+  link_.send(form_data);
 });
