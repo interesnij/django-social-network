@@ -163,8 +163,11 @@ on('#ajax', 'click', '.survey_unvote', function() {
       };
       _this.remove();
     };
-
-    toast_info("Ваш голос удален!")
+    answers = _this.parentElement.parentElement.parentElement.querySelectorAll(".lite_color");
+    for (var i = 0; i < answers.length; i++) {
+      answers[i].classList.add("survey_vote", "pointer");
+    };
+    toast_info("Ваш голос удален!");
   };
 
   };
