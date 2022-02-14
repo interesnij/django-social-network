@@ -29,10 +29,17 @@
               <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
             </div>
             {% endfor %}
+
             {% if object.is_have_votes %}
+              {% if object.is_anonymous %}
+                Это анонимный опрос.
+              {% else %}
+              <p class="survey_info pointer">Всего проголосовали: {{ object.vote }}</p>
+
               {{ object.get_6_users|safe }}
+              {% endif %}
             {% else %}
-              Пока никто не голосовал. Станьте первым!
+              Пока никто не голосовал.
             {% endif %}
           </div>
       </div>
