@@ -739,9 +739,9 @@ class Survey(models.Model):
             pass
         data = []
         for answer in self.get_answers():
-            SurveyVote.objects.filter(answer_id=answer_id, user=user).delete()
+            SurveyVote.objects.filter(answer_id=answer.pk, user=user).delete()
             try:
-                answer.vote += 1
+                answer.vote -= 1
                 answer.save(update_fields=["vote"])
             except:
                 pass
