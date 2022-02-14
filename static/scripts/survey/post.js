@@ -52,9 +52,7 @@ on('#ajax', 'click', '.survey_vote', function() {
 
   if (_this.classList.contains("False")) {
     // один вариант ответа на опрос
-    for (var i = 0; i < answers.length; i++) {
-      answers[i].querySelector(".vote_svg").innerHTML = "";
-     };
+
      if (_this.querySelector(".vote_svg").innerHTML) {
        _this.querySelector(".vote_svg").innerHTML = '';
        console.log("This vote remove");
@@ -63,6 +61,9 @@ on('#ajax', 'click', '.survey_vote', function() {
          console.log("Survey have vote!")
        } else { is_have_vote = false; }
      } else {
+       for (var i = 0; i < answers.length; i++) {
+         answers[i].querySelector(".vote_svg").innerHTML = "";
+        };
        _this.querySelector(".vote_svg").innerHTML = '<input type="hidden" name="votes" value="' + _this.getAttribute("data-pk") + '"><svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>';
        is_have_vote = true
      };
