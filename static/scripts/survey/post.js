@@ -55,7 +55,7 @@ on('#ajax', 'click', '.survey_vote', function() {
      };
      is_have_vote = true
   } else {
-    null
+    is_have_vote = true
   };
   if (_this.querySelector(".vote_svg").innerHTML) {
     _this.querySelector(".vote_svg").innerHTML = ''
