@@ -115,13 +115,27 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
-    console.log(elem);
     toast_info("Вы проголосовали!");
-
-    answers = form_post.querySelectorAll(".lite_color");
+    block = form_post.querySelector(".answers_container");
+    answers = block.querySelectorAll(".lite_color");
     for (var i = 0; i < answers.length; i++) {
       answers[i].classList.remove("survey_vote", "pointer");
     };
+
+    list = elem.split(";");
+    for (var i = 0; i < list.length; i++) {
+      values = list[i].split(",");
+      if (block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']')) {
+        answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
+        answer.querySelector(".count").innerHTML = values[1];
+        answer.querySelector(".progress2").style.width = values[2] + "%"
+      }
+      console.log("pk ", values[0])
+      console.log("votes ", values[1])
+      console.log("% ", values[2]);
+      console.log("===========");
+    };
+
   } else { this.disabled = false };
 
   };
@@ -129,6 +143,7 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
 });
 
 on('#ajax', 'click', '.survey_unvote', function() {
+  _this = this;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/survey/unvote/" + this.parentElement.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -136,14 +151,20 @@ on('#ajax', 'click', '.survey_unvote', function() {
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
+    block = _this.parentElement.parentElement.parentElement.querySelector(".answers_container");
     list = elem.split(";");
     for (var i = 0; i < list.length; i++) {
       values = list[i].split(",");
+      if (block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']')) {
+        answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
+        answer.querySelector(".count").innerHTML = values[1];
+        answer.querySelector(".progress2").style.width = values[2] + "%"
+      }
       console.log("pk ", values[0])
       console.log("votes ", values[1])
       console.log("% ", values[2]);
       console.log("===========");
-    }
+    };
 
     toast_info("Ваш голос удален!")
   };
