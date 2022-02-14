@@ -461,7 +461,7 @@ height: auto;
 .progress_span_l {
   float: right;
   padding-right: 10px;
-  z-index: 1;
+  z-index: 0;
   padding-top: 5px;
   padding-bottom: 3px;
 }
