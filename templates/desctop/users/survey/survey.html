@@ -2,7 +2,7 @@
 
 <div class="card" style="flex: 0 0 100%;">
 
-  <div class="mb-3 border text-center position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
+  <div class="mb-3 border text-center position-relative box-shadow" style="border-radius: .3rem;">
 
       <figure class="background-img">
         {% if object.image %}
@@ -91,8 +91,8 @@
           {% if object.is_anonymous %}
             Это анонимный опрос.
           {% else %}
-          <p class="survey_info pointer"> Всего проголосовали: {{ object.vote }}</p>
-          <br>
+          <p class="survey_info pointer">Всего проголосовали: {{ object.vote }}</p>
+
           {{ object.get_6_users|safe }}
           {% endif %}
         {% else %}
