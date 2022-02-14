@@ -61,7 +61,7 @@ on('#ajax', 'click', '.survey_vote', function() {
     _this.querySelector(".vote_svg").innerHTML = '';
     console.log("This vote remove")
     for (var i = 0; i < answers.length; i++) {
-      if (answers[i].querySelector(".vote_svg").innerHTML) {
+      if (answers[i].querySelector("input")) {
         is_have_vote = true;
         console.log("Survey have vote!")
       }
@@ -87,6 +87,6 @@ on('#ajax', 'click', '.votes_remove', function() {
   for (var i = 0; i < answers.length; i++) {
     answers[i].querySelector(".vote_svg").innerHTML = "";
   };
-  _this.classList.remove("hidden");
-  _this.nextElementSibling.classList.remove("hidden");
+  _this.classList.add("hidden");
+  _this.nextElementSibling.classList.add("hidden");
 });
