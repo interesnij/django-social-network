@@ -51,6 +51,7 @@ on('#ajax', 'click', '.survey_vote', function() {
   answers = parent.querySelectorAll(".lite_color");
 
   if (_this.classList.contains("False")) {
+    // один вариант ответа на опрос
     for (var i = 0; i < answers.length; i++) {
       answers[i].querySelector(".vote_svg").innerHTML = "";
      };
@@ -68,6 +69,7 @@ on('#ajax', 'click', '.survey_vote', function() {
   }
 
   else {
+    // несколько вариантов ответа на опрос
     if (_this.querySelector(".vote_svg").innerHTML) {
       _this.querySelector(".vote_svg").innerHTML = '';
       is_have_vote = false
