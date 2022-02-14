@@ -132,12 +132,13 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
       };
-      dropdown_menu = form_post.previousElementSibling.querySelector(".dropdown-menu");
-      $span = document.createElement("span");
-      $span.classList.add("dropdown-item", "survey_unvote");
-      $span.innerHTML = 'Удалить голос';
-      dropdown_menu.prepend($span)
+
     };
+    dropdown_menu = form_post.previousElementSibling.querySelector(".dropdown-menu");
+    $span = document.createElement("span");
+    $span.classList.add("dropdown-item", "survey_unvote");
+    $span.innerHTML = 'Удалить голос';
+    dropdown_menu.prepend($span)
 
   } else { this.disabled = false };
 
