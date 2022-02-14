@@ -50,7 +50,7 @@ on('#ajax', 'click', '.survey_vote', function() {
   parent = _this.parentElement;
   answers = parent.querySelectorAll(".lite_color");
 
-  if (_this.classList.contains("False")) {
+  if (parent.classList.contains("no_multiple")) {
     // один вариант ответа на опрос
 
      if (_this.querySelector(".vote_svg").innerHTML) {
