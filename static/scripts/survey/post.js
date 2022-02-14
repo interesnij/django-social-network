@@ -116,8 +116,8 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
     elem = link_.responseText;
     console.log(elem);
     toast_info("Вы проголосовали!")
-  };
+  } else { this.disabled = false };
 
-} else { this.disabled = false }};
+}};
   link_.send(form_data);
 });
