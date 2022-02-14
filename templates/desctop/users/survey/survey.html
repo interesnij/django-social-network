@@ -2,7 +2,7 @@
 
 <div class="card" style="flex: 0 0 100%;">
 
-  <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
+  <div class="mb-3 border text-center position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
 
       <figure class="background-img">
         {% if object.image %}
@@ -88,7 +88,13 @@
           {% endif %}
         {% endfor %}
         {% if object.is_have_votes %}
-          {{ object.get_6_users|safe }} 
+          {% if object.is_anonymous %}
+            Это анонимный опрос.
+          {% else %}
+          <p class="survey_info pointer"> Всего проголосовали: {{ object.vote }}</p>
+          <br>
+          {{ object.get_6_users|safe }}
+          {% endif %}
         {% else %}
           Пока никто не голосовал.
         {% endif %}
