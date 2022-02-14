@@ -159,10 +159,10 @@ on('#ajax', 'click', '.survey_unvote', function() {
     for (var i = 0; i < list.length; i++) {
       values = list[i].split(",");
       if (block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']')) {
-        console.log("eeee");
         answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
         answer.querySelector(".count").innerHTML = values[1];
-        answer.querySelector(".progress2").style.width = values[2] + "%"
+        answer.querySelector(".progress2").style.width = values[2] + "%";
+        answer.querySelector(".vote_svg").innerHTML = ""
       };
     };
     answers = _this.parentElement.parentElement.parentElement.querySelectorAll(".lite_color");
