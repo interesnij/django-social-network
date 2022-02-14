@@ -103,26 +103,32 @@ on('#ajax', 'click', '.votes_remove', function() {
 });
 
 on('#ajax', 'click', '#add_vote_survey_btn', function() {
-  form_post = this.parentElement.parentElement;
+  _this = this;
+  form_post = _this.parentElement.parentElement;
   form_data = new FormData(form_post);
 
-  this.disabled = true;
+  _this.disabled = true;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/survey/vote/" + this.getAttribute("data-pk") + "/", true );
+  link_.open( 'POST', "/survey/vote/" + _this.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
     elem = link_.responseText;
     console.log(elem);
-    toast_info("Вы проголосовали!")
+    toast_info("Вы проголосовали!");
+
+    answers = form_post.querySelectorAll(".lite_color");
+    for (var i = 0; i < answers.length; i++) {
+      answers[i].classList.remove("survey_vote", "pointer");
+    };
   } else { this.disabled = false };
 
   };
   link_.send(form_data);
 });
 
-on('#ajax', 'click', '.survey_unvote', function() { 
+on('#ajax', 'click', '.survey_unvote', function() {
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'GET', "/survey/unvote/" + this.parentElement.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
