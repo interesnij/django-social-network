@@ -171,8 +171,8 @@ def get_post_attach(post, user):
                     survey = Survey.objects.get(pk=item[3:], type="PUB")
                     _class, voted, answers, creator = "", "", "", survey.creator
                     if survey.commuity:
-                    survey_vote = "survey_vote "
-                    survey_detail = "survey_detail "
+                        survey_vote = "survey_vote "
+                        survey_detail = "survey_detail "
                     if survey.is_time_end():
                         time = "<p>Время голосования вышло</p>"
                     else:
