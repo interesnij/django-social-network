@@ -745,7 +745,7 @@ class Survey(models.Model):
                 answer.save(update_fields=["vote"])
             except:
                 pass
-            data.append(str(answer.pk) + "," + answer.get_votes_count() + "," + answer.get_procent())
+            data.append(str(answer.pk) + "," + answer.get_count() + "," + answer.get_procent())
         self.vote -= 1
         self.save(update_fields=["vote"])
         return HttpResponse(data)
