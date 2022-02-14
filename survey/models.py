@@ -739,12 +739,13 @@ class Survey(models.Model):
             pass
         data = []
         for answer in self.get_answers():
-            SurveyVote.objects.filter(answer_id=answer.pk, user=user).delete()
-            try:
-                answer.vote -= 1
-                answer.save(update_fields=["vote"])
-            except:
-                pass
+            if SurveyVote.objects.filter(answer_id=answer.pk, user=user).exists():
+                SurveyVote.objects.filter(answer_id=answer.pk, user=user).delete()
+                try:
+                    answer.vote -= 1
+                    answer.save(update_fields=["vote"])
+                except:
+                    pass
             data.append([str(answer.pk) + "," + str(answer.get_count()) + "," + str(answer.get_procent())],)
         self.vote -= 1
         self.save(update_fields=["vote"])
