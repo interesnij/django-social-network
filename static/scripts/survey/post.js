@@ -85,7 +85,7 @@ on('#ajax', 'click', '.survey_vote', function() {
   if (is_have_vote) {
     footer.querySelector(".votes_remove").classList.remove("hidden");
     footer.querySelector(".float-right").classList.remove("hidden");
-    footer.querySelector(".float-right").setAttribute("disabled", "false")
+    footer.querySelector(".float-right").removeAttribute("disabled")
   } else {
     footer.querySelector(".votes_remove").classList.add("hidden");
     footer.querySelector(".float-right").classList.add("hidden")
