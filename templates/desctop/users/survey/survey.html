@@ -88,7 +88,7 @@
           {% endif %}
         {% endfor %}
         {% if object.is_have_votes %}
-          {{ object.get_users }}
+          {{ object.get_6_users|safe }} 
         {% else %}
           Пока никто не голосовал.
         {% endif %}
