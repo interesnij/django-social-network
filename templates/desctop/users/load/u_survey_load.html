@@ -30,7 +30,7 @@
             </div>
             {% endfor %}
             {% if object.is_have_votes %}
-              {{ object.get_6_users }}
+              {{ object.get_6_users|safe }}
             {% else %}
               Пока никто не голосовал. Станьте первым!
             {% endif %}
