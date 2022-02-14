@@ -707,7 +707,7 @@ class Survey(models.Model):
         from datetime import datetime
         from django.http import HttpResponse
 
-        if self.time_end < datetime.now() or user.is_voted_of_survey(self.pk):
+        if (self.time_end and self.time_end < datetime.now()) or user.is_voted_of_survey(self.pk):
             pass
         data = []
         for answer_id in votes:
