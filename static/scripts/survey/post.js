@@ -44,3 +44,22 @@ on('#ajax', 'click', '#add_survey_btn', function() {
   }};
   link_.send(form_data);
 });
+
+on('#ajax', 'click', '.survey_vote', function() {
+  _this = this;
+  parent = _this.parentElement;
+  survey_pk = parent.getAttribute("data-pk");
+  if (_this.classList.contains("False")) {
+    answers = parent.querySelectorAll(".lite_color");
+    for (var i = 0; i < answers.length; i++) {
+      answers[i].querySelector("vote_svg").innerHTML = "";
+     };
+
+  } else {
+    null
+  };
+  _this.querySelector("vote_svg").innerHTML = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+  footer = parent.parentElement.nextElementSibling
+  footer.querySelector(".votes_remove").classList.remove("hidden");
+  footer.querySelector(".float-right").classList.remove("hidden");
+});

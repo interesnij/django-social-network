@@ -7,11 +7,10 @@
           <img src="{{ object.image.url }}" alt="user image">
         {% endif %}
       </figure>
-      <div class="container" style="list-style-type:none">
-        <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+      <div class="container" data-pk="{{ object.pk }}">
         <br>
-        <h4 class="">{{ object.title }}</h4>
-        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax mb-2">
+        <h4>{{ object.title }}</h4>
+        <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
           {{ object.creator }}
         </a>
         {% if object.time_end %}
@@ -26,7 +25,9 @@
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
             <span class="progress_span_l" style="margin-left: auto;">
-              <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+              <span class="vote_svg">
+                <svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+              </span>
               {{ answer.get_count }}
             </span>
           </div>
@@ -45,6 +46,7 @@
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
             <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
               {{ answer.get_count }}
             </span>
           </div>
@@ -57,5 +59,9 @@
           Пока никто не голосовал.
         {% endif %}
       </div>
+  </div>
+  <div class="card-footer">
+      <button class="btn hidden btn-sm border votes_remove">Отмена</button>
+      <button id="add_vote_survey_btn" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button>
   </div>
 </div>

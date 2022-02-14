@@ -8,7 +8,13 @@ class VoteInline(admin.TabularInline):
     model = SurveyVote
 
 class SurveyAdmin(admin.ModelAdmin):
-    list_display = ['title', 'is_anonymous', 'is_multiple', 'is_no_edited', 'time_end']
+    list_display = [
+        'title',
+        'is_anonymous',
+        'is_multiple',
+        'is_no_edited',
+        'time_end'
+    ]
     inlines = [
         AnswerInline,
         #VoteInline,

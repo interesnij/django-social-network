@@ -697,12 +697,43 @@ class Survey(models.Model):
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="R")
 
-    def is_private(self):
-        return False
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+
+    def votes_create(self, user, votes):
+        import json
+        from datetime import datetime
+        from django.http import HttpResponse
+
+        if self.time_end < datetime.now() or user.is_voted_of_survey(self.pk):
+            pass
+        data = []
+        for answer_id in votes:
+            answer = Answer.objects.get(pk=answer_id)
+            SurveyVote.objects.create(answer_id=answer_id, user=user)
+            data.append(answer_id, ",", answer.get_votes_count() , ",", answer.get_procent())
+        if self.community:
+            from common.notify.notify import community_notify, community_wall
+
+            community = self.community
+            community_notify(user, community, None, self.pk, "SUR", "c_survey_vote_notify", "SVO")
+            community_wall(user, community, None, self.pk, "SUR", "c_survey_vote_wall", "SVO")
+        else:
+            from common.notify.notify import user_notify, user_wall
+
+            user_notify(user, None, self.pk, "SUR", "u_survey_vote_notify", "SVO")
+            user_wall(user, None, self.pk, "SUR", "u_survey_vote_wall", "SVO")
+        return HttpResponse(data)
+    def votes_delete(self, user):
+        if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
+            pass
+        data = []
+        for answer in self.get_answers():
+            SurveyVote.objects.filter(answer_id=answer_id, user=user).delete()
+            data.append(answer.pk, ",", answer.get_votes_count() , ",", answer.get_procent())
+        return HttpResponse(data)
 
 
 class Answer(models.Model):
@@ -739,37 +770,6 @@ class Answer(models.Model):
     def minus_votes(self, count):
         self.vote -= count
         return self.save(update_fields=['vote'])
-
-    def vote_it(self, user):
-        import json
-        from datetime import datetime
-        from django.http import HttpResponse
-
-        survey = self.survey
-        if survey.time_end < datetime.now():
-            pass
-        try:
-            answer = SurveyVote.objects.get(answer=answer, user_id=user.pk)
-            if survey.is_no_edited:
-                pass
-            else:
-                answer.delete()
-        except SurveyVote.DoesNotExist:
-            if not survey.is_multiple and user.is_voted_of_survey(survey.pk):
-                user.get_vote_of_survey(survey.pk).delete()
-            SurveyVote.objects.create(answer=answer, user=user.user)
-            if survey.community:
-                from common.notify.notify import community_notify, community_wall
-
-                community = survey.community
-                community_notify(user, community, None, survey.pk, "SUR", "c_survey_vote_notify", "SVO")
-                community_wall(user, community, None, survey.pk, "SUR", "c_survey_vote_wall", "SVO")
-            else:
-                from common.notify.notify import user_notify, user_wall
-
-                user_notify(user, None, survey.pk, "SUR", "u_survey_vote_notify", "SVO")
-                user_wall(user, None, survey.pk, "SUR", "u_survey_vote_wall", "SVO")
-        return HttpResponse(json.dumps({"votes": survey.get_votes_count(), "procent":self.get_procent()}), content_type="application/json")
 
 
 class SurveyVote(models.Model):
