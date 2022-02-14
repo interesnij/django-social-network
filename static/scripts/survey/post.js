@@ -118,6 +118,6 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
     toast_info("Вы проголосовали!")
   } else { this.disabled = false };
 
-}};
+  };
   link_.send(form_data);
 });
