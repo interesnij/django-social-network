@@ -58,11 +58,12 @@ on('#ajax', 'click', '.survey_vote', function() {
     is_have_vote = true
   };
   if (_this.querySelector(".vote_svg").innerHTML) {
-    _this.querySelector(".vote_svg").innerHTML = ''
+    _this.querySelector(".vote_svg").innerHTML = '';
+    console.log("This vote remove")
     for (var i = 0; i < answers.length; i++) {
       if (answers[i].querySelector(".vote_svg").innerHTML) {
         is_have_vote = true;
-        console.log(is_have_vote)
+        console.log("Survey have vote!")
       }
      };
   } else {
