@@ -710,6 +710,9 @@ class Survey(models.Model):
         if (self.time_end and self.time_end < datetime.now()) or user.is_voted_of_survey(self.pk):
             pass
         data = []
+        
+        self.vote += 1
+        self.save(update_fields=["vote"])
         for answer_id in votes:
             answer = Answer.objects.get(pk=answer_id)
             SurveyVote.objects.create(answer_id=answer_id, user=user)
@@ -727,8 +730,7 @@ class Survey(models.Model):
 
             user_notify(user, None, self.pk, "SUR", "u_survey_vote_notify", "SVO")
             user_wall(user, None, self.pk, "SUR", "u_survey_vote_wall", "SVO")
-        self.vote += 1
-        self.save(update_fields=["vote"])
+
         return HttpResponse(data)
     def votes_delete(self, user):
         if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
