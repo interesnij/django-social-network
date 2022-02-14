@@ -718,7 +718,7 @@ class Survey(models.Model):
             SurveyVote.objects.create(answer_id=answer_id, user=user)
             answer.vote += 1
             answer.save(update_fields=["vote"])
-            data.append(str(answer_id) + "," + str(answer.get_count()) + "," + str(answer.get_procent()))
+            data.append([str(answer_id) + "," + str(answer.get_count()) + "," + str(answer.get_procent())])
         if self.community:
             from common.notify.notify import community_notify, community_wall
 
@@ -745,7 +745,7 @@ class Survey(models.Model):
                 answer.save(update_fields=["vote"])
             except:
                 pass
-            data.append(str(answer.pk) + "," + str(answer.get_count()) + "," + str(answer.get_procent()))
+            data.append([str(answer.pk) + "," + str(answer.get_count()) + "," + str(answer.get_procent())])
         self.vote -= 1
         self.save(update_fields=["vote"])
         return HttpResponse(data)
