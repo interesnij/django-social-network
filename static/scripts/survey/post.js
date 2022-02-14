@@ -132,7 +132,7 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
       };
-      dropdown_menu = form_post.querySelector(".dropdown-menu");
+      dropdown_menu = form_post.previousElementSibling.querySelector(".dropdown-menu");
       dropdown_menu.prepend('<span class="dropdown-item survey_unvote">Удалить голос</span>')
     };
 
