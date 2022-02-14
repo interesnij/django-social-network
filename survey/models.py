@@ -713,7 +713,9 @@ class Survey(models.Model):
         for answer_id in votes:
             answer = Answer.objects.get(pk=answer_id)
             SurveyVote.objects.create(answer_id=answer_id, user=user)
-            data.append(answer_id, ",", answer.get_votes_count() , ",", answer.get_procent())
+            answer.vote += 1
+            answer.save(update_fields=["vote"])
+            data.append(answer_id, ",", answer.get_count() , ",", answer.get_procent())
         if self.community:
             from common.notify.notify import community_notify, community_wall
 
@@ -732,6 +734,11 @@ class Survey(models.Model):
         data = []
         for answer in self.get_answers():
             SurveyVote.objects.filter(answer_id=answer_id, user=user).delete()
+            try:
+                answer.vote += 1
+                answer.save(update_fields=["vote"])
+            except:
+                pass
             data.append(answer.pk, ",", answer.get_votes_count() , ",", answer.get_procent())
         return HttpResponse(data)
 
