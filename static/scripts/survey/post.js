@@ -164,13 +164,13 @@ on('#ajax', 'click', '.survey_unvote', function() {
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
       };
-      _this.remove();
     };
     answers = _this.parentElement.parentElement.parentElement.querySelectorAll(".lite_color");
     for (var i = 0; i < answers.length; i++) {
       answers[i].classList.add("survey_vote", "pointer");
     };
     toast_info("Ваш голос удален!");
+    _this.remove();
   };
 
   };
