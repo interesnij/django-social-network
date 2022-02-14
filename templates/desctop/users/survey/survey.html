@@ -41,7 +41,7 @@
           </div>
 
           {% else %}
-          <div class="lite_color answer_style survey_vote {{ object.is_multiple }}">
+          <div class="lite_color pointer answer_style survey_vote {{ object.is_multiple }}" data-pk="{{ answer.pk }}">
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
             <span class="progress_span_r">{{ answer.text }}</span>
             <span class="progress_span_l" style="margin-left: auto;">
