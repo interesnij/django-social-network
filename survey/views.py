@@ -144,7 +144,7 @@ class SurveyRecover(View):
 
 
 class SurveyVote(View):
-	def get(self, request, **kwargs):
+	def post(self, request, **kwargs):
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
 		answers = request.POST.getlist("votes")
 		if survey.list.is_user_can_see_el(request.user.pk):
