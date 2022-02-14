@@ -152,7 +152,7 @@ class SurveyVote(View):
 		return HttpResponse()
 
 class SurveyUnVote(View):
-	def post(self, request, **kwargs):
+	def get(self, request, **kwargs):
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
 		if survey.list.is_user_can_see_el(request.user.pk):
 			return survey.votes_delete(request.user)
