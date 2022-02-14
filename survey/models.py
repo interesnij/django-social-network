@@ -727,6 +727,8 @@ class Survey(models.Model):
 
             user_notify(user, None, self.pk, "SUR", "u_survey_vote_notify", "SVO")
             user_wall(user, None, self.pk, "SUR", "u_survey_vote_wall", "SVO")
+        self.vote += 1
+        self.save(update_fields=["vote"])
         return HttpResponse(data)
     def votes_delete(self, user):
         if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
