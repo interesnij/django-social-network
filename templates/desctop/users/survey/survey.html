@@ -36,7 +36,7 @@
 
       <form>
         {% csrf_token %}
-      <div class="container answers_container {% if object.is_multiple %}no_multiple{% endif %}">
+      <div class="container answers_container {% if not object.is_multiple %}no_multiple{% endif %}">
         <br>
         <h4>{{ object.title }}</h4>
         <p class="position-relative">
