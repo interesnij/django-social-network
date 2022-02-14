@@ -159,9 +159,7 @@ on('#ajax', 'click', '.survey_unvote', function() {
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
       };
-      footer = _this.parentElement.parentElement.parentElement
-      footer.querySelector(".votes_remove").classList.add("hidden");
-      footer.querySelector(".float-right").classList.add("hidden");
+
     };
 
     toast_info("Ваш голос удален!")
