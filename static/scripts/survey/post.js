@@ -121,6 +121,8 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
     for (var i = 0; i < answers.length; i++) {
       answers[i].classList.remove("survey_vote", "pointer");
     };
+    form_post.querySelector(".votes_remove").classList.add("hidden");
+    form_post.querySelector(".float-right").classList.add("hidden");
 
     list = elem.split(";");
     for (var i = 0; i < list.length; i++) {
@@ -129,11 +131,8 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
         answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
-      }
-      console.log("pk ", values[0])
-      console.log("votes ", values[1])
-      console.log("% ", values[2]);
-      console.log("===========");
+      };
+
     };
 
   } else { this.disabled = false };
@@ -159,11 +158,10 @@ on('#ajax', 'click', '.survey_unvote', function() {
         answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = values[2] + "%"
-      }
-      console.log("pk ", values[0])
-      console.log("votes ", values[1])
-      console.log("% ", values[2]);
-      console.log("===========");
+      };
+      footer = _this.parentElement.parentElement.parentElement
+      footer.querySelector(".votes_remove").classList.add("hidden");
+      footer.querySelector(".float-right").classList.add("hidden");
     };
 
     toast_info("Ваш голос удален!")
