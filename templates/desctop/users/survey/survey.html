@@ -12,7 +12,7 @@
       <div class="container">
         <br>
         <h4>{{ object.title }}</h4>
-        <p>
+        <p class="position-relative">
           <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
             {{ object.creator }}
           </a>
