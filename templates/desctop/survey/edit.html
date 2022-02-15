@@ -55,7 +55,7 @@
                     <label class="custom-control-label" for="need_time_end">Ограничить время</label>
                   </div>
                 </div>
-                <div class="form-group {% if survey.need_time_end %}hide{% endif %}">
+                <div class="form-group {% if not survey.need_time_end %}hide{% endif %}">
                   <label>Дата окончания</label>
                   <input name="time_end" value="{{ survey.need_time_end }}" type="datetime-local" class="form-control">
                 </div>
