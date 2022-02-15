@@ -63,10 +63,12 @@
           {% else %}
           <div class="lite_color answer_style {% if not object.is_time_end %}pointer survey_vote{% endif %}" data-pk="{{ answer.pk }}">
             <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
-            <span class="progress_span_r">{{ answer.text }}</span>
+            <span class="progress_span_r">{{ answer.text }}
+              <span class="count">{{ answer.get_count }}</span>
+            </span>
             <span class="progress_span_l" style="margin-left: auto;">
               <span class="vote_svg"></span>
-              <span class="count">{{ answer.get_count }}</span>
+              <span class="procent">{{ answer.get_procent }}%</span>
             </span>
           </div>
 
