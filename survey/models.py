@@ -611,12 +611,9 @@ class Survey(models.Model):
                 user_send_notify(survey.pk, creator.pk, user_id, None, "create_u_survey_notify")
         return survey
 
-    def edit_survey(self, title, image, order, is_anonymous, is_multiple, is_no_edited, time_end, answers):
-        from common.processing.survey import get_survey_processing
-
+    def edit_survey(self, title, image, is_anonymous, is_multiple, is_no_edited, time_end, answers):
         self.title = title
         self.image = image
-        self.order = order
         self.is_anonymous = is_anonymous
         self.is_multiple = is_multiple
         self.is_no_edited = is_no_edited

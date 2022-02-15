@@ -1,4 +1,5 @@
-{% if good_list.get_3_goods %}
+{% if community.is_have_good %}
+
 <div class="card mt-3">
   <div class="p-1">
     <a href="{% url 'community_goods' pk=community.pk %}" class="ajax">
@@ -6,12 +7,12 @@
           <div class="media-body">
               <h6 class="content-color-primary mb-0">Товары</h6>
           </div>
-          {{ good_list.count_items }}
+          {{ community.community_info.goods }}
       </div>
     </a>
   </div>
   <div style="display: flex; flex-wrap: wrap;" data-uuid="{{ good_list.uuid }}">
-    {% for object in good_list.get_3_goods %}
+    {% for object in community.get_3_goods %}
     <div class="col-md-4 mb-3">
             <div class="border c_good_detail pointer" good-pk="{{ object.pk }}">
                 <div class="row align-items-center no-gutters">
