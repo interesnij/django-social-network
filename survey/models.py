@@ -544,7 +544,7 @@ class Survey(models.Model):
             if self.community:
                 return self.community.get_bb_avatar()
             else:
-                return self.user.get_bb_avatar()
+                return self.creator.get_bb_avatar()
 
     def is_user_can_edit_delete_item(self, user):
         if self.community and user.is_staff_of_community(self.community.pk):
