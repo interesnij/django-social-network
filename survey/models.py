@@ -624,9 +624,11 @@ class Survey(models.Model):
         self.time_end = time_end
         self.save()
         if set(answers) != set(self.get_answers()):
-            self.survey.all().delete()
+            answer_order = 0
+            Answer.objects.filter(survey=self).delete()
             for answer in answers:
-                Answer.objects.create(survey=survey, text=answer)
+                answer_order += 1
+                Answer.objects.create(survey=survey, text=answer, order=answer_order)
         return survey
 
     def is_user_voted(self, user_id):
