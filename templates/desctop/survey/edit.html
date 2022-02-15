@@ -11,7 +11,7 @@
                 </div>
                 <span id="answers_container">
 
-                  <div class="answers_add_form {% if survey.is_full_answers %}hidden{% endif %}">
+                  <div class="form-group answers_add_form {% if survey.is_full_answers %}hidden{% endif %}">
                     <div>
                       <div>
                         <span class="input-group-text add_answer pointer">Добавить вариант ответа</span>
@@ -32,38 +32,43 @@
 
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_anonymous" class="custom-control-input" id="id_is_anonymous">
+                    <input type="checkbox" {% if survey.is_full_answers %}checked{% endif %} name="is_anonymous" class="custom-control-input" id="id_is_anonymous">
                     <label class="custom-control-label" for="id_is_anonymous">Анонимный опрос</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_multiple" class="custom-control-input" id="id_is_multiple">
+                    <input type="checkbox" {% if survey.is_multiple %}checked{% endif %} name="is_multiple" class="custom-control-input" id="id_is_multiple">
                     <label class="custom-control-label" for="id_is_multiple">Несколько вариантов</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="is_no_edited" class="custom-control-input" id="id_is_no_edited">
+                    <input type="checkbox" {% if survey.is_no_edited %}checked{% endif %} name="is_no_edited" class="custom-control-input" id="id_is_no_edited">
                     <label class="custom-control-label" for="id_is_no_edited">Запрет отмены голоса</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="need_time_end">
+
+                    <input type="checkbox" {% if survey.need_time_end %}checked{% endif %} class="custom-control-input" id="need_time_end">
                     <label class="custom-control-label" for="need_time_end">Ограничить время</label>
                   </div>
                 </div>
-                <div class="form-group hide">
+                <div class="form-group {% if survey.need_time_end %}hide{% endif %}">
                   <label>Дата окончания</label>
-                  <input name="time_end" type="datetime-local" class="form-control">
+                  <input name="time_end" value="{{ survey.need_time_end }}" type="datetime-local" class="form-control">
                 </div>
                 <div class="hide_image">
                   <input type="file" name="image" id="id_image" accept="image/*">
                 </div>
                 <div class="border border_2" id="video_holder">
+                  {% if survey.image %}
+                    <img class="img-fluid rounded" src="{{ survey.image.url }}" alt="img" style="height: 100%;">
+                  {% else %}
                     <p>Добавить обложку?</p>
                     <i style="">(не обязательно)</i>
+                  {% endif %}
                 </div>
 
             </div>
