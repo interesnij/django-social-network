@@ -171,6 +171,7 @@ on('#ajax', 'click', '.survey_unvote', function() {
         answer.querySelector(".count").innerHTML = values[1];
         answer.querySelector(".progress2").style.width = procent;
         answer.querySelector(".procent").innerHTML = procent;
+        answer.querySelector(".vote_svg").innerHTML = "";
       };
     };
     answers = _this.parentElement.parentElement.parentElement.querySelectorAll(".lite_color");
