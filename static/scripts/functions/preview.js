@@ -214,6 +214,7 @@ function create_preview_survey(pk, src, container_html){
   $div = document.createElement("div");
   $div.classList.add("card");
   $div.style.flex = "0 0 100%";
+  $div.setAttribute("survey-pk", pk);
 
   $box_shadow = document.createElement("div");
   $div.classList.add("mb-3", "border", "text-center", "position-relative", "box-shadow");
