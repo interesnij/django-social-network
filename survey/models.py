@@ -538,7 +538,7 @@ class Survey(models.Model):
         return True
 
     def get_image(self):
-        if self.image.url:
+        if self.image:
             return self.image.url
         else:
             if self.community:
