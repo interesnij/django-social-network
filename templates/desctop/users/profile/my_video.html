@@ -12,15 +12,13 @@
       </a>
     </div>
     <div class="card-body p-1">
-        <div class="row no-gutters">
-          {% for object in user.get_2_videos %}
+        {% for object in user.get_2_videos %}
           <div class="media-body position-relative">
             <img class="image_fit_200" src="{{ object.image.url }}" alt="">
             <div class="video_icon_play_v2 video_list_detail" video-counter="{{ forloop.counter }}" video-pk="{{ object.pk }}"></div>
             <a>{{ object.title }}</a>
           </div>
-          {% endfor %}
-        </div>
+        {% endfor %}
     </div>
 </div>
 
