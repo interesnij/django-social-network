@@ -195,7 +195,7 @@ def get_post_attach(post, user):
                     elif not survey.is_time_end:
                         vote_class = "pointer survey_vote"
 
-                    if survey.is_user_can_edit_delete(user.pk):
+                    if survey.list.is_user_can_edit_delete(user.pk):
                         drops += '<span class="dropdown-item survey_edit">Изменить</span><span class="dropdown-item survey_remove">Удалить</span>'
                     elif user.is_moderator():
                         drops += '<span class="dropdown-item create_close">Закрыть</span>'
