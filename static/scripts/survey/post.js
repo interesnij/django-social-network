@@ -111,7 +111,7 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
 
   _this.disabled = true;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/survey/vote/" + _this.getAttribute("data-pk") + "/", true );
+  link_.open( 'POST', "/survey/vote/" + form_post.parentElement.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.setRequestHeader('X-CSRFToken', token);
 
@@ -154,7 +154,7 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
 on('#ajax', 'click', '.survey_unvote', function() {
   _this = this;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'GET', "/survey/unvote/" + this.parentElement.getAttribute("data-pk") + "/", true );
+  link_.open( 'GET', "/survey/unvote/" + this.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   link_.onreadystatechange = function () {

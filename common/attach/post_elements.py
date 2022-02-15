@@ -215,7 +215,7 @@ def get_post_attach(post, user):
                     <div class="dropdown"><a class="btn_default drop pointer" \
                     style="position:absolute;right:5px;top:5px;">\
                     <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>\
-                    </a><div class="dropdown-menu dropdown-menu-right" data-pk="', str(survey.pk), '" \
+                    </a><div class="dropdown-menu dropdown-menu-right" \
                     data-type="sur', str(survey.pk), '" style="top:30px;right:-10px;"> \
                     <span class="dropdown-item copy_link">Копировать ссылку</span>', drops, \
                     '</div></div><form><div class="container answers_container ', multiple_class,\
