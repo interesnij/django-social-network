@@ -198,8 +198,6 @@ on('body', 'click', '.survey_remove', function() {
 
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
-    block = form_post.querySelector(".answers_container");
-
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
