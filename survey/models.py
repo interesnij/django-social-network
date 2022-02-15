@@ -543,7 +543,7 @@ class Survey(models.Model):
         else:
             return '/static/images/no_img/list.jpg'
 
-    def is_user_can_edit_delete(self, user):
+    def is_user_can_edit_delete_item(self, user):
         if self.community and user.is_staff_of_community(self.community.pk):
             return True
         elif self.creator.pk == user.pk or self.list.creator.pk == user.pk:
