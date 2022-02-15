@@ -10,6 +10,9 @@ on('#ajax', 'click', '.load_attach_survey_list', function() {
 on('#ajax', 'click', '.add_survey', function() {
   create_fullscreen('/survey/add_survey_in_list/' + this.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
 });
+on('#ajax', 'click', '.edit_survey', function() {
+  create_fullscreen('/survey/edit/' + this.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
+});
 
 on('#ajax', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")

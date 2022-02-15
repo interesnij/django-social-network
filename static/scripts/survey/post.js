@@ -203,6 +203,7 @@ on('body', 'click', '.survey_remove', function() {
     p = document.createElement("div");
     p.classList.add("card", "mb-3");
     p.style.padding = "20px";
+    p.style.flexBasis = "100%";
     p.innerHTML = "<span class='survey_restore pointer' data-pk='" + block.getAttribute("data-pk") + "'>Опрос удален. <span class='underline'>Восстановить</span></span>";
 
     block.parentElement.insertBefore(p, block);
