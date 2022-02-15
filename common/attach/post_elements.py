@@ -166,64 +166,63 @@ def get_post_attach(post, user):
                 except:
                     pass
             elif item[:3] == "sur":
-                try:
-                    from survey.models import Survey
-                    survey = Survey.objects.get(pk=item[3:], type="PUB")
-                    vote_class, vote_svg, multiple_class, drops, footer, time_end = "", "", "", "", "", ""
+                #try:
+                from survey.models import Survey
+                survey = Survey.objects.get(pk=item[3:], type="PUB")
+                vote_class, vote_svg, multiple_class, drops, footer, time_end = "", "", "", "", "", ""
 
-                    if survey.commuity:
-                        owner_name, owner_link = survey.commuity.name, survey.commuity.get_link()
+                if survey.commuity:
+                    owner_name, owner_link = survey.commuity.name, survey.commuity.get_link()
+                else:
+                    owner_name, owner_link = survey.creator.get_full_name(), survey.creator.get_link()
+
+                if survey.is_have_votes():
+                    if survey.is_anonymous:
+                        info = "Это анонимный опрос."
                     else:
-                        owner_name, owner_link = survey.creator.get_full_name(), survey.creator.get_link()
+                        info = '<p class="survey_info pointer position-relative">Всего проголосовали: ' + str(survey.vote) +'</p>' + survey.get_6_users()
+                else:
+                    info = 'Пока никто не голосовал.'
 
-                    if survey.is_have_votes():
-                        if survey.is_anonymous:
-                            info = "Это анонимный опрос."
-                        else:
-                            info = '<p class="survey_info pointer position-relative">Всего проголосовали: ' + str(survey.vote) +'</p>' + \
-                            survey.get_6_users()
+                if user.is_authenticated:
+                    footer = '<div class="card-footer position-relative"><button class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" data-pk="{{ object.pk }}" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
+                    if not survey.is_multiple:
+                        multiple_class = 'no_multiple'
+
+                    drops = '<span class="dropdown-item create_repost">Добавить</span>'
+                    if survey.is_user_voted(user.pk):
+                        drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
+                    elif not survey.is_time_end:
+                        vote_class = "pointer survey_vote"
+
+                    if survey.is_user_can_edit_delete(user.pk):
+                        drops += '<span class="dropdown-item survey_edit">Изменить</span><span class="dropdown-item survey_remove">Удалить</span>'
+                    elif user.is_moderator():
+                        drops += '<span class="dropdown-item create_close">Закрыть</span>'
                     else:
-                        info = 'Пока никто не голосовал.'
+                        drops += '<span class="dropdown-item create_claim">Пожаловаться</span>'
 
-                    if user.is_authenticated:
-                        footer = '<div class="card-footer position-relative"><button class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" data-pk="{{ object.pk }}" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
-                        if not survey.is_multiple:
-                            multiple_class = 'no_multiple'
+                for answer in survey.get_answers():
+                    if answer.is_user_voted(user.pk):
+                        vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+                    answers = ''.join([answers, '<div class="lite_color answer_style', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span>', str(answer.get_procent()), '%</span></div>'])
 
-                        drops = '<span class="dropdown-item create_repost">Добавить</span>'
-                        if survey.is_user_voted(user.pk):
-                            drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
-                        elif not survey.is_time_end:
-                            vote_class = "pointer survey_vote"
-
-                        if survey.is_user_can_edit_delete(user.pk):
-                            drops += '<span class="dropdown-item survey_edit">Изменить</span><span class="dropdown-item survey_remove">Удалить</span>'
-                        elif user.is_moderator():
-                            drops += '<span class="dropdown-item create_close">Закрыть</span>'
-                        else:
-                            drops += '<span class="dropdown-item create_claim">Пожаловаться</span>'
-
-                    for answer in survey.get_answers():
-                        if answer.is_user_voted(user.pk):
-                            vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
-                        answers = ''.join([answers, '<div class="lite_color answer_style', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span>', str(answer.get_procent()), '%</span></div>'])
-
-                    if survey.time_end:
-                        time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
-                    block = ''.join([block, '<div style="border-radius: .3rem;" class="card p-1 border text-center position-relative box-shadow">\
-                    <figure class="background-img">', survey.get_image(), '</figure>\
-                    <div class="dropdown"><a class="btn_default drop pointer" \
-                    style="position:absolute;right:5px;top:5px;">\
-                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>\
-                    </a><div class="dropdown-menu dropdown-menu-right" data-pk="', str(survey.pk), '" \
-                    data-type="sur', str(survey.pk), '" style="top:30px;right:-10px;"> \
-                    <span class="dropdown-item copy_link">Копировать ссылку</span>', drops, \
-                    '</div></div><form><div class="container answers_container ', multiple_class,\
-                    '" <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
-                    <a href="', owner_link, '" class="underline ajax">', owner_name, '</a></p>',
-                    time_end, '<br>', answers, info, '</div>', footer, '</form></div>'])
-                except:
-                    pass
+                if survey.time_end:
+                    time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
+                block = ''.join([block, '<div style="border-radius: .3rem;" class="card p-1 border text-center position-relative box-shadow">\
+                <figure class="background-img">', survey.get_image(), '</figure>\
+                <div class="dropdown"><a class="btn_default drop pointer" \
+                style="position:absolute;right:5px;top:5px;">\
+                <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>\
+                </a><div class="dropdown-menu dropdown-menu-right" data-pk="', str(survey.pk), '" \
+                data-type="sur', str(survey.pk), '" style="top:30px;right:-10px;"> \
+                <span class="dropdown-item copy_link">Копировать ссылку</span>', drops, \
+                '</div></div><form><div class="container answers_container ', multiple_class,\
+                '" <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
+                <a href="', owner_link, '" class="underline ajax">', owner_name, '</a></p>',
+                time_end, '<br>', answers, info, '</div>', footer, '</form></div>'])
+                #except:
+                #    pass
             elif item[:3] == "use":
                 #try:
                 from users.models import User
