@@ -219,7 +219,7 @@ def get_post_attach(post, user):
                     data-type="sur', str(survey.pk), '" style="top:30px;right:-10px;"> \
                     <span class="dropdown-item copy_link">Копировать ссылку</span>', drops, \
                     '</div></div><form><div class="container answers_container ', multiple_class,\
-                    '" <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
+                    '"> <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
                     <a href="', owner_link, '" class="underline ajax">', owner_name, '</a></p>',
                     time_end, '<br>', answers, info, '</div>', footer, '</form></div>'])
                 except:
