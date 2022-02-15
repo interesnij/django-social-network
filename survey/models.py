@@ -661,8 +661,7 @@ class Survey(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "PUB":
-            self.type = Survey.DELETED
+        self.type = Survey.DELETED
         self.save(update_fields=['type'])
         self.list.count -= 1
         self.list.save(update_fields=["count"])
