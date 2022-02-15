@@ -629,7 +629,7 @@ class Survey(models.Model):
         for answer in answers:
             answer_order += 1
             Answer.objects.create(survey=self, text=answer, order=answer_order)
-        return survey
+        return self
 
     def is_user_voted(self, user_id):
         return not self.is_time_end() and SurveyVote.objects.filter(answer__survey_id=self.pk, user_id=user_id).exists()
