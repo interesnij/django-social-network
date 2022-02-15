@@ -117,6 +117,9 @@ class SurveyEdit(TemplateView):
 		survey.list.is_user_can_create_el(request.user.pk)\
 		and survey.is_can_edit():
 			survey = form.save(commit=False)
+			answers = request.POST.getlist("answers")
+			if not answers:
+				HttpResponse("not ansvers")
 			new_survey = survey.edit_survey(
 				title=survey.title,
 				image=survey.image,
