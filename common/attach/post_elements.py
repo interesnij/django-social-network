@@ -169,7 +169,7 @@ def get_post_attach(post, user):
                 #try:
                 from survey.models import Survey
                 survey = Survey.objects.get(pk=item[3:], type="PUB")
-                vote_class, vote_svg, multiple_class, drops, footer, time_end = "", "", "", "", "", ""
+                vote_class, vote_svg, multiple_class, drops, footer, time_end, answers = "", "", "", "", "", "", ""
 
                 if survey.community:
                     owner_name, owner_link = survey.community.name, survey.community.get_link()
