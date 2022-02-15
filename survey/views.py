@@ -99,7 +99,7 @@ class SurveyEdit(TemplateView):
 	def get(self,request,*args,**kwargs):
 		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
 		self.template_name = get_settings_template("survey/edit.html", request.user, request.META['HTTP_USER_AGENT'])
-		return super(SurveyUserEdit,self).get(request,*args,**kwargs)
+		return super(SurveyEdit,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		from survey.forms import SurveyForm

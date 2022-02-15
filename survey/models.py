@@ -642,6 +642,10 @@ class Survey(models.Model):
 
     def get_answers(self):
         return Answer.objects.filter(survey_id=self.pk)
+    def get_answers_count(self):
+        return self.get_answers().values("pk").count()
+    def is_full_answers(self):
+        return self.get_answers_count() > 9
 
     def get_all_count(self):
         if self.vote > 0:
