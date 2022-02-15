@@ -191,7 +191,8 @@ def get_post_attach(post, user):
 
                         drops = '<span class="dropdown-item create_repost">Добавить</span>'
                         if survey.is_user_voted(user.pk):
-                            drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
+                            if not survey.is_no_edited:
+                                drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
                         elif not survey.time_end:
                             vote_class = "pointer survey_vote"
 
