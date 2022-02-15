@@ -197,7 +197,9 @@ def get_post_attach(post, user):
                             vote_class = "pointer survey_vote"
 
                         if survey.is_user_can_edit_delete_item(user):
-                            drops += '<span class="dropdown-item survey_edit">Изменить</span><span class="dropdown-item survey_remove">Удалить</span>'
+                            if survey.is_can_edit():
+                                drops += '<span class="dropdown-item survey_edit">Изменить</span>'
+                            drops += '<span class="dropdown-item survey_remove">Удалить</span>'
                         elif user.is_moderator():
                             drops += '<span class="dropdown-item create_close">Закрыть</span>'
                         else:
