@@ -166,9 +166,11 @@ on('#ajax', 'click', '.survey_unvote', function() {
       values = list[i].split(",");
       if (block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']')) {
         answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
+
+        procent = values[2] + "%";
         answer.querySelector(".count").innerHTML = values[1];
-        answer.querySelector(".progress2").style.width = values[2] + "%";
-        answer.querySelector(".vote_svg").innerHTML = ""
+        answer.querySelector(".progress2").style.width = procent;
+        answer.querySelector(".procent").innerHTML = procent;
       };
     };
     answers = _this.parentElement.parentElement.parentElement.querySelectorAll(".lite_color");
