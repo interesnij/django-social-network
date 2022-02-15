@@ -672,8 +672,7 @@ class Survey(models.Model):
             Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
     def restore_item(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
-            self.type = Survey.PUBLISHED
+        self.type = Survey.PUBLISHED
         self.save(update_fields=['type'])
         self.list.count += 1
         self.list.save(update_fields=["count"])

@@ -208,7 +208,7 @@ on('body', 'click', '.survey_remove', function() {
   }};
   link_.send();
 });
-on('#ajax', 'click', '.survey_restore', function() {
+on('body', 'click', '.survey_restore', function() {
   item = this.parentElement.nextElementSibling;
   pk = this.getAttribute("data-pk");
   block = this.parentElement;
