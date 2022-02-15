@@ -209,8 +209,9 @@ def get_post_attach(post, user):
 
                 if survey.time_end:
                     time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
-                block = ''.join([block, '<div style="border-radius: .3rem;" class="card p-1 border text-center position-relative box-shadow">\
-                <figure class="background-img">', survey.get_image(), '</figure>\
+
+                block = ''.join([block, '<div style="border-radius:.3rem;flex-basis:100%;" class="card p-1 border text-center position-relative box-shadow">\
+                <figure class="background-img"><img src="', survey.get_image(), '" alt="img" ></figure>\
                 <div class="dropdown"><a class="btn_default drop pointer" \
                 style="position:absolute;right:5px;top:5px;">\
                 <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>\
