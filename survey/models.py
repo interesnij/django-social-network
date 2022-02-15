@@ -587,8 +587,10 @@ class Survey(models.Model):
         list.count += 1
         list.save(update_fields=["count"])
         survey = cls.objects.create(title=title,order=list.count,list=list,image=image,creator=creator,is_anonymous=is_anonymous,is_multiple=is_multiple,is_no_edited=is_no_edited,time_end=time_end)
+        answer_order = 0
         for answer in answers:
-            Answer.objects.create(survey=survey, text=answer)
+            answer_order += 1
+            Answer.objects.create(survey=survey, text=answer, order=answer_order)
         if community:
             from common.notify.progs import community_send_notify, community_send_wall
             from notify.models import Notify, Wall
@@ -765,6 +767,7 @@ class Answer(models.Model):
     text = models.CharField(max_length=250, verbose_name="Вариант ответа")
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='+', verbose_name="Опрос")
     vote = models.PositiveIntegerField(default=0, verbose_name="Кол-во голосов")
+    order = models.PositiveIntegerField(default=0, verbose_name="Градация по порядку")
 
     class Meta:
         verbose_name = 'Вариант ответа'
