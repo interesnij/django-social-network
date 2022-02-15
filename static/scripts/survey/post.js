@@ -132,8 +132,10 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
       values = list[i].split(",");
       if (block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']')) {
         answer = block.querySelector('[data-pk=' + '"' + values[0] + '"' + ']');
+        procent = values[2] + "%";
         answer.querySelector(".count").innerHTML = values[1];
-        answer.querySelector(".progress2").style.width = values[2] + "%"
+        answer.querySelector(".progress2").style.width = procent;
+        answer.querySelector(".procent").innerHTML = procent;
       };
 
     };
