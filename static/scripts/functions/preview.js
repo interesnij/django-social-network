@@ -85,8 +85,8 @@ function check_good_list_in_block(block, _this, pk) {
 };
 function check_survey_in_block(block, _this, pk) {
     if (block.querySelector('[survey-pk=' + '"' + pk + '"' + ']')) {
-      _this.parentElement.setAttribute("tooltip", "Опрос уже выбран");
-      _this.parentElement.setAttribute("flow", "up");
+      _this.setAttribute("tooltip", "Опрос уже выбран");
+      _this.setAttribute("flow", "up");
       return true
     } else {
         return false
