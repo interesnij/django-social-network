@@ -5,9 +5,7 @@
   <div class="mb-3 border text-center position-relative box-shadow" style="border-radius: .3rem;">
 
       <figure class="background-img">
-        {% if object.image %}
-          <img src="{{ object.image.url }}" alt="user image">
-        {% endif %}
+          <img src="{{ object.get_image }}" alt="img">
       </figure>
 
       <div class="dropdown">

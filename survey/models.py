@@ -537,6 +537,15 @@ class Survey(models.Model):
     def is_survey(self):
         return True
 
+    def get_image(self):
+        if self.image.url:
+            return self.image.url
+        else:
+            if self.community:
+                return self.community.get_bb_avatar()
+            else:
+                return self.user.get_bb_avatar()
+
     def is_user_can_edit_delete_item(self, user):
         if self.community and user.is_staff_of_community(self.community.pk):
             return True
