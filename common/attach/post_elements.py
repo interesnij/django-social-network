@@ -171,8 +171,8 @@ def get_post_attach(post, user):
                 survey = Survey.objects.get(pk=item[3:], type="PUB")
                 vote_class, vote_svg, multiple_class, drops, footer, time_end = "", "", "", "", "", ""
 
-                if survey.commuity:
-                    owner_name, owner_link = survey.commuity.name, survey.commuity.get_link()
+                if survey.community:
+                    owner_name, owner_link = survey.community.name, survey.community.get_link()
                 else:
                     owner_name, owner_link = survey.creator.get_full_name(), survey.creator.get_link()
 
