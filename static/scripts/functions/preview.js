@@ -9,7 +9,7 @@ function check_photo_in_block(block, _this, pk) {
 };
 function check_photo_list_in_block(block, _this, pk) {
     if (block.querySelector('[photolist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Альбом уже прикреплён")
+        toast_info("Альбом уже прикреплён")
         return true
     } else {
         return false
@@ -26,7 +26,7 @@ function check_video_in_block(block, _this, pk) {
 };
 function check_video_list_in_block(block, _this, pk) {
     if (block.querySelector('[videolist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Видеоальбом уже прикреплён")
+        toast_info("Видеоальбом уже прикреплён")
         return true
     } else {
         return false
@@ -43,7 +43,7 @@ function check_music_in_block(block, _this, counter) {
 };
 function check_playlist_in_block(block, _this, pk) {
     if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Плейлист уже прикреплён")
+        toast_info("Плейлист уже прикреплён")
         return true
     } else {
         return false
@@ -60,7 +60,7 @@ function check_doc_in_block(block, _this, pk) {
 };
 function check_doc_list_in_block(block, _this, pk) {
     if (block.querySelector('[doclist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Список документов уже прикреплён")
+        toast_info("Список документов уже прикреплён")
         return true
     } else {
         return false
@@ -77,7 +77,7 @@ function check_good_in_block(block, _this, pk) {
 };
 function check_good_list_in_block(block, _this, pk) {
     if (block.querySelector('[goodlist-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Список товаров уже прикреплён")
+        toast_info("Список товаров уже прикреплён")
         return true
     } else {
         return false
@@ -85,8 +85,9 @@ function check_good_list_in_block(block, _this, pk) {
 };
 function check_survey_in_block(block, _this, pk) {
     if (block.querySelector('[survey-pk=' + '"' + pk + '"' + ']')) {
-        toats_info("Опрос уже прикреплён")
-        return true
+      _this.parentElement.setAttribute("tooltip", "Опрос уже выбран");
+      _this.parentElement.setAttribute("flow", "up");
+      return true
     } else {
         return false
     }
