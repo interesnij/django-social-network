@@ -129,6 +129,7 @@ class SurveyEdit(TemplateView):
 				time_end=survey.time_end,
 				answers=answers,
 			)
+			return HttpResponse()
 		else:
 			return HttpResponseBadRequest()
 
