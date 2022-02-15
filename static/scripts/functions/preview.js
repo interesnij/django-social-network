@@ -83,6 +83,14 @@ function check_good_list_in_block(block, _this, pk) {
         return false
     }
 };
+function check_survey_in_block(block, _this, pk) {
+    if (block.querySelector('[survey-pk=' + '"' + pk + '"' + ']')) {
+        toats_info("Опрос уже прикреплён")
+        return true
+    } else {
+        return false
+    }
+};
 
 function photo_preview_delete(){
   $span = document.createElement("span");
@@ -199,6 +207,30 @@ function create_preview_chat_item(_this){
   $div_flex.append($figure);
   $div.append($input);
   $div.append($div_flex);
+  return $div
+};
+
+function create_preview_survey(pk, src, container_html){
+  $div = document.createElement("div");
+  $div.classList.add("card");
+  $div.style.flex = "0 0 100%";
+
+  $box_shadow = document.createElement("div");
+  $div.classList.add("mb-3", "border", "text-center", "position-relative", "box-shadow");
+
+  $input = document.createElement("span");
+  $input.innerHTML = '<input type="hidden" name="attach_items" value="sur' + pk + '">';
+
+  $figure = document.createElement("div");
+
+  $img = document.createElement("img");
+  $img.classList.add("detail_photo", "image_fit", "pointer", "handle");
+  $img.setAttribute("src", img_src);
+  $img.setAttribute('photo-pk', photo_pk);
+  $img.setAttribute('data-pk', user_pk);
+  $div.append(photo_preview_delete());
+  $div.append($input);
+  $div.append($img);
   return $div
 };
 

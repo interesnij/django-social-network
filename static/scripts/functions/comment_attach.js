@@ -85,6 +85,15 @@ function photo_comment_upload_attach(photo_list, dropdown){
   close_work_fullscreen();
 };
 
+function survey_message_attach(block, pk, container_html) {
+  is_full_dropdown();
+  div = create_preview_survey(pk, container_html);
+  block.append(div);
+  create_drag_attach_comment(block);
+  add_file_dropdown();
+  is_full_dropdown();
+};
+
 function video_comment_attach(dropdown, pk, counter, src){
   is_full_dropdown(dropdown);
   img_block = dropdown.parentElement.parentElement.previousElementSibling;

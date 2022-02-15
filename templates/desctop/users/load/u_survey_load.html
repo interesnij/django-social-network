@@ -6,15 +6,15 @@
 {% if object_list %}
   <div style="padding-bottom:10px;display: flex; flex-wrap: wrap;" class="is_block_paginate">
     {% for object in object_list %}
-    <div class="card pag mb-3 attach_survey pointer" style="flex: 0 0 100%;" data-pk="{{ object.pk }}">
+
+    <div class="card mb-3 attach_survey pointer" style="flex: 0 0 100%;" data-pk="{{ object.pk }}">
       <div class="mb-3 border text-center position-relative box-shadow">
           <figure class="background-img">
             {% if object.image %}
               <img src="{{ object.image.url }}" alt="user image">
             {% endif %}
           </figure>
-          <div class="container" style="list-style-type:none">
-            <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+          <div class="container">
             <br>
             <h4>{{ object.title }}</h4>
             <p class="content-color-primary underline">{{ object.creator }}</p>

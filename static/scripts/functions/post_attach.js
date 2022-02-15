@@ -142,6 +142,15 @@ function good_post_attach(block, src, pk, uuid, title) {
   is_full_attach();
 };
 
+function survey_post_attach(block, pk, container_html) {
+  is_full_attach();
+  div = create_preview_survey(pk, container_html);
+  block.append(div);
+  create_drag_attach_post(block);
+  add_file_attach();
+  is_full_attach();
+};
+
 function article_post_attach(_this, block) {
   is_full_attach();
   _this.parentElement.classList.add("attach_toggle");
