@@ -769,6 +769,7 @@ class Answer(models.Model):
     class Meta:
         verbose_name = 'Вариант ответа'
         verbose_name_plural = 'Варианты ответа'
+        ordering = ["order"]
 
     def __str__(self):
         return self.text
