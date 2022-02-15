@@ -185,3 +185,45 @@ on('#ajax', 'click', '.survey_unvote', function() {
   };
   link_.send();
 });
+
+
+on('body', 'click', '.survey_remove', function() {
+  _this = this;
+  block = _this.parentElement.parentElement.parentElement;
+
+  _this.disabled = true;
+  link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link_.open( 'GET', "/survey/delete/" + block.getAttribute("data-pk") + "/", true );
+  link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link_.onreadystatechange = function () {
+  if ( link_.readyState == 4 && link_.status == 200 ) {
+    block = form_post.querySelector(".answers_container");
+
+    p = document.createElement("div");
+    p.classList.add("card", "mb-3");
+    p.style.padding = "20px";
+    p.innerHTML = "<span class='survey_restore pointer' data-pk='" + block.getAttribute("data-pk") + "'>Опрос удален. <span class='underline'>Восстановить</span></span>";
+
+    block.parentElement.insertBefore(p, block);
+    block.style.display = "none"
+  }};
+  link_.send();
+});
+on('#ajax', 'click', '.survey_restore', function() {
+  item = this.parentElement.nextElementSibling;
+  pk = this.getAttribute("data-pk");
+  block = this.parentElement;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/survey/restore/" + pk + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    block.remove();
+    item.style.display = "block";
+    //main_container = document.body.querySelector(".main-container");
+    //add_list_in_all_stat("restored_user_post",pk,main_container.getAttribute("data-type"),main_container.getAttribute("data-pk"));
+  }};
+  link.send();
+});
