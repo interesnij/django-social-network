@@ -324,7 +324,10 @@ class RepostCreate(TemplateView):
             if self.type[0] == "l":
                 self.can_copy_item = self.item.is_user_can_copy_el(request.user.pk)
             elif case == 3 and not self.type[0] == "l":
-                self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
+                if type[:3] == "sur":
+                    self.can_copy_item = False
+                else:
+                    self.can_copy_item = self.item.list.is_user_can_copy_el(request.user.pk)
             if self.item.community:
                 check_can_get_lists(request.user, self.item.community)
             elif self.item.creator.pk != request.user.pk:

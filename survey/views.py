@@ -112,8 +112,10 @@ class SurveyEdit(TemplateView):
 		from survey.forms import SurveyForm
 
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
-		form = SurveyForm(request.POST,request.FILES,instance=survey)
-		if request.is_ajax() and form.is_valid() and survey.list.is_user_can_create_el(request.user.pk):
+		form = SurveyForm(request.POST, request.FILES, instance=survey)
+		if request.is_ajax() and form.is_valid() and \
+		survey.list.is_user_can_create_el(request.user.pk)\
+		and survey.is_can_edit():
 			survey = form.save(commit=False)
 			new_survey = survey.edit_survey(
 				title=survey.title,

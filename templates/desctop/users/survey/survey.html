@@ -18,7 +18,9 @@
               <span class="dropdown-item survey_unvote">Удалить голос</span>
             {% endif %}
             {% if object|is_user_can_edit_delete:request.user %}
-              <span class="dropdown-item survey_edit">Изменить</span>
+              {% if object.is_can_edit %}
+                <span class="dropdown-item survey_edit">Изменить</span>
+              {% endif %}
               <span class="dropdown-item survey_remove">Удалить</span>
             {% elif request.user.is_moderator %}
               <span class="dropdown-item create_close">Закрыть</span>

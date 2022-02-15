@@ -532,6 +532,10 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+    def is_can_edit(self):
+        from datetime import datetime, timedelta
+        return datetime.now() < self.created + timedelta(minutes=60)
+
     def get_code(self):
         return "sur" + str(self.pk)
     def is_survey(self):
