@@ -107,11 +107,13 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
   _this = this;
   form_post = _this.parentElement.parentElement;
   form_data = new FormData(form_post);
+  token = document.body.getAttribute("data-csrf");
 
   _this.disabled = true;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link_.open( 'POST', "/survey/vote/" + _this.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link_.setRequestHeader('X-CSRFToken', token);
 
   link_.onreadystatechange = function () {
   if ( link_.readyState == 4 && link_.status == 200 ) {
