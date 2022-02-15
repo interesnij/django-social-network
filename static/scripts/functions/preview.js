@@ -222,15 +222,26 @@ function create_preview_survey(pk, src, container_html){
   $input.innerHTML = '<input type="hidden" name="attach_items" value="sur' + pk + '">';
 
   $figure = document.createElement("div");
+  $figure.classList.add("background-img");
+  if (src) {
+    $img = document.createElement("img");
+    $img.setAttribute("src", src);
+    $figure.append($img);
+  };
 
-  $img = document.createElement("img");
-  $img.classList.add("detail_photo", "image_fit", "pointer", "handle");
-  $img.setAttribute("src", img_src);
-  $img.setAttribute('photo-pk', photo_pk);
-  $img.setAttribute('data-pk', user_pk);
-  $div.append(photo_preview_delete());
+  $a = document.createElement("a");
+  $a.classList.add("survey_attach_remove", "pointer");
+  $a.innerHTML = "Открепить";
+
+  $container = document.createElement("div");
+  $container.classList.add("container");
+  $container.innerHTML = container_html;
+
   $div.append($input);
-  $div.append($img);
+  $box_shadow.append($figure);
+  $box_shadow.append($a);
+  $box_shadow.append($container);
+  $div.append($box_shadow);
   return $div
 };
 

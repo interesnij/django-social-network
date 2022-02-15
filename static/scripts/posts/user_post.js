@@ -977,12 +977,14 @@ on('#ajax', 'click', '.chat_friends_load_one', function() {
 on('#ajax', 'click', '.attach_survey', function() {
   _this = this;
   pk = _this.getAttribute('data-pk');
+  figure = _this.querySelector(".background-img");
+  figure.querySelector("src") ? img_src = figure.querySelector("src").getAttribute("src") : img_src = null;
   container_html = _this.querySelector(".container").innerHTML;
   if (document.body.querySelector(".current_file_dropdown")){
-    check_survey_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (survey_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, container_html), close_work_fullscreen())
+    check_survey_in_block(document.body.querySelector(".current_file_dropdown").parentElement.parentElement.parentElement.parentElement.previousElementSibling, _this, pk) ? null : (survey_comment_attach(document.body.querySelector(".current_file_dropdown").parentElement.parentElement, pk, img_src, container_html), close_work_fullscreen())
   } else if (document.body.querySelector(".attach_block")){
-    check_survey_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (survey_post_attach(document.body.querySelector(".attach_block"), pk, container_html), close_work_fullscreen())
+    check_survey_in_block(document.body.querySelector(".attach_block"), _this, pk) ? null : (survey_post_attach(document.body.querySelector(".attach_block"), pk, img_src, container_html), close_work_fullscreen())
   } else if (document.body.querySelector(".message_attach_block")){
-    check_survey_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (survey_message_attach(document.body.querySelector(".message_attach_block"), pk, container_html), close_work_fullscreen())
+    check_survey_in_block(document.body.querySelector(".message_attach_block"), _this, pk) ? null : (survey_message_attach(document.body.querySelector(".message_attach_block"), pk, img_src, container_html), close_work_fullscreen())
   }
 });
