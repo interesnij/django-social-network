@@ -185,7 +185,7 @@ def get_post_attach(post, user):
                         info = 'Пока никто не голосовал.'
 
                     if user.is_authenticated:
-                        footer = '<div class="card-footer position-relative"><button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" data-pk="', str(survey.pk), '" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
+                        footer = '<div class="card-footer position-relative"><button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
                         if not survey.is_multiple:
                             multiple_class = 'no_multiple'
 
@@ -210,7 +210,7 @@ def get_post_attach(post, user):
                     if survey.time_end:
                         time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
 
-                    block = ''.join([block, '<div style="border-radius:.3rem;flex-basis:100%;" class="card p-1 border text-center position-relative box-shadow">\
+                    block = ''.join([block, '<div data-pk="', str(survey.pk),'" style="border-radius:.3rem;flex-basis:100%;" class="card p-1 border text-center position-relative box-shadow">\
                     <figure class="background-img"><img src="', survey.get_image(), '" alt="img" ></figure>\
                     <div class="dropdown"><a class="btn_default drop pointer" \
                     style="position:absolute;right:5px;top:5px;">\
