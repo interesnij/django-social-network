@@ -205,7 +205,7 @@ def get_post_attach(post, user):
                 for answer in survey.get_answers():
                     if answer.is_user_voted(user.pk):
                         vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
-                    answers = ''.join([answers, '<div class="lite_color answer_style', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span>', str(answer.get_procent()), '%</span></div>'])
+                    answers = ''.join([answers, '<div class="lite_color answer_style', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' <span class="count text-muted">', str(answer.get_count()), '</span></span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span>', str(answer.get_procent()), '%</span></div>'])
 
                 if survey.time_end:
                     time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
