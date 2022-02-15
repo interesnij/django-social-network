@@ -92,9 +92,9 @@ function photo_list_message_attach(block, title, pk, count) {
   show_message_form_send_btn();
 };
 
-function survey_message_attach(block, pk, container_html) {
+function survey_message_attach(block, pk, src, container_html) {
   is_full_message_attach();
-  div = create_preview_survey(pk, container_html);
+  div = create_preview_survey(pk, src, container_html);
   block.append(div);
   create_drag_attach_comment(block);
   add_file_message_attach();

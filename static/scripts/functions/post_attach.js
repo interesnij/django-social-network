@@ -142,9 +142,9 @@ function good_post_attach(block, src, pk, uuid, title) {
   is_full_attach();
 };
 
-function survey_post_attach(block, pk, container_html) {
+function survey_post_attach(block, pk, src, container_html) {
   is_full_attach();
-  div = create_preview_survey(pk, container_html);
+  div = create_preview_survey(pk, src, container_html);
   block.append(div);
   create_drag_attach_post(block);
   add_file_attach();
