@@ -21,7 +21,7 @@
                   {% for answer in survey.get_answers %}
                   <div class="form-group">
                     <div class="input-group">
-                      <input type="text" value="{{ survey.text }}" name="answers" placeholder="Вариант ответа" class="form-control answer">
+                      <input type="text" value="{{ answer.text }}" name="answers" placeholder="Вариант ответа" class="form-control answer">
                       <div class="input-group-append"><span class="input-group-text remove_answer pointer">x</span></div>
                     </div>
                   </div>
