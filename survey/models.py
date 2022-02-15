@@ -623,12 +623,12 @@ class Survey(models.Model):
         self.is_no_edited = is_no_edited
         self.time_end = time_end
         self.save()
-        if set(answers) != set(self.get_answers()):
-            answer_order = 0
-            Answer.objects.filter(survey=self).delete()
-            for answer in answers:
-                answer_order += 1
-                Answer.objects.create(survey=survey, text=answer, order=answer_order)
+
+        answer_order = 0
+        Answer.objects.filter(survey=self).delete()
+        for answer in answers:
+            answer_order += 1
+            Answer.objects.create(survey=self, text=answer, order=answer_order)
         return survey
 
     def is_user_voted(self, user_id):
