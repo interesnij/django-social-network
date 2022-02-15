@@ -185,7 +185,7 @@ def get_post_attach(post, user):
                     info = 'Пока никто не голосовал.'
 
                 if user.is_authenticated:
-                    footer = '<div class="card-footer position-relative"><button class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" data-pk="{{ object.pk }}" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
+                    footer = '<div class="card-footer position-relative"><button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" data-pk="{{ object.pk }}" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
                     if not survey.is_multiple:
                         multiple_class = 'no_multiple'
 
