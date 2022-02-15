@@ -1,6 +1,6 @@
 {% load user %}
 
-  <div class="mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+  <div class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
       <figure class="background-img">
           <img src="{{ object.get_image }}" alt="img">
       </figure>
@@ -32,7 +32,7 @@
       <form>
       <div class="container answers_container {% if not object.is_multiple %}no_multiple{% endif %}">
         <br>
-        <h4>{{ object.title }}</h4>
+        <h4 class="m-0">{{ object.title }}</h4>
         <p class="position-relative">
           <a href="{% url 'user' pk=object.creator.pk %}" class="underline ajax">
             {{ object.creator }}
