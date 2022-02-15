@@ -1,6 +1,6 @@
 {% load user %}
 
-  <div data-pk="{{ object.pk }}" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
+  <div data-pk="{{ object.pk }}" class="card mb-3 pb-1 border text-center position-relative box-shadow {% if object.is_no_edited %}no_edited{% endif %}" style="border-radius: .3rem;">
       <figure class="background-img">
           <img src="{{ object.get_image }}" alt="img">
       </figure>

@@ -106,12 +106,13 @@ on('#ajax', 'click', '.votes_remove', function() {
 on('#ajax', 'click', '#add_vote_survey_btn', function() {
   _this = this;
   form_post = _this.parentElement.parentElement;
+  block = form_post.parentElement
   form_data = new FormData(form_post);
   token = document.body.getAttribute("data-csrf");
 
   _this.disabled = true;
   link_ = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link_.open( 'POST', "/survey/vote/" + form_post.parentElement.getAttribute("data-pk") + "/", true );
+  link_.open( 'POST', "/survey/vote/" + block.getAttribute("data-pk") + "/", true );
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link_.setRequestHeader('X-CSRFToken', token);
 
@@ -139,12 +140,13 @@ on('#ajax', 'click', '#add_vote_survey_btn', function() {
       };
 
     };
-    dropdown_menu = form_post.previousElementSibling.querySelector(".dropdown-menu");
-    $span = document.createElement("span");
-    $span.classList.add("dropdown-item", "survey_unvote");
-    $span.innerHTML = 'Удалить голос';
-    dropdown_menu.prepend($span)
-
+    if (!block.classList.contains("no_edited")) {
+      dropdown_menu = form_post.previousElementSibling.querySelector(".dropdown-menu");
+      $span = document.createElement("span");
+      $span.classList.add("dropdown-item", "survey_unvote");
+      $span.innerHTML = 'Удалить голос';
+      dropdown_menu.prepend($span)
+    }
   } else { this.disabled = false };
 
   };
