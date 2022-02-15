@@ -909,9 +909,16 @@ on('body', 'click', '.doc_attach_list', function() {
 
 on('#ajax', 'click', '.survey_attach_remove', function() {
   block = this.parentElement.parentElement;
-  block.parentElement.nextElementSibling.querySelector(".attach_panel").style.display = "block";
   block.remove();
-  remove_file_attach();
+  if (document.body.querySelector(".message_attach_block")){
+    remove_file_message_attach()
+  }
+  else if (document.body.querySelector(".current_file_dropdown")){
+    remove_file_dropdown()
+  }
+  else if (document.body.querySelector(".attach_block")){
+    remove_file_attach()
+  }
 });
 
 on('#ajax', 'click', '.good_load_one', function() {

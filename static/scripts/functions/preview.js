@@ -230,7 +230,7 @@ function create_preview_survey(pk, src, container_html){
   };
 
   $a = document.createElement("a");
-  $a.classList.add("survey_attach_remove", "pointer");
+  $a.classList.add("survey_attach_remove", "pointer", "position-relative");
   $a.innerHTML = "Открепить";
 
   $container = document.createElement("div");
