@@ -169,7 +169,7 @@ def get_post_attach(post, user):
                 try:
                     from survey.models import Survey
                     survey = Survey.objects.get(pk=item[3:], type="PUB")
-                    vote_class, vote_svg, multiple_class, drops, footer, time_end, answers = "", "", "", "", "", "", ""
+                    vote_class, multiple_class, drops, footer, time_end, answers = "", "", "", "", "", ""
 
                     if survey.community:
                         owner_name, owner_link = survey.community.name, survey.community.get_link()
@@ -206,8 +206,13 @@ def get_post_attach(post, user):
                             drops += '<span class="dropdown-item create_claim">Пожаловаться</span>'
 
                     for answer in survey.get_answers():
-                        if answer.is_user_voted(user.pk):
-                            vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+                        try:
+                            if answer.is_user_voted(user.pk):
+                                vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+                            else:
+                                vote_svg = ""
+                        except:
+                            vote_svg = ""
                         answers = ''.join([answers, '<div data-pk=', str(answer.pk),' class="lite_color answer_style ', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' <span class="count text-muted small">', str(answer.get_count()), '</span></span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span><span class="procent">', str(answer.get_procent()), '%</span></span></div>'])
 
                     if survey.time_end:
