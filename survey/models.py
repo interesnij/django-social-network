@@ -670,7 +670,7 @@ class Survey(models.Model):
     def get_6_users(self):
         from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")[:6]
-        list = '<br>'
+        list = '<hr>'
         for voter in User.objects.filter(id__in=[i['user_id'] for i in voter_ids]):
             list += '<a class="pr-1" href="' + voter.get_link() + '" target="_blank" tooltip="' + voter.get_full_name() + '" flow="up">' + voter.get_s_avatar() + '</a>'
         return list
