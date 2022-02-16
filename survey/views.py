@@ -186,8 +186,8 @@ class SurveyVoters(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
-		if not self.survey.is_anonymous \
-		and not self.survey.type[0] != "_" \
+		if (not self.survey.is_anonymous \
+		or not self.survey.type[0] != "_") \
 		and self.survey.list.is_user_can_see_el(request.user.pk):
 			self.template_name = get_settings_template("survey/voters.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
