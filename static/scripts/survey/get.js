@@ -27,6 +27,6 @@ on('#ajax', 'click', '.add_answer', function() {
   answers = container.querySelectorAll(".answer");
   answers.length > 9 ? toast_error("Допустимо не больше 10 вариантов!") :
   (div = document.createElement("div"), div.classList.add("form-group"),
-  div.innerHTML = '<div class="input-group"><input type="text" name="answers" placeholder="Вариант ответа" class="form-control answer"><div class="input-group-append"><span class="input-group-text custom_color pointer remove_answer">x</span></div></div>',
+  div.innerHTML = '<div class="input-group"><div class="input-group-prepend"><span class="input-group-text handle">≡</span></div><input type="text" name="answers" placeholder="Вариант ответа" class="form-control answer"><div class="input-group-append"><span class="input-group-text custom_color pointer remove_answer">x</span></div></div>',
   container.append(div));
 });
