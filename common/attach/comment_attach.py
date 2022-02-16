@@ -227,7 +227,7 @@ def get_comment_attach(comment, user):
                     if survey.time_end:
                         time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
 
-                    block = ''.join([block, '<div data-pk="', str(survey.pk),'" class="card p-1 border text-center position-relative box-shadow">\
+                    block = ''.join([block, '<div data-pk="', str(survey.pk),'" class="card p-1 border text-center position-relative box-shadow" style="flex-basis: 100%;">\
                     <figure class="background-img"><img src="', survey.get_image(), '" alt="img" ></figure>\
                     <div class="dropdown"><a class="btn_default drop pointer" \
                     style="position:absolute;right:5px;top:5px;">\
