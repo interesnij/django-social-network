@@ -253,7 +253,8 @@ on('#ajax', 'click', '#edit_survey_btn', function() {
 
   link_.onreadystatechange = function () {
   if ( this.readyState == 4 && this.status == 200 ) {
-  toast_info("Опрос изменен!")
+  toast_info("Опрос изменен!");
+  close_work_fullscreen()
   }};
   link_.send(form_data);
 });
