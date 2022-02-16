@@ -656,6 +656,17 @@ class Survey(models.Model):
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")
         return User.objects.filter(id__in=[i['user_id'] for i in voter_ids])
 
+    def get_users_ru(self):
+        count = self.vote
+        a = count % 10
+        b = count % 100
+        if (a == 1) and (b != 11):
+            return "Проголосовал " + str(count) + " человек"
+        elif (a >= 2) and (a <= 4) and ((b < 10) or (b >= 20)):
+            return "Проголосовали " + str(count) + " человека"
+        else:
+            return "Проголосовали " + str(count) + " людей"
+
     def get_6_users(self):
         from users.models import User
         voter_ids = SurveyVote.objects.filter(answer__survey_id=self.pk).values("user_id")[:6]
