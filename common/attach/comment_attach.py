@@ -177,6 +177,8 @@ def get_comment_attach(comment, user):
             elif item[:3] == "sur":
                 try:
                     from survey.models import Survey
+                    from datetime import datetime
+
                     survey = Survey.objects.get(pk=item[3:], type="PUB")
                     vote_class, multiple_class, drops, footer, answers = "", "", "", "", ""
 
@@ -202,7 +204,7 @@ def get_comment_attach(comment, user):
                         if survey.is_user_voted(user.pk):
                             if not survey.is_no_edited:
                                 drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
-                        elif not survey.time_end:
+                        elif survey.time_end and survey.time_end > datetime.now(:
                             vote_class = "pointer survey_vote"
 
                         if survey.is_user_can_edit_delete_item(user):
