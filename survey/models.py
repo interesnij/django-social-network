@@ -537,7 +537,7 @@ class Survey(models.Model):
                 return '<p class="content-color-primary">Время опроса вышло.</p>'
             else:
                 from django.contrib.humanize.templatetags.humanize import naturaltime
-                return '<p class="content-color-primary">' + naturaltime(self.created) + "</p>"
+                return '<p class="content-color-primary">' + naturaltime(self.time_end) + "</p>"
         else:
             return '<p class="content-color-primary">Бессрочный опрос.</p>'
 
