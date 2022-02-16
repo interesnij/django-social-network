@@ -89,10 +89,9 @@ on('body', 'change', '.case_all_input', function() {
         jsonResponse = JSON.parse(link_.responseText);
         document.body.querySelector("#upload_video_pk").setAttribute("value", jsonResponse.pk)
       }
-      else {
-        elem = link_.responseText;
+      else { 
         response = document.createElement("span");
-        response.innerHTML = elem;
+        response.innerHTML = link_.responseText;
         lenta = form.parentElement.parentElement.parentElement.querySelector(".is_paginate");
         lenta.insertAdjacentHTML('afterBegin', response.innerHTML);
         lenta.querySelector(".items_empty") ? document.body.querySelector(".items_empty").style.display = "none" : null
