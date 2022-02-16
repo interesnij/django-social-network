@@ -13,7 +13,8 @@ from common.templates import (
 								get_template_user_list,
 								get_template_anon_user_list,
 								get_settings_template,
-								render_for_platform
+								render_for_platform,
+								get_default_template
 							)
 
 class SurveyView(ListView):
@@ -189,7 +190,7 @@ class SurveyVoters(ListView):
 		if (not self.survey.is_anonymous \
 		or not self.survey.type[0] != "_") \
 		and self.survey.list.is_user_can_see_el(request.user.pk):
-			self.template_name = get_settings_template("survey/voters.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.template_name = get_default_template("survey/", "voters.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			raise Http404
 		return super(SurveyVoters,self).get(request,*args,**kwargs)
