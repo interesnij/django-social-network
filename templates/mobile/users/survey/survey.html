@@ -40,9 +40,7 @@
             {{ object.creator }}
           </a>
         </p>
-        {% if object.time_end %}
-          <p class="content-color-primary">До {{ object.time_end }}</p>
-        {% endif %}
+        {{ object.get_time_description|safe }}
         <br>
 
         {% for answer in object.get_answers %}

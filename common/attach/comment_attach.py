@@ -178,7 +178,7 @@ def get_comment_attach(comment, user):
                 try:
                     from survey.models import Survey
                     survey = Survey.objects.get(pk=item[3:], type="PUB")
-                    vote_class, multiple_class, drops, footer, time_end, answers = "", "", "", "", "", ""
+                    vote_class, multiple_class, drops, footer, answers = "", "", "", "", ""
 
                     if survey.community:
                         owner_name, owner_link = survey.community.name, survey.community.get_link()
@@ -224,9 +224,6 @@ def get_comment_attach(comment, user):
                             vote_svg = ""
                         answers = ''.join([answers, '<div data-pk=', str(answer.pk),' class="lite_color answer_style ', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' <span class="count text-muted small">', str(answer.get_count()), '</span></span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span><span class="procent">', str(answer.get_procent()), '%</span></span></div>'])
 
-                    if survey.time_end:
-                        time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
-
                     block = ''.join([block, '<div data-pk="', str(survey.pk),'" class="card p-1 border text-center position-relative box-shadow" style="flex-basis: 100%;">\
                     <figure class="background-img"><img src="', survey.get_image(), '" alt="img" ></figure>\
                     <div class="dropdown"><a class="btn_default drop pointer" \
@@ -238,7 +235,7 @@ def get_comment_attach(comment, user):
                     '</div></div><form><div class="container answers_container ', multiple_class,\
                     '"> <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
                     <a href="', owner_link, '" class="underline ajax">', owner_name, '</a></p>',
-                    time_end, '<br>', answers, info, '</div>', footer, '</form></div>'])
+                    survey.get_time_description(), '<br>', answers, info, '</div>', footer, '</form></div>'])
                 except:
                     pass
             elif item[:3] == "use":

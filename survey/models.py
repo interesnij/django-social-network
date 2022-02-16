@@ -534,12 +534,12 @@ class Survey(models.Model):
         if self.time_end:
             from datetime import datetime, timedelta
             if self.time_end < datetime.now():
-                return '<p class="content-color-primary">Время опроса вышло.</p>'
+                return '<p class="small">Время опроса вышло.</p>'
             else:
                 from django.contrib.humanize.templatetags.humanize import naturaltime
-                return '<p class="content-color-primary">Окончание опроса истекает ' + naturaltime(self.time_end) + "</p>"
+                return '<p class="small">Окончание опроса истекает ' + naturaltime(self.time_end) + "</p>"
         else:
-            return '<p class="content-color-primary">Бессрочный опрос.</p>'
+            return '<p class="small">Бессрочный опрос.</p>'
 
     def is_can_edit(self):
         from datetime import datetime, timedelta
