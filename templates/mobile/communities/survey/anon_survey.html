@@ -1,31 +1,61 @@
-<div class="card" style="flex: 0 0 100%;">
-  <div class="mb-3 border text-center has-background-img position-relative box-shadow" style="padding: 2rem 1rem;border-radius: .3rem;">
+{% load user %}
+
+  <div data-pk="{{ object.pk }}" class="card mb-3 pb-1 border text-center position-relative box-shadow" style="border-radius: .3rem;">
       <figure class="background-img">
-        {% if object.image %}
-          <img src="{{ object.image.url }}" alt="user image">
-        {% endif %}
+          <img src="{{ object.get_image }}" alt="img">
       </figure>
-      <div class="container" style="list-style-type:none">
-        <i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i>
+
+      <div class="dropdown">
+          <a class="btn_default drop pointer" style="position:absolute;right:5px;top:5px;">
+              <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" data-type="sur{{ object.pk }}" style="top:30px;right:-10px;">
+            <span class="dropdown-item copy_link">Копировать ссылку</span>
+          </div>
+      </div>
+
+      <div>
+      <div class="container answers_container">
         <br>
-        <h4 class="">{{ object.title }}</h4>
-        <p class="content-color-primary underline">{{ object.creator }}</p>
+        <h4 class="m-0">{{ object.title }}</h4>
+        <p class="position-relative">
+          <a href="{% url 'community_detail' pk=object.community.pk %}" class="underline ajax">
+            {{ object.community.name }}
+          </a>
+        </p>
         {% if object.time_end %}
           <p class="content-color-primary">До {{ object.time_end }}</p>
         {% endif %}
         <br>
+
         {% for answer in object.get_answers %}
-        <div class="lite_color answer_style">
-          <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
-          <span class="progress_span_r">{{ answer.text }}</span>
-          <span class="progress_span_l" style="margin-left: auto;">{{ answer.get_count }}</span>
-        </div>
+
+          <div class="lite_color answer_style">
+            <div class="progress2" style="width:{{ answer.get_procent }}%;"></div>
+            <span class="progress_span_r">{{ answer.text }}
+              <span class="count text-muted">{{ answer.get_count }}</span>
+            </span>
+            <span class="progress_span_l" style="margin-left: auto;">
+              <span class="vote_svg"></span>
+              <span class="procent">{{ answer.get_procent }}%</span>
+            </span>
+          </div>
         {% endfor %}
+
         {% if object.is_have_votes %}
-          {{ object.get_users }}
+          {% if object.is_anonymous %}
+            Это анонимный опрос.
+          {% else %}
+          <a class="i_link survey_info pointer position-relative">{{ object.get_users_ru }}</a>
+
+          {{ object.get_6_users|safe }}
+          {% endif %}
         {% else %}
           Пока никто не голосовал.
         {% endif %}
       </div>
+      </div>
   </div>
-</div>
