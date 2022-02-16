@@ -287,8 +287,6 @@ class SurveyList(models.Model):
 
     def get_items(self):
         return self.survey_list.filter(type="PUB")
-    def get_manager_items(self):
-        return self.survey_list.filter(type="MAN")
     def count_items(self):
         return self.survey_list.exclude(type__contains="_").values("pk").count()
 
@@ -729,6 +727,7 @@ class Survey(models.Model):
 
         self.vote += 1
         self.save(update_fields=["vote"])
+
         for answer_id in votes:
             answer = Answer.objects.get(pk=answer_id)
             SurveyVote.objects.create(answer_id=answer_id, user=user)
@@ -753,6 +752,9 @@ class Survey(models.Model):
 
         if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
             return HttpResponse()
+        self.vote -= 1
+        self.save(update_fields=["vote"])
+
         data = []
         for answer in self.get_answers():
             if SurveyVote.objects.filter(answer_id=answer.pk, user=user).exists():
@@ -763,8 +765,6 @@ class Survey(models.Model):
                 except:
                     pass
             data.append(str(answer.pk) + "," + str(answer.get_count()) + "," + str(answer.get_procent()) + ";")
-        self.vote -= 1
-        self.save(update_fields=["vote"])
         return HttpResponse(data)
 
 

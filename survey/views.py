@@ -170,7 +170,7 @@ class SurveyDetail(TemplateView):
 
 	def get(self,request,*args,**kwargs):
 		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
-		if self.survey.is_user_can_see_el(request.user.pk):
+		if self.survey.list.is_user_can_see_el(request.user.pk):
 			self.template_name = get_settings_template("survey/survey.html", request.user, request.META['HTTP_USER_AGENT'])
 		else:
 			raise Http404
@@ -180,3 +180,24 @@ class SurveyDetail(TemplateView):
 		context = super(SurveyDetail,self).get_context_data(**kwargs)
 		context["object"] = self.survey
 		return context
+
+class SurveyVoters(ListView):
+	template_name = None
+
+	def get(self,request,*args,**kwargs):
+		self.survey = Survey.objects.get(pk=self.kwargs["pk"])
+		if not self.survey.is_anonymous \
+		and not self.survey.type[0] != "_" \
+		and self.survey.list.is_user_can_see_el(request.user.pk):
+			self.template_name = get_settings_template("survey/voters.html", request.user, request.META['HTTP_USER_AGENT'])
+		else:
+			raise Http404
+		return super(SurveyVoters,self).get(request,*args,**kwargs)
+
+	def get_context_data(self,**kwargs):
+		context = super(SurveyVoters,self).get_context_data(**kwargs)
+		context["survey"] = self.survey
+		return context
+
+	def get_queryset(self):
+		return self.survey.get_users()

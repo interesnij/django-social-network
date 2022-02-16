@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^vote/(?P<pk>\d+)/$', SurveyVote.as_view()),
     url(r'^unvote/(?P<pk>\d+)/$', SurveyUnVote.as_view()),
     url(r'^detail/(?P<pk>\d+)/$', SurveyDetail.as_view()),
+    url(r'^voters/(?P<pk>\d+)/$', SurveyVoters.as_view()),
 ]

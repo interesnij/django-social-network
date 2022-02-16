@@ -1,0 +1,11 @@
+{% load liked_user %}
+
+{% if object_list %}
+<span>Проголосовало {{ survey.vote }} {{ survey.vote|rupluralize:"человек,человека,людей" }}</span>
+
+<span style="display: flex;">
+  {% for voter in object_list %}
+    {% include 'desctop/generic/user/voter.html' %}
+  {% endfor %}
+</span>
+{% endif %}

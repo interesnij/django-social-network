@@ -14,6 +14,10 @@ on('#ajax', 'click', '.survey_edit', function() {
   create_fullscreen('/survey/edit/' + this.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen", true);
 });
 
+on('#ajax', 'click', '.survey_info', function() {
+  create_fullscreen('/survey/voters/' + this.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
+});
+
 on('#ajax', 'click', '#need_time_end', function() {
   this.parentElement.parentElement.nextElementSibling.classList.toggle("hide")
 });
