@@ -3,6 +3,9 @@
   height: 35px;
   width: 100%;
 }
+.t_f {
+  cursor: pointer;
+}
 .load_comments_list {
   cursor: pointer;
 }
