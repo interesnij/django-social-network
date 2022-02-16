@@ -137,12 +137,6 @@ function view_timer(count, list) {
 };
 
 function create_fullscreen(url, type_class, need_drag_items) {
-  if (need_drag_items) {
-    console.log("need_drag_items!");
-    get_dragula(".worker_drag_container")
-  } else {
-    need_drag_items = null
-  };
   container = document.body.querySelector("#fullscreens_container");
 
   if (container.innerHTML) {
@@ -259,7 +253,11 @@ function create_fullscreen(url, type_class, need_drag_items) {
             if ($loader.scrollHeight  > offset) {
               offset = $loader.scrollHeight;
               $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
-            };
+            }
+          };
+          if (need_drag_items) { 
+            console.log("need_drag_items!");
+            get_dragula(".worker_drag_container")
           }
       }
   };
