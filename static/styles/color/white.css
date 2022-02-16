@@ -39,7 +39,7 @@ a {
   color: #2a5885 !important;
   font-weight: 400;
 }
-.text_support a:hover, .pointer.i_link  {
+.text_support a:hover, .pointer.i_link:hover  {
   border-bottom: 1px solid #2a5885 !important;
   color: #2a5885 !important;
 }
