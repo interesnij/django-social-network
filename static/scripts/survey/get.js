@@ -23,7 +23,6 @@ on('#ajax', 'click', '#need_time_end', function() {
 });
 
 on('#ajax', 'click', '.remove_answer', function() {
-  this.parentElement.parentElement.parentElement.parentElement.querySelector(".answers_add_form").classList.remove("hidden");
   this.parentElement.parentElement.parentElement.remove()
 });
 on('#ajax', 'click', '.add_answer', function() {
