@@ -724,7 +724,7 @@ class Survey(models.Model):
         from django.http import HttpResponse
 
         if (self.time_end and self.time_end < datetime.now()) or user.is_voted_of_survey(self.pk):
-            pass
+            return HttpResponse()
         data = []
 
         self.vote += 1
@@ -752,7 +752,7 @@ class Survey(models.Model):
         from django.http import HttpResponse
 
         if not user.is_voted_of_survey(self.pk) or self.is_no_edited:
-            pass
+            return HttpResponse()
         data = []
         for answer in self.get_answers():
             if SurveyVote.objects.filter(answer_id=answer.pk, user=user).exists():
