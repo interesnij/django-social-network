@@ -136,7 +136,13 @@ function view_timer(count, list) {
     }, 1000);
 };
 
-function create_fullscreen(url, type_class) {
+function create_fullscreen(url, type_class, need_drag_items) {
+  if (need_drag_items) {
+    console.log("need_drag_items!");
+    get_dragula(".worker_drag_container")
+  } else {
+    need_drag_items = null
+  };
   container = document.body.querySelector("#fullscreens_container");
 
   if (container.innerHTML) {

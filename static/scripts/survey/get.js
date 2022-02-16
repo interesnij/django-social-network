@@ -8,7 +8,7 @@ on('#ajax', 'click', '.load_attach_survey_list', function() {
 });
 
 on('#ajax', 'click', '.add_survey', function() {
-  create_fullscreen('/survey/add_survey_in_list/' + this.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
+  create_fullscreen('/survey/add_survey_in_list/' + this.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen", true);
 });
 on('#ajax', 'click', '.survey_edit', function() {
   create_fullscreen('/survey/edit/' + this.parentElement.parentElement.parentElement.getAttribute("data-pk") + "/", "worker_fullscreen");
