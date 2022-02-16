@@ -417,7 +417,9 @@ function music_onReady(){console.log("Аудио плеер готов");}
     function music_onPlay(){
         div = document.createElement("div");
         div.innerHTML = music_player.getTrackTitle();
-        title = "¶ " + div.querySelector('span').innerHTML;
+        try{
+        title = "¶ " + div.querySelector('span').innerHTML}
+        catch {title = "Без названия"}
 
         console.log("Воспроизводится трек: " + title);
         document.title = title;
