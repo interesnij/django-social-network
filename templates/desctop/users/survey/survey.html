@@ -82,7 +82,7 @@
           {% if object.is_anonymous %}
             Это анонимный опрос.
           {% else %}
-          <p class="i_link survey_info pointer position-relative">Всего проголосовали: {{ object.vote }}</p>
+          <a class="i_link survey_info pointer position-relative">Всего проголосовали: {{ object.vote }}</a>
 
           {{ object.get_6_users|safe }}
           {% endif %}

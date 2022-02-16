@@ -180,7 +180,7 @@ def get_post_attach(post, user):
                         if survey.is_anonymous:
                             info = "Это анонимный опрос."
                         else:
-                            info = '<p class="i_link survey_info pointer position-relative">Всего проголосовали: ' + str(survey.vote) +'</p>' + survey.get_6_users()
+                            info = '<a class="i_link survey_info pointer position-relative">Всего проголосовали: ' + str(survey.vote) +'</a>' + survey.get_6_users()
                     else:
                         info = 'Пока никто не голосовал.'
 
