@@ -530,6 +530,17 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+    def get_time_description(self):
+        if self.time_end:
+            from datetime import datetime, timedelta
+            if self.time_end < datetime.now():
+                return '<p class="content-color-primary">Время опроса вышло.</p>'
+            else:
+                from django.contrib.humanize.templatetags.humanize import naturaltime
+                return '<p class="content-color-primary">' + naturaltime(self.created) + "</p>"
+        else:
+            return '<p class="content-color-primary">Бессрочный опрос.</p>'
+
     def is_can_edit(self):
         from datetime import datetime, timedelta
         return datetime.now() < self.created + timedelta(minutes=60)
