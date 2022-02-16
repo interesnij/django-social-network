@@ -1,203 +1,275 @@
 def get_message_attach(message, user):
     block = ''
     for item in message.attach.split(","):
-        if item[:3] == "pho":
-            try:
-                from gallery.models import Photo
-                photo = Photo.objects.get(pk=item[3:])
-                if photo.type[0] == "_":
+        if item[0] == "l":
+            if item[:3] == "lmu":
+                try:
+                    from music.models import MusicList
+                    playlist = MusicList.objects.get(pk=item[3:])
+                    if playlist.type[0] == "_":
+                        pass
+                    if playlist.community:
+                        creator, name, add, remove, repost = playlist.community, ": " + playlist.community.name, "c_add_music_list", "c_remove_music_list", "c_ucm_music_list_repost"
+                    else:
+                        creator, name, add, remove, repost = playlist.creator, playlist.creator.get_full_name_genitive(), "u_add_music_list", "u_remove_music_list", "u_ucm_music_list_repost"
+                    if playlist.image:
+                        image = '<img src="' + img_src + '" style="width:120px;height:120px;" alt="image">'
+                    else:
+                        image = '<svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
+                    repost_svg, add_svg = '', ''
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" playlist-pk="', str(playlist.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_music_list btn_default pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                except:
                     pass
-                block = ''.join([block, '<div class="photo" chat-pk="', str(message.chat.pk), '"><div class="progressive replace chat_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
-            except:
-                pass
-        elif item[:3] == "vid":
-            try:
-                from video.models import Video
-                video = Video.objects.get(pk=item[3:])
-                if video.type[0] == "_":
+            elif item[:3] == "lpo":
+                try:
+                    from posts.models import PostsList
+                    list = PostsList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                    if list.community:
+                        creator, name, img_src = list.community, ": " + list.community.name, list.community.get_bb_avatar()
+                    else:
+                        creator, name, img_src = list.creator, list.creator.get_full_name_genitive(), list.creator.get_bb_avatar()
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" postlist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_posts_list pointer"><img src="' + img_src + '" style="width:120px;height:120px;" alt="image"></a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_posts_list pointer">', list.name, '</h6><p>Список записей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Записей: ', str(list.count_items()), '</p></div></div></div></div>'])
+                except:
                     pass
-                if video.community:
-                    block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 c_message_video" video-pk="', str(video.pk), '" video-counter="0"></div></div>'])
-                else:
-                    block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_message_video" video-pk="', str(video.pk), '" video-counter="0"></div></div>'])
-            except:
-                pass
-        elif item[:3] == "goo":
-            try:
-                from goods.models import Good
-                good = Good.objects.get(pk=item[3:])
-                if good.type[0] == "_":
+            elif item[:3] == "ldo":
+                try:
+                    from docs.models import DocsList
+                    list = DocsList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                        if list.community:
+                            creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_doc_list", "c_remove_doc_list", "c_ucm_doc_list_repost"
+                    else:
+                        creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_doc_list", "u_remove_doc_list", "u_ucm_doc_list_repost"
+                    image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
+                    repost_svg, add_svg = '', ''
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" doclist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_doc_list btn_default pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_doc_list pointer">', list.name, '</h6><p>Список документов <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                except:
                     pass
-                if good.image:
-                    figure = '<figure class="background-img shadow-dark"><img class="image_fit opacity-100" src="', good.image.url, '" alt="img"></figure>'
-                else:
-                    figure = '<figure class="background-img shadow-dark"><svg class="image_fit svg_default opacity-100" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" /></svg>'
-                block = ''.join([block, '<div class="card has-background-img good_detail mb-3 pointer" good-pk="', good.pk, '" style="flex-basis: 100%;">', figure, '<div class="card-header"><div class="media"><div class="media-body"><h4 class="text-white mb-0">', good.title, '</h4></div></div></div><div class="card-body spantshirt"></div><div class="card-footer"><p class="small mb-1 text-success">', good.price, ' ₽</p></div></div>'])
-            except:
-                pass
-        elif item[:3] == "mus":
-            try:
-                from music.models import Music
-                music = Music.objects.get(pk=item[3:], type="PUB")
-                music_counter += 1
+            elif item[:3] == "lph":
+                try:
+                    from gallery.models import PhotoList
+                    list = PhotoList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                    if list.community:
+                        creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
+                    else:
+                        creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
+                        share_svg, add_svg = '', ''
+                    block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" owner-pk="', str(creator.pk), '" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
+                except:
+                    pass
+            elif item[:3] == "lgo":
+                try:
+                    from goods.models import GoodList
+                    list = GoodList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                    if list.community:
+                        creator, name, img_src = list.community, list.community.name, list.community.get_bb_avatar()
+                    else:
+                        creator, name, img_src = list.creator, list.creator.get_full_name(), list.creator.get_bb_avatar()
+                    share, add = '', ''
 
-                if user.is_authenticated:
-                    if music.community:
-                        case_add, case_edit, case_delete = "c_ucm_music_repost", "c_track_edit", "c_track_remove"
-                    else:
-                        case_add, case_edit, case_delete = "u_ucm_music_repost", "u_track_edit", "u_track_remove"
-                    drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
-                    if music.list.is_user_can_create_el(user.pk):
-                        drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
-                    if user.is_moderator():
-                        drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
-                    else:
-                        drops += '<span class="dropdown-item case_claim_track">Пожаловаться</span>'
-                span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
-
-                block = ''.join([block, '<div class="music" data-path="', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
-            except:
-                pass
-        elif item[:3] == "doc":
-            try:
-                from docs.models import Doc
-                doc = Doc.objects.get(pk=item[3:], type="PUB")
-                if user.is_authenticated:
-                    if doc.community:
-                        case_add, case_edit, case_delete = "c_ucm_doc_repost", "c_doc_edit", "c_doc_remove"
-                    else:
-                        case_add, case_edit, case_delete = "u_ucm_doc_repost", "u_doc_edit", "u_doc_remove"
-                    drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
-                    if doc.list.is_user_can_create_el(user.pk):
-                        drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
-                    if user.is_moderator():
-                        drops += '<span class="dropdown-item case_close_doc">Закрыть</span>'
-                    else:
-                        drops += '<span class="dropdown-item case_claim_doc">Пожаловаться</span>'
-
-                span_btn = ''.join(['<span class="span_btn" data-pk="', str(doc.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
-                block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
-            except:
-                pass
-        elif item[:3] == "sur":
-            try:
-                from survey.models import Survey
-                survey = Survey.objects.get(pk=item[3:])
-                if survey.type[0] == "_":
+                    block = ''.join([block, '<div goodlist-pk="', str(list.pk), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h6 class="content-color-primary mb-0 load_good_list pointer"><a>', list.name, '</a></h6></div><span class="small">', share, add, '</span></div><div class="centered no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="load_good_list pointer image_fit_small" src="', img_src, '" style="border-radius:50%" /></figure></div><h5 class="mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
+                except:
                     pass
-                _class, voted, answers, creator = "", "", "", survey.creator
-                if survey.commuity:
-                    survey_vote = "c_survey_vote "
-                    survey_detail = "c_survey_detail "
-                else:
-                    survey_vote = "u_survey_vote "
-                    survey_detail = "u_survey_detail "
-                if survey.is_time_end():
-                    time = "<p>Время голосования вышло</p>"
-                else:
-                    time = "<p>До " + str(survey.time_end) + "</p>"
-                    if user.is_authenticated and not survey.is_user_voted(user.pk):
-                        _class = " pointer " + survey_vote + str(survey.is_multiple)
-                if survey.image:
-                    image = '<img src="' + survey.image.url + '" alt="user image">'
-                else:
-                    image = ""
-                if survey.is_have_votes():
-                    voters = '<span class="' + survey_detail + 'pointer">'
-                    for user in survey.get_6_users():
-                        if user.s_avatar:
-                            img = '<img src="' + user.s_avatar.url + '" style="width: 40px;border-radius:40px;" alt="image">'
+            elif item[:3] == "lvi":
+                try:
+                    from video.models import VideoList
+                    list = VideoList.objects.get(pk=item[3:])
+                    if list.type[0] == "_":
+                        pass
+                    if list.community:
+                        creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_video_list", "c_remove_video_list", "c_ucm_video_list_repost"
+                    else:
+                        creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_video_list", "u_remove_video_list", "u_ucm_video_list_repost"
+                    image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
+                    repost_svg, add_svg = '', ''
+
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" videolist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_video_list btn_default pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
+                except:
+                    pass
+        else:
+            if item[:3] == "pho":
+                try:
+                    from gallery.models import Photo
+                    photo = Photo.objects.get(pk=item[3:])
+                    if photo.type[0] == "_":
+                        pass
+                    block = ''.join([block, '<div class="photo" chat-pk="', str(message.chat.pk), '"><div class="progressive replace chat_photo pointer" data-href="', photo.file.url, '" photo-pk="', str(photo.pk), '"><img class="preview image_fit" width="20" height="15" loading="lazy" src="', photo.preview.url,'" alt="img"></div></div>'])
+                except:
+                    pass
+            elif item[:3] == "vid":
+                try:
+                    from video.models import Video
+                    video = Video.objects.get(pk=item[3:])
+                    if video.type[0] == "_":
+                        pass
+                        if video.community:
+                            block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 c_message_video" video-pk="', str(video.pk), '" video-counter="0"></div></div>'])
                         else:
-                            img = '<img src="/static/images/no_img/user.jpg" style="width: 40px;border-radius:40px;" alt="image">'
-                    voters += '<figure class="staked">' + img + '</figure>'
-                else:
-                    voters = 'Пока никто не голосовал. Станьте первым!'
-                for answer in survey.get_answers():
-                    if answer.is_user_voted(user.pk):
-                        voted = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
-                    answers = ''.join([answers, '<div class="lite_color answer_style', _class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' - ', str(answer.get_count()), '</span><span class="progress_span_l" style="margin-left: auto;">', voted, str(answer.get_procent()), '%</span></div>'])
-                block = ''.join([block, '<div style="flex: 0 0 100%;" survey-pk="', str(survey.pk), '" data-pk="', str(creator.pk), '" class="border text-center has-background-img position-relative box-shadow"><figure class="background-img">', image, '</figure><div class="container" style="list-style-type:none"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none border-bottom"></i><br><h4 class="', survey_detail,  '"pointer">', survey.title, '</h4><a class="underline ajax" href="', creator.get_link(), '">', str(creator), '</a>', time, '<br>', answers, voters, '</span></div></div>'])
-            except:
-                pass
-        elif item[:3] == "lmu":
-            try:
-                from music.models import MusicList
-                playlist = MusicList.objects.get(pk=item[3:])
-                if playlist.type[0] == "_":
+                            block = ''.join([block, '<div class="video"><img class="image_fit" src="', video.image.url, '" alt="img"><div class="video_icon_play_v2 u_message_video" video-pk="', str(video.pk), '" video-counter="0"></div></div>'])
+                except:
                     pass
-                if playlist.community:
-                    creator, name, add, remove, repost = playlist.community, ": " + playlist.community.name, "c_add_music_list", "c_remove_music_list", "c_ucm_music_list_repost"
-                else:
-                    creator, name, add, remove, repost = playlist.creator, playlist.creator.get_full_name_genitive(), "u_add_music_list", "u_remove_music_list", "u_ucm_music_list_repost"
-                if playlist.image:
-                    image = '<img src="' + playlist.image.url + '" style="width:120px;height:120px;" alt="image">'
-                else:
-                    image = '<svg fill="currentColor" class="svg_default border" style="width:120px;height:120px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>'
-                repost_svg, add_svg = '', ''
+            elif item[:3] == "goo":
+                try:
+                    from goods.models import Good
+                    good = Good.objects.get(pk=item[3:], type="PUB")
+                    if good.image:
+                        figure = '<figure class="background-img shadow-dark"><img class="image_fit opacity-100" src="', good.image.url, '" alt="img"></figure>'
+                    else:
+                        figure = '<figure class="background-img shadow-dark"><svg class="image_fit svg_default opacity-100" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" /></svg>'
+                    block = ''.join([block, '<div class="card has-background-img good_detail mb-3 pointer" good-pk="', good.pk, '" style="flex-basis: 100%;">', figure, '<div class="card-header"><div class="media"><div class="media-body"><h4 class="text-white mb-0">', good.title, '</h4></div></div></div><div class="card-body spantshirt"></div><div class="card-footer"><p class="small mb-1 text-success">', good.price, ' ₽</p></div></div>'])
+                except:
+                    pass
+            elif item[:3] == "mus":
+                try:
+                    from music.models import Music
+                    music = Music.objects.get(pk=item[3:], type="PUB")
+                    music_counter += 1
+                    span_btn = ''
 
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" playlist-pk="', str(playlist.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_music_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_music_list pointer">', playlist.name, '</h6><p>Плейлист <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Треков: ', str(playlist.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
-            except:
-                pass
-        elif item[:3] == "ldo":
-            try:
-                from docs.models import DocsList
-                list = DocsList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
+                    if user.is_authenticated:
+                        if music.community:
+                            case_add, case_edit, case_delete = "c_ucm_music_repost", "c_track_edit", "c_track_remove"
+                        else:
+                            case_add, case_edit, case_delete = "u_ucm_music_repost", "u_track_edit", "u_track_remove"
+                        drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                        if music.list.is_user_can_create_el(user.pk):
+                            drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
+                        elif user.is_moderator():
+                            drops += '<span class="dropdown-item case_close_track">Закрыть</span>'
+                        else:
+                            drops += '<span class="dropdown-item case_claim_track">Пожаловаться</span>'
+                    span_btn = ''.join(['<span class="span_btn" data-pk="', str(music.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                    block = ''.join([block, '<div class="music" data-path="', music.file.url, '" data-duration="', music.get_duration(), '" style="flex-basis: auto;width:100%;position: relative;"><div class="media" music-counter="', str(music_counter), '">', music.get_s_image(), '<div class="media-body" style="display: flex;"><h6 class="music_list_post music_title"><a>', music.title, '</a></h6>', span_btn, '</div></div></div>'])
+                except:
                     pass
-                if list.community:
-                    creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_doc_list", "c_remove_doc_list", "c_ucm_doc_list_repost"
-                else:
-                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_doc_list", "u_remove_doc_list", "u_ucm_doc_list_repost"
-                image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
-                repost_svg, add_svg = '', ''
+            elif item[:3] == "doc":
+                try:
+                    from docs.models import Doc
+                    doc = Doc.objects.get(pk=item[3:], type="PUB")
+                    span_btn = ''
+                    if user.is_authenticated:
+                        if doc.community:
+                            case_add, case_edit, case_delete = "c_ucm_doc_repost", "c_doc_edit", "c_doc_remove"
+                        else:
+                            case_add, case_edit, case_delete = "u_ucm_doc_repost", "u_doc_edit", "u_doc_remove"
+                        drops = '<span class="dropdown-item ' + case_add + '">Добавить</span><span class="dropdown-item case_copy_link" data-link="">Копировать ссылку</span>'
+                        if doc.list.is_user_can_create_el(user.pk):
+                            drops += '<span class="dropdown-item ' + case_edit + '">Изменить</span><span class="dropdown-item ' + case_delete + '">Удалить</span>'
+                        elif user.is_moderator():
+                            drops += '<span class="dropdown-item case_close_doc">Закрыть</span>'
+                        else:
+                            drops += '<span class="dropdown-item case_claim_doc">Пожаловаться</span>'
 
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" doclist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_doc_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_doc_list pointer">', list.name, '</h6><p>Список документов <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Документов: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
-            except:
-                pass
-        elif item[:3] == "lph":
-            try:
-                from gallery.models import PhotoList
-                list = PhotoList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
+                        span_btn = ''.join(['<span class="span_btn" data-pk="', str(doc.pk), '"><span class="dropdown" style="position: inherit;"><a class="btn_default drop pointer"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 25px;">', drops , '</div></span</span>'])
+                    block = ''.join([block, '<div style="flex-basis: 100%;margin-bottom:10px"><div class="media" style="position: relative;"><svg fill="currentColor" class="svg_default" style="width:45px;margin: 0;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><div class="media-body doc_media_body"><h6 class="pointer mb-0" style="width: 84%;overflow: hidden;"><a href="', doc.file.url, '" target="_blank" rel="nofollow">', doc.title, '</a></h6><span class="small">', str(doc.file.size), ' | ', doc.get_mime_type(), '</span>', span_btn, '</div></div></div>'])
+                except:
                     pass
-                if list.community:
-                    creator, name, add, remove, repost = list.community, list.community.name, "c_add_photo_list", "c_remove_photo_list", "c_ucm_photo_list_repost"
-                else:
-                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name(), "u_add_photo_list", "u_remove_photo_list", "u_ucm_photo_list_repost"
-                    share_svg, add_svg = '', ''
-                block = ''.join([block, '<div class="custom_color mb-1 text-center has-background-img position-relative box-shadow" owner-pk="', str(creator.pk), '" photolist-pk="', str(list.pk), '" style="width: 100%;flex-basis: 100%;"><figure class="background-img"><img src="', list.get_cover_photo(), '">"</figure><div class="container"><i class="figure avatar120 mr-0 fa fa-gift rounded-circle bg-none"></i><br><h4 class="load_photo_list pointer"><a>', list.name, '</a></h4><p class="lead"><a class="ajax underline" href="', creator.get_link(), '">', name, '</a></p><hr class="my-3"><a class="load_photo_list pointer">', list.count_items_ru(), '</a><div class="row">', share_svg, add_svg, '</div>', '</div></div>'])
-            except:
-                pass
-        elif item[:3] == "lgo":
-            try:
-                from goods.models import GoodList
-                list = GoodList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
-                    pass
-                if list.community:
-                    creator, name, img_src = list.community, list.community.name, list.community.get_bb_avatar()
-                else:
-                    creator, name, img_src = list.creator, list.creator.get_full_name(), list.creator.get_bb_avatar()
-                share, add = '', ''
-                block = ''.join([block, '<div owner-pk="', str(creator.pk), '" goodlist-pk="', str(list.pk), '" style="padding: 7px;width: 100%;flex-basis: 100%"><div class="media mb-2"><div class="media-body"><h6 class="content-color-primary mb-0 load_good_list pointer"><a>', list.name, '</a></h6></div><span class="small">', share, add, '</span></div><div class="centered no-gutters"><figure class="mx-auto mb-3" style="width:120px"><img class="load_good_list pointer image_fit_small" src="', img_src, '" style="border-radius:50%" /></figure></div><h5 class="card-title mb-2 header-color-primary text-center"><a href="', creator.get_link(), '" class="ajax underline">', name, '</a></h5><h6 class="card-subtitle header-color-secondary text-center">', list.count_items_ru(), '</h6></div>'])
-            except:
-                pass
-        elif item[:3] == "lvi":
-            try:
-                from video.models import VideoList
-                list = VideoList.objects.get(pk=item[3:])
-                if list.type[0] == "_":
-                    pass
-                if list.community:
-                    creator, name, add, remove, repost = list.community, ": " + list.community.name, "c_add_video_list", "c_remove_video_list", "c_ucm_video_list_repost"
-                else:
-                    creator, name, add, remove, repost = list.creator, list.creator.get_full_name_genitive(), "u_add_video_list", "u_remove_video_list", "u_ucm_video_list_repost"
-                image = '<svg fill="currentColor" class="svg_default border" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
-                repost_svg, add_svg = '', ''
+            elif item[:3] == "sur":
+                try:
+                    from survey.models import Survey
+                    survey = Survey.objects.get(pk=item[3:], type="PUB")
+                    vote_class, multiple_class, drops, footer, time_end, answers = "", "", "", "", "", ""
 
-                block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" owner-pk="', str(creator.pk), '" videolist-pk="', str(list.pk), '" style="padding: 8px;padding-bottom: 0;"><div style="display:flex"><figure><a class="load_video_list pointer">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><h6 class="my-0 mt-1 load_video_list pointer">', list.name, '</h6><p>Список видеозаписей <a style="vertical-align: baseline;" class="ajax underline" href="', creator.get_link(), '">', name, '</a><br>Видеозаписей: ', str(list.count_items()), '</p></div><span class="playlist_share">', add_svg, repost_svg, '</span></div></div></div>'])
-            except:
-                pass
+                    if survey.community:
+                        owner_name, owner_link = survey.community.name, survey.community.get_link()
+                    else:
+                        owner_name, owner_link = survey.creator.get_full_name(), survey.creator.get_link()
+
+                    if survey.is_have_votes():
+                        if survey.is_anonymous:
+                            info = "Это анонимный опрос."
+                        else:
+                            info = '<a class="i_link survey_info pointer position-relative">' + survey.get_users_ru() +'</a>' + survey.get_6_users()
+                    else:
+                        info = 'Пока никто не голосовал.'
+
+                    if user.is_authenticated:
+                        footer = '<div class="card-footer position-relative"><button type="button" class="btn hidden btn-sm float-left border votes_remove">Отмена</button><button id="add_vote_survey_btn" type="button" class="btn hidden btn-sm btn-success float-right">Проголосовать</button></div>'
+                        if not survey.is_multiple:
+                            multiple_class = 'no_multiple'
+
+                        drops = '<span class="dropdown-item create_repost">Добавить</span>'
+                        if survey.is_user_voted(user.pk):
+                            if not survey.is_no_edited:
+                                drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
+                        elif not survey.time_end:
+                            vote_class = "pointer survey_vote"
+
+                        if survey.is_user_can_edit_delete_item(user):
+                            if survey.is_can_edit():
+                                drops += '<span class="dropdown-item survey_edit">Изменить</span>'
+                            drops += '<span class="dropdown-item survey_remove">Удалить</span>'
+                        elif user.is_moderator():
+                            drops += '<span class="dropdown-item create_close">Закрыть</span>'
+                        else:
+                            drops += '<span class="dropdown-item create_claim">Пожаловаться</span>'
+
+                    for answer in survey.get_answers():
+                        try:
+                            if answer.is_user_voted(user.pk):
+                                vote_svg = '<svg fill="currentColor" style="width:15px;height:15px;" class="svg_default" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>'
+                            else:
+                                vote_svg = ""
+                        except:
+                            vote_svg = ""
+                        answers = ''.join([answers, '<div data-pk=', str(answer.pk),' class="lite_color answer_style ', vote_class, '"><div class="progress2" style="width:', str(answer.get_procent()), '%;"></div><span class="progress_span_r">', answer.text, ' <span class="count text-muted small">', str(answer.get_count()), '</span></span><span class="progress_span_l" style="margin-left: auto;"><span class="vote_svg">', vote_svg, '</span><span class="procent">', str(answer.get_procent()), '%</span></span></div>'])
+
+                    if survey.time_end:
+                        time_end = '<p class="content-color-primary">До ', survey.time_end, '</p>'
+
+                    block = ''.join([block, '<div data-pk="', str(survey.pk),'" class="card p-1 border text-center position-relative box-shadow">\
+                    <figure class="background-img"><img src="', survey.get_image(), '" alt="img" ></figure>\
+                    <div class="dropdown"><a class="btn_default drop pointer" \
+                    style="position:absolute;right:5px;top:5px;">\
+                    <svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>\
+                    </a><div class="dropdown-menu dropdown-menu-right" \
+                    data-type="sur', str(survey.pk), '" style="top:30px;right:-10px;"> \
+                    <span class="dropdown-item copy_link">Копировать ссылку</span>', drops, \
+                    '</div></div><form><div class="container answers_container ', multiple_class,\
+                    '"> <br><h4 class="m-0">', survey.title, '</h4><p class="position-relative">\
+                    <a href="', owner_link, '" class="underline ajax">', owner_name, '</a></p>',
+                    time_end, '<br>', answers, info, '</div>', footer, '</form></div>'])
+                except:
+                    pass
+            elif item[:3] == "use":
+                try:
+                    from users.models import User
+                    user = User.objects.get(pk=item[3:])
+                    if user.type[0] == "_":
+                        pass
+                    span_btn = ''
+
+                    image = '<img src="' + user.get_bb_avatar() + '" alt="img" style="width: 80px;">'
+                    repost_svg, add_svg = '', ''
+
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', user.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', user.get_link(), '" class="my-0 mt-1 ajax">', user.get_full_name(), '</a><p>', user.get_online_status(), '<br>Друзей: ', str(user.profile.friends), '</p></div></div></div></div>'])
+                except:
+                    pass
+            elif item[:3] == "com":
+                try:
+                    from communities.models import Community
+                    community = Community.objects.get(pk=item[3:])
+                    if community.type[0] == "_":
+                        pass
+                    span_btn = ''
+
+                    image = '<img src="' + community.get_bb_avatar() + '" alt="img" style="width: 120px;">'
+                    repost_svg, add_svg = '', ''
+                    if community.description:
+                        description = community.description
+                    else:
+                        description = community.category.name
+
+                    block = ''.join([block, '<div style="flex-basis: 100%;" class="card"><div class="card-body" style="padding: 5px"><div style="display:flex"><figure><a class="ajax" href="', community.get_link(), '">', image, '</a></figure><div class="media-body" style="margin-left: 10px;"><a href="', community.get_link(), '" class="my-0 mt-1 ajax">', community.name, '</a><p>', description, '<br>Подписчиков: ', str(community.community_info.members), '</p></div></div></div></div>'])
+                except:
+                    pass
     return ''.join(["<div class='attach_container'>", block, "</div>"])
 
 

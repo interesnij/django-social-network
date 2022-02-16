@@ -57,7 +57,7 @@ body {
   color: #282C34 !important;
   font-weight: 400;
 }
-.text_support a:hover {
+.text_support a:hover, .pointer.i_link:hover {
   border-bottom: 1px solid #282C34 !important;
   color: #282C34 !important;
 }
