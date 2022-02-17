@@ -197,9 +197,6 @@ def get_post_attach(post, user):
                                 drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
                         elif survey.time_end and survey.time_end > datetime.now():
                             vote_class = "pointer survey_vote"
-                        elif survey.time_end:
-                            if survey.time_end > datetime.now():
-                                vote_class = "pointer survey_vote"
                         else:
                             vote_class = "pointer survey_vote"
 
