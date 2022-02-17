@@ -377,6 +377,8 @@ class MusicList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return self.type[:4] == "_SUS"
 
     @classmethod
     def create_list(cls,creator,name,description,community,can_see_el,create_el,copy_el,can_see_el_users,create_el_users,copy_el_users):
@@ -571,6 +573,41 @@ class MusicList(models.Model):
         if self.type == "_CLO":
             self.type = MusicList.LIST
         elif self.type == "_CLOM":
+            self.type = MusicList.MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPlayListPosition
+            CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserPlayListPosition
+            UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def suspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = MusicList.SUSPENDED
+        elif self.type == "MAI":
+            self.type = MusicList.SUSPENDED_MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPlayListPosition
+            CommunityPlayListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserPlayListPosition
+            UserPlayListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+        if Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="DOL", object_id=self.pk, verb="ITE").update(status="C")
+    def unsuspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "_SUS":
+            self.type = MusicList.LIST
+        elif self.type == "_SUSM":
             self.type = MusicList.MAIN
         self.save(update_fields=['type'])
         if self.community:

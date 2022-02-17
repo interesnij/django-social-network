@@ -302,8 +302,6 @@ class SurveyList(models.Model):
         return self.type == self.MAIN
     def is_list(self):
         return self.type == self.LIST
-    def is_private(self):
-        return False
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
@@ -312,6 +310,8 @@ class SurveyList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return self.type[:4] == "_SUS"
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
@@ -425,8 +425,6 @@ class SurveyList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = SurveyList.DELETED
-        elif self.type == "MAN":
-            self.type = SurveyList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunitySurveyListPosition
@@ -440,10 +438,8 @@ class SurveyList(models.Model):
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
     def restore_item(self):
         from notify.models import Notify, Wall
-        if self.type == "TDEL":
+        if self.type == "_DEL":
             self.type = SurveyList.LIST
-        elif self.type == "TDELM":
-            self.type = SurveyList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunitySurveyListPosition
@@ -462,8 +458,6 @@ class SurveyList(models.Model):
             self.type = SurveyList.CLOSED
         elif self.type == "MAI":
             self.type = SurveyList.CLOSED_MAIN
-        elif self.type == "MAN":
-            self.type = SurveyList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunitySurveyListPosition
@@ -477,12 +471,45 @@ class SurveyList(models.Model):
             Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "TCLO":
+        if self.type == "_CLO":
             self.type = SurveyList.LIST
-        elif self.type == "TCLOM":
+        elif self.type == "_CLOM":
             self.type = SurveyList.MAIN
-        elif self.type == "TCLOM":
-            self.type = SurveyList.MANAGER
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def suspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = SurveyList.SUSPENDED
+        elif self.type == "MAI":
+            self.type = SurveyList.SUSPENDED_MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunitySurveyListPosition
+            CommunitySurveyListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserSurveyListPosition
+            UserSurveyListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+        if Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="SUL", object_id=self.pk, verb="ITE").update(status="C")
+    def unsuspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "_SUS":
+            self.type = SurveyList.LIST
+        elif self.type == "_SUSM":
+            self.type = SurveyList.MAIN
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunitySurveyListPosition

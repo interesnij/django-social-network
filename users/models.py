@@ -575,20 +575,6 @@ class User(AbstractUser):
         self.delete_notify_subscriber_from_main_list(user_id)
         return user_to_block
 
-    def search_followers_with_query(self, query):
-        followers_query = Q(follows__followed_user_id=self.pk, is_deleted=False)
-        names_query = Q(username__icontains=query)
-        names_query.add(Q(profile__name__icontains=query), Q.OR)
-        followers_query.add(names_query, Q.AND)
-        return User.objects.filter(followers_query).distinct()
-
-    def search_followings_with_query(self, query):
-        followings_query = Q(followers__user_id=self.pk, is_deleted=False)
-        names_query = Q(username__icontains=query)
-        names_query.add(Q(profile__name__icontains=query), Q.OR)
-        followings_query.add(names_query, Q.AND)
-        return User.objects.filter(followings_query).distinct()
-
     '''''проверки is для подписчиков  113-169'''''
 
     def is_connected_with_user(self, user):
@@ -766,62 +752,92 @@ class User(AbstractUser):
         self.profile.photos += count
         return self.profile.save(update_fields=['photos'])
     def minus_photos(self, count):
-        self.profile.photos -= count
-        return self.profile.save(update_fields=['photos'])
+        try:
+            self.profile.photos -= count
+            return self.profile.save(update_fields=['photos'])
+        except:
+            pass
     def plus_goods(self, count):
         self.profile.goods += count
         return self.profile.save(update_fields=['goods'])
     def minus_goods(self, count):
-        self.profile.goods -= count
-        return self.profile.save(update_fields=['goods'])
+        try:
+            self.profile.goods -= count
+            return self.profile.save(update_fields=['goods'])
+        except:
+            pass
     def plus_posts(self, count):
         self.profile.posts += count
         return self.profile.save(update_fields=['posts'])
     def minus_posts(self, count):
-        self.profile.posts -= count
-        return self.profile.save(update_fields=['posts'])
+        try:
+            self.profile.posts -= count
+            return self.profile.save(update_fields=['posts'])
+        except:
+            pass
     def plus_videos(self, count):
         self.profile.videos += count
         return self.profile.save(update_fields=['videos'])
     def minus_videos(self, count):
-        self.profile.videos -= count
-        return self.profile.save(update_fields=['videos'])
+        try:
+            self.profile.videos -= count
+            return self.profile.save(update_fields=['videos'])
+        except:
+            pass
     def plus_docs(self, count):
         self.profile.docs += count
         return self.profile.save(update_fields=['docs'])
     def minus_docs(self, count):
-        self.profile.docs -= count
-        return self.profile.save(update_fields=['docs'])
+        try:
+            self.profile.docs -= count
+            return self.profile.save(update_fields=['docs'])
+        except:
+            pass
     def plus_tracks(self, count):
         self.profile.tracks += count
         return self.profile.save(update_fields=['tracks'])
     def minus_tracks(self, count):
-        self.profile.tracks -= count
-        return self.profile.save(update_fields=['tracks'])
+        try:
+            self.profile.tracks -= count
+            return self.profile.save(update_fields=['tracks'])
+        except:
+            pass
     def plus_communities(self, count):
         self.profile.communities += count
         return self.profile.save(update_fields=['communities'])
     def minus_communities(self, count):
-        self.profile.communities -= count
-        return self.profile.save(update_fields=['communities'])
+        try:
+            self.profile.communities -= count
+            return self.profile.save(update_fields=['communities'])
+        except:
+            pass
     def plus_articles(self, count):
         self.profile.articles += count
         return self.profile.save(update_fields=['articles'])
     def minus_articles(self, count):
-        self.profile.articles -= count
-        return self.profile.save(update_fields=['articles'])
+        try:
+            self.profile.articles -= count
+            return self.profile.save(update_fields=['articles'])
+        except:
+            pass
     def plus_friends(self, count):
         self.profile.friends += count
         return self.profile.save(update_fields=['friends'])
     def minus_friends(self, count):
-        self.profile.friends -= count
-        return self.profile.save(update_fields=['friends'])
+        try:
+            self.profile.friends -= count
+            return self.profile.save(update_fields=['friends'])
+        except:
+            pass
     def plus_follows(self, count):
         self.profile.follows += count
         return self.profile.save(update_fields=['follows'])
     def minus_follows(self, count):
-        self.profile.follows -= count
-        return self.profile.save(update_fields=['follows'])
+        try:
+            self.profile.follows -= count
+            return self.profile.save(update_fields=['follows'])
+        except:
+            pass
 
 
     ''''' GET всякие  219-186 '''''

@@ -427,6 +427,8 @@ class VideoList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return self.type[:4] == "_SUS"
 
     def get_users_ids(self):
         users = self.users.exclude(type__contains="_").values("pk")
@@ -730,8 +732,6 @@ class VideoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "LIS":
             self.type = VideoList.DELETED
-        elif self.type == "MAN":
-            self.type = VideoList.DELETED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityVideoListPosition
@@ -747,8 +747,6 @@ class VideoList(models.Model):
         from notify.models import Notify, Wall
         if self.type == "_DEL":
             self.type = VideoList.LIST
-        elif self.type == "_DELM":
-            self.type = VideoList.MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityVideoListPosition
@@ -767,8 +765,6 @@ class VideoList(models.Model):
             self.type = VideoList.CLOSED
         elif self.type == "MAI":
             self.type = VideoList.CLOSED_MAIN
-        elif self.type == "MAN":
-            self.type = VideoList.CLOSED_MANAGER
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityVideoListPosition
@@ -786,8 +782,41 @@ class VideoList(models.Model):
             self.type = VideoList.LIST
         elif self.type == "_CLOM":
             self.type = VideoList.MAIN
-        elif self.type == "_CLOM":
-            self.type = VideoList.MANAGER
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityVideoListPosition
+            CommunityVideoListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserVideoListPosition
+            UserVideoListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def suspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = VideoList.SUSPENDED
+        elif self.type == "MAI":
+            self.type = VideoList.SUSPENDED_MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityVideoListPosition
+            CommunityVideoListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserVideoListPosition
+            UserVideoListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+        if Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
+    def unsuspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "_SUS":
+            self.type = VideoList.LIST
+        elif self.type == "_SUSM":
+            self.type = VideoList.MAIN
         self.save(update_fields=['type'])
         if self.community:
             from communities.model.list import CommunityVideoListPosition

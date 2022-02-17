@@ -641,6 +641,8 @@ class PostsList(models.Model):
         return self.is_list()
     def is_have_get(self):
         return self.is_list() or self.is_main()
+    def is_suspended(self):
+        return self.type[:4] == "_SUS"
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):
@@ -785,6 +787,41 @@ class PostsList(models.Model):
         if self.type == "_CLO":
             self.type = PostsList.LIST
         elif self.type == "_CLOM":
+            self.type = PostsList.MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def suspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PostsList.SUSPENDED
+        elif self.type == "MAI":
+            self.type = PostsList.SUSPENDED_MAIN
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPostsListPosition
+            CommunityPostsListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserPostsListPosition
+            UserPostsListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+        if Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
+    def unsuspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "_SUS":
+            self.type = PostsList.LIST
+        elif self.type == "_SUSM":
             self.type = PostsList.MAIN
         self.save(update_fields=['type'])
         if self.community:

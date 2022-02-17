@@ -413,6 +413,8 @@ class GoodList(models.Model):
 		return self.type[:4] == "_DEL"
 	def is_closed(self):
 		return self.type[:4] == "_CLO"
+	def is_suspended(self):
+		return self.type[:4] == "_SUS"
 
 	def get_items(self):
 		return self.good_list.filter(type="PUB")
@@ -792,6 +794,41 @@ class GoodList(models.Model):
 		if self.type == "_CLO":
 			self.type = GoodList.LIST
 		elif self.type == "_CLOM":
+			self.type = GoodList.MAIN
+		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="R")
+
+	def close_item(self):
+		from notify.models import Notify, Wall
+		if self.type == "LIS":
+			self.type = GoodList.SUSPENDED
+		elif self.type == "MAI":
+			self.type = GoodList.SUSPENDED_MAIN
+		self.save(update_fields=['type'])
+		if self.community:
+			from communities.model.list import CommunityGoodListPosition
+			CommunityGoodListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+		else:
+			from users.model.list import UserGoodListPosition
+			UserGoodListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+		if Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Notify.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
+		if Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").exists():
+			Wall.objects.filter(type="GOL", object_id=self.pk, verb="ITE").update(status="C")
+	def unsuspend_item(self):
+		from notify.models import Notify, Wall
+		if self.type == "_SUS":
+			self.type = GoodList.LIST
+		elif self.type == "_SUSM":
 			self.type = GoodList.MAIN
 		self.save(update_fields=['type'])
 		if self.community:

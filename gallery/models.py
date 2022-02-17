@@ -400,7 +400,7 @@ class PhotoList(models.Model):
     def is_closed(self):
         return self.type[:4] == "_CLO"
     def is_suspended(self):
-        return False
+        return self.type[:4] == "_SUS"
 
     def get_cover_photo(self):
         if self.cover_photo:
@@ -794,6 +794,49 @@ class PhotoList(models.Model):
         elif self.type == "_CLOW":
             self.type = PhotoList.WALL
         elif self.type == "_CLOA":
+            self.type = PhotoList.AVATAR
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPhotoListPosition
+            CommunityPhotoListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=1)
+        else:
+            from users.model.list import UserPhotoListPosition
+            UserPhotoListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=1)
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="R")
+
+    def suspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "LIS":
+            self.type = PhotoList.SUSPENDED
+        elif self.type == "MAI":
+            self.type = PhotoList.SUSPENDED_MAIN
+        elif self.type == "AVA":
+            self.type = PhotoList.SUSPENDED_AVATAR
+        elif self.type == "WAL":
+            self.type = PhotoList.SUSPENDED_WALL
+        self.save(update_fields=['type'])
+        if self.community:
+            from communities.model.list import CommunityPhotoListPosition
+            CommunityPhotoListPosition.objects.filter(community=self.community.pk, list=self.pk).update(type=0)
+        else:
+            from users.model.list import UserPhotoListPosition
+            UserPhotoListPosition.objects.filter(user=self.creator.pk, list=self.pk).update(type=0)
+        if Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Notify.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+        if Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").exists():
+            Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
+    def unsuspend_item(self):
+        from notify.models import Notify, Wall
+        if self.type == "_SUS":
+            self.type = PhotoList.LIST
+        elif self.type == "_SUSM":
+            self.type = PhotoList.MAIN
+        elif self.type == "_SUSW":
+            self.type = PhotoList.WALL
+        elif self.type == "_SUSA":
             self.type = PhotoList.AVATAR
         self.save(update_fields=['type'])
         if self.community:
