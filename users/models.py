@@ -64,6 +64,64 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name()
 
+    def close_item(self):
+        if self.type == "STA":
+            self.type = User.CLOSED_STANDART
+        elif self.type == "DEPS":
+            self.type = User.CLOSED_DEPUTAT_SEND
+        elif self.type == "STA":
+            self.type = User.CLOSED_STANDART
+        elif self.type == "MAN":
+            self.type = User.CLOSED_MANAGER
+        elif self.type == "IDS":
+            self.type = User.CLOSED_IDENTIFIED_SEND
+        elif self.type == "IDE":
+            self.type = User.CLOSED_IDENTIFIED
+        self.save(update_fields=['type'])
+    def abort_close_item(self):
+        if self.type == "_CLOD":
+            self.type = User.DEPUTAT
+        elif self.type == "_CLODS":
+            self.type = User.DEPUTAT_SEND
+        elif self.type == "_CLOS":
+            self.type = User.STANDART
+        elif self.type == "_CLOM":
+            self.type = User.MANAGER
+        elif self.type == "_CLOIS":
+            self.type = User.IDENTIFIED_SEND
+        elif self.type == "_CLOI":
+            self.type = User.IDENTIFIED
+        self.save(update_fields=['type'])
+
+    def suspend_item(self):
+        if self.type == "DEP":
+            self.type = User.SUSPENDED_DEPUTAT
+        elif self.type == "DEPS":
+            self.type = User.SUSPENDED_DEPUTAT_SEND
+        elif self.type == "STA":
+            self.type = User.SUSPENDED_STANDART
+        elif self.type == "MAN":
+            self.type = User.SUSPENDED_MANAGER
+        elif self.type == "IDS":
+            self.type = User.SUSPENDED_IDENTIFIED_SEND
+        elif self.type == "IDE":
+            self.type = User.SUSPENDED_IDENTIFIED
+        self.save(update_fields=['type'])
+    def abort_suspend_item(self):
+        if self.type == "_SUSD":
+            self.type = User.DEPUTAT
+        elif self.type == "_SUSDS":
+            self.type = User.DEPUTAT
+        elif self.type == "_SUSS":
+            self.type = User.STANDART
+        elif self.type == "_SUSM":
+            self.type = User.MANAGER
+        elif self.type == "_SUSIS":
+            self.type = User.IDENTIFIED_SEND
+        elif self.type == "_SUSI":
+            self.type = User.IDENTIFIED
+        self.save(update_fields=['type'])
+
     def get_description(self):
         return '<a href="' + self.get_link() + '" target="_blank">' + self.get_full_name_genitive() + '</a>'
 

@@ -195,9 +195,11 @@ class SanctionCreate(TemplateView):
             elif _type[:3] == "use":
                 from users.models import User
                 item, t =  User.objects.get(pk=_type[3:]), "USE"
+                open_suspend, open_warning_banner, is_admin = True, True, True
             elif _type[:3] == "com":
                 from communities.models import Community
                 item, t =  Community.objects.get(pk=_type[3:]), "COM"
+                open_suspend, open_warning_banner, is_admin = True, True, True
             elif _type[:3] == "sit":
                 from music.models import Music
                 item, t=  Music.objects.get(pk=_type[3:]), "SIT"
@@ -207,9 +209,10 @@ class SanctionCreate(TemplateView):
             elif _type[:3] == "for":
                 from survey.models import Survey
                 item, t =  Survey.objects.get(pk=_type[3:]), "FOR"
-
+        if not (is_admin and request.user.is_administrator()) or not request.user.is_moderator():
+            return HttpResponseBadRequest()
         if request.is_ajax():
-            post = form_post.save(commit=False)
+            
             ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=item.pk, description=post.description, type=post.type)
             return HttpResponse()
         else:
