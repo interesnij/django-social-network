@@ -8,7 +8,7 @@ urlpatterns = [
 
     url(r'^moderation_list/', include('managers.url.moderation_list')),
     url(r'^penalty_list/', include('managers.url.penalty_list')),
-    url(r'^progs/', include('managers.url.progs')),
+    url(r'^create_close/$', CloseCreate.as_view()),
 
     url(r'^send_messages/$', SendManagerMessages.as_view()),
 ]

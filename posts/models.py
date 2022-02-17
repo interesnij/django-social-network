@@ -11,12 +11,14 @@ class PostsList(models.Model):
     MAIN, LIST, DRAFT, TEST = 'MAI','LIS','_DRA','_T'
     DELETED = '_DEL'
     CLOSED, CLOSED_MAIN = '_CLO','_CLOM'
+    SUSPENDED, SUSPENDED_MAIN = '_SUS','_SUSMA'
 
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(TEST, 'TEST'),(LIST, 'Пользовательский'),(DRAFT, 'Предложка'),
         (DELETED, 'Удалённый'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
+        (SUSPENDED_MAIN, 'Замороженный основной'),(SUSPENDED, 'Замороженный'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),

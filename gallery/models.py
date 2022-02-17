@@ -13,11 +13,13 @@ class PhotoList(models.Model):
     MAIN, LIST, WALL, AVATAR = 'MAI', 'LIS', 'WAL', 'AVA'
     DELETED = '_DEL'
     CLOSED, CLOSED_WALL, CLOSED_AVATAR, CLOSED_MAIN = '_CLO', '_CLOW', '_CLOA', '_CLOM'
+    SUSPENDED, SUSPENDED_WALL, SUSPENDED_AVATAR, SUSPENDED_MAIN = '_SUS', '_SUSW', '_SUSA', '_SUSM'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),
         (DELETED, 'Удалённый'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),(CLOSED_WALL, 'Закрытый со стены'),(CLOSED_AVATAR, 'Закрытый со страницы'),
+        (SUSPENDED, 'Замороженный'),(SUSPENDED_MAIN, 'Замороженный основной'),(SUSPENDED_WALL, 'Замороженный со стены'),(SUSPENDED_AVATAR, 'Замороженный со страницы'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),

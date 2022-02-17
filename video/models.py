@@ -32,12 +32,13 @@ class VideoCategory(models.Model):
 
 
 class VideoList(models.Model):
-    MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN = 'MAI','LIS','_DEL','_CLO','_CLOMA'
+    MAIN, LIST, DELETED, CLOSED, CLOSED_MAIN, SUSPENDED, SUSPENDED_MAIN = 'MAI','LIS','_DEL','_SUS','_SUSMA','_CLO','_CLOMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),
         (DELETED, 'Удалённый'),
         (CLOSED, 'Закрытый менеджером'),(CLOSED_MAIN, 'Закрытый основной'),
+        (SUSPENDED_MAIN, 'Замороженный основной'),(SUSPENDED, 'Замороженный'),
     )
     PERM = (
             (ALL_CAN, 'Все пользователи'),
