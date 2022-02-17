@@ -169,7 +169,7 @@ def get_post_attach(post, user):
                 try:
                     from survey.models import Survey
                     from datetime import datetime
-                    
+
                     survey = Survey.objects.get(pk=item[3:], type="PUB")
                     vote_class, multiple_class, drops, footer, answers = "", "", "", "", ""
 
@@ -196,6 +196,11 @@ def get_post_attach(post, user):
                             if not survey.is_no_edited:
                                 drops += '<span class="dropdown-item survey_unvote">Удалить голос</span>'
                         elif survey.time_end and survey.time_end > datetime.now():
+                            vote_class = "pointer survey_vote"
+                        elif survey.time_end:
+                            if survey.time_end > datetime.now():
+                                vote_class = "pointer survey_vote"
+                        else:
                             vote_class = "pointer survey_vote"
 
                         if survey.is_user_can_edit_delete_item(user):
