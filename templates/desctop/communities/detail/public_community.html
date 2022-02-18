@@ -95,13 +95,7 @@
                 {% endif %}
                 <div class="card mt-1 mb-1" style="padding: 10px;" data-type="com{{ community.pk }}">
                   {% if request.user.manager %}
-                    <a class="community_blocker pointer">Блокировать</a>
-                    <a class="community_suspend pointer">Остановка</a>
-                    {% if community.is_have_warning_banner %}
-                      <a href="/managers/penalty_list/community/{{ request.user.pk}}" class="ajax">Применен баннер</a>
-                    {% else %}
-                      <a class="community_warning_banner pointer">Повесить баннер</a>
-                    {% endif %}
+                    <a class="create_close pointer">Закрыть</a>
                   {% else %}
                     <a class="create_claim pointer">Пожаловаться</a>
                   {% endif %}
