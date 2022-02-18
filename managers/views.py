@@ -108,7 +108,6 @@ class SanctionCreate(TemplateView):
         form = ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid():
             mod = form.save(commit=False)
-            type = request.POST.get('type')
             case = request.POST.get('case')
             item = list[0]
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=item.pk, type=type)
