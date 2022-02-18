@@ -52,7 +52,7 @@ class SendManagerMessages(TemplateView):
             return HttpResponseBadRequest()
 
 
-class SanctionCreate(TemplateView):
+class SanctionItemCreate(TemplateView):
     template_name, open_suspend, open_warning_banner, is_admin = None, None, None, None
 
     def get(self,request,*args,**kwargs):
@@ -81,10 +81,10 @@ class SanctionCreate(TemplateView):
 
         if (self.is_admin and request.user.is_administrator()) or request.user.is_moderator():
             self.template_name = get_detect_platform_template("managers/sanction.html", request.user, request.META['HTTP_USER_AGENT'])
-        return super(SanctionCreate,self).get(request,*args,**kwargs)
+        return super(SanctionItemCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(SanctionCreate,self).get_context_data(**kwargs)
+        context = super(SanctionItemCreate,self).get_context_data(**kwargs)
         context["object"] = self.item
         context["type"] = self._type
         context["subtype"] = self._subtype
@@ -138,7 +138,47 @@ class SanctionCreate(TemplateView):
                 moderate_obj.description = mod.description
                 moderate_obj.save()
                 moderate_obj.create_warning_banner(manager_id=request.user.pk)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=30)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=31)
+                item.banner_item()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class SanctionItemDelete(TemplateView):
+    def get(self, request, *args, **kwargs):
+        from django.http import HttpResponse, HttpResponseBadRequest
+        from managers.models import Moderated, ModeratedLogs
+        from common.utils import get_item_for_post_sanction
+
+        type = request.GET.get('_type')
+        subtype = request.GET.get('_subtype')
+
+        list = get_item_for_post_sanction(type, subtype)
+        if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
+            return HttpResponseBadRequest()
+
+        if request.is_ajax():
+            item = list[0]
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            if item.type[:4] == "_CLO":
+                moderate_obj.delete_close(object=item, manager_id=request.user.pk)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][2])
+                item.abort_close_item()
+                
+            elif item.type[:4] == "_SUS":
+                moderate_obj.delete_suspend(manager_id=request.user.pk)
+                item.unsuspend_item()
+                if item.type[0] == "l":
+                    log_number = 10
+                else:
+                    log_number = 11
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=log_number)
+
+            elif item.type[:4] == "_BAN":
+                moderate_obj.delete_warning_banner(manager_id=request.user.pk)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=log_number)
+                item.unbanner_item()
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

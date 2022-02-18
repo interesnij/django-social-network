@@ -370,7 +370,7 @@ def get_item_for_post_sanction(_type, _subtype):
             return [SurveyList.objects.get(pk=_type[3:]), "WIL", False, _list]
 
     elif _subtype and _subtype == "comment":
-        _list = [3, 9, 16, 22]
+        _list = [3, 0, 9, 16, 22]
         if _type[:3] == "pos":
             from posts.models import PostComment
             return [PostComment.objects.get(pk=_type[3:]), "CPO", False, _list]
@@ -406,7 +406,7 @@ def get_item_for_post_sanction(_type, _subtype):
             return [VideoComment.objects.get(pk=_type[3:]), "CaR", False, _list]
 
     else:
-        _list = [2, 8, 15, 21]
+        _list = [2, 0, 8, 15, 21] 
         if _type[:3] == "pos":
             return [Post.objects.get(pk=_type[3:]), "POS", False, _list]
         elif _type[:3] == "pho":
