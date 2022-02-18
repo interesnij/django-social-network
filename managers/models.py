@@ -743,7 +743,7 @@ class StaffLogs(models.Model):
         (SUPERMANAGER_CREATE, 'Суперменеджер создан'), (SUPERMANAGER_DELETE, 'Суперменеджер удален'),
     )
 
-    type = models.PositiveSmallIntegerField(default=0, choices=ACTION, verbose_name="Действие")
+    type = models.PositiveSmallIntegerField(default=0, choices=TYPE, verbose_name="Действие")
     user_pk = models.PositiveIntegerField(default=0, verbose_name="id назначаемого")
     manager = models.PositiveIntegerField(default=0, verbose_name="id менеджера")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
