@@ -13,8 +13,8 @@ on('body', 'click', '.create_close', function() {
 
 on('body', 'click', '.submit_case_sanction', function() {
   if (this.classList.contains('submit_case_suspend')) {
-    this.parentElement.parentElement.querySelector('block_suspend').classList.remove('hidden')
-  } else { this.parentElement.parentElement.querySelector('block_suspend').classList.add('hidden')};
+    this.parentElement.parentElement.querySelector('.block_suspend').classList.remove('hidden')
+  } else { this.parentElement.parentElement.querySelector('.block_suspend').classList.add('hidden')};
 });
 
 on('#ajax', 'click', '#send_manager_messages_btn', function() {
