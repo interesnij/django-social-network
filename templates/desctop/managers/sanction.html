@@ -3,7 +3,7 @@
     <input type="hidden" name="_type" value="{{ type }}">
     <input type="hidden" name="_subtype" value="{{ subtype }}">
     <div class="card-header">
-      <h4>Санкция на {{ object.get_description|safe }}</h4>
+      <h6>Санкция на {{ object.get_description|safe }}</h6>
     </div>
     <div class="card-body">
       <div class="form-group">
@@ -14,16 +14,16 @@
           </label>
         </div>
         {% if open_suspend %}
-          <div class="custom-control custom-radio">
-            <input checked type="radio" value="suspend" name="case" class="custom-control-input submit_case_suspend submit_case_sanction" id="suspend_">
+          <div class="custom-control custom-radio mt-1">
+            <input type="radio" value="suspend" name="case" class="custom-control-input submit_case_suspend submit_case_sanction" id="suspend_">
             <label class="custom-control-label" for="suspend_">
               Остановить {{ object.get_description|safe }}
             </label>
           </div>
         {% endif %}
         {% if open_warning_banner %}
-          <div class="custom-control custom-radio">
-            <input checked type="radio" value="warning_banner" name="case" class="custom-control-input submit_case_sanction" id="suspend_">
+          <div class="custom-control custom-radio mt-1">
+            <input type="radio" value="warning_banner" name="case" class="custom-control-input submit_case_sanction" id="suspend_">
             <label class="custom-control-label" for="suspend_">
               Применить баннер предупреждения
             </label>
