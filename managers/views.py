@@ -67,19 +67,19 @@ class SanctionCreate(TemplateView):
             self.item = get_planner(self._type)
         elif self._type[0] == "l":
             self.item = get_list_of_type(self._type)
-            open_suspend = True
+            self.open_suspend = True
         elif "use" in self._type:
             from users.models import User
             self.item = User.objects.get(pk=self._type[3:])
-            open_suspend, open_warning_banner, is_admin = True, True, True
+            self.open_suspend, self.open_warning_banner, self.is_admin = True, True, True
         elif "com" in self._type:
             from communities.models import Community
             self.item = Community.objects.get(pk=self._type[3:])
-            open_suspend, open_warning_banner, is_admin = True, True, True
+            self.open_suspend, self.open_warning_banner, self.is_admin = True, True, True
         else:
             self.item = get_item_of_type(self._type)
 
-        if (is_admin and request.user.is_administrator()) or request.user.is_moderator():
+        if (self.is_admin and request.user.is_administrator()) or request.user.is_moderator():
             self.template_name = get_detect_platform_template("managers/sanction.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SanctionCreate,self).get(request,*args,**kwargs)
 
