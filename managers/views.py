@@ -98,7 +98,10 @@ class SanctionCreate(TemplateView):
         from common.utils import get_item_for_post_sanction
         from managers.forms import ModeratedForm
 
-        list = get_item_for_post_sanction(request.POST.get('_type'), request.POST.get('_subtype'))
+        type = request.POST.get('_type')
+        subtype = request.POST.get('_subtype')
+
+        list = get_item_for_post_sanction(type, subtype)
         if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
             return HttpResponseBadRequest()
 
