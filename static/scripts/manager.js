@@ -47,7 +47,7 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
 });
 
 
-on('#ajax', 'click', '#send_manager_messages_btn', function() {
+on('#ajax', 'click', '#create_sanction_btn', function() {
   form = this.parentElement.parentElement;
   _text = form.querySelector(".smile_supported").innerHTML;
   this.disabled = true;
