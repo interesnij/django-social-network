@@ -100,7 +100,7 @@ class SanctionCreate(TemplateView):
 
         list = get_item_for_post_sanction(request.POST.get('_type'), request.POST.get('_subtype'))
         if not (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
-            return HttpResponse("ошибка доступа!")
+            return HttpResponse(list) 
 
         form = ModeratedForm(request.POST)
         if request.is_ajax() and form.is_valid():
