@@ -122,21 +122,11 @@ class Moderated(models.Model):
         self.verified = True
         self.save()
         ModerationPenalty.create_close_penalty(moderated_object=self, manager_id=manager_id, type=self.type, object_id=self.object_id)
-        if self.type < 5:
-            object.close_item()
-        elif object.community:
-            object.close_item(object.community)
-        else:
-            object.close_item(None)
+        object.close_item()
     def delete_close(self, object, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
         obj.delete()
-        if self.type < 5:
-            object.abort_close_item()
-        elif object.community:
-            object.abort_close_item(object.community)
-        else:
-            object.abort_close_item(None)
+        object.abort_close_item()
         self.delete()
     def delete_suspend(self, manager_id):
         obj = ModerationPenalty.objects.get(moderated_object=self, type=self.type, object_id=self.object_id)
@@ -150,22 +140,8 @@ class Moderated(models.Model):
     def unverify_moderation(self, object, manager_id):
         self.verified = False
         self.moderated_object.all().delete()
-        if self.type == 1:
-            from users.models import User
-            user = User.objects.get(pk=self.object_id)
-            user.abort_close_item()
-            user.abort_suspend_item()
-        elif self.type == 2:
-            from communities.models import Community
-            community = Community.objects.get(pk=self.object_id)
-            community.abort_close_item()
-            community.abort_suspend_item()
-        elif self.type < 5:
-            object.abort_close_item(None)
-        elif object.community:
-            object.abort_close_item(object.community)
-        else:
-            object.abort_close_item(None)
+        object.abort_suspend_item()
+        object.abort_close_item()
         self.save()
 
     def reject_moderation(self, manager_id):
