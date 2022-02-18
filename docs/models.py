@@ -38,7 +38,7 @@ class DocsList(models.Model):
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
-    created = models.DateTimeField(auto_now_add=True, auto_now=False, default=timezone.now, verbose_name="Создан")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
