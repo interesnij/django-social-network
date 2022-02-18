@@ -63,7 +63,7 @@ class SanctionCreate(TemplateView):
 
         if self._subtype and self._subtype == "comment":
             self.item = get_comment(self._type)
-        elif _subtype and _subtype == "planner":
+        elif self._subtype and self._subtype == "planner":
             self.item = get_planner(self._type)
         elif _type[0] == "l":
             self.item = get_list_of_type(self._type)
