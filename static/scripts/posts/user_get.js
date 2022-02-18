@@ -31,8 +31,19 @@ on('#ajax', 'click', '.load_posts_list', function() {
 on('body', 'click', '.create_repost', function() {
   parent = this.parentElement;
   type = parent.getAttribute('data-type');
+  if (parent.getAttribute('data-subtype')) {
+    subtype = parent.getAttribute('data-subtype')
+  } else { subtype = null};
   create_fullscreen("/users/progs/create_repost/?type=" + type, "worker_fullscreen");
   clear_attach_block();
+});
+on('body', 'click', '.create_close', function() {
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  if (parent.getAttribute('data-subtype')) {
+    subtype = parent.getAttribute('data-subtype')
+  } else { subtype = null};
+  create_fullscreen("/managers/create_sanction/?type=" + type + "&subtype=" + subtype, "worker_fullscreen");
 });
 on('body', 'click', '.create_claim', function() {
   parent = this.parentElement;

@@ -80,7 +80,7 @@ class SanctionCreate(TemplateView):
             self.item = get_item_of_type(self._type)
 
         if (is_admin and request.user.is_administrator()) or request.user.is_moderator():
-            self.template_name = get_detect_platform_template("generic/sanction.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_detect_platform_template("managers/sanction.html", request.user, request.META['HTTP_USER_AGENT'])
         return super(SanctionCreate,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
