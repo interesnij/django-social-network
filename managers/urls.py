@@ -11,7 +11,8 @@ urlpatterns = [
 
     url(r'^create_sanction/$', SanctionItemCreate.as_view()),
     url(r'^delete_sanction/$', SanctionItemDelete.as_view()),
-    url(r'^rejected_sanction/(?P<pk>\d+)/$', RejectedItemCreate.as_view()),
+    url(r'^rejected_claims/$', RejectedItemClaims.as_view()),
+    url(r'^unverify_sanction/$', UnverifyItemCreate.as_view()),
 
     url(r'^send_messages/$', SendManagerMessages.as_view()),
 ]

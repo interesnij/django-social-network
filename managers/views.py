@@ -184,7 +184,7 @@ class SanctionItemDelete(View):
             return HttpResponseBadRequest()
 
 
-class RejectedItemCreate(View):
+class RejectedItemClaims(View):
     def get(self, request, *args, **kwargs):
         from django.http import HttpResponse, HttpResponseBadRequest
         from managers.models import Moderated, ModeratedLogs
@@ -202,6 +202,29 @@ class RejectedItemCreate(View):
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][3])
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class UnverifyItemCreate(View):
+    def get(self, request, *args, **kwargs):
+        from django.http import HttpResponse, HttpResponseBadRequest
+        from managers.models import Moderated, ModeratedLogs
+        from common.utils import get_item_for_post_sanction
+
+        type = request.GET.get('_type')
+        subtype = request.GET.get('_subtype')
+
+        list = get_item_for_post_sanction(type, subtype)
+        if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
+            return HttpResponseBadRequest()
+
+        if request.is_ajax():
+            item = list[0]
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            moderate_obj.unverify_moderation(item, manager_id=request.user.pk)
+            ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][4])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
