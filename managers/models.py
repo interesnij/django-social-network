@@ -686,7 +686,7 @@ class ModeratedLogs(models.Model):
     LIST_REJECT, ITEM_REJECT, COMMENT_REJECT = 14,15,16
     LIST_UNVERIFY, ITEM_UNVERIFY, COMMENT_UNVERIFY = 20, 21,22
 
-    BANNER_CREATE, BANNER_REMOVE = 30,31 
+    BANNER_CREATE, BANNER_REMOVE = 30,31
     ACTION = (
         (LIST_CLOSED, 'Список закрыт'),(ITEM_CLOSED, 'Элемент закрыт'),(COMMENT_CLOSED, 'Комментарий закрыт'),(LIST_SUSPENDED, 'Список заморожен'),(ITEM_SUSPENDED, 'Элемент заморожен'),
         (LIST_CLOSED_HIDE, 'Список восстановлен'),(ITEM_CLOSED_HIDE, 'Элемент восстановлен'),(COMMENT_CLOSED_HIDE, 'Комментарий восстановлен'),(LIST_SUSPENDED_HIDE, 'Список разморожен'),(ITEM_SUSPENDED_HIDE, 'Элемент разморожен'),
@@ -700,7 +700,7 @@ class ModeratedLogs(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     action = models.PositiveSmallIntegerField(default=0, choices=ACTION, verbose_name="Действие")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
-    time_to_suspend = models.DateTimeField(blank=True, verbose_name="Время, на которое заморожен объект")
+    time_to_suspend = models.DateTimeField(blank=True, null=True, verbose_name="Время, на которое заморожен объект")
 
     def __str__(self):
         return self.type
