@@ -38,8 +38,8 @@ class User(AbstractUser):
         (PRIV_ID, 'Ид прив'),
 
         (DEL_CHILD, 'Удал ребенок'),
-        (DEL_PRIVATE_CHILD, 'Удал ребенок прив'),
-        (DEL_STANDART, 'Удал'),
+        (DEL_PRIV_CHILD, 'Удал ребенок прив'),
+        (DEL_STAND, 'Удал'),
         (DEL_PRIV_STAND, 'Удал прив'),
         (DEL_VER_SEND, 'Удал подавший на вер'),
         (DEL_PRIV_VER_SEND, 'Удал подавший на вер прив'),
