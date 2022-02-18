@@ -2,6 +2,21 @@ on('#ajax', 'click', '.send_manager_messages', function() {
   create_fullscreen("/managers/send_messages/", "worker_fullscreen");
 });
 
+on('body', 'click', '.create_close', function() {
+  parent = this.parentElement;
+  type = parent.getAttribute('data-type');
+  if (parent.getAttribute('data-subtype')) {
+    subtype = parent.getAttribute('data-subtype')
+  } else { subtype = null};
+  create_fullscreen("/managers/create_sanction/?type=" + type + "&subtype=" + subtype, "worker_fullscreen");
+});
+
+on('body', 'click', '.submit_case_sanction', function() {
+  if (this.classList.contains('submit_case_suspend')) {
+    this.parentElement.querySelector('block_suspend').classList.remove('hidden')
+  } else { this.parentElement.querySelector('block_suspend').classList.add('hidden')};
+});
+
 on('#ajax', 'click', '#send_manager_messages_btn', function() {
   form = this.parentElement.parentElement.parentElement;
   _text = form.querySelector(".smile_supported").innerHTML;

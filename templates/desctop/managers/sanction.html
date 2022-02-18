@@ -7,23 +7,23 @@
     </div>
     <div class="card-body">
       <div class="form-group">
-        <div class="custom-control custom-radio">
-          <input checked type="radio" value="close" name="case" class="custom-control-input submit_case_sanction" id="close_">
+        <div class="custom-control custom-radio submit_case_sanction">
+          <input checked type="radio" value="close" name="case" class="custom-control-input" id="close_">
           <label class="custom-control-label" for="close_">
-            Закрыть {{ object.get_description|safe }}
+            Закрыть объект
           </label>
         </div>
         {% if open_suspend %}
-          <div class="custom-control custom-radio mt-1">
-            <input type="radio" value="suspend" name="case" class="custom-control-input submit_case_suspend submit_case_sanction" id="suspend_">
+          <div class="custom-control custom-radio mt-1 submit_case_suspend submit_case_sanction">
+            <input type="radio" value="suspend" name="case" class="custom-control-input" id="suspend_">
             <label class="custom-control-label" for="suspend_">
-              Остановить {{ object.get_description|safe }}
+              Остановить объект
             </label>
           </div>
         {% endif %}
         {% if open_warning_banner %}
-          <div class="custom-control custom-radio mt-1">
-            <input type="radio" value="warning_banner" name="case" class="custom-control-input submit_case_sanction" id="suspend_">
+          <div class="custom-control custom-radio mt-1 submit_case_sanction">
+            <input type="radio" value="warning_banner" name="case" class="custom-control-input" id="suspend_">
             <label class="custom-control-label" for="suspend_">
               Применить баннер предупреждения
             </label>
