@@ -145,7 +145,7 @@ class SanctionItemCreate(TemplateView):
             return HttpResponseBadRequest()
 
 
-class SanctionItemDelete(TemplateView):
+class SanctionItemDelete(View):
     def get(self, request, *args, **kwargs):
         from django.http import HttpResponse, HttpResponseBadRequest
         from managers.models import Moderated, ModeratedLogs
@@ -165,7 +165,7 @@ class SanctionItemDelete(TemplateView):
                 moderate_obj.delete_close(object=item, manager_id=request.user.pk)
                 ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][2])
                 item.abort_close_item()
-                
+
             elif item.type[:4] == "_SUS":
                 moderate_obj.delete_suspend(manager_id=request.user.pk)
                 item.unsuspend_item()
@@ -179,6 +179,29 @@ class SanctionItemDelete(TemplateView):
                 moderate_obj.delete_warning_banner(manager_id=request.user.pk)
                 ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=log_number)
                 item.unbanner_item()
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
+
+class RejectedItemCreate(View):
+    def get(self, request, *args, **kwargs):
+        from django.http import HttpResponse, HttpResponseBadRequest
+        from managers.models import Moderated, ModeratedLogs
+        from common.utils import get_item_for_post_sanction
+
+        type = request.GET.get('_type')
+        subtype = request.GET.get('_subtype')
+
+        list = get_item_for_post_sanction(type, subtype)
+        if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
+            return HttpResponseBadRequest()
+
+        if request.is_ajax():
+            item = list[0]
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            moderate_obj.reject_moderation(manager_id=request.user.pk)
+            ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][3])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
