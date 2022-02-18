@@ -9,11 +9,11 @@ from users.helpers import upload_to_user_directory
 
 
 class User(AbstractUser):
-    CHILD,PRIVATE_CHILD,STANDART,PRIVATE_STANDART,VERIFIED_SEND,PRIVATE_VERIFIED_SEND,VERIFIED,PRIVATE_VERIFIED,IDENTIFIED_SEND,PRIVATE_IDENTIFIED_SEND,IDENTIFIED,PRIVATE_IDENTIFIED = 'CHI','CHIP','STA','STAP','VES','VESP','VER','VERP','IDS','IDSP','IDE','IDEP'
-    CLOSED_CHILD,CLOSED_PRIVATE_CHILD,CLOSED_STANDART,CLOSED_PRIVATE_STANDART,CLOSED_VERIFIED_SEND,CLOSED_PRIVATE_VERIFIED_SEND,CLOSED_VERIFIED,CLOSED_PRIVATE_VERIFIED,CLOSED_IDENTIFIED_SEND,CLOSED_PRIVATE_IDENTIFIED_SEND,CLOSED_IDENTIFIED,CLOSED_PRIVATE_IDENTIFIED = '_CLOC','_CLOCP','_CLOS','_CLOSP','_CLOVS','_CLOVSP','_CLOV','_CLOVP','_CLOIS','_CLOISP','_CLOI','_CLOIP'
-    DELETED_CHILD,DELETED_PRIVATE_CHILD,DELETED_STANDART,DELETED_PRIVATE_STANDART,DELETED_VERIFIED_SEND,DELETED_PRIVATE_VERIFIED_SEND,DELETED_VERIFIED,DELETED_PRIVATE_VERIFIED,DELETED_IDENTIFIED_SEND,DELETED_PRIVATE_IDENTIFIED_SEND,DELETED_IDENTIFIED,DELETED_PRIVATE_IDENTIFIED = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP'
-    SUSPENDED_CHILD,SUSPENDED_PRIVATE_CHILD,SUSPENDED_STANDART,SUSPENDED_PRIVATE_STANDART,SUSPENDED_VERIFIED_SEND,SUSPENDED_PRIVATE_VERIFIED_SEND, SUSPENDED_VERIFIED,SUSPENDED_PRIVATE_VERIFIED, SUSPENDED_IDENTIFIED_SEND,SUSPENDED_PRIVATE_IDENTIFIED_SEND,SUSPENDED_IDENTIFIED,SUSPENDED_PRIVATE_IDENTIFIED = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP'
-    BANNER_CHILD,BANNER_PRIVATE_CHILD,BANNER_STANDART,BANNER_PRIVATE_STANDART,BANNER_VERIFIED_SEND,BANNER_PRIVATE_VERIFIED_SEND,BANNER_VERIFIED,BANNER_PRIVATE_VERIFIED,BANNER_IDENTIFIED_SEND,BANNER_PRIVATE_IDENTIFIED_SEND,BANNER_IDENTIFIED,BANNER_PRIVATE_IDENTIFIED = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP'
+    CHILD,PRIV_CHILD,STAND,PRIV_STAND,VER_SEND,PRIV_VER_SEND,VER,PRIV_VER,ID_SEND,PRIV_ID_SEND,ID,PRIV_ID= 'CHI','CHIP','STA','STAP','VES','VESP','VER','VERP','IDS','IDSP','IDE','IDEP'
+    CLOS_CHILD,CLOS_PRIV_CHILD,CLOS_STAND,CLOS_PRIV_STAND,CLOS_VER_SEND,CLOS_PRIV_VER_SEND,CLOS_VER,CLOS_PRIV_VER,CLOS_ID_SEND,CLOS_PRIV_ID_SEND,CLOS_ID,CLOS_PRIV_ID = '_CLOC','_CLOCP','_CLOS','_CLOSP','_CLOVS','_CLOVSP','_CLOV','_CLOVP','_CLOIS','_CLOISP','_CLOI','_CLOIP'
+    DEL_CHILD,DEL_PRIV_CHILD,DEL_STAND,DEL_PRIV_STAND,DEL_VER_SEND,DEL_PRIV_VER_SEND,DEL_VER,DEL_PRIV_VER,DEL_ID_SEND,DEL_PRIV_ID_SEND,DEL_ID,DEL_PRIV_ID = '_DELC','_DELCP', '_DELS','_DELSP', '_DELVS','_DELVSP', '_DELV','_DELVP', '_DELIS','_DELISP', '_DELI','_DELIP'
+    SUSP_CHILD,SUSP_PRIVATE_CHILD,SUSP_STAND,SUSP_PRIV_STAND,SUSP_VER_SEND,SUSP_PRIV_VER_SEND, SUSP_VER,SUSP_PRIV_VER, SUSP_ID_SEND,SUSP_PRIV_ID_SEND,SUSP_ID,SUSP_PRIV_ID = '_SUSC','_SUSCP', '_SUSS','_SUSSP', '_SUSVS','_SUSVSP', '_SUSV','_SUSVP', '_SUSIS','_SUSISP', '_SUSI','_SUSIP'
+    BAN_CHILD,BAN_PRIV_CHILD,BAN_STAND,BAN_PRIV_STAND,BAN_VER_SEND,BAN_PRIV_VER_SEND,BAN_VER,BAN_PRIV_VER,BAN_ID_SEND,BAN_PRIV_ID_SEND,BAN_ID,BAN_PRIV_ID = '_BANC','_BANCP', '_BANS','_BANSP', '_BANVS','_BANVSP', '_BANV','_BANVP', '_BANIS','_BANISP', '_BANI','_BANIP'
 
     STANDART,TRAINEE_MODERATOR, MODERATOR, HIGH_MODERATOR, TEAMLEAD_MODERATOR, \
     TRAINEE_MANAGER, MANAGER, \
@@ -24,11 +24,70 @@ class User(AbstractUser):
     MALE, FEMALE, DESCTOP, PHONE = 'Man', 'Fem', 'De', 'Ph'
 
     TYPE = (
-        (CHILD, 'Ребенок'),(PRIVATE_CHILD, 'Ребенок приватный'),(STANDART, 'Обычные права'),(PRIVATE_STANDART, 'Обычный приватный'),(VERIFIED_SEND, 'Запрос на проверку'),(PRIVATE_VERIFIED_SEND, 'Запрос на проверку приватный'),(VERIFIED, 'Проверенный'),(PRIVATE_VERIFIED, 'Проверенный приватный'),(IDENTIFIED_SEND, 'Запрос на идентификацию'),(PRIVATE_IDENTIFIED_SEND, 'Запрос на идентификацию приватный'),(IDENTIFIED, 'Идентифицированный'),(PRIVATE_IDENTIFIED, 'Идентифицированный приватный'),
-        (DELETED_CHILD, 'Удален ребенок'),(DELETED_PRIVATE_CHILD, 'Удален ребенок приватный'),(DELETED_STANDART, 'Удален'),(DELETED_PRIVATE_STANDART, 'Удален приватный'),(DELETED_VERIFIED_SEND, 'Удален подавший на верификацию'),(DELETED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(DELETED_VERIFIED, 'Удален верифицированный'),(DELETED_PRIVATE_VERIFIED, 'Удален верифицированный приватный'),(DELETED_IDENTIFIED_SEND, 'Удален подавший на идентификацию'),(DELETED_PRIVATE_IDENTIFIED_SEND, 'Удален подавший на идентификацию приватный'),(DELETED_IDENTIFIED, 'Удален идентифиированный'),(DELETED_PRIVATE_IDENTIFIED, 'Удален идентифиированный приватный'),
-        (CLOSED_CHILD, 'Закрыт ребенок'),(CLOSED_PRIVATE_CHILD, 'Закрыт ребенок приватный'),(CLOSED_STANDART, 'Закрыт'),(CLOSED_PRIVATE_STANDART, 'Закрыт приватный'),(CLOSED_VERIFIED_SEND, 'Удален подавший на верификацию'),(CLOSED_PRIVATE_VERIFIED_SEND, 'Удален подавший на верификацию приватный'),(CLOSED_VERIFIED, 'Закрыт верифицированный'),(CLOSED_PRIVATE_VERIFIED, 'Закрыт верифицированный приватный'),(CLOSED_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию'),(CLOSED_PRIVATE_IDENTIFIED_SEND, 'Закрыт подавший на идентификацию приватный'),(CLOSED_IDENTIFIED, 'Закрыт идентифиированный'),(CLOSED_PRIVATE_IDENTIFIED, 'Закрыт идентифиированный приватный'),
-        (SUSPENDED_CHILD, 'Заморожен ребенок'),(SUSPENDED_PRIVATE_CHILD, 'Заморожен ребенок приватный'),(SUSPENDED_STANDART, 'Заморожен'),(SUSPENDED_PRIVATE_STANDART, 'Заморожен приватный'),(SUSPENDED_VERIFIED_SEND, 'Заморожен подавший на верификацию'),(SUSPENDED_PRIVATE_VERIFIED_SEND, 'Заморожен подавший на верификацию приватный'),(SUSPENDED_VERIFIED, 'Заморожен верифицированный'),(SUSPENDED_PRIVATE_VERIFIED, 'Заморожен верифицированный приватный'),(SUSPENDED_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию'),(SUSPENDED_PRIVATE_IDENTIFIED_SEND, 'Заморожен подавший на идентификацию приватный'),(SUSPENDED_IDENTIFIED, 'Заморожен идентифиированный'),(SUSPENDED_PRIVATE_IDENTIFIED, 'Заморожен идентифиированный приватный'),
-        (BANNER_CHILD, 'Баннер ребенок'),(BANNER_PRIVATE_CHILD, 'Баннер ребенок приватный'),(BANNER_STANDART, 'Баннер'),(BANNER_PRIVATE_STANDART, 'Баннер приватный'),(BANNER_VERIFIED_SEND, 'Баннер подавший на верификацию'),(BANNER_PRIVATE_VERIFIED_SEND, 'Баннер подавший на верификацию приватный'),(BANNER_VERIFIED, 'Баннер верифицированный'),(BANNER_PRIVATE_VERIFIED, 'Баннер верифицированный приватный'),(BANNER_IDENTIFIED_SEND, 'Баннер подавший на идентификацию'),(BANNER_PRIVATE_IDENTIFIED_SEND, 'Баннер подавший на идентификацию приватный'),(BANNER_IDENTIFIED, 'Баннер идентифиированный'),(BANNER_PRIVATE_IDENTIFIED, 'Баннер идентифиированный приватный'),
+        (CHILD, 'Ребенок'),
+        (PRIV_CHILD, 'Ребенок прив'),
+        (STAND, 'Обычные права'),
+        (PRIV_STAND, 'Обычный прив'),
+        (VER_SEND, 'Запрос на проверку'),
+        (PRIV_VER_SEND, 'Запрос на проверку прив'),
+        (VER, 'Проверенный'),
+        (PRIV_VER, 'Проверенный прив'),
+        (ID_SEND, 'Запрос на ид'),
+        (PRIV_ID_SEND, 'Запрос на ид прив'),
+        (ID, 'Ид'),
+        (PRIV_ID, 'Ид прив'),
+
+        (DEL_CHILD, 'Удал ребенок'),
+        (DEL_PRIVATE_CHILD, 'Удал ребенок прив'),
+        (DEL_STANDART, 'Удал'),
+        (DEL_PRIV_STAND, 'Удал прив'),
+        (DEL_VER_SEND, 'Удал подавший на вер'),
+        (DEL_PRIV_VER_SEND, 'Удал подавший на вер прив'),
+        (DEL_VER, 'Удал вер'),
+        (DEL_PRIV_VER, 'Удал вер прив'),
+        (DEL_ID_SEND, 'Удал подавший на ид'),
+        (DEL_PRIV_ID_SEND, 'Удал подавший на ид прив'),
+        (DEL_ID, 'Удал ид'),
+        (DEL_PRIV_ID, 'Удал ид прив'),
+
+        (CLOS_CHILD, 'Закр ребенок'),
+        (CLOS_PRIV_CHILD, 'Закр ребенок прив'),
+        (CLOS_STAND, 'Закр'),
+        (CLOS_PRIV_STAND, 'Закр прив'),
+        (CLOS_VER_SEND, 'Удал подавший на вер'),
+        (CLOS_PRIV_VER_SEND, 'Удал подавший на вер прив'),
+        (CLOS_VER, 'Закр вер'),
+        (CLOS_PRIV_VER, 'Закр вер прив'),
+        (CLOS_ID_SEND, 'Зак подавший на ид'),
+        (CLOS_PRIV_ID_SEND, 'Закр подавший на ид прив'),
+        (CLOS_ID, 'Закр ид'),
+        (CLOS_PRIV_ID, 'Закр ид прив'),
+
+        (SUSP_CHILD, 'Зам ребенок'),
+        (SUSP_PRIV_CHILD, 'Зам ребенок прив'),
+        (SUSP_STAND, 'Зам'),
+        (SUSP_PRIV_STAND, 'Зам прив'),
+        (SUSP_VER_SEND, 'Зам подавший на вер'),
+        (SUSP_PRIV_VER_SEND, 'Зам подавший на вер прив'),
+        (SUSP_VER, 'Зам вер'),
+        (SUSP_PRIV_VER, 'Зам вер прив'),
+        (SUSP_ID_SEND, 'Зам подавший на ид'),
+        (SUSP_PRIV_ID_SEND, 'Зам подавший на ид прив'),
+        (SUSP_ID, 'Зам ид'),
+        (SUSP_PRIV_ID, 'Зам ид прив'),
+
+        (BAN_CHILD, 'Бан ребенок'),
+        (BAN_PRIV_CHILD, 'Бан ребенок прив'),
+        (BAN_STAND, 'Бан'),
+        (BAN_PRIV_STAND, 'Бан прив'),
+        (BAN_VER_SEND, 'Бан подавший на вер'),
+        (BAN_PRIV_VER_SEND, 'Бан подавший на вер прив'),
+        (BAN_VER, 'Бан вер'),
+        (BAN_PRIV_VER, 'Бан вер прив'),
+        (BAN_ID_SEND, 'Бан подавший на ид'),
+        (BAN_PRIV_ID_SEND, 'Бан подавший на ид прив'),
+        (BAN_ID, 'Бан ид'),
+        (BAN_PRIV_ID, 'Бан ид прив'),
     )
     PERM = (
         (STANDART, 'Обычные права'),

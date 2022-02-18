@@ -94,7 +94,7 @@
                   </button>
                 {% endif %}
                 <div class="card mt-1 mb-1" style="padding: 10px;" data-type="com{{ community.pk }}">
-                  {% if request.user.manager %}
+                  {% if request.user.is_manager %}
                     <a class="create_close pointer">Закрыть</a>
                   {% else %}
                     <a class="create_claim pointer">Пожаловаться</a>
