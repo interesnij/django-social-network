@@ -58,6 +58,7 @@ class PostsList(models.Model):
     class Meta:
         verbose_name = "список записей"
         verbose_name_plural = "списки записей"
+        indexes = (BrinIndex(fields=['created']),)
 
     def get_code(self):
         return "lpo" + str(self.pk)

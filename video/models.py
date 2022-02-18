@@ -76,6 +76,7 @@ class VideoList(models.Model):
     class Meta:
         verbose_name = 'Видеоальбом'
         verbose_name_plural = 'Видеоальбомы'
+        indexes = (BrinIndex(fields=['created']),)
 
     def __str__(self):
         return self.name

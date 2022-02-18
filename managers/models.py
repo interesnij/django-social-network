@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models import Q
+from django.contrib.postgres.indexes import BrinIndex
 
 USER, COMMUNITY, SITE, MAIL = 'USE', 'COM', 'SIT', 'MAI'
 
@@ -34,7 +35,6 @@ TYPE = (
     (FORUM_LIST, 'Список обсуждений'),(FORUM, 'Обсуждение'),(FORUM_COMMENT, 'Коммент к обсуждению'),
     (WIKI_LIST, 'Список википедии'),(WIKI_ITEM, 'Объект википедии'),(WIKI_COMMENT, 'Коммент к википедии')
 )
-
 
 class Moderated(models.Model):
     # рассмотрение жалобы на объект, получаемфй по attach. Применение санкций или отвергание жалобы. При применении удаление жалоб-репортов
@@ -678,3 +678,80 @@ class ModerationPenalty(models.Model):
     def get_penalty_wiki(cls):
         types = Q(verified=False,type__gt=48)&Q(type__lt=51)
         return cls.objects.filter(types)
+
+
+class ModeratedLogs(models.Model):
+    LIST_CLOSED, ITEM_CLOSED, COMMENT_CLOSED = 1,2,3
+    LIST_CLOSED_HIDE, ITEM_CLOSED_HIDE, COMMENT_CLOSED_HIDE = 7,8,9
+    LIST_REJECT, ITEM_REJECT, COMMENT_REJECT = 14,15,16
+    LIST_UNVERIFY, ITEM_UNVERIFY, COMMENT_UNVERIFY = 20, 21,22
+    BANNER_CREATE, BANNER_REMOVE = 30,31
+    ACTION = (
+        (LIST_CLOSED, 'Список закрыт'),(ITEM_CLOSED, 'Элемент закрыт'),(COMMENT_CLOSED, 'Комментарий закрыт'),
+        (LIST_CLOSED_HIDE, 'Список восстановлен'),(ITEM_CLOSED_HIDE, 'Элемент восстановлен'),(COMMENT_CLOSED_HIDE, 'Комментарий восстановлен'),
+        (LIST_REJECT, 'Жалоба на список отклонена'),(ITEM_REJECT, 'Жалоба на элемент отклонена'),(COMMENT_REJECT, 'Жалоба на комментарий отклонена'),
+        (LIST_UNVERIFY, 'Проверка на список убрана'),(ITEM_UNVERIFY, 'Проверка на элемент убрана'),(COMMENT_UNVERIFY, 'Проверка на комментарий убрана'),
+        (BANNER_CREATE, 'Баннер создан'), (BANNER_REMOVE, 'Баннер убран')
+    )
+
+    type = models.CharField(max_length=4, choices=TYPE, verbose_name="Класс объекта")
+    object_id = models.PositiveIntegerField(default=0, verbose_name="id объекта")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
+    action = models.PositiveSmallIntegerField(default=0, choices=ACTION, verbose_name="Действие")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name = 'Лог модерации'
+        verbose_name_plural = 'Логи модерации'
+        indexes = (BrinIndex(fields=['created']),)
+
+class StaffLogs(models.Model):
+    TRAINEE_MODERATOR_CREATE, TRAINEE_MODERATOR_DELETE = 1,2
+    MODERATOR_CREATE, MODERATOR_DELETE = 5,6
+    HIGH_MODERATOR_CREATE, HIGH_MODERATOR_DELETE = 9,10
+    TEAMLEAD_MODERATOR_CREATE, TEAMLEAD_MODERATOR_DELETE = 13,14
+    TRAINEE_MANAGER_CREATE, TRAINEE_MANAGER_DELETE = 17,18
+    MANAGER_CREATE, MANAGER_DELETE = 21,22
+    HIGH_MANAGER_CREATE, HIGH_MANAGER_DELETE = 25,26
+    TEAMLEAD_MANAGER_CREATE, TEAMLEAD_MANAGER_DELETE = 29, 30
+    ADVERTISER_CREATE, ADVERTISER_DELETE = 33,34
+    HIGH_ADVERTISER_CREATE, HIGH_ADVERTISER_DELETE = 37,38
+    TEAMLEAD_ADVERTISER_CREATE, TEAMLEAD_ADVERTISER_DELETE = 41,42
+    ADMINISTRATOR_CREATE, ADMINISTRATOR_DELETE = 45,46
+    HIGH_ADMINISTRATOR_CREATE, HIGH_ADMINISTRATOR_DELETE = 49,50
+    TEAMLEAD_ADMINISTRATOR_CREATE, TEAMLEAD_ADMINISTRATOR_DELETE = 53, 54
+    SUPERMANAGER_CREATE, SUPERMANAGER_DELETE = 57,58
+
+    TYPE = (
+        (TRAINEE_MODERATOR_CREATE, 'Модератор-стажер создан'), (TRAINEE_MODERATOR_DELETE, 'Модератор-стажер удален'),
+        (MODERATOR_CREATE, 'Модератор создан'), (MODERATOR_DELETE, 'Модератор удален'),
+        (HIGH_MODERATOR_CREATE, 'Старший модератор создан'), (HIGH_MODERATOR_DELETE, 'Старший модератор удален'),
+        (TEAMLEAD_MODERATOR_CREATE, 'Модератор-тимлид создан'), (TEAMLEAD_MODERATOR_DELETE, 'Модератор-тимлид удален'),
+        (TRAINEE_MANAGER_CREATE, 'Менеджер-стажер создан'), (TRAINEE_MANAGER_DELETE, 'Менеджер-стажер удален'),
+        (MANAGER_CREATE, 'Менеджер создан'), (MANAGER_DELETE, 'Менеджер удален'),
+        (HIGH_MANAGER_CREATE, 'Старший менеджер создан'), (HIGH_MANAGER_DELETE, 'Старший менеджер удален'),
+        (TEAMLEAD_MANAGER_CREATE, 'Менеджер-тимлид создан'), (TEAMLEAD_MANAGER_DELETE, 'Менеджер-тимлид удален'),
+        (ADVERTISER_CREATE, 'Менеджер рекламы создан'), (ADVERTISER_CREATE, 'Менеджер рекламы удален'),
+        (HIGH_ADVERTISER_CREATE, 'Старший рекламы создан'), (HIGH_ADVERTISER_DELETE, 'Старший рекламы удален'),
+        (TEAMLEAD_ADVERTISER_CREATE, 'Тимлид рекламы создан'), (TEAMLEAD_ADVERTISER_DELETE, 'Тимлид рекламы удален'),
+        (ADMINISTRATOR_CREATE, 'Администратор создан'), (ADMINISTRATOR_DELETE, 'Администратор удален'),
+        (HIGH_ADMINISTRATOR_CREATE, 'Старший администратор создан'), (HIGH_ADMINISTRATOR_DELETE, 'Старший администратор удален'),
+        (TEAMLEAD_ADMINISTRATOR_CREATE, 'Тимлид-администратор создан'), (TEAMLEAD_ADMINISTRATOR_DELETE, 'Тимлид-администратор удален'),
+        (SUPERMANAGER_CREATE, 'Суперменеджер создан'), (SUPERMANAGER_DELETE, 'Суперменеджер удален'),
+    )
+
+    type = models.PositiveSmallIntegerField(default=0, choices=ACTION, verbose_name="Действие")
+    user_pk = models.PositiveIntegerField(default=0, verbose_name="id назначаемого")
+    manager = models.PositiveIntegerField(default=0, verbose_name="id менеджера")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name = 'Лог работы с персоналом'
+        verbose_name_plural = 'Логи работы с персоналом'
+        indexes = (BrinIndex(fields=['created']),)

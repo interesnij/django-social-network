@@ -51,7 +51,6 @@ MY_APPS = [
     'stst',
     'quan',
     'about',
-    'logs',
     'managers',
     'notify',
     'survey',

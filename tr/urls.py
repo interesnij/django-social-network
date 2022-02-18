@@ -39,7 +39,6 @@ urlpatterns = [
     url(r'^stat/', include('stst.urls')),
     url(r'^questions/', include('quan.urls')),
     url(r'^about/', include('about.urls')),
-    url(r'^logs/', include('logs.urls')),
     url(r'^managers/', include('managers.urls')),
     url(r'^notify/', include('notify.urls')),
     url(r'^docs/', include('docs.urls')),

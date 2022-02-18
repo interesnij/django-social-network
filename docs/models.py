@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.indexes import BrinIndex
 from docs.helpers import upload_to_doc_directory, validate_file_extension
 from django.db.models import Q
+from django.utils import timezone
 
 
 class DocsList(models.Model):
@@ -37,6 +38,7 @@ class DocsList(models.Model):
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, default=timezone.now, verbose_name="Создан")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит документы")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает документы и потом с этими документами работает")
@@ -51,6 +53,7 @@ class DocsList(models.Model):
     class Meta:
         verbose_name = "список документов"
         verbose_name_plural = "списки документов"
+        indexes = (BrinIndex(fields=['created']),)
 
     def get_code(self):
         return "ldo" + str(self.pk)

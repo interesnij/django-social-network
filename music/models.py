@@ -58,6 +58,7 @@ class MusicAlbum(models.Model):
     class Meta:
         verbose_name = "плейлист"
         verbose_name_plural = "плейлисты"
+        indexes = (BrinIndex(fields=['created']),)
 
 
 class MusicList(models.Model):

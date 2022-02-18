@@ -6,6 +6,7 @@ from users.helpers import upload_to_user_directory
 from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from imagekit.models import ProcessedImageField
 from django.db.models import Q
+from django.utils import timezone
 
 
 class SurveyList(models.Model):
@@ -42,6 +43,7 @@ class SurveyList(models.Model):
     count = models.PositiveIntegerField(default=0)
     repost = models.PositiveIntegerField(default=0, verbose_name="Кол-во репостов")
     copy = models.PositiveIntegerField(default=0, verbose_name="Кол-во копий")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, default=timezone.now, verbose_name="Создан")
 
     can_see_el = models.PositiveSmallIntegerField(choices=PERM, default=1, verbose_name="Кто видит записи")
     create_el = models.PositiveSmallIntegerField(choices=PERM, default=7, verbose_name="Кто создает записи и потом с этими документами работает")
@@ -53,6 +55,7 @@ class SurveyList(models.Model):
     class Meta:
         verbose_name = "список опросов"
         verbose_name_plural = "списки опросов"
+        indexes = (BrinIndex(fields=['created']),)
 
     def get_code(self):
         return "lsu" + str(self.pk)
@@ -305,7 +308,7 @@ class SurveyList(models.Model):
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
-        return self.is_list() or self.is_private()
+        return self.is_list()
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):

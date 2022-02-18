@@ -330,3 +330,116 @@ def get_item_with_comments(item):
     elif item[:3] == "vid":
         from video.models import Video
         return Video.objects.get(pk=item[3:])
+
+def get_item_for_post_sanction(_type, _subtype):
+    """
+        Вход: _type тип объекта, _subtype подтип,
+        Выход: 1 объект, 2 тип модерации, 3 режим заморозки, 4 баннера, 5 нужен ли админ
+    """
+    if _type[0] == "l":
+        open_suspend = True
+        if _type[:3] == "lpo":
+            from posts.models import PostsList
+            return [PostsList.objects.get(pk=_type[3:]), "POL", True, False, False]
+        elif _type[:3] == "lph":
+            from gallery.models import PhotoList
+            return [PhotoList.objects.get(pk=_type[3:]), "PHL", True, False, False]
+        elif _type[:3] == "lgo":
+            from goods.models import GoodList
+            return [GoodList.objects.get(pk=_type[3:]), "GOL", True, False, False]
+        elif _type[:3] == "lvi":
+            from video.models import VideoList
+            return [VideoList.objects.get(pk=_type[3:]), "VIL", True, False, False]
+        elif _type[:3] == "ldo":
+            from docs.models import DocsList
+            return [DocsList.objects.get(pk=_type[3:]), "DOL", True, False, False]
+        elif _type[:3] == "lmu":
+            from music.models import MusicList
+            return [MusicList.objects.get(pk=_type[3:]), "MUL", True, False, False]
+        elif _type[:3] == "lsu":
+            from survey.models import SurveyList
+            return [SurveyList.objects.get(pk=_type[3:]), "SUL", True, False, False]
+        elif _type[:3] == "lfo":
+            from forum.models import ForumList
+            return [SurveyList.objects.get(pk=_type[3:]), "FOL", True, False, False]
+        elif _type[:3] == "lar":
+            from article.models import ArticleList
+            return [SurveyList.objects.get(pk=_type[3:]), "ARL", True, False, False]
+        elif _type[:3] == "lwi":
+            from wiki.models import WikiList
+            return [SurveyList.objects.get(pk=_type[3:]), "WIL", True, False, False]
+
+    elif _subtype and _subtype == "comment":
+        if _type[:3] == "pos":
+            from posts.models import PostComment
+            return [PostComment.objects.get(pk=_type[3:]), "CPO", False, False, False]
+        elif _type[:3] == "pho":
+            from gallery.models import PhotoComment
+            return [PhotoComment.objects.get(pk=_type[3:]), "CPH", False, False, False]
+        elif _type[:3] == "goo":
+            from goods.models import GoodComment
+            return [GoodComment.objects.get(pk=_type[3:]), "CGO", False, False, False]
+        elif _type[:3] == "vid":
+            from video.models import VideoComment
+            return [VideoComment.objects.get(pk=_type[3:]), "CVI", False, False, False]
+        elif _type[:3] == "wik":
+            from video.models import VideoComment
+            return [VideoComment.objects.get(pk=_type[3:]), "CWI", False, False, False]
+        elif _type[:3] == "CwC":
+            from video.models import VideoComment
+            return [VideoComment.objects.get(pk=_type[3:]), "CwC", False, False, False]
+
+    elif _subtype and _subtype == "planner":
+        if _type[:3] == "WrS":
+            from posts.models import PostComment
+            return [PostComment.objects.get(pk=_type[3:]), "WrS", False, False, False]
+        elif type[:3] == "BoA":
+            from gallery.models import PhotoComment
+            return [PhotoComment.objects.get(pk=_type[3:]), "BoA", False, False, False]
+        elif _type[:3] == "CoL":
+            from goods.models import GoodComment
+            return [GoodComment.objects.get(pk=_type[3:]), "CoL", False, False, False]
+        elif _type[:3] == "CaR":
+            from video.models import VideoComment
+            return [VideoComment.objects.get(pk=_type[3:]), "CaR", False, False, False]
+
+    else:
+        if _type[:3] == "pos":
+            return [Post.objects.get(pk=_type[3:]), "POS", False, False, False]
+        elif _type[:3] == "pho":
+            from gallery.models import Photo
+            return [Photo.objects.get(pk=_type[3:]), "PHO", False, False, False]
+        elif _type[:3] == "goo":
+            from goods.models import Good
+            return [Good.objects.get(pk=_type[3:]), "GOO", False, False, False]
+        elif _type[:3] == "vid":
+            from video.models import Video
+            return [Video.objects.get(pk=_type[3:]), "VID", False, False, False]
+        elif _type[:3] == "doc":
+            from docs.models import Doc
+            return [Doc.objects.get(pk=_type[3:]), "DOC", False, False, False]
+        elif _type[:3] == "mus":
+            from music.models import Music
+            return [Music.objects.get(pk=_type[3:]), "MUS", False, False, False]
+        elif _type[:3] == "sur":
+            from survey.models import Survey
+            return [Survey.objects.get(pk=_type[3:]), "SUR", False, False, False]
+        elif _type[:3] == "mes":
+            from chat.models import Message
+            return [Message.objects.get(pk=_type[3:]), "CHA", False, False, False]
+
+        elif _type[:3] == "use":
+            from users.models import User
+            return [User.objects.get(pk=_type[3:]), "USE", True, True, True]
+        elif _type[:3] == "com":
+            from communities.models import Community
+            return [Community.objects.get(pk=_type[3:]), "COM", True, True, True]
+        elif _type[:3] == "sit":
+            from site.models import Site
+            return [Music.objects.get(pk=_type[3:]), "SIT", False, False, False]
+        elif type[:3] == "mai":
+            from mail.models import Mail
+            ireturn [Survey.objects.get(pk=_type[3:]), "MAI", False, False, False]
+        elif _type[:3] == "for":
+            from forum.models import Forum
+            return [Survey.objects.get(pk=_type[3:]), "FOR", False, False, False]
