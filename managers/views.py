@@ -94,14 +94,49 @@ class SanctionCreate(TemplateView):
 
     def post(self, request, *args, **kwargs):
         from django.http import HttpResponse, HttpResponseBadRequest
-        from managers.models import Moderated, ModerationReport
+        from managers.models import Moderated, ModeratedLogs
         from common.utils import get_item_for_post_sanction
+        from managers.forms import ModeratedForm
 
         list = get_item_for_post_sanction(request.POST.get('_type'), request.POST.get('_subtype'))
-        if not (list[4] and request.user.is_administrator()) or not request.user.is_moderator():
+        if not (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
             return HttpResponseBadRequest()
-        if request.is_ajax():
-            ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=item.pk, description=post.description, type=post.type)
+
+        form = ModeratedForm(request.POST)
+        if request.is_ajax() and form.is_valid():
+            mod = form.save(commit=False)
+            type = request.POST.get('type')
+            case = request.POST.get('case')
+            item = list[0]
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=item.pk, type=type)
+            if case == "close":
+                moderate_obj.create_close(object=item, description=mod.description, manager_id=request.user.pk)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][0])
+                item.close_item()
+
+            elif case == "suspend":
+                moderate_obj.status = Moderated.SUSPEND
+                moderate_obj.description = mod.description
+                moderate_obj.save()
+
+                if number == '4':
+                    duration_of_penalty = timezone.now() + timezone.timedelta(days=30)
+                elif number == '3':
+                    duration_of_penalty = timezone.now() + timezone.timedelta(days=7)
+                elif number == '2':
+                    duration_of_penalty = timezone.now() + timezone.timedelta(days=3)
+                elif number == '1':
+                    duration_of_penalty = timezone.now() + timezone.timedelta(hours=6)
+
+                moderate_obj.create_suspend(manager_id=request.user.pk, duration_of_penalty=duration_of_penalty)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][1])
+                item.suspend_item()
+            elif case == "warning_banner":
+                moderate_obj.status = Moderated.BANNER_GET
+                moderate_obj.description = mod.description
+                moderate_obj.save()
+                moderate_obj.create_warning_banner(manager_id=request.user.pk)
+                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=30)
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
