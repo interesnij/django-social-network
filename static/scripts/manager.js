@@ -45,3 +45,29 @@ on('#ajax', 'click', '#send_manager_messages_btn', function() {
       }
       ajax_link.send(form_data);
 });
+
+
+on('#ajax', 'click', '#send_manager_messages_btn', function() {
+  form = this.parentElement.parentElement;
+  _text = form.querySelector(".smile_supported").innerHTML;
+  this.disabled = true;
+
+  $input = document.createElement("input");
+  $input.setAttribute("name", "text");
+  $input.setAttribute("type", "hidden");
+  $input.classList.add("input_text");
+  $input.value = _text;
+  form.append($input);
+  form_data = new FormData(form);
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      ajax_link.open( 'POST', '/managers/create_sanction/', true );
+      ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      ajax_link.onreadystatechange = function () {
+        if ( this.readyState == 4 && this.status == 200 ) {
+            toast_success("Санкция применена!");
+            close_work_fullscreen();
+        } else {this.disabled = false}
+      }
+      ajax_link.send(form_data);
+});
