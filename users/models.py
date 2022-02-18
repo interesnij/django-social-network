@@ -335,17 +335,17 @@ class User(AbstractUser):
     def is_closed(self):
         return self.type[:4] == "_CLO"
     def is_verified_send(self):
-        return self.type == User.VERIFIED_SEND
+        return self.type == User.VER_SEND
     def is_verified(self):
-        return self.type == User.VERIFIED
+        return self.type == User.VER
     def is_identified_send(self):
-        return self.type == User.IDENTIFIED_SEND
+        return self.type == User.ID_SEND
     def is_identified(self):
-        return self.type == User.IDENTIFIED
+        return self.type == User.ID
     def is_child(self):
         return self.type == User.CHILD
     def is_child_safety(self):
-        if self.perm > 5  or self.type == User.VERIFIED:
+        if self.perm > 5  or self.type == User.VER:
             return True
         else:
             return False
