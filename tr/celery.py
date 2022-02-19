@@ -1,6 +1,8 @@
 import os
 
 from celery import Celery
+from posts.models import PostsList
+from datetime import datetime, timedelta
 
 # Установите модуль настроек Django по умолчанию для программы "celery".
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.settings')
@@ -19,10 +21,10 @@ app.autodiscover_tasks("common")
 
 
 @app.task
-def test():
+def test1():
     list = PostsList.objects.get(pk=1)
     list.name = "бубубу"
     list.save(update_fields=["name"])
 
 
-test.apply_async(eta=timezone.now() + timezone.timedelta(seconds=3))
+test1.apply_async(eta=timezone.now() + timezone.timedelta(seconds=3))
