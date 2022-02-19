@@ -30,11 +30,11 @@ def get_fine_request_user(request_user):
     return template
 
 def get_fine_item(request_user, item):
-    if (item.community and request_user.is_administrator_of_community(item.community.pk)) \
-        (not item.community and request_user.pk == item.creator.pk):
+    staff = ""
+    if item.community and request_user.is_administrator_of_community(item.community.pk):
         staff = "staff_"
-    else:
-        staff = ""
+    elif not item.community and request_user.pk == item.creator.pk:
+        staff = "staff_"
     if item.is_deleted():
         template = "generic/centered/" + staff + "deleted_list.html"
     elif item.is_closed():
