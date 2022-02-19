@@ -1019,7 +1019,7 @@ class User(AbstractUser):
         from users.model.list import UserPostsListPosition
         try:
             list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
-            if list.list:
+            if list:
                 return list.list
             else:
                 return self.get_post_list().pk
