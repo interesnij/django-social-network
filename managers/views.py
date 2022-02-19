@@ -120,7 +120,7 @@ class SanctionItemCreate(TemplateView):
                 moderate_obj.status = Moderated.SUSPEND
                 moderate_obj.description = mod.description
                 moderate_obj.save()
-
+                number = request.POST.get('number')
                 if number == '4':
                     duration_of_penalty = timezone.now() + timezone.timedelta(days=30)
                 elif number == '3':
