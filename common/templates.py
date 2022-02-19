@@ -29,60 +29,28 @@ def get_fine_request_user(request_user):
         template = "generic/u_template/you_suspended.html"
     return template
 
-def get_fine_community_item(request_user, community, item, folder, template):
+def get_fine_item(request_user, item):
+    if (item.community and request_user.is_administrator_of_community(item.community.pk)) \
+        (not item.community and request_user.pk == item.creator.pk):
+        staff = "staff_"
+    else:
+        staff = ""
     if item.is_deleted():
-        if request_user.is_administrator_of_community(community.pk) and item.community.pk == community.pk:
-            template = folder + "admin_deleted_" + template
-        else:
-            template =  "generic/c_template/deleted.html"
+        template = "generic/centered/" + staff + "deleted_list.html"
     elif item.is_closed():
-        if staff:
-            template = folder + "staff_closed_" + template
-        if request_user.is_administrator_of_community(community.pk) and item.community.pk == community.pk:
-            template = "generic/c_template/admin_closed.html"
-        else:
-            template =  folder + "closed_" + template
+        template = "generic/centered/" + staff + "closed_list.html"
     elif item.is_suspended():
-        if staff:
-            template = folder + "staff_suspended_" + template
-        if request_user.is_administrator_of_community(community.pk) and item.community.pk == community.pk:
-            template = "generic/c_template/admin_suspended.html"
-        else:
-            template = "generic/c_template/suspended.html"
+        template = "generic/centered/" + staff + "suspended_list.html"
     return template
-def get_anon_fine_community_item(community, item):
+def get_anon_fine_item(item):
     if item.is_deleted():
-        template = "generic/c_template/anon_deleted.html"
+        template = "generic/centered/deleted_list.html"
     elif item.is_closed():
-        template = "generic/c_template/anon_closed.html"
+        template = "generic/centered/closed_list.html"
     elif item.is_suspended():
-        template = "generic/c_template/anon_suspended.html"
+        template = "generic/centered/suspended_list.html"
     return template
-def get_anon_fine_user_item(item):
-    if item.is_deleted():
-        template = "generic/u_template/anon_deleted.html"
-    elif item.is_closed():
-        template = folder + "anon_closed_" + template
-    elif item.is_suspended():
-        template = "generic/u_template/anon_suspended.html"
-    return template
-def get_fine_user_item(request_user, item, folder, template):
-    if item.is_deleted():
-        if item.creator.pk == request_user.pk:
-            template = folder + "my_deleted_" + template
-        else:
-            template = "generic/u_template/deleted.html"
-    elif item.is_closed():
-        if item.creator.pk == request_user.pk:
-            template = folder + "my_closed_" + template
-        else:
-            template = folder + "closed_" + template
-    elif item.is_suspended():
-        if item.creator.pk == request_user.pk:
-            template = folder + "my_suspended_" + template
-        else:
-            template = "generic/u_template/suspended.html"
-    return template
+
 def get_fine_user(user):
     if user.is_suspended():
         template = "generic/u_template/user_suspended.html"
@@ -133,14 +101,6 @@ def get_fine_anon_user(user):
     elif user.is_closed():
         template = "generic/u_template/anon_user_closed.html"
     return template
-def get_anon_fine_user_list(list):
-    if list.is_deleted():
-        template = "generic/u_template/anon_deleted.html"
-    elif list.is_closed():
-        template = "generic/u_template/anon_closed.html"
-    elif list.is_suspended():
-        template = "generic/u_template/anon_suspended.html"
-    return template
 
 def get_my_template(template, request_user, user_agent):
     if request_user.is_authenticated:
@@ -179,8 +139,6 @@ def get_template_community(community, folder, template, request_user, user_agent
             template_name = folder + "staff_member_" + template
         else:
             template_name = folder + template
-    elif request_user.is_community_manager():
-        template_name = folder + "staff_" + template
     elif community.is_close():
         if request_user.is_follow_from_community(community.pk):
             template_name = "generic/c_template/follow_community.html"
@@ -268,7 +226,7 @@ def get_template_user_item(item, folder, template, request_user, user_agent):
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif item.type[0] == "_" or list.type[0] == "_":
-        template_name = get_fine_user_item(request_user, item, folder, template)
+        template_name = get_fine_item(request_user, item)
     elif user.type[0] == "_":
         template_name = get_fine_user(user)
     elif user.pk == request_user.pk:
@@ -288,7 +246,7 @@ def get_template_anon_user_item(item, template, request_user, user_agent):
     if user.type[0] == "_":
         template_name = get_anon_fine_user(user)
     elif item.type[0] == "_" or list.type[0] == "_":
-        template_name = get_anon_fine_user_list(item)
+        template_name = get_anon_fine_item(item)
     elif user.is_closed_profile():
         template_name = "generic/u_template/anon_close_user.html"
     elif not user.is_child_safety():
@@ -304,7 +262,7 @@ def get_template_user_list(list, folder, template, request_user, user_agent):
     if request_user.type[0] == "_":
         template_name = get_fine_request_user(request_user)
     elif list.type[0] == "_":
-        template_name = get_fine_user_item(request_user, list, folder, template)
+        template_name = get_fine_item(request_user, list)
     elif user.type[0] == "_":
         template_name = get_fine_user(user)
     elif user.pk == request_user.pk:
@@ -324,7 +282,7 @@ def get_template_anon_user_list(list, template, request_user, user_agent):
     if user.type[0] == "_":
         template_name = get_anon_fine_user(user)
     elif list.type[0] == "_":
-        template_name = get_anon_fine_user_list(item)
+        template_name = get_anon_fine_item(item)
     elif user.is_closed_profile():
         template_name = "generic/u_template/anon_close_user.html"
     elif not user.is_child_safety():
@@ -342,7 +300,7 @@ def get_template_community_item(item, folder, template, request_user, user_agent
     elif community.type[0] == "_":
         template_name = get_fine_community(community, request_user)
     elif item.type[0] == "_" or list.type[0] == "_":
-        template_name = get_fine_community_item(request_user, community, item, folder, template)
+        template_name = get_fine_item(request_user, item)
     elif request_user.is_administrator_of_community(community.pk):
         template_name = folder + "admin_" + template
     elif community.is_private():
@@ -362,7 +320,7 @@ def get_template_anon_community_item(item, template, request_user, user_agent):
     if community.type[0] == "_":
         template_name = get_anon_fine_community(community)
     elif item.type[0] == "_" or list.type[0] == "_":
-        template_name = get_anon_fine_community_item(community, item)
+        template_name = get_anon_fine_item(item)
     elif community.is_public():
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
@@ -383,7 +341,7 @@ def get_template_community_list(list, folder, template, request_user, user_agent
     elif community.type[0] == "_":
         template_name = get_fine_community(community, request_user)
     elif list.type[0] == "_":
-        template_name = get_fine_community_item(request_user, community, list, folder, template)
+        template_name = get_fine_item(request_user, list)
     elif request_user.is_administrator_of_community(community.pk):
         template_name = folder + "admin_" + template
     elif community.is_private() and not request_user.is_member_of_community(community.pk):
@@ -403,7 +361,7 @@ def get_template_anon_community_list(list, template, request_user, user_agent):
     if community.type[0] == "_":
         template_name = get_anon_fine_community(community)
     elif list.type[0] == "_":
-        template_name = get_anon_fine_community_item(community, item)
+        template_name = get_anon_fine_item(list)
     elif community.is_public():
         if not community.is_verified():
             template_name = "generic/c_template/anon_no_child_safety.html"
