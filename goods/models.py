@@ -96,6 +96,16 @@ class GoodList(models.Model):
 		else:
 			return count
 
+	def get_longest_penalties(self):
+		return self.manager_penalties.filter(type="GOL", object_id=self.pk)[0].expiration
+	def get_moderated_description(self):
+		from managers.models import Moderated
+		obj = Moderated.objects.filter(type="GOL", object_id=self.pk)[0]
+		if obj.description:
+			return obj.description
+		else:
+			return "Предупреждение за нарушение правил соцсети трезвый.рус"
+
 	def get_code(self):
 		return "lgo" + str(self.pk)
 	def is_good_list(self):

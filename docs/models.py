@@ -65,6 +65,16 @@ class DocsList(models.Model):
         else:
             return 'список документов <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
+    def get_longest_penalties(self):
+        return self.manager_penalties.filter(type="DOL", object_id=self.pk)[0].expiration
+    def get_moderated_description(self):
+        from managers.models import Moderated
+        obj = Moderated.objects.filter(type="DOL", object_id=self.pk)[0]
+        if obj.description:
+            return obj.description
+        else:
+            return "Предупреждение за нарушение правил соцсети трезвый.рус"
+
     def is_user_list(self, user):
         return self in user.get_doc_lists()
     def is_user_collection_list(self, user_id):

@@ -62,6 +62,16 @@ class SurveyList(models.Model):
     def is_survey_list(self):
         return True
 
+    def get_longest_penalties(self):
+        return self.manager_penalties.filter(type="SUL", object_id=self.pk)[0].expiration
+    def get_moderated_description(self):
+        from managers.models import Moderated
+        obj = Moderated.objects.filter(type="SUL", object_id=self.pk)[0]
+        if obj.description:
+            return obj.description
+        else:
+            return "Предупреждение за нарушение правил соцсети трезвый.рус"
+
     def get_description(self):
         if self.community:
             return 'список опросов сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'

@@ -89,6 +89,16 @@ class Community(models.Model):
     def is_community(self):
         return True
 
+    def get_longest_penalties(self):
+        return self.manager_penalties.filter(type="COM", object_id=self.pk)[0].expiration 
+    def get_moderated_description(self):
+        from managers.models import Moderated
+        obj = Moderated.objects.filter(type="COM", object_id=self.pk)[0]
+        if obj.description:
+            return obj.description
+        else:
+            return "Предупреждение за нарушение правил соцсети трезвый.рус"
+
     def get_b_avatar(self):
         if self.get_avatar_pk():
             return '<img src="' + self.b_avatar.url + '" class="detail_photo pointer" photo-pk="' + str(self.get_avatar_pk()) + '">'

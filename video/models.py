@@ -86,6 +86,16 @@ class VideoList(models.Model):
     def is_video_list(self):
         return True
 
+    def get_longest_penalties(self):
+        return self.manager_penalties.filter(type="VIL", object_id=self.pk)[0].expiration
+    def get_moderated_description(self):
+        from managers.models import Moderated
+        obj = Moderated.objects.filter(type="VIL", object_id=self.pk)[0]
+        if obj.description:
+            return obj.description
+        else:
+            return "Предупреждение за нарушение правил соцсети трезвый.рус"
+
     def get_description(self):
         if self.community:
             return 'видеоальбом сообщества <a href="' + self.community.get_link() + '" target="_blank">' + self.community.name + '</a>'
