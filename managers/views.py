@@ -110,7 +110,7 @@ class SanctionItemCreate(TemplateView):
             mod = form.save(commit=False)
             case = request.POST.get('case')
             item = list[0]
-            moderate_obj = Moderated.get_or_create_moderated_object(object_id=item.pk, type=type)
+            moderate_obj = Moderated.get_or_create_moderated_object(object_id=item.pk, type=list[1])
             if case == "close":
                 moderate_obj.create_close(object=item, description=mod.description, manager_id=request.user.pk)
                 ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][0])
@@ -118,7 +118,7 @@ class SanctionItemCreate(TemplateView):
 
             elif case == "suspend":
                 from django.utils import timezone
-                
+
                 moderate_obj.status = Moderated.SUSPEND
                 moderate_obj.description = mod.description
                 moderate_obj.save()
@@ -162,7 +162,7 @@ class SanctionItemDelete(View):
 
         if request.is_ajax():
             item = list[0]
-            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             if item.type[:4] == "_CLO":
                 moderate_obj.delete_close(object=item, manager_id=request.user.pk)
                 ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][2])
@@ -201,7 +201,7 @@ class RejectedItemClaims(View):
 
         if request.is_ajax():
             item = list[0]
-            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.reject_moderation(manager_id=request.user.pk)
             ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][3])
             return HttpResponse()
@@ -224,7 +224,7 @@ class UnverifyItemCreate(View):
 
         if request.is_ajax():
             item = list[0]
-            moderate_obj = Moderated.objects.get(object_id=item.pk, type=type)
+            moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.unverify_moderation(item, manager_id=request.user.pk)
             ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][4])
             return HttpResponse()
