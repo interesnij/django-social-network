@@ -21,4 +21,4 @@ def is_user_voted(survey, request_user_id):
 @register.filter
 def get_bad_item(item, request_user):
     from common.utils import get_bad_item
-    return survey.get_bad_item(item, request_user_id)
+    return item.get_bad_item(request_user_id)
