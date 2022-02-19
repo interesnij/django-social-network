@@ -1017,8 +1017,11 @@ class User(AbstractUser):
 
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
-        list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        try:
+            list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
+            return list.list
+        except UserPostsListPosition.DoesNotExist:
+            return self.get_post_list().pk
     def get_selected_photo_list_pk(self):
         from users.model.list import UserPhotoListPosition
         list = UserPhotoListPosition.objects.filter(user=self.pk, type=1).first()
