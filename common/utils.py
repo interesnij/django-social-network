@@ -449,7 +449,7 @@ def get_item_for_post_sanction(_type, _subtype):
 
 def get_bad_item(item, request_user):
     staff = ""
-    if user.is_authenticated:
+    if request_user.is_authenticated:
         if item.community and request_user.is_administrator_of_community(item.community.pk):
             staff = "staff_"
         elif not item.community and request_user.pk == item.creator.pk:
