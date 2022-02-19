@@ -418,6 +418,10 @@ class ModerationPenalty(models.Model):
         verbose_name = 'Оштрафованный объект'
         verbose_name_plural = 'Оштрафованные объект'
 
+    def get_expiration(self):
+        from django.contrib.humanize.templatetags.humanize import naturaltime
+        return naturaltime(self.created)
+
     @classmethod
     def create_suspension_penalty(cls, object_id, type, manager_id, moderated_object, expiration):
         try:
