@@ -255,7 +255,7 @@ function create_fullscreen(url, type_class, need_drag_items) {
               $new_window_list[3] = parseFloat(offset * 0.000264).toFixed(2);
             }
           };
-          if (need_drag_items) { 
+          if (need_drag_items) {
             console.log("need_drag_items!");
             get_dragula(".worker_drag_container")
           }
@@ -657,7 +657,7 @@ function if_list(block) {
         } else if (_block.getAttribute("community-pk")){
           link = "/posts/list/?community=" + _block.getAttribute("community-pk")
         };
-        list_block_load(_block, ".post_container", link);
+        list_block_load(_block, ".load_list", link);
         scrolled(_block.querySelector('.list_pk'));
     } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');

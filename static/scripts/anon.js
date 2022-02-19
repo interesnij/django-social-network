@@ -830,7 +830,7 @@ function if_list(block) {
       } else if (_block.getAttribute("community-pk")){
         link = "/posts/list/?community=" + _block.getAttribute("community-pk")
       };
-      list_block_load(_block, ".post_container", link);
+      list_block_load(_block, ".load_list", link);
       scrolled(_block.querySelector('.list_pk'));
   } else if (block.querySelector('.is_block_post_paginate')) {
         lenta = block.querySelector('.is_block_post_paginate');
