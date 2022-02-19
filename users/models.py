@@ -1017,38 +1017,53 @@ class User(AbstractUser):
 
     def get_selected_post_list_pk(self):
         from users.model.list import UserPostsListPosition
-        try:
-            list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
-            if list:
-                return list.list
-            else:
-                return self.get_post_list().pk
-        except UserPostsListPosition.DoesNotExist:
+        list = UserPostsListPosition.objects.filter(user=self.pk, type=1).first()
+        if list:
+            return list.list
+        else:
             return self.get_post_list().pk
     def get_selected_photo_list_pk(self):
         from users.model.list import UserPhotoListPosition
         list = UserPhotoListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_photo_list().pk
     def get_selected_doc_list_pk(self):
         from users.model.list import UserDocsListPosition
         list = UserDocsListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_doc_list().pk
     def get_selected_good_list_pk(self):
         from users.model.list import UserGoodListPosition
         list = UserGoodListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_good_list().pk
     def get_selected_music_list_pk(self):
         from users.model.list import UserPlayListPosition
         list = UserPlayListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_playlist().pk
     def get_selected_video_list_pk(self):
         from users.model.list import UserVideoListPosition
         list = UserVideoListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_video_list().pk
     def get_selected_survey_list_pk(self):
         from users.model.list import UserSurveyListPosition
         list = UserSurveyListPosition.objects.filter(user=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_survey_list().pk
 
     def get_post_lists(self):
         from posts.models import PostsList
@@ -1157,16 +1172,16 @@ class User(AbstractUser):
             return None
     def get_post_list(self):
         from posts.models import PostsList
-        return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type=PostsList.MAIN)
+        return PostsList.objects.get(creator_id=self.pk, community__isnull=True, type__contains="MA")
     def get_doc_list(self):
         from docs.models import DocsList
-        return DocsList.objects.get(creator_id=self.pk, community__isnull=True, type=DocsList.MAIN)
+        return DocsList.objects.get(creator_id=self.pk, community__isnull=True, type__contains="MA")
     def get_survey_list(self):
         from survey.models import SurveyList
-        return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type=SurveyList.MAIN)
+        return SurveyList.objects.get(creator_id=self.pk, community__isnull=True, type__contains="MA")
     def get_playlists(self):
         from music.models import MusicList
-        return MusicList.objects.filter(creator_id=self.id, community__isnull=True, type=MusicList.MAIN)
+        return MusicList.objects.filter(creator_id=self.id, community__isnull=True, type__contains="MA")
 
     def get_6_photos(self):
         from gallery.models import Photo

@@ -90,7 +90,7 @@ class Community(models.Model):
         return True
 
     def get_longest_penalties(self):
-        return self.manager_penalties.filter(type="COM", object_id=self.pk)[0].expiration 
+        return self.manager_penalties.filter(type="COM", object_id=self.pk)[0].expiration
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="COM", object_id=self.pk)[0]
@@ -318,19 +318,19 @@ class Community(models.Model):
 
     def get_good_list(self):
         from goods.models import GoodList
-        return GoodList.objects.get(community_id=self.pk, type=GoodList.MAIN)
+        return GoodList.objects.get(community_id=self.pk, type__contains="MA")
     def get_post_list(self):
         from posts.models import PostsList
-        return PostsList.objects.get(community_id=self.pk, type=PostsList.MAIN)
+        return PostsList.objects.get(community_id=self.pk, type__contains="MA")
     def get_playlist(self):
         from music.models import MusicList
-        return MusicList.objects.get(community_id=self.pk, type=MusicList.MAIN)
+        return MusicList.objects.get(community_id=self.pk, type__contains="MA")
     def get_video_list(self):
         from video.models import VideoList
-        return VideoList.objects.get(community_id=self.pk, type=VideoList.MAIN)
+        return VideoList.objects.get(community_id=self.pk, type__contains="MA")
     def get_photo_list(self):
         from gallery.models import PhotoList
-        return PhotoList.objects.get(community_id=self.pk, type=PhotoList.MAIN)
+        return PhotoList.objects.get(community_id=self.pk, type__contains="MA")
     def get_avatar_pk(self):
         try:
             from gallery.models import PhotoList
@@ -340,7 +340,7 @@ class Community(models.Model):
             return None
     def get_doc_list(self):
         from docs.models import DocsList
-        return DocsList.objects.get(community_id=self.pk, type=DocsList.MAIN)
+        return DocsList.objects.get(community_id=self.pk, type__contains="MA")
 
     def get_post_lists(self):
         from posts.models import PostsList
@@ -351,11 +351,17 @@ class Community(models.Model):
     def get_selected_post_list_pk(self):
         from communities.model.list import CommunityPostsListPosition
         list = CommunityPostsListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_post_list().pk
     def get_selected_photo_list_pk(self):
         from communities.model.list import CommunityPhotoListPosition
         list = CommunityPhotoListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_photo_list().pk
     def get_selected_doc_list_pk(self):
         from communities.model.list import CommunityDocsListPosition
         list = CommunityDocsListPosition.objects.filter(community=self.pk, type=1).first()
@@ -363,19 +369,31 @@ class Community(models.Model):
     def get_selected_good_list_pk(self):
         from communities.model.list import CommunityGoodListPosition
         list = CommunityGoodListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_good_list().pk
     def get_selected_music_list_pk(self):
         from communities.model.list import CommunityPlayListPosition
         list = CommunityPlayListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_playlist().pk
     def get_selected_video_list_pk(self):
         from communities.model.list import CommunityVideoListPosition
         list = CommunityVideoListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_video_list().pk
     def get_selected_survey_list_pk(self):
         from communities.model.list import CommunitySurveyListPosition
         list = CommunitySurveyListPosition.objects.filter(community=self.pk, type=1).first()
-        return list.list
+        if list:
+            return list.list
+        else:
+            return self.get_survey_list().pk
 
     def get_survey_lists(self):
         from survey.models import SurveyList
