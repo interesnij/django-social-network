@@ -14,5 +14,12 @@ class ModeratedAdmin(admin.ModelAdmin):
     class Meta:
             model = Moderated
 
+class ModerationPenaltyAdmin(admin.ModelAdmin):
+    list_display = ['type', 'object_id', 'status', 'moderated_object']
+    search_fields = ['type']
+    class Meta:
+            model = ModerationPenalty
+
 
 admin.site.register(Moderated, ModeratedAdmin)
+admin.site.register(ModerationPenalty, ModerationPenaltyAdmin)
