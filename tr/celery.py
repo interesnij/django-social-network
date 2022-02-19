@@ -18,13 +18,3 @@ app.config_from_object('django.conf:settings')
 
 # Загружайте модули задач из всех зарегистрированных приложений Django.
 app.autodiscover_tasks("common")
-
-
-@app.task
-def test1():
-    list = PostsList.objects.get(pk=1)
-    list.name = "бубубу"
-    list.save(update_fields=["name"])
-
-
-test1.apply_async(eta=timezone.now() + timezone.timedelta(seconds=3))
