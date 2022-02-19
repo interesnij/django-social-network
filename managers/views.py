@@ -117,6 +117,8 @@ class SanctionItemCreate(TemplateView):
                 item.close_item()
 
             elif case == "suspend":
+                from django.utils import timezone
+                
                 moderate_obj.status = Moderated.SUSPEND
                 moderate_obj.description = mod.description
                 moderate_obj.save()
