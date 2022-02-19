@@ -133,7 +133,7 @@ class SanctionItemCreate(TemplateView):
                     duration_of_penalty = timezone.now() + timezone.timedelta(hours=6)
 
                 moderate_obj.create_suspend(manager_id=request.user.pk, duration_of_penalty=duration_of_penalty)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][1])
+                ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][1])
                 item.suspend_item()
             elif case == "warning_banner":
                 moderate_obj.status = Moderated.BANNER_GET

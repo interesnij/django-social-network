@@ -53,7 +53,7 @@ on('#ajax', 'click', '#create_sanction_btn', function() {
   this.disabled = true;
 
   $input = document.createElement("input");
-  $input.setAttribute("name", "text");
+  $input.setAttribute("name", "description");
   $input.setAttribute("type", "hidden");
   $input.classList.add("input_text");
   $input.value = _text;
