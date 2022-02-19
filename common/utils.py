@@ -455,9 +455,9 @@ def get_bad_item(item, request_user):
         elif not item.community and request_user.pk == item.creator.pk:
             staff = "staff_"
     if item.is_deleted():
-        template = "generic/centered/" + staff + "deleted_list.html"
+        template = "desctop/generic/centered/" + staff + "deleted_list.html"
     elif item.is_closed():
-        template = "generic/centered/" + staff + "closed_list.html"
+        template = "desctop/generic/centered/" + staff + "closed_list.html"
     elif item.is_suspended():
-        template = "generic/centered/" + staff + "suspended_list.html"
+        template = "desctop/generic/centered/" + staff + "suspended_list.html"
     return template
