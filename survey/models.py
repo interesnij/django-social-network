@@ -63,7 +63,8 @@ class SurveyList(models.Model):
         return True
 
     def get_longest_penalties(self):
-        return self.manager_penalties.filter(type="SUL", object_id=self.pk)[0].expiration
+        from managers.models import ModerationPenalty
+        return ModerationPenalty.objects.filter(type="SUL", object_id=self.pk)[0].expiration
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="SUL", object_id=self.pk)[0]

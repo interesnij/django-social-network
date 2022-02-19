@@ -66,7 +66,8 @@ class DocsList(models.Model):
             return 'список документов <a href="' + self.creator.get_link() + '" target="_blank">' + self.creator.get_full_name_genitive() + '</a>'
 
     def get_longest_penalties(self):
-        return self.manager_penalties.filter(type="DOL", object_id=self.pk)[0].expiration
+        from managers.models import ModerationPenalty
+        return ModerationPenalty.objects.filter(type="DOL", object_id=self.pk)[0].expiration
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="DOL", object_id=self.pk)[0]
