@@ -12,7 +12,7 @@ app = Celery('tr')
 # - namespace='СЕЛЬДЕРЕЙ' означает все ключи конфигурации, связанные с сельдереем
 # должен иметь префикс `CELERY_`.
 
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings')
 
 # Загружайте модули задач из всех зарегистрированных приложений Django.
 app.autodiscover_tasks()
