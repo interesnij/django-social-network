@@ -779,6 +779,8 @@ class Survey(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_open(self):
+        return self.type[0] != "_"
 
     def votes_create(self, user, votes):
         import json

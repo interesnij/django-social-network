@@ -1223,6 +1223,8 @@ class Good(models.Model):
 		return self.type[:4] == "_DEL"
 	def is_closed(self):
 		return self.type[:4] == "_CLO"
+	def is_open(self):
+		return self.type[0] != "_"
 
 	def create_comment(self, commenter, attach, parent, text, sticker):
 		from common.processing_2 import get_text_processing

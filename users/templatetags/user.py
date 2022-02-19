@@ -17,3 +17,8 @@ def is_user_can_edit_delete(obj, request_user):
 @register.filter
 def is_user_voted(survey, request_user_id):
     return survey.is_user_voted(request_user_id)
+
+@register.filter
+def get_bad_item(item, request_user):
+    from common.utils import get_bad_item
+    return survey.get_bad_item(item, request_user_id)

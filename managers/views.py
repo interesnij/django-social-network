@@ -113,7 +113,7 @@ class SanctionItemCreate(TemplateView):
             moderate_obj = Moderated.get_or_create_moderated_object(object_id=item.pk, type=list[1])
             if case == "close":
                 moderate_obj.create_close(object=item, description=mod.description, manager_id=request.user.pk)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][0])
+                ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][0])
                 item.close_item()
 
             elif case == "suspend":
@@ -140,7 +140,7 @@ class SanctionItemCreate(TemplateView):
                 moderate_obj.description = mod.description
                 moderate_obj.save()
                 moderate_obj.create_warning_banner(manager_id=request.user.pk)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=31)
+                ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=31)
                 item.banner_item()
             return HttpResponse()
         else:
@@ -165,7 +165,7 @@ class SanctionItemDelete(View):
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             if item.type[:4] == "_CLO":
                 moderate_obj.delete_close(object=item, manager_id=request.user.pk)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][2])
+                ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][2])
                 item.abort_close_item()
 
             elif item.type[:4] == "_SUS":
@@ -179,7 +179,7 @@ class SanctionItemDelete(View):
 
             elif item.type[:4] == "_BAN":
                 moderate_obj.delete_warning_banner(manager_id=request.user.pk)
-                ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=log_number)
+                ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=log_number)
                 item.unbanner_item()
             return HttpResponse()
         else:
@@ -203,7 +203,7 @@ class RejectedItemClaims(View):
             item = list[0]
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.reject_moderation(manager_id=request.user.pk)
-            ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][3])
+            ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][3])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
@@ -226,7 +226,7 @@ class UnverifyItemCreate(View):
             item = list[0]
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.unverify_moderation(item, manager_id=request.user.pk)
-            ModeratedLogs.objects.create(type=type, object_id=item.pk, manager=request.user.pk, action=list[3][4])
+            ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][4])
             return HttpResponse()
         else:
             return HttpResponseBadRequest()

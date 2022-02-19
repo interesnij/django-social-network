@@ -406,7 +406,7 @@ def get_item_for_post_sanction(_type, _subtype):
             return [VideoComment.objects.get(pk=_type[3:]), "CaR", False, _list]
 
     else:
-        _list = [2, 0, 8, 15, 21] 
+        _list = [2, 0, 8, 15, 21]
         if _type[:3] == "pos":
             return [Post.objects.get(pk=_type[3:]), "POS", False, _list]
         elif _type[:3] == "pho":
@@ -446,3 +446,18 @@ def get_item_for_post_sanction(_type, _subtype):
         elif _type[:3] == "for":
             from forum.models import Forum
             return [Survey.objects.get(pk=_type[3:]), "FOR", False, _list]
+
+def get_bad_item(item, user):
+    staff = ""
+    if user.is_authenticated:
+        if item.community and request_user.is_administrator_of_community(item.community.pk):
+            staff = "staff_"
+        elif not item.community and request_user.pk == item.creator.pk:
+            staff = "staff_"
+    if item.is_deleted():
+        template = "generic/centered/" + staff + "deleted_list.html"
+    elif item.is_closed():
+        template = "generic/centered/" + staff + "closed_list.html"
+    elif item.is_suspended():
+        template = "generic/centered/" + staff + "suspended_list.html"
+    return template
