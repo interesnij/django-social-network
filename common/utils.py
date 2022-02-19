@@ -447,7 +447,7 @@ def get_item_for_post_sanction(_type, _subtype):
             from forum.models import Forum
             return [Survey.objects.get(pk=_type[3:]), "FOR", False, _list]
 
-def get_bad_item(item, user):
+def get_bad_item(item, request_user):
     staff = ""
     if user.is_authenticated:
         if item.community and request_user.is_administrator_of_community(item.community.pk):
