@@ -420,7 +420,7 @@ class ModerationPenalty(models.Model):
 
     def get_expiration(self):
         from django.contrib.humanize.templatetags.humanize import naturaltime
-        return naturaltime(self.created)
+        return naturaltime(self.expiration)
 
     @classmethod
     def create_suspension_penalty(cls, object_id, type, manager_id, moderated_object, expiration):
