@@ -2,6 +2,7 @@ import os
 from celery import Celery
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.conf import settings
 
 # Установите модуль настроек Django по умолчанию для программы "celery".
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.settings')
@@ -16,7 +17,7 @@ app = Celery('tr')
 app.config_from_object('django.conf:settings')
 
 # Загружайте модули задач из всех зарегистрированных приложений Django.
-app.autodiscover_tasks()
+app.autodiscover_tasks(settings.INSTALLED_APPS)
 
 @app.task
 def test():
