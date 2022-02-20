@@ -3,7 +3,7 @@ from celery import Celery
 from tr import celery_app
 from posts.models import PostsList
 from tr.celery import app
-
+from django.utils import timezone
 
 #class MyTask(celery_app.Task):
 #    def run(self):
