@@ -220,7 +220,8 @@ class NewsListView(ListView):
 		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'])
 
 		from common.tasks import custom
-		custom.delay()
+		#custom.delay()
+		custom.apply_async(eta=timezone.now() + timezone.timedelta(seconds=40))
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
