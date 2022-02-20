@@ -1,5 +1,9 @@
 
-{% if object_list %}
+{% if not list.is_open %}
+  {% load user %}
+  {% include list|get_bad_item:request.user %}
+
+{% elif object_list %}
 {% for object in object_list %}
   {% include 'desctop/generic/items/staff_photo.html' %}
 {% endfor %}

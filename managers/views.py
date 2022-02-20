@@ -118,6 +118,8 @@ class SanctionItemCreate(TemplateView):
 
             elif case == "suspend":
                 from django.utils import timezone
+                from common.tasks import custom
+        		from datetime import datetime, timedelta
 
                 moderate_obj.status = Moderated.SUSPEND
                 moderate_obj.description = mod.description
@@ -134,7 +136,8 @@ class SanctionItemCreate(TemplateView):
 
                 moderate_obj.create_suspend(manager_id=request.user.pk, duration_of_penalty=duration_of_penalty)
                 ModeratedLogs.objects.create(type=list[1], object_id=item.pk, manager=request.user.pk, action=list[3][1])
-                item.suspend_item()
+
+        		custom.apply_async((item), eta=duration_of_penalty)
             elif case == "warning_banner":
                 moderate_obj.status = Moderated.BANNER_GET
                 moderate_obj.description = mod.description
@@ -171,6 +174,7 @@ class SanctionItemDelete(View):
             elif item.type[:4] == "_SUS":
                 moderate_obj.delete_suspend(manager_id=request.user.pk)
                 item.unsuspend_item()
+
                 if item.type[0] == "l":
                     log_number = 10
                 else:

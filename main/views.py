@@ -218,12 +218,6 @@ class NewsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'])
-
-		from common.tasks import custom
-		from datetime import datetime, timedelta
-		#custom.delay()
-		test_limit = datetime.utcnow() + timedelta(minutes=1)
-		custom.apply_async(eta=test_limit)
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):

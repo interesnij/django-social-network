@@ -9,7 +9,11 @@
       {% include 'desctop/generic/items/list_meta.html' %}
     </h5>
   </div>
-  {% if object_list %}
+  {% if not list.is_open %}
+    {% load user %}
+    {% include list|get_bad_item:request.user %}
+
+  {% elif object_list %}
   <div class="row is_load_paginate is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.creator.pk }}" data-type="user_video_list">
     {% for object in object_list %}
       {% include 'desctop/users/video/main_list/video.html' %}

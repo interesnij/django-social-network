@@ -19,6 +19,11 @@
 
            <span></span>
             <span class="post_stream drag_container is_paginate" data-type="pos">
+              {% if not list.is_open %}
+                {% load user %}
+                {% include list|get_bad_item:request.user %}
+
+              {% elif object_list %}
               {% for object in object_list %}
                 {% include 'mobile/posts/post_community/post.html' %}
               {% endfor %}
@@ -26,6 +31,7 @@
               <div class="load centered m-1 next_page_list" data-link="/posts/list/?list={{ list.pk }}&page={{ page_obj.next_page_number }}">
                   <img src="/static/images/preloader.gif">
               </div>
+              {% endif %}
               {% endif %}
 
               {% if not object and not object_list %}

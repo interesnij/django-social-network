@@ -1,6 +1,10 @@
 
-{% if photo_list %}
-{% for object in photo_list %}
+{% if not list.is_open %}
+  {% load user %}
+  {% include list|get_bad_item:request.user %}
+
+{% elif object_list %}
+{% for object in object_list %}
   {% include 'mobile/generic/items/photo.html' %}
 {% endfor %}
   {% if page_obj.has_next %}

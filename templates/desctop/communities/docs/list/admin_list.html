@@ -37,7 +37,11 @@
     <div class="card mb-2">
         <div class="card-body">
             <ul class="is_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" data-type="doc" data-community-id="{{ list.community.pk }}">
-                {% if object_list %}
+              {% if not list.is_open %}
+                {% load user %}
+                {% include list|get_bad_item:request.user %}
+
+              {% elif object_list %}
                 {% for object in object_list %}
                   {% include 'desctop/communities/docs/doc.html' %}
                 {% endfor %}
@@ -47,7 +51,7 @@
                 </div>
                 {% endif %}
 
-                {% else %}
+              {% else %}
                 <div class="card centered items_empty">
                     <div class="card-body" style="margin-top: 10%;">
                         <svg class='svg_default thumb_big' fill='currentColor' viewBox='0 0 24 24'>
@@ -57,7 +61,7 @@
                     </div>
                     <h6 style="margin: 20px;text-align: center;">В списке пока нет документов.</h6>
                 </div>
-                {% endif %}
+              {% endif %}
             </ul>
         </div>
     </div>

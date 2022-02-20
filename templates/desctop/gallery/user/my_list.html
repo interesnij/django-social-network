@@ -26,7 +26,11 @@
   </form>
 </div>
 
-  {% if object_list %}
+{% if not list.is_open %}
+  {% load user %}
+  {% include list|get_bad_item:request.user %}
+
+{% elif object_list %}
   <div class="row is_paginate is_block_paginate drag_container is_stat_list" data-pk="{{ list.pk }}" owner-pk="{{ list.community.pk }}" data-type="community_photo_list">
 
     {% for object in object_list %}

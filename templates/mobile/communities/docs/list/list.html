@@ -37,7 +37,11 @@
           <div class="card mb-2">
               <div class="card-body">
                     <ul class="is_paginate is_stat_list" data-pk="{{ list.pk }}" data-type="{% if list.community %}community{% else %}user{% endif %}_doc_list">
-                      {% if object_list %}
+                      {% if not list.is_open %}
+                        {% load user %}
+                        {% include list|get_bad_item:request.user %}
+
+                      {% elif object_list %}
                       {% for object in object_list %}
                         {% include 'mobile/communities/docs/doc.html' %}
                       {% endfor %}
