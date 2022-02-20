@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Установите модуль настроек Django по умолчанию для программы "celery".
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.settings')
 
-app = Celery('tr', backend='redis://localhost', broker='pyamqp://')
+app = Celery('tr')
 
 # Использование строки здесь означает, что рабочему не нужно сериализовать
 # объект конфигурации для дочерних процессов.
