@@ -12,4 +12,4 @@ class MyTask(celery_app.Task):
     list.save(update_fields=["name"])
 
 
-test.apply_async(eta=timezone.now() + timezone.timedelta(seconds=20))
+MyTask.apply_async(eta=timezone.now() + timezone.timedelta(seconds=20))
