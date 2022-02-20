@@ -18,7 +18,9 @@ apt install redis-server
 python -m pip install django-redis
 BeautifulSoup4
 lxml
+
 pip install django-celery
+pip install -U "celery[redis]"
 
 sudo add-apt-repository ppa:savoury1/ffmpeg4
 sudo apt-get update

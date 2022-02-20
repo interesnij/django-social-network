@@ -7,7 +7,7 @@ from django.conf import settings
 # Установите модуль настроек Django по умолчанию для программы "celery".
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.settings')
 
-app = Celery('tr')
+app = Celery('tr', broker='pyamqp://guest@localhost//')
 
 # Использование строки здесь означает, что рабочему не нужно сериализовать
 # объект конфигурации для дочерних процессов.
