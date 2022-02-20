@@ -60,7 +60,7 @@
             {% include list|get_bad_item:request.user %}
 
           {% elif object_list %}
-          {% else %}
+
           {% for object in object_list %}
             {% include 'desctop/posts/post_user/my_post.html' %}
           {% endfor %}
