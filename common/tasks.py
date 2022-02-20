@@ -6,10 +6,12 @@ from posts.models import PostsList
 
 
 class MyTask(celery_app.Task):
-    print ("it's work!")
-    list = PostsList.objects.get(pk=1)
-    list.name = "бубубу"
-    list.save(update_fields=["name"])
+    def debug_task(self):
+        print ("it's work!")
+
+    #list = PostsList.objects.get(pk=1)
+    #list.name = "бубубу"
+    #list.save(update_fields=["name"])
 
 
-MyTask.apply_async(eta=timezone.now() + timezone.timedelta(seconds=20))
+debug_task.apply_async(eta=timezone.now() + timezone.timedelta(seconds=20))
