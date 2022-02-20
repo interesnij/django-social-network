@@ -11,4 +11,4 @@ class MyTask(celery_app.Task):
         list.name = "бубубу"
         list.save(update_fields=["name"])
 
-app.tasks.register(MyTask())
+MyTask = app.register_task(MyTask())
