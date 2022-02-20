@@ -90,7 +90,7 @@ class Community(models.Model):
         return True
 
     def get_longest_penalties(self):
-        return self.manager_penalties.filter(type="COM", object_id=self.pk)[0].expiration
+        return ModerationPenalty.objects.filter(type="COM", object_id=self.pk)[0].get_expiration()
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="COM", object_id=self.pk)[0]
@@ -972,7 +972,7 @@ class Community(models.Model):
 
     ''''' модерация '''''
     def get_longest_community_penalties(self):
-        return self.community_penalties.filter(community=self)[0].expiration
+        return self.community_penalties.filter(community=self)[0].get_expiration()
     def get_moderated_description(self):
         from managers.models import Moderated
         return Moderated.objects.filter(object_id=self.pk, type="COM")[0].description

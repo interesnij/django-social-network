@@ -1435,7 +1435,7 @@ class User(AbstractUser):
         return count
 
     def get_longest_penalties(self):
-        return self.manager_penalties.filter(type="USE", object_id=self.pk)[0].expiration
+        return ModerationPenalty.objects.filter(type="USE", object_id=self.pk)[0].get_expiration()
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="USE", object_id=self.pk)[0]

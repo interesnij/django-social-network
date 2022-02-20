@@ -67,7 +67,7 @@ class PostsList(models.Model):
 
     def get_longest_penalties(self):
         from managers.models import ModerationPenalty
-        return ModerationPenalty.objects.filter(type="POL", object_id=self.pk)[0].expiration
+        return ModerationPenalty.objects.filter(type="POL", object_id=self.pk)[0].get_expiration()
     def get_moderated_description(self):
         from managers.models import Moderated
         obj = Moderated.objects.filter(type="POL", object_id=self.pk)[0]
