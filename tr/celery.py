@@ -26,4 +26,4 @@ def test():
     #list.save(update_fields=["name"])
 
 
-test.apply_async(eta=datetime.datetime(2022, 2, 20, 11, 42))
+test.apply_async(eta=datetime(2022, 2, 20, 11, 43))
