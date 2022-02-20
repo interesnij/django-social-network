@@ -3,7 +3,7 @@ from celery import shared_task, current_task, task
 from celery import Celery
 from posts.models import PostsList
 
-app = Celery()
+app = Celery('tasks', broker='redis://localhost')
 
 @app.task
 def test():
