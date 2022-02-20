@@ -119,7 +119,7 @@ class SanctionItemCreate(TemplateView):
             elif case == "suspend":
                 from django.utils import timezone
                 from common.tasks import custom
-        		from datetime import datetime, timedelta
+                from datetime import datetime, timedelta
 
                 moderate_obj.status = Moderated.SUSPEND
                 moderate_obj.description = mod.description
