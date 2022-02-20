@@ -3,6 +3,7 @@ from celery import shared_task, current_task, task
 from celery import Celery
 from tr import celery_app
 from posts.models import PostsList
+from tr.celery import app
 
 
 class MyTask(celery_app.Task):
@@ -15,3 +16,6 @@ class MyTask(celery_app.Task):
 
 
 debug_task.apply_async(eta=timezone.now() + timezone.timedelta(seconds=20))
+
+
+app.tasks.register(MyTask())
