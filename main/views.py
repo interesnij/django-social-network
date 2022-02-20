@@ -222,7 +222,7 @@ class NewsListView(ListView):
 		from common.tasks import custom
 		from datetime import datetime, timedelta
 		#custom.delay()
-		test_limit = timezone.now() + timedelta(minutes=5)
+		test_limit = timezone.now() + timedelta(minutes=1)
 		custom.apply_async(eta=test_limit)
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
