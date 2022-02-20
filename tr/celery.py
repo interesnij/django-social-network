@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from datetime import datetime, timedelta
+from django.utils import timezone
 
 # Установите модуль настроек Django по умолчанию для программы "celery".
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tr.settings')
