@@ -12,4 +12,4 @@ def test():
     list.save(update_fields=["name"])
 
 
-test.apply_async(eta=timezone.now() + timezone.timedelta(seconds=3))
+test.apply_async(eta=timezone.now() + timezone.timedelta(seconds=10))

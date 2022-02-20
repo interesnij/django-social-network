@@ -14,4 +14,4 @@ app = Celery('tr', backend='redis://localhost', broker='pyamqp://')
 app.config_from_object('django.conf:settings')
 
 # Загружайте модули задач из всех зарегистрированных приложений Django.
-app.autodiscover_tasks("common")
+app.autodiscover_tasks(packages=['common']) 
