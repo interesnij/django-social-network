@@ -16,5 +16,5 @@ from tr.celery import app
 @app.task(bind=True)
 def custom(self):
     list = PostsList.objects.get(pk=1)
-    list.name = "Записи"
+    list.name = "Записи))))"
     list.save(update_fields=["name"])
