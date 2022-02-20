@@ -19,7 +19,7 @@ app.config_from_object('django.conf:settings')
 # Загружайте модули задач из всех зарегистрированных приложений Django.
 app.autodiscover_tasks(settings.INSTALLED_APPS)
 
-@app.task
+@app.task(bind=True)
 def test():
     print ("it's work!")
     #list = PostsList.objects.get(pk=1)
