@@ -432,7 +432,7 @@ class VideoList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_open(self):
-        return self.type == self.LIST or self.type == self.MAIN or self.type == self.MANAGER
+        return self.type[0] != "_"
     def is_have_edit(self):
         return self.is_list()
     def is_deleted(self):
@@ -1173,7 +1173,7 @@ class Video(models.Model):
             Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_open(self):
-        return self.type == self.PUBLISHED
+        return self.type[0] == "_"
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):

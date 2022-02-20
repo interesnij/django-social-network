@@ -648,7 +648,7 @@ class PostsList(models.Model):
     def is_closed(self):
         return self.type[:4] == "_CLO"
     def is_open(self):
-        return self.type[0] == "_"
+        return self.type[0] != "_"
     def is_have_edit(self):
         return self.is_list()
     def is_have_get(self):
@@ -1006,7 +1006,7 @@ class Post(models.Model):
             pass
 
     def is_open(self):
-        return self.type == self.MANAGER or self.type == self.PUBLISHED
+        return self.type[0] != "_"
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):

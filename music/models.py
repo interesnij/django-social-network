@@ -895,7 +895,7 @@ class Music(models.Model):
             Wall.objects.filter(type="MUS", object_id=self.pk, verb="ITE").update(status="R")
 
     def is_open(self):
-        return self.type == self.MANAGER or self.type == self.PUBLISHED
+        return self.type[0] != "_"
     def is_deleted(self):
         return self.type[:4] == "_DEL"
     def is_closed(self):
