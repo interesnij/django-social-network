@@ -218,6 +218,9 @@ class NewsListView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.template_name = get_detect_main_template("main/lists/news_list.html", request.user, request.META['HTTP_USER_AGENT'])
+
+		from common.tasks import MyTask
+		MyTask.delay()
 		return super(NewsListView,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
