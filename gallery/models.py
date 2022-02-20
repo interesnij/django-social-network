@@ -746,7 +746,7 @@ class PhotoList(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO" or self.type == "_SUS":
             self.type = PhotoList.DELETED
         self.save(update_fields=['type'])
         if self.community:
@@ -777,13 +777,13 @@ class PhotoList(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_SUS":
             self.type = PhotoList.CLOSED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_SUSMA":
             self.type = PhotoList.CLOSED_MAIN
-        elif self.type == "AVA":
+        elif self.type == "AVA" or self.type == "_SUSAV":
             self.type = PhotoList.CLOSED_AVATAR
-        elif self.type == "WAL":
+        elif self.type == "WAL" or self.type == "_SUSWA":
             self.type = PhotoList.CLOSED_WALL
         self.save(update_fields=['type'])
         if self.community:
@@ -798,13 +798,13 @@ class PhotoList(models.Model):
             Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_CLO":
+        if self.type == "_CLO" or self.type == "_SUS":
             self.type = PhotoList.LIST
-        elif self.type == "_CLOM":
+        elif self.type == "_CLOMA" or self.type == "_SUSMA":
             self.type = PhotoList.MAIN
-        elif self.type == "_CLOW":
+        elif self.type == "_CLOWA" or self.type == "_SUSWA":
             self.type = PhotoList.WALL
-        elif self.type == "_CLOA":
+        elif self.type == "_CLOAV" or self.type == "_SUSAV":
             self.type = PhotoList.AVATAR
         self.save(update_fields=['type'])
         if self.community:
@@ -820,13 +820,13 @@ class PhotoList(models.Model):
 
     def suspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO":
             self.type = PhotoList.SUSPENDED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_CLOMA":
             self.type = PhotoList.SUSPENDED_MAIN
-        elif self.type == "AVA":
+        elif self.type == "AVA" or self.type == "_CLOAV":
             self.type = PhotoList.SUSPENDED_AVATAR
-        elif self.type == "WAL":
+        elif self.type == "WAL" or self.type == "_CLOWA":
             self.type = PhotoList.SUSPENDED_WALL
         self.save(update_fields=['type'])
         if self.community:
@@ -841,13 +841,13 @@ class PhotoList(models.Model):
             Wall.objects.filter(type="PHL", object_id=self.pk, verb="ITE").update(status="C")
     def unsuspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_SUS":
+        if self.type == "_SUS" or self.type == "_CLO":
             self.type = PhotoList.LIST
-        elif self.type == "_SUSM":
+        elif self.type == "_SUSMA" or self.type == "_CLOMA":
             self.type = PhotoList.MAIN
-        elif self.type == "_SUSW":
+        elif self.type == "_SUSWA" or self.type == "_CLOWA":
             self.type = PhotoList.WALL
-        elif self.type == "_SUSA":
+        elif self.type == "_SUSAV" or self.type == "_CLOAV":
             self.type = PhotoList.AVATAR
         self.save(update_fields=['type'])
         if self.community:
@@ -1050,7 +1050,7 @@ class Photo(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "PUB":
+        if self.type == "PUB" or self.type == "_CLO":
             self.type = Photo.DELETED
         self.save(update_fields=['type'])
         if self.community:

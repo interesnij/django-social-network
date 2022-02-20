@@ -742,7 +742,7 @@ class VideoList(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO" or self.type == "_SUS":
             self.type = VideoList.DELETED
         self.save(update_fields=['type'])
         if self.community:
@@ -773,9 +773,9 @@ class VideoList(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_SUS":
             self.type = VideoList.CLOSED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_SUSMA":
             self.type = VideoList.CLOSED_MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -790,9 +790,9 @@ class VideoList(models.Model):
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_CLO":
+        if self.type == "_CLO" or self.type == "_SUS":
             self.type = VideoList.LIST
-        elif self.type == "_CLOM":
+        elif self.type == "_CLOMA" or self.type == "_SUSMA":
             self.type = VideoList.MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -808,9 +808,9 @@ class VideoList(models.Model):
 
     def suspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO":
             self.type = VideoList.SUSPENDED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_CLOMA":
             self.type = VideoList.SUSPENDED_MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -825,9 +825,9 @@ class VideoList(models.Model):
             Wall.objects.filter(type="VIL", object_id=self.pk, verb="ITE").update(status="C")
     def unsuspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_SUS":
+        if self.type == "_SUS" or self.type == "_CLO":
             self.type = VideoList.LIST
-        elif self.type == "_SUSM":
+        elif self.type == "_SUSMA" or self.type == "_CLOMA":
             self.type = VideoList.MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -1111,7 +1111,7 @@ class Video(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "PUB":
+        if self.type == "PUB" or self.type == "_CLO":
             self.type = Video.DELETED
         self.save(update_fields=['type'])
         if self.community:

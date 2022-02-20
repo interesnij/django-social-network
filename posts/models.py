@@ -748,7 +748,7 @@ class PostsList(models.Model):
     def delete_item(self):
         from notify.models import Notify, Wall
 
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO" or self.type == "_SUS":
             self.type = PostsList.DELETED
         self.save(update_fields=['type'])
         if self.community:
@@ -779,9 +779,9 @@ class PostsList(models.Model):
 
     def close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_SUS":
             self.type = PostsList.CLOSED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_SUSMA":
             self.type = PostsList.CLOSED_MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -796,9 +796,9 @@ class PostsList(models.Model):
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
     def abort_close_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_CLO":
+        if self.type == "_CLO" or self.type == "_SUS":
             self.type = PostsList.LIST
-        elif self.type == "_CLOM":
+        elif self.type == "_CLOMA" or self.type == "_SUSMA":
             self.type = PostsList.MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -814,9 +814,9 @@ class PostsList(models.Model):
 
     def suspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "LIS":
+        if self.type == "LIS" or self.type == "_CLO":
             self.type = PostsList.SUSPENDED
-        elif self.type == "MAI":
+        elif self.type == "MAI" or self.type == "_CLOMA":
             self.type = PostsList.SUSPENDED_MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -831,9 +831,9 @@ class PostsList(models.Model):
             Wall.objects.filter(type="POL", object_id=self.pk, verb="ITE").update(status="C")
     def unsuspend_item(self):
         from notify.models import Notify, Wall
-        if self.type == "_SUS":
+        if self.type == "_SUS" or self.type == "_CLO":
             self.type = PostsList.LIST
-        elif self.type == "_SUSM":
+        elif self.type == "_SUSMA" or self.type == "_CLOMA":
             self.type = PostsList.MAIN
         self.save(update_fields=['type'])
         if self.community:
@@ -1222,7 +1222,7 @@ class Post(models.Model):
 
     def delete_item(self):
         from notify.models import Notify, Wall
-        if self.type == "PUB":
+        if self.type == "PUB" or self.type == "_CLO":
             self.type = Post.DELETED
         self.save(update_fields=['type'])
         if self.community:
