@@ -10,7 +10,7 @@ from common.model.other import Stickers
 class PostsList(models.Model):
     MAIN, LIST, DRAFT, TEST = 'MAI','LIS','_DRA','_T'
     DELETED = '_DEL'
-    CLOSED, CLOSED_MAIN = '_CLO','_CLOM'
+    CLOSED, CLOSED_MAIN = '_CLO','_CLOMA'
     SUSPENDED, SUSPENDED_MAIN = '_SUS','_SUSMA'
 
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
@@ -647,14 +647,14 @@ class PostsList(models.Model):
         return self.type[:4] == "_DEL"
     def is_closed(self):
         return self.type[:4] == "_CLO"
+    def is_suspended(self):
+        return self.type[:4] == "_SUS"
     def is_open(self):
         return self.type[0] != "_"
     def is_have_edit(self):
         return self.is_list()
     def is_have_get(self):
         return self.is_list() or self.is_main()
-    def is_suspended(self):
-        return self.type[:4] == "_SUS"
 
     @classmethod
     def get_user_staff_lists(cls, user_pk):

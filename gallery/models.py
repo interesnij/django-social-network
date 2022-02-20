@@ -12,8 +12,8 @@ from common.model.other import Stickers
 class PhotoList(models.Model):
     MAIN, LIST, WALL, AVATAR = 'MAI', 'LIS', 'WAL', 'AVA'
     DELETED = '_DEL'
-    CLOSED, CLOSED_WALL, CLOSED_AVATAR, CLOSED_MAIN = '_CLO', '_CLOW', '_CLOA', '_CLOM'
-    SUSPENDED, SUSPENDED_WALL, SUSPENDED_AVATAR, SUSPENDED_MAIN = '_SUS', '_SUSW', '_SUSA', '_SUSM'
+    CLOSED, CLOSED_WALL, CLOSED_AVATAR, CLOSED_MAIN = '_CLO', '_CLOWA', '_CLOAM', '_CLOMA'
+    SUSPENDED, SUSPENDED_WALL, SUSPENDED_AVATAR, SUSPENDED_MAIN = '_SUS', '_SUSWA', '_SUSAV', '_SUSMA'
     ALL_CAN,FRIENDS,EACH_OTHER,FRIENDS_BUT,SOME_FRIENDS,MEMBERS,CREATOR,ADMINS,MEMBERS_BUT,SOME_MEMBERS = 1,2,3,4,5,6,7,8,9,10
     TYPE = (
         (MAIN, 'Основной'),(LIST, 'Пользовательский'),(WALL, 'Фото со стены'),(AVATAR, 'Фото со страницы'),
@@ -864,7 +864,6 @@ class PhotoList(models.Model):
 
 class Photo(models.Model):
     PUBLISHED, DELETED, CLOSED, MESSAGE = 'PUB','_DEL','_CLO','_MES'
-    CLOSED_MANAGER = '_CLOM'
     TYPE = (
         (PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),(MESSAGE, 'Загруженный в сообщениях'),
     )

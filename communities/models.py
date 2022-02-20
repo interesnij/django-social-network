@@ -40,17 +40,17 @@ class CommunitySubCategory(models.Model):
 
 
 class Community(models.Model):
-    PRIVATE, CLOSED, MANAGER, PUBLIC = 'PRI','CLO','MAN','PUB'
-    DELETED, PRIVATE_DELETED, CLOSED_DELETED, MANAGER_DELETED = '_DELO', '_DELP', '_DELC', '_DELM'
-    BANNER_OPEN, BANNER_PRIVATE, BANNER_CLOSED, BANNER_MANAGER = '_BANO', '_BANP', '_BANC', '_BANM'
-    SUSPENDED_OPEN, SUSPENDED_PRIVATE, SUSPENDED_CLOSED, SUSPENDED_MANAGER = '_SUSO', '_SUSP', '_SUSC', '_SUSM'
-    BLOCKED_OPEN, BLOCKED_PRIVATE, BLOCKED_CLOSED, BLOCKED_MANAGER = '_BLOO', '_BLOP', '_BLOC', '_BLOM'
+    PRIVATE, CLOSED, PUBLIC = 'PRI','CLO','PUB'
+    DELETED, PRIVATE_DELETED, CLOSED_DELETED = '_DELO', '_DELP', '_DELC'
+    BANNER_OPEN, BANNER_PRIVATE, BANNER_CLOSED = '_BANO', '_BANP', '_BANC'
+    SUSPENDED_OPEN, SUSPENDED_PRIVATE, SUSPENDED_CLOSED = '_SUSO', '_SUSP', '_SUSC'
+    BLOCKED_OPEN, BLOCKED_PRIVATE, BLOCKED_CLOSED = '_BLOO', '_BLOP', '_BLOC'
     TYPE = (
-        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(MANAGER, 'Созданный персоналом'),(PUBLIC, 'Открытый'),
-        (DELETED, 'Открытый удалённый'),(PRIVATE_DELETED, 'Приватный удалённый'),(CLOSED_DELETED, 'Закрытый удалённый'),(MANAGER_DELETED, 'Менеджерский удалённый'),
-        (BANNER_OPEN, 'Открытый баннер'),(BANNER_PRIVATE, 'Приватный баннер'),(BANNER_CLOSED, 'Закрытый баннер'),(BANNER_MANAGER, 'Менеджерский баннер'),
-        (SUSPENDED_OPEN, 'Открытый замороженный'),(SUSPENDED_PRIVATE, 'Приватный замороженный'), (SUSPENDED_CLOSED, 'Закрытый замороженный'),(SUSPENDED_MANAGER, 'Менеджерский замороженный'),
-        (BLOCKED_OPEN, 'Открытый блокнутый'),(BLOCKED_PRIVATE, 'Приватный блокнутый'), (BLOCKED_CLOSED, 'Закрытый блокнутый'),(BLOCKED_MANAGER, 'Менеджерский блокнутый'),
+        (CLOSED, 'Закрытый'),(PRIVATE, 'Приватный'),(PUBLIC, 'Открытый'),
+        (DELETED, 'Открытый удалённый'),(PRIVATE_DELETED, 'Приватный удалённый'),(CLOSED_DELETED, 'Закрытый удалённый'),
+        (BANNER_OPEN, 'Открытый баннер'),(BANNER_PRIVATE, 'Приватный баннер'),(BANNER_CLOSED, 'Закрытый баннер'),
+        (SUSPENDED_OPEN, 'Открытый замороженный'),(SUSPENDED_PRIVATE, 'Приватный замороженный'), (SUSPENDED_CLOSED, 'Закрытый замороженный'),
+        (BLOCKED_OPEN, 'Открытый блокнутый'),(BLOCKED_PRIVATE, 'Приватный блокнутый'), (BLOCKED_CLOSED, 'Закрытый блокнутый'),
     )
 
     CHILD, STANDART, VERIFIED_SEND, VERIFIED = 'CH', 'ST', 'VS', 'VE'

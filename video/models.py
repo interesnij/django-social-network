@@ -844,7 +844,6 @@ class VideoList(models.Model):
 
 class Video(models.Model):
     PUBLISHED, DELETED, CLOSED, UPLOAD = 'PUB','_DEL','_CLO','_UPL'
-    DELETED_MANAGER, CLOSED_MANAGER = '_DELM','_CLOM'
     TYPE = (
         (UPLOAD, 'Загружен'),(PUBLISHED, 'Опубликовано'),(DELETED, 'Удалено'),(CLOSED, 'Закрыто модератором'),
     )
