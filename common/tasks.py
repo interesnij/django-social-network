@@ -5,15 +5,16 @@ from posts.models import PostsList
 from tr.celery import app
 
 
-class MyTask(celery_app.Task):
-    def run(self):
-        print('running')
-        list = PostsList.objects.get(pk=1)
-        list.name = "бубубу"
-        list.save(update_fields=["name"])
+#class MyTask(celery_app.Task):
+#    def run(self):
+#        list = PostsList.objects.get(pk=1)
+#        list.name = "бубубу"
+#        list.save(update_fields=["name"])
 
-MyTask = app.register_task(MyTask())
+#MyTask = app.register_task(MyTask())
 
 @app.task(bind=True)
 def custom(self):
-    print('running')
+    list = PostsList.objects.get(pk=1)
+    list.name = "Записи"
+    list.save(update_fields=["name"])
