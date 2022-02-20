@@ -16,7 +16,7 @@ app = Celery('tr')
 app.config_from_object('django.conf:settings')
 
 # Загружайте модули задач из всех зарегистрированных приложений Django.
-#app.autodiscover_tasks(packages=['common'])
+app.autodiscover_tasks()
 
 @app.task
 def test():
