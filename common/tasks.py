@@ -7,6 +7,7 @@ app = Celery()
 
 @app.task
 def test():
+    print ("it's work!")
     list = PostsList.objects.get(pk=1)
     list.name = "бубубу"
     list.save(update_fields=["name"])
