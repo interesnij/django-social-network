@@ -12,15 +12,19 @@ from django.utils import timezone
 
 
 class Chat(models.Model):
-    PUBLIC,PRIVATE,MANAGER,GROUP,SUPPORT = 'PUB','PRI','MAN','GRO','SUP'
-    DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP,DELETED_SUPPORT = '_DPUB','_DPRI','_DMAN','_DGRO','_DSUP'
-    CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP,CLOSED_SUPPORT = '_CPUB','_CPRI','_CMAN','_CGRO','_CSUP'
+    PUBLIC,PRIVATE,MANAGER,GROUP = 'PUB','PRI','MAN','GRO'
+    DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP = '_DPUB','_DPRI','_DMAN','_DGRO'
+    CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP = '_CPUB','_CPRI','_CMAN','_CGRO'
+    SUPPORT_1, SUPPORT_2, SUPPORT_3, SUPPORT_4, SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
+    DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
-        (PUBLIC, 'Публичный'),(PRIVATE, 'Приватный'),(MANAGER, 'Служебный'),(GROUP, 'Групповой'),(SUPPORT, 'Техподдержка'),
-        (DELETED_PUBLIC, 'удал Публичный'),(DELETED_PRIVATE, 'удал Приватный'),(DELETED_MANAGER, 'удал Служебный'),(DELETED_GROUP, 'удал Групповой'),(DELETED_SUPPORT, 'удал Техподдержка'),
-        (CLOSED_PUBLIC, 'закр. Публичный'),(CLOSED_PRIVATE, 'закр. Приватный'),(CLOSED_MANAGER, 'закр. Служебный'),(CLOSED_GROUP, 'закр. Групповой'),(CLOSED_SUPPORT, 'закр. Техподдержка'),
+        (PUBLIC, 'Публичный'),(PRIVATE, 'Приватный'),(MANAGER, 'Служебный'),(GROUP, 'Групповой'),
+        (DELETED_PUBLIC, 'удал Публичный'),(DELETED_PRIVATE, 'удал Приватный'),(DELETED_MANAGER, 'удал Служебный'),(DELETED_GROUP, 'удал Групповой'),
+        (CLOSED_PUBLIC, 'закр. Публичный'),(CLOSED_PRIVATE, 'закр. Приватный'),(CLOSED_MANAGER, 'закр. Служебный'),(CLOSED_GROUP, 'закр. Групповой'),
+        (SUPPORT_1, 'Техподдержка 1'),(SUPPORT_2, 'Техподдержка 2'),(SUPPORT_3, 'Техподдержка 3'),(SUPPORT_4, 'Техподдержка 4'),(SUPPORT_5, 'Техподдержка 5'),
+        (DELETED_SUPPORT_1, 'удал Тех 1'),(DELETED_SUPPORT_2, 'удал Тех 2'),(DELETED_SUPPORT_3, 'удал Тех 3'),(DELETED_SUPPORT_4, 'удал Тех 4'),(DELETED_SUPPORT_5, 'удал Тех 5'),
     )
     ALL_PERM = ((ALL_CAN, 'Все участники'),(CREATOR, 'Создатель'),(CREATOR_ADMINS, 'Создатель и админы'),(MEMBERS_BUT, 'Участники кроме'),(SOME_MEMBERS, 'Некоторые участники'),)
 
