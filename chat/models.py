@@ -622,7 +622,7 @@ class Chat(models.Model):
             chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>'
         elif self.is_support():
             if self.members == 1:
-                chat_name,  = "Чат техподдержки"
+                chat_name = "Чат техподдержки"
                 target_display = "Чат ждёт менеджера..."
             else:
                 from managers.models import SupportUsers
