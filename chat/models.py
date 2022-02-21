@@ -338,7 +338,7 @@ class Chat(models.Model):
         return chat_user.beep()
 
     def is_support(self):
-        return self.type[:3] == "SUP"
+        return "SU" in self.type
     def is_support_1(self):
         return self.type == "SUP1"
     def is_support_2(self):
