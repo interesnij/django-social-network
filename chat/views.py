@@ -20,6 +20,17 @@ class ChatsListView(ListView):
 	def get_queryset(self):
 		return self.user.get_all_chats()
 
+class ClosedSupportChats(ListView):
+	template_name, paginate_by = None, 15
+
+	def get(self,request,*args,**kwargs):
+		from common.templates import get_settings_template
+
+		self.template_name = get_settings_template("chat/chat/closed_support_list.html", request.user, request.META['HTTP_USER_AGENT'])
+		return super(ClosedSupportChats,self).get(request,*args,**kwargs)
+
+	def get_queryset(self):
+		return self.user.get_all_chats()
 
 class ChatDetailView(ListView):
 	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count = None, 30, None, None, None
