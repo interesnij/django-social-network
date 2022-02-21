@@ -16,7 +16,7 @@ class Chat(models.Model):
     DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP = '_DPUB','_DPRI','_DMAN','_DGRO'
     CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP = '_CPUB','_CPRI','_CMAN','_CGRO'
     SUPPORT_1, SUPPORT_2, SUPPORT_3, SUPPORT_4, SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
-    DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "_SUP1", "_SUP2", "_SUP3", "_SUP4", "_SUP5"
+    DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "_SU1", "_SU2", "_SU3", "_SU4", "_SU5"
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
@@ -72,15 +72,15 @@ class Chat(models.Model):
             self.save(update_fields=['type'])
     def restore_support_chat(self, user_id, community):
         if self.creator_id == user_id:
-            if self.type == "_SUP1":
+            if self.type == "_SU1":
                 self.type = Chat.SUPPORT_1
-            elif self.type == "_SUP2":
+            elif self.type == "_SU2":
                 self.type = Chat.SUPPORT_2
-            elif self.type == "_SUP3":
+            elif self.type == "_SU3":
                 self.type = Chat.SUPPORT_3
-            elif self.type == "_SUP4":
+            elif self.type == "_SU4":
                 self.type = Chat.SUPPORT_4
-            elif self.type == "_SUP5":
+            elif self.type == "_SU5":
                 self.type = Chat.SUPPORT_5
             self.save(update_fields=['type'])
 

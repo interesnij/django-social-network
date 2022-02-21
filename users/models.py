@@ -203,7 +203,7 @@ class User(AbstractUser):
             return chat.pk
     def get_or_create_support_chat_pk(self):
         from chat.models import Chat, ChatUsers
-        if Chat.objects.filter(creator_id=self.pk, type__contains="SUP").exclude(type__contains="_").exists():
+        if Chat.objects.filter(creator_id=self.pk, type__contains="SUP").exists():
             return Chat.objects.filter(creator_id=self.pk, type__contains="SUP").first().pk
         else:
             chat = Chat.objects.create(creator_id=self.pk, type=Chat.SUPPORT_1, members=1, name="Чат техподдержки",)
@@ -211,10 +211,10 @@ class User(AbstractUser):
             return chat.pk
     def is_have_deleted_support_chats(self):
         from chat.models import Chat, ChatUsers
-        return Chat.objects.filter(creator_id=self.pk, type__contains="_SUP").exists()
+        return Chat.objects.filter(creator_id=self.pk, type__contains="_SU").exists()
     def get_deleted_support_chats(self):
         from chat.models import Chat, ChatUsers
-        return Chat.objects.filter(creator_id=self.pk, type__contains="_SUP")
+        return Chat.objects.filter(creator_id=self.pk, type__contains="_SU")
 
     def is_closed_profile(self):
         return self.type[-1] == "P"
