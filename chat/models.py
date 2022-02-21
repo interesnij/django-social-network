@@ -648,7 +648,7 @@ class Chat(models.Model):
         elif self.is_manager():
             chat_name, dop_drops, target_display, u_chat_info = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>', ''
         elif self.is_support():
-            dop_drops, u_chat_info = '<a class="dropdown-item close_support_chat pointer">Закрыть заявку</a>', ''
+            dop_drops, u_chat_info, target_display = '<a class="dropdown-item close_support_chat pointer">Закрыть заявку</a>', '', ''
             if self.members == 1:
                 chat_name = "Чат техподдержки"
                 target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат ждёт менеджера...</span>'
