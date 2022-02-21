@@ -21,7 +21,7 @@
                           {% else %}
                           - <a href="/chat/{{ request.user.get_or_create_support_chat_pk }}/" class="ajax">Написать в техподдержку</a>
                           {% if request.user.is_have_deleted_support_chats %}
-                            <br>| <a href="/chat/my_support/" class="ajax">История обращений в чаты техподдержки</a>
+                            |<br> <a href="/chat/my_support/" class="ajax">История обращений в чаты техподдержки</a>
                           {% endif %}
                           {% endif %}
                         </h5>
