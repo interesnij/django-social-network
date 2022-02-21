@@ -30,7 +30,7 @@ class ClosedSupportChats(ListView):
 		return super(ClosedSupportChats,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.user.get_all_chats()
+		return self.request.user.get_all_chats()
 
 class ChatDetailView(ListView):
 	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count = None, 30, None, None, None
