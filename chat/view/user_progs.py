@@ -355,7 +355,16 @@ class DeleteSupportChat(View):
 			chat.delete_support_chat(request.user.pk)
 			return HttpResponse()
 		raise Http404
+class RefreshSupportChat(View):
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse, Http404
 
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user.pk in chat.get_members_ids():
+			chat.restore_support_chat(request.user.pk)
+			return HttpResponse()
+		raise Http404
 
 class UserChatAdminCreate(View):
 	def get(self,request,*args,**kwargs):

@@ -1531,6 +1531,17 @@ on('#ajax', 'click', '.close_support_chat', function() {
   }};
   link.send();
 });
+on('#ajax', 'click', '.refresh_support_chat', function() {
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/refresh_support_chat/" + this.getAttribute("chat-pk") + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    ajax_get_reload("/chat/" + this.getAttribute("chat-pk") + "/");
+  }};
+  link.send();
+});
 
 on('body', 'click', '.add_perm_user_chat', function() {
   _this = this;

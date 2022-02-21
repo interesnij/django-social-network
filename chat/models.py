@@ -70,7 +70,7 @@ class Chat(models.Model):
             elif self.type == "SUP5":
                 self.type = Chat.DELETED_SUPPORT_5
             self.save(update_fields=['type'])
-    def restore_item(self, user_id, community):
+    def restore_support_chat(self, user_id, community):
         if self.creator_id == user_id:
             if self.type == "_SUP1":
                 self.type = Chat.SUPPORT_1
