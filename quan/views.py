@@ -9,7 +9,7 @@ class QuanView(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.template_name = get_default_template("quan/", "quan_home.html", request.user, request.META['HTTP_USER_AGENT'])
-        if request.user.is_autenticated:
+        if request.user.is_authenticated:
             from managers.models import SupportUsers
             if request.user.is_superuser or SupportUsers.objects.filter(manager=request.user.pk).exists():
                 self.i_support = True
