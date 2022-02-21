@@ -58,7 +58,7 @@ class Chat(models.Model):
         return self.creator.get_full_name()
 
     def delete_support_chat(self, user_id):
-        if user_id in self.chat.get_members_ids():
+        if user_id in self.get_members_ids():
             if self.type == "SUP1":
                 self.type = Chat.DELETED_SUPPORT_1
             elif self.type == "SUP2":
