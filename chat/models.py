@@ -621,9 +621,10 @@ class Chat(models.Model):
         elif self.is_manager():
             chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>'
         elif self.is_support():
+            dop_drops = ''
             if self.members == 1:
                 chat_name = "Чат техподдержки"
-                target_display = "Чат ждёт менеджера..."
+                target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат джет менеджера...</span>'
             else:
                 from managers.models import SupportUsers
                 user = self.get_chat_member(user_id)
