@@ -246,7 +246,7 @@ class SupportChats(ListView):
         from django.db.models import Q
         from chat.models import Chat
 
-        if request.user.is_superuser or SupportUsers.objects.filter(manager=request.user.pk).exists():
+        if SupportUsers.objects.filter(manager=request.user.pk).exists():
             self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
             types = ~Q(type__contains="_")
             manager = SupportUsers.objects.filter(manager=request.user.pk).first()
@@ -260,9 +260,9 @@ class SupportChats(ListView):
                 types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")|Q(type="SUP4")), Q.AND)
             elif manager.level == 5:
                 types.add(Q(type__contains="SUP"), Q.AND)
-            else:
-                types.add(Q(type__contains="SUP"), Q.AND)
             chats = Chat.objects.filter(types)
+        elif request.user.is_superuser:
+            chats = Chat.objects.filter(type__contains="SUP")
         else:
             raise Http404
         return super(SupportChats,self).get(request,*args,**kwargs)
