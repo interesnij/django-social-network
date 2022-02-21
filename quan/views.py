@@ -16,9 +16,9 @@ class QuanView(TemplateView):
         return super(QuanView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-		context = super(QuanView,self).get_context_data(**kwargs)
-		context["i_support"] = self.i_support
-		return context
+        context = super(QuanView,self).get_context_data(**kwargs)
+        context["i_support"] = self.i_support
+        return context
 
 
 class QuanCategoryView(TemplateView):
