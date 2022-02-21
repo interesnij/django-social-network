@@ -268,4 +268,4 @@ class SupportChats(ListView):
         return super(SupportChats,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        return chats
+        return self.chats
