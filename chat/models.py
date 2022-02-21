@@ -622,13 +622,14 @@ class Chat(models.Model):
             chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>'
         elif self.is_support():
             if self.members == 1:
-                chat_name = "Чат техподдержки"
+                chat_name,  = "Чат техподдержки"
+                target_display = "Чат ждёт менеджера..."
             else:
                 from managers.models import SupportUsers
                 user = self.get_chat_member(user_id)
                 manager = SupportUsers.objects.get(manager=user.pk)
                 chat_name = "Агент техподдержки " + str(manager.pk)
-            target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
+                target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
         if not self.is_muted(user_id):
             muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
         else:

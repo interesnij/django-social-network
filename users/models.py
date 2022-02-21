@@ -206,7 +206,7 @@ class User(AbstractUser):
         if Chat.objects.filter(creator_id=self.pk, type__contains="SUP").exists():
             return Chat.objects.filter(creator_id=self.pk, type__contains="SUP").first().pk
         else:
-            chat = Chat.objects.create(creator_id=self.pk, type=Chat.SUPPORT_1, name="Чат техподдержки",)
+            chat = Chat.objects.create(creator_id=self.pk, type=Chat.SUPPORT_1, members=1, name="Чат техподдержки",)
             ChatUsers.objects.create(user=self, chat=chat)
             return chat.pk
     def is_have_deleted_support_chats(self):
