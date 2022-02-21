@@ -5,6 +5,7 @@ from managers.views import *
 urlpatterns = [
     url(r'^$', ManagersView.as_view(), name='managers'),
     url(r'^high_officer/$', SuperManagersView.as_view(), name='super_managers'),
+    url(r'^support/$', SupportChats.as_view()),
 
     url(r'^create_sanction/$', SanctionItemCreate.as_view()),
     url(r'^delete_sanction/$', SanctionItemDelete.as_view()),

@@ -15,7 +15,11 @@
             <div class="card-header">
                 <div class="media">
                     <div class="media-body">
-                        <h5 class="mt-1">Вопросы и ответы</h5>
+                        <h5 class="mt-1">Вопросы и ответы
+                          {% if i_support %}
+                            <a href="/managers/support/" class="ajax">Техподдержка</a>
+                          {% endif %}
+                        </h5>
                     </div>
                 </div>
             </div>

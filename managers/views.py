@@ -3,6 +3,7 @@ from common.templates import get_detect_platform_template
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.views import View
 from users.models import User
+from django.views.generic import ListView
 
 
 class ManagersView(TemplateView):
@@ -234,3 +235,35 @@ class UnverifyItemCreate(View):
             return HttpResponse()
         else:
             return HttpResponseBadRequest()
+
+
+class SupportChats(ListView):
+    template_name, paginate_by = None, 15
+
+    def get(self,request,*args,**kwargs):
+        from managers.models import SupportUsers
+        from common.templates import get_settings_template
+        from django.db.models import Q
+        from chat.models import Chat
+
+        if SupportUsers.objects.filter(manager=request.user.pk).exists():
+            self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+            types = ~Q(type__contains="_")
+            manager = SupportUsers.objects.filter(manager=request.user.pk).first()
+            if manager.level == 1:
+                types.add(Q(type="SUP1"), Q.AND)
+            elif manager.level == 2:
+                types.add(Q(Q(type="SUP1")|Q(type="SUP2")), Q.AND)
+            elif manager.level == 3:
+                types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")), Q.AND)
+            elif manager.level == 4:
+                types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")|Q(type="SUP4")), Q.AND)
+            elif manager.level == 5:
+                types.add(Q(type__contains="SUP"), Q.AND)
+            chats = Chat.objects.filter(types)
+        else:
+            raise Http404
+        return super(SupportChats,self).get(request,*args,**kwargs)
+
+    def get_queryset(self):
+        return chats

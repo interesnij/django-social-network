@@ -5,11 +5,20 @@ from common.templates import get_default_template
 
 
 class QuanView(TemplateView):
-    template_name = None
+    template_name, i_support = None, None
 
     def get(self,request,*args,**kwargs):
         self.template_name = get_default_template("quan/", "quan_home.html", request.user, request.META['HTTP_USER_AGENT'])
+        if request.user.is_autenticated:
+            from managers.models import SupportUsers
+            if request.user.is_superuser or SupportUsers.objects.filter(manager=request.user.pk).exists():
+                self.i_support = True
         return super(QuanView,self).get(request,*args,**kwargs)
+
+    def get_context_data(self,**kwargs):
+		context = super(QuanView,self).get_context_data(**kwargs)
+		context["i_support"] = self.i_support
+		return context
 
 
 class QuanCategoryView(TemplateView):
