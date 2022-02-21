@@ -18,6 +18,10 @@
                         <h5 class="mt-1">Вопросы и ответы
                           {% if i_support %}
                              (<a href="/managers/support/" class="ajax">Техподдержка</a>)
+                          {% else %}
+                          - <a href="/chat/{{ request.user.get_or_create_support_chat_pk }}/" class="ajax">Написать в техподдержку</a>
+                          {% if request.user.is_have_deleted_support_chats %}
+                            | <a href="/chat/my_support/" class="ajax">Чаты с техподдержкой</a>
                           {% endif %}
                         </h5>
                     </div>
