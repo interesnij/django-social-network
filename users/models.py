@@ -203,7 +203,7 @@ class User(AbstractUser):
             return chat.pk
     def get_or_create_support_chat_pk(self):
         from chat.models import Chat, ChatUsers
-        if Chat.objects.filter(creator_id=self.pk, type__contains="SUP").exists():
+        if Chat.objects.filter(creator_id=self.pk, type__contains="SUP").exclude(type__contains="_").exists():
             return Chat.objects.filter(creator_id=self.pk, type__contains="SUP").first().pk
         else:
             chat = Chat.objects.create(creator_id=self.pk, type=Chat.SUPPORT_1, members=1, name="Чат техподдержки",)
