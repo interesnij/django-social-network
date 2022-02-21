@@ -260,9 +260,9 @@ class SupportChats(ListView):
                 types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")|Q(type="SUP4")), Q.AND)
             elif manager.level == 5:
                 types.add(Q(type__contains="SUP"), Q.AND)
-            chats = Chat.objects.filter(types)
+            self.chats = Chat.objects.filter(types)
         elif request.user.is_superuser:
-            chats = Chat.objects.filter(type__contains="SUP")
+            self.chats = Chat.objects.filter(type__contains="SUP")
         else:
             raise Http404
         return super(SupportChats,self).get(request,*args,**kwargs)
