@@ -345,7 +345,7 @@ class ExitUserFromUserChat(View):
 			return HttpResponse()
 		raise Http404
 
-class ExitUserFromUserChat(View):
+class DeleteSupportChat(View):
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404
@@ -466,9 +466,9 @@ class InviteMembersInUserChat(ListView):
 				return render_for_platform(request, 'chat/chat/new_manager_messages.html', {'object_list': info_messages})
 			else:
 				return HttpResponse()
-		else:
-			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
+
+		from django.http import HttpResponseBadRequest
+		return HttpResponseBadRequest()
 
 
 class UserChatDelete(View):
@@ -477,11 +477,10 @@ class UserChatDelete(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user/is_administrator_of_chat(chat.pk):
+		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
 			chat.delete_chat()
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 class UserChatRecover(View):
 	def get(self,request,*args,**kwargs):
@@ -492,8 +491,7 @@ class UserChatRecover(View):
 		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
 			chat.restore_chat()
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 class UserChatCleanMessages(View):
 	def get(self,request,*args,**kwargs):
