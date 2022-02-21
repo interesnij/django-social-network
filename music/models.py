@@ -382,7 +382,7 @@ class MusicList(models.Model):
     def is_list(self):
         return self.type == self.LIST
     def is_open(self):
-        return self.type[0] == "_"
+        return self.type[0] != "_"
     def is_have_edit(self):
         return self.is_list()
     def is_deleted(self):
