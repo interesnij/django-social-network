@@ -57,6 +57,33 @@ class Chat(models.Model):
     def __str__(self):
         return self.creator.get_full_name()
 
+    def delete_support_chat(self, user_id):
+        if user_id in self.chat.get_members_ids():
+            if self.type == "SUP1":
+                self.type = Chat.DELETED_SUPPORT_1
+            elif self.type == "SUP2":
+                self.type = Chat.DELETED_SUPPORT_2
+            elif self.type == "SUP3":
+                self.type = Chat.DELETED_SUPPORT_3
+            elif self.type == "SUP4":
+                self.type = Chat.DELETED_SUPPORT_4
+            elif self.type == "SUP5":
+                self.type = Chat.DELETED_SUPPORT_5
+            self.save(update_fields=['type'])
+    def restore_item(self, user_id, community):
+        if self.creator_id == user_id:
+            if self.type == "_SUP1":
+                self.type = Chat.SUPPORT_1
+            elif self.type == "_SUP2":
+                self.type = Chat.SUPPORT_2
+            elif self.type == "_SUP3":
+                self.type = Chat.SUPPORT_3
+            elif self.type == "_SUP4":
+                self.type = Chat.SUPPORT_4
+            elif self.type == "_SUP5":
+                self.type = Chat.SUPPORT_5
+            self.save(update_fields=['type'])
+
     def post_include_users(self, users, type):
         if type == "can_add_members":
             ChatPerm.objects.filter(user__chat_id=self.pk, can_add_in_chat=1).update(can_add_in_chat=0)
@@ -621,10 +648,10 @@ class Chat(models.Model):
         elif self.is_manager():
             chat_name, dop_drops, target_display, u_chat_info = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>', ''
         elif self.is_support():
-            dop_drops, u_chat_info = '', ''
+            dop_drops, u_chat_info = '<a class="dropdown-item close_support_chat pointer">Закрыть заявку</a>', ''
             if self.members == 1:
                 chat_name = "Чат техподдержки"
-                target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат джет менеджера...</span>'
+                target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат ждёт менеджера...</span>'
             else:
                 from managers.models import SupportUsers
                 user = self.get_chat_member(user_id)

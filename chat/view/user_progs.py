@@ -52,9 +52,9 @@ class CreateUserChat(TemplateView):
 			if request.POST.get('users'):
 				new_chat.invite_users_in_chat(request.POST.getlist('users'), request.user)
 			return render_for_platform(request, 'chat/chat/detail/chat.html', {'chat': new_chat, 'get_header_chat': get_header_chat, 'favourite_messages_count': favourite_messages_count})
-		else:
-			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
+
+		from django.http import HttpResponseBadRequest
+		return HttpResponseBadRequest()
 
 
 class UserSendPageMessage(TemplateView):
@@ -101,9 +101,9 @@ class UserSendPageMessage(TemplateView):
 				else:
 					_message = Message.get_or_create_chat_and_send_message(creator=request.user, repost=None, user=self.user, text=message.text, voice=request.POST.get('voice'), attach=request.POST.getlist('attach_items'), sticker=request.POST.get('sticker'))
 				return HttpResponse()
-			else:
-				from django.http import HttpResponseBadRequest
-				return HttpResponseBadRequest()
+
+			from django.http import HttpResponseBadRequest
+			return HttpResponseBadRequest()
 
 
 class LoadUserChatMessage(TemplateView):
@@ -168,9 +168,9 @@ class UserSendMessage(View):
 											attach=request.POST.getlist('attach_items'))
 			from common.templates import render_for_platform
 			return render_for_platform(request, 'chat/message/message.html', {'object': new_message})
-		else:
-			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
+
+		from django.http import HttpResponseBadRequest
+		return HttpResponseBadRequest()
 
 class UserSendVoiceMessage(View):
 	def post(self,request,*args,**kwargs):
@@ -192,9 +192,9 @@ class UserSendVoiceMessage(View):
 											time=dt.parse(request.POST.get('time'))
 										)
 			return HttpResponse(json.dumps({"uuid": str(new_message.uuid)}),content_type="application/json")
-		else:
-			from django.http import HttpResponseBadRequest
-			return HttpResponseBadRequest()
+
+		from django.http import HttpResponseBadRequest
+		return HttpResponseBadRequest()
 
 
 class UserSaveDraftMessage(View):
@@ -250,8 +250,7 @@ class UserMessageFixed(View):
 		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.fixed_message_for_user_chat(request.user)
 			return render_for_platform(request, 'chat/message/info_message.html', {'object': info_message})
-		else:
-			raise Http404
+		raise Http404
 
 class UserMessageUnFixed(View):
 	def get(self,request,*args,**kwargs):
@@ -262,8 +261,7 @@ class UserMessageUnFixed(View):
 		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.unfixed_message_for_user_chat(request.user)
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 
 class UserMessagesFavorite(View):
@@ -274,8 +272,7 @@ class UserMessagesFavorite(View):
 		if request.is_ajax():
 			Message.add_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 class UserMessagesUnFavorite(View):
 	def get(self,request,*args,**kwargs):
@@ -285,8 +282,7 @@ class UserMessagesUnFavorite(View):
 		if request.is_ajax():
 			Message.remove_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 
 class UserMessageDelete(View):
@@ -298,8 +294,7 @@ class UserMessageDelete(View):
 		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
 			message.delete_item(request.user.pk, None)
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 class UserMessageRecover(View):
 	def get(self,request,*args,**kwargs):
@@ -310,8 +305,7 @@ class UserMessageRecover(View):
 		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
 			message.restore_item(request.user.pk, None)
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 
 class PhotoAttachInChatUserCreate(View):
@@ -325,8 +319,7 @@ class PhotoAttachInChatUserCreate(View):
 				photo = Photo.objects.create(creator=request.user, preview=p,file=p, type="_MES")
 				photos += [photo,]
 			return render_for_platform(request, 'chat/create/u_new_photos.html',{'object_list': photos})
-		else:
-			raise Http404
+		raise Http404
 
 
 class UserChatMemberDelete(View):
@@ -339,12 +332,10 @@ class UserChatMemberDelete(View):
 		if request.is_ajax() and chat.creator == request.user:
 			chat.delete_member(user=user, creator=request.user)
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
 
 class ExitUserFromUserChat(View):
 	def get(self,request,*args,**kwargs):
-		from users.models import User
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
@@ -352,8 +343,18 @@ class ExitUserFromUserChat(View):
 		if request.is_ajax() and request.user.pk in chat.get_members_ids():
 			chat.exit_member(user=request.user)
 			return HttpResponse()
-		else:
-			raise Http404
+		raise Http404
+
+class ExitUserFromUserChat(View):
+	def get(self,request,*args,**kwargs):
+		from chat.models import Chat
+		from django.http import HttpResponse, Http404
+
+		chat = Chat.objects.get(pk=self.kwargs["pk"])
+		if request.is_ajax() and request.user.pk in chat.get_members_ids():
+			chat.delete_support_chat(request.user.pk)
+			return HttpResponse()
+		raise Http404
 
 
 class UserChatAdminCreate(View):

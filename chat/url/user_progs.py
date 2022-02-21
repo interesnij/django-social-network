@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^beep_off/(?P<pk>\d+)/$', UserChatBeepOff.as_view()),
     url(r'^beep_on/(?P<pk>\d+)/$', UserChatBeepOn.as_view()),
     url(r'^exit_user_from_user_chat/(?P<pk>\d+)/$', ExitUserFromUserChat.as_view()),
+    url(r'^delete_support_chat/(?P<pk>\d+)/$', DeleteSupportChat.as_view()),
 
     url(r'^invite_members/$', InviteMembersInUserChat.as_view()),
     url(r'^edit/(?P<pk>\d+)/$', UserChatEdit.as_view()),
