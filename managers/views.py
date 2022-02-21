@@ -263,6 +263,7 @@ class SupportChats(ListView):
             self.chats = Chat.objects.filter(types)
         elif request.user.is_superuser:
             self.chats = Chat.objects.filter(type__contains="SUP")
+            self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(SupportChats,self).get(request,*args,**kwargs)
