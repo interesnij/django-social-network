@@ -737,3 +737,23 @@ class StaffLogs(models.Model):
         verbose_name = 'Лог работы с персоналом'
         verbose_name_plural = 'Логи работы с персоналом'
         indexes = (BrinIndex(fields=['created']),)
+
+
+class SupportUsers(models.Model):
+    LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5 = 1,2,3,4,5
+    LEVEL = (
+        (LEVEL_1, 'Уровень 1'),(LEVEL_2, 'Уровень 2'),(LEVEL_3, 'Уровень 3'),(LEVEL_4, 'Уровень 4'),(LEVEL_5, 'Уровень 5'),
+    )
+
+    level = models.CharField(max_length=4, choices=LEVEL, default=LEVEL_1, verbose_name="Уровень сложности")
+    manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
+    created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
+    points = models.IntegerField(default=0, verbose_name="Компетентность условная")
+
+    def __str__(self):
+        return self.level
+
+    class Meta:
+        verbose_name = 'Агент техподдержки'
+        verbose_name_plural = 'Агенты техподдержки'
+        indexes = (BrinIndex(fields=['created']),)

@@ -16,7 +16,7 @@ class Chat(models.Model):
     DELETED_PUBLIC,DELETED_PRIVATE,DELETED_MANAGER,DELETED_GROUP = '_DPUB','_DPRI','_DMAN','_DGRO'
     CLOSED_PUBLIC,CLOSED_PRIVATE,CLOSED_MANAGER,CLOSED_GROUP = '_CPUB','_CPRI','_CMAN','_CGRO'
     SUPPORT_1, SUPPORT_2, SUPPORT_3, SUPPORT_4, SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
-    DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "SUP1", "SUP2", "SUP3", "SUP4", "SUP5"
+    DELETED_SUPPORT_1, DELETED_SUPPORT_2, DELETED_SUPPORT_3, DELETED_SUPPORT_4, DELETED_SUPPORT_5 = "_SUP1", "_SUP2", "_SUP3", "_SUP4", "_SUP5"
     ALL_CAN, CREATOR, CREATOR_ADMINS, MEMBERS_BUT, SOME_MEMBERS = 1,2,3,4,5
 
     TYPE = (
@@ -310,6 +310,19 @@ class Chat(models.Model):
         chat_user = ChatUsers.objects.get(chat_id=self.pk, user_id=user_id)
         return chat_user.beep()
 
+    def is_support(self):
+        return self.type[:3] == "SUP"
+    def is_support_1(self):
+        return self.type == "SUP1"
+    def is_support_2(self):
+        return self.type == "SUP2"
+    def is_support_3(self):
+        return self.type == "SUP3"
+    def is_support_4(self):
+        return self.type == "SUP4"
+    def is_support_5(self):
+        return self.type == "SUP5"
+
     def get_members(self):
         from users.models import User
         return User.objects.filter(chat_users__chat__pk=self.pk, chat_users__type="ACT")
@@ -527,8 +540,7 @@ class Chat(models.Model):
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
         elif self.is_private():
-            chat_user = self.get_chat_user(user_id)
-            member = chat_user.user
+            member = self.get_chat_member(user_id)
             if self.image:
                 figure = ''.join(['<figure><img src="', self.image.url, '" style="border-radius:50px;width:50px;" alt="image"></figure>'])
             elif member.s_avatar:
@@ -546,8 +558,23 @@ class Chat(models.Model):
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
+        elif self.is_support():
+            figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
+            status = ''
+            if self.members == 1:
+                chat_name = "Чат техподдержки"
+            else:
+                from managers.models import SupportUsers
+                user = self.get_chat_member(user_id)
+                manager = SupportUsers.objects.get(manager=user.pk)
+                chat_name = "Агент техподдержки " + str(manager.pk)
+                if user.get_online():
+                    status = ' <span class="status bg-success"></span>'
+                else:
+                    status = ''
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif self.is_manager():
-            chat_user = self.creator
             figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             chat_name = self.name
             status = ''
@@ -571,7 +598,6 @@ class Chat(models.Model):
 
 
     def get_header_chat(self, user_id):
-        chat_user = self.get_chat_user(user_id)
         request_chat_user = self.get_chat_request_user(user_id)
         if self.is_user_can_fix_item(user_id):
             fix_btn = '<span tooltip="Закрепить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_fixed" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg></span>'
@@ -590,13 +616,19 @@ class Chat(models.Model):
                 dop_drops += '<a class="dropdown-item u_add_members_in_chat pointer">Добавить друзей</a>'
             dop_drops += '<a class="dropdown-item user_exit_in_user_chat pointer">Выйти из чата</a>'
         elif self.is_private():
-            member = chat_user.user
+            member = self.get_chat_member(user_id)
             chat_name, dop_drops, target_display = '<a href="' + member.get_link() + '" target="_blank">' + member.get_full_name() + '</a>', '<a class="dropdown-item add_member_in_chat pointer">Добавить в чат</a>', '<span class="type_display small" style="position:absolute;top: 21px;">' + member.get_online_status() + '</span>'
         elif self.is_manager():
             chat_name, dop_drops, target_display = "Служебный чат", '', '<span class="type_display small" style="position:absolute;top: 21px;">Категория такая-то</span>'
         elif self.is_support():
-            chat_name = "Чат техподдержки"
-            target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Агент поддержки такой-то</span>'
+            if self.members == 1:
+                chat_name = "Чат техподдержки"
+            else:
+                from managers.models import SupportUsers
+                user = self.get_chat_member(user_id)
+                manager = SupportUsers.objects.get(manager=user.pk)
+                chat_name = "Агент техподдержки " + str(manager.pk)
+            target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
         if not self.is_muted(user_id):
             muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
         else:
