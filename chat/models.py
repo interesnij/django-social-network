@@ -930,7 +930,6 @@ class Message(models.Model):
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=models.CASCADE, related_name="message_thread")
     sticker = models.ForeignKey(Stickers, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
     repost = models.ForeignKey("posts.Post", on_delete=models.CASCADE, null=True, blank=True, related_name='post_message')
-    transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=10000, blank=True)
@@ -1473,7 +1472,6 @@ class MessageVersion(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=1000, blank=True)
     attach = models.CharField(blank=True, max_length=200, verbose_name="Прикрепленные элементы")
-    transfer = models.ManyToManyField("self", blank=True, related_name='+')
 
     class Meta:
         verbose_name = "Копия сообщения перед изменением"

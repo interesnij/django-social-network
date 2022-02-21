@@ -118,9 +118,9 @@ class UserProfileFamily(models.Model):
     partner = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='user_profile_partner', verbose_name="Муж/Жена")
     mom = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE, related_name='user_profile_mom', verbose_name="Мама")
     dad = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE, related_name='user_profile_dad', verbose_name="Папа")
-    brother_sister = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_bro', verbose_name="Братья, сёстры")
-    children = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_chilren', verbose_name="Дети")
-    grandsons = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_grandsons', verbose_name="Внуки")
+    #brother_sister = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_bro', verbose_name="Братья, сёстры")
+    #children = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_chilren', verbose_name="Дети")
+    #grandsons = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_profile_grandsons', verbose_name="Внуки")
 
     class Meta:
         verbose_name = 'Семья пользователя'

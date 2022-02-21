@@ -20,9 +20,6 @@ class Article(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='article_creator', on_delete=models.CASCADE, verbose_name="Создатель")
     type = models.CharField(choices=TYPE, max_length=5, verbose_name="Статус статьи")
 
-    #users = models.ManyToManyField("users.User", blank=True, related_name='users_article')
-    #communities = models.ManyToManyField('communities.Community', blank=True, related_name='communities_article')
-
     @classmethod
     def create_article(cls, creator, title, community, g_image, content, created ):
         article = Article.objects.create(creator=creator,content=content,g_image=g_image,community=community,title=title)
