@@ -20,6 +20,13 @@ class ModerationPenaltyAdmin(admin.ModelAdmin):
     class Meta:
             model = ModerationPenalty
 
+class SupportUsersAdmin(admin.ModelAdmin):
+    list_display = ['level', 'manager', 'points', 'chats']
+    search_fields = ['level']
+    class Meta:
+            model = SupportUsers
+
 
 admin.site.register(Moderated, ModeratedAdmin)
 admin.site.register(ModerationPenalty, ModerationPenaltyAdmin)
+admin.site.register(SupportUsers, SupportUsersAdmin)
