@@ -763,7 +763,7 @@ class SupportUsers(models.Model):
         from common.model.votes import SupportUserVotes
 
         try:
-            item = SupportUserVotes.objects.get(user=self, manager_id=self.manager)
+            item = SupportUserVotes.objects.get(user=user, manager_id=self.manager)
             if item.vote != SupportUserVotes.LIKE:
                 item.vote = SupportUserVotes.LIKE
                 item.save(update_fields=['vote'])
@@ -774,13 +774,13 @@ class SupportUsers(models.Model):
                 self.points -= 1
                 self.save(update_fields=['points'])
         except SupportUserVotes.DoesNotExist:
-            SupportUserVotes.objects.create(user=self, manager_id=self.manager, vote=SupportUserVotes.LIKE)
+            SupportUserVotes.objects.create(user=user, manager_id=self.manager, vote=SupportUserVotes.LIKE)
             self.points += 1
             self.save(update_fields=['points'])
     def send_dislike(self, user):
         from common.model.votes import SupportUserVotes
         try:
-            item = SupportUserVotes.objects.get(user=self, manager_id=self.manager)
+            item = SupportUserVotes.objects.get(user=user, manager_id=self.manager)
             if item.vote != SupportUserVotes.DISLIKE:
                 item.vote = SupportUserVotes.DISLIKE
                 item.save(update_fields=['vote'])
@@ -791,6 +791,6 @@ class SupportUsers(models.Model):
                 self.points += 1
                 self.save(update_fields=['points'])
         except SupportUserVotes.DoesNotExist:
-            SupportUserVotes.objects.create(user=self, manager_id=self.manager, vote=SupportUserVotes.DISLIKE)
+            SupportUserVotes.objects.create(user=user, manager_id=self.manager, vote=SupportUserVotes.DISLIKE)
             self.points -= 1
             self.save(update_fields=['points'])
