@@ -53,9 +53,9 @@ class Community(models.Model):
         (BLOCKED_OPEN, 'Открытый блокнутый'),(BLOCKED_PRIVATE, 'Приватный блокнутый'), (BLOCKED_CLOSED, 'Закрытый блокнутый'),
     )
 
-    CHILD, STANDART, VERIFIED_SEND, VERIFIED = 'CH', 'ST', 'VS', 'VE'
+    CHILD, STANDART, VER_SEND, VER = 'CH', 'ST', 'VS', 'VE'
     PERM = (
-        (CHILD, 'Детская'),(STANDART, 'Обычные права'),(VERIFIED_SEND, 'Запрос на проверку'),(VERIFIED, 'Провернный'),
+        (CHILD, 'Детская'),(STAND, 'Обычные права'),(VER_SEND, 'Запрос на проверку'),(VER, 'Провернный'),
     )
 
     category = models.ForeignKey(CommunitySubCategory, on_delete=models.CASCADE, related_name='+', verbose_name="Подкатегория сообщества")
@@ -159,9 +159,9 @@ class Community(models.Model):
     def is_standart(self):
         return self.perm == Community.STANDART
     def is_verified_send(self):
-        return self.perm == Community.VERIFIED_SEND
+        return self.perm == Community.VER_SEND
     def is_verified(self):
-        return self.perm == Community.VERIFIED
+        return self.perm == Community.VER
     def is_child(self):
         return self.perm == Community.CHILD
     def is_suspended(self):
