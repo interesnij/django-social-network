@@ -1,11 +1,14 @@
 
 {% if request.user.is_support %}
+
     <a class="pointer increase level_support_chat">Повысить уровень чата</a>
+
 {% else %}
+
   {% if chat.members == 1 %}
     <p>Подождите свободного менеджера.</p>
   {% else %}
-    <p>Оцените работу менеджера:
-      
-    </p>
+    <p>Оцените работу менеджера:</p>
   {% endif %}
+
+{% endif %}
