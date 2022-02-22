@@ -1749,7 +1749,7 @@ on('#ajax', 'click', '.dislike_support_manager', function() {
       _this.classList.add("btn_danger");
       _this.classList.remove("btn_default");
     };
-    next = _this.nextElementSibling.classList;
+    next = _this.previousElementSibling.classList;
     next.remove("btn_success");
     next.add("btn_default");
   }};
