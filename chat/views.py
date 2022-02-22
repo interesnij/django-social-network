@@ -3,18 +3,22 @@ from django.views.generic import ListView
 
 
 class ChatsListView(ListView):
-	template_name, paginate_by = None, 15
+	template_name, paginate_by, is_have_support_chats  = None, 15, None
 
 	def get(self,request,*args,**kwargs):
 		from common.templates import get_settings_template
+		from managers.models import SupportUsers
 
 		self.template_name, self.user = get_settings_template("chat/chat/list.html", request.user, request.META['HTTP_USER_AGENT']), request.user
-		self.favourite_messages_count = request.user.favourite_messages_count()
+		if SupportUsers.objects.filter(manager=self.user.pk).exists():
+			self.is_have_support_chats = True
+		self.favourite_messages_count = self.user.favourite_messages_count()
 		return super(ChatsListView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
 		context = super(ChatsListView,self).get_context_data(**kwargs)
 		context['favourite_messages_count'] = self.favourite_messages_count
+		context['is_have_support_chats'] = self.is_have_support_chats
 		return context
 
 	def get_queryset(self):
@@ -30,21 +34,24 @@ class ClosedSupportChats(ListView):
 		return super(ClosedSupportChats,self).get(request,*args,**kwargs)
 
 	def get_queryset(self):
-		return self.request.user.get_deleted_support_chats() 
+		return self.request.user.get_deleted_support_chats()
 
 class ChatDetailView(ListView):
-	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count = None, 30, None, None, None
+	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count, is_have_support_chats = None, 30, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
 		from common.templates import get_settings_template
 		from asgiref.sync import async_to_sync
 		from channels.layers import get_channel_layer
+		from managers.models import SupportUsers
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
 		if self.pk in self.chat.get_members_ids():
 			self.template_name = get_settings_template("chat/chat/detail/chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			if SupportUsers.objects.filter(manager=self.pk).exists():
+				self.is_have_support_chats = True
 		else:
 			from django.http import Http404
 			raise Http404
@@ -77,6 +84,7 @@ class ChatDetailView(ListView):
 
 		context['favourite_messages_count'] = self.favourite_messages_count
 		context['is_admin'] = self.is_admin
+		context['is_have_support_chats'] = self.is_have_support_chats
 		return context
 
 	def get_queryset(self):
