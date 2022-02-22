@@ -364,52 +364,45 @@ class User(AbstractUser):
         import pymorphy2
         from string import ascii_letters
 
-        morph = pymorphy2.MorphAnalyzer()
-        if all(map(lambda c: c in ascii_letters, self.first_name)):
-            first_name = self.first_name
-        else:
-            name = morph.parse(self.first_name)[0]
-            v1 = name.inflect({'gent'})
-            first_name = v1.word.title()
-        if all(map(lambda c: c in ascii_letters, self.last_name)):
-            last_name = self.last_name
-        else:
-            surname = morph.parse(self.last_name)[0]
-            v2 = surname.inflect({'gent'})
-            last_name = v2.word.title()
-        return first_name + " " + last_name
-
-    def get_name_genitive(self):
-        import pymorphy2
-        from string import ascii_letters
-
-        morph = pymorphy2.MorphAnalyzer()
-        if all(map(lambda c: c in ascii_letters, self.first_name)):
-            first_name = self.first_name
-        else:
-            name = morph.parse(self.first_name)[0]
-            v1 = name.inflect({'gent'})
-            first_name = v1.word.title()
-        return first_name
+        try:
+            morph = pymorphy2.MorphAnalyzer()
+            if all(map(lambda c: c in ascii_letters, self.first_name)):
+                first_name = self.first_name
+            else:
+                name = morph.parse(self.first_name)[0]
+                v1 = name.inflect({'gent'})
+                first_name = v1.word.title()
+            if all(map(lambda c: c in ascii_letters, self.last_name)):
+                last_name = self.last_name
+            else:
+                surname = morph.parse(self.last_name)[0]
+                v2 = surname.inflect({'gent'})
+                last_name = v2.word.title()
+            return first_name + " " + last_name
+        except:
+            return self.get_full_name()
 
     def get_full_name_datv(self):
         import pymorphy2
         from string import ascii_letters
 
-        morph = pymorphy2.MorphAnalyzer()
-        if all(map(lambda c: c in ascii_letters, self.first_name)):
-            first_name = self.first_name
-        else:
-            name = morph.parse(self.first_name)[0]
-            v1 = name.inflect({'datv'})
-            first_name = v1.word.title()
-        if all(map(lambda c: c in ascii_letters, self.last_name)):
-            last_name = self.last_name
-        else:
-            surname = morph.parse(self.last_name)[0]
-            v2 = surname.inflect({'datv'})
-            last_name = v2.word.title()
-        return first_name + " " + last_name
+        try:
+            morph = pymorphy2.MorphAnalyzer()
+            if all(map(lambda c: c in ascii_letters, self.first_name)):
+                first_name = self.first_name
+            else:
+                name = morph.parse(self.first_name)[0]
+                v1 = name.inflect({'datv'})
+                first_name = v1.word.title()
+            if all(map(lambda c: c in ascii_letters, self.last_name)):
+                last_name = self.last_name
+            else:
+                surname = morph.parse(self.last_name)[0]
+                v2 = surname.inflect({'datv'})
+                last_name = v2.word.title()
+            return first_name + " " + last_name
+        except:
+            return self.get_full_name()
 
     def create_s_avatar(self, photo_input):
         from easy_thumbnails.files import get_thumbnailer
