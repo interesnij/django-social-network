@@ -630,8 +630,12 @@ class Chat(models.Model):
     def get_header_chat(self, user_id):
         try:
             beep_icon = self.get_chat_request_user(user_id).get_beep_icon()
+            if not self.is_muted(user_id):
+                muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
+            else:
+                muted_drop = '<span><a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a></span>'
         except:
-            beep_icon = ""
+            beep_icon, muted_drop = "", ""
         if self.is_user_can_fix_item(user_id):
             fix_btn = '<span tooltip="Закрепить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_fixed" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg></span>'
         else:
@@ -664,10 +668,6 @@ class Chat(models.Model):
                 manager = SupportUsers.objects.get(manager=user.pk)
                 chat_name = "Агент техподдержки " + str(manager.pk)
                 target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
-        if not self.is_muted(user_id):
-            muted_drop = '<span><a class="dropdown-item on_full_chat_notify pointer">Вкл. уведомления</a></span>'
-        else:
-            muted_drop = '<span><a class="dropdown-item off_full_chat_notify pointer">Откл. уведомления</a></span>'
 
         if self.name:
              chat_name = self.name
