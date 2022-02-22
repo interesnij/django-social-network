@@ -598,7 +598,7 @@ class Chat(models.Model):
                 for user in self.get_members():
                     if user.is_support():
                         manager = SupportUsers.objects.get(manager=user.pk)
-                        chat_name = "Агент техподдержки " + str(manager.pk)
+                        chat_name = "Агент техподдержки №" + str(manager.pk)
                         if user.get_online():
                             status = ' <span class="status bg-success"></span>'
                 else:
@@ -662,7 +662,7 @@ class Chat(models.Model):
             dop_drops, u_chat_info, target_display = '<a class="dropdown-item close_support_chat pointer">Закрыть заявку</a>', '', ''
             if self.members == 1:
                 chat_name = "Чат техподдержки"
-                target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат ждёт менеджера...</span>'
+                target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат ждёт менеджера...</span>'
             else:
                 from managers.models import SupportUsers
                 for user in self.get_members():
@@ -671,8 +671,6 @@ class Chat(models.Model):
                         chat_name = "Агент техподдержки " + str(manager.pk)
                 target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
 
-        if self.name:
-             chat_name = self.name
         media_body = ''.join(['<div class="media-body" style="overflow: inherit;padding-top: 3px;"><h5 class="time-title mb-1"><span class="', u_chat_info, ' pointer">', chat_name, '</span><span class="notify_box">', beep_icon, '</h5><span class="mt-1 mb-2 target_display">', target_display, buttons, '</span></div>'])
         dropdown = ''.join(['<div class="dropdown d-inline-block"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 29px; width: 100%;"><a class="dropdown-item chat_search pointer">Поиск сообщений</a><a class="dropdown-item show_attach_files pointer">Показать вложения</a>', muted_drop, dop_drops,'<a class="dropdown-item u_clean_chat_messages pointer">Очистить историю</a></div></div>'])
         return ''.join([media_body, dropdown])
