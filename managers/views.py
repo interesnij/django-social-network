@@ -248,7 +248,7 @@ class SupportChats(ListView):
 
         if SupportUsers.objects.filter(manager=request.user.pk).exists():
             self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
-            types = ~Q(type__contains="_")
+            types = Q(type__contains="_")
             manager = SupportUsers.objects.filter(manager=request.user.pk).first()
             if manager.level == 1:
                 types.add(Q(type="SUP1"), Q.AND)
@@ -260,10 +260,9 @@ class SupportChats(ListView):
                 types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")|Q(type="SUP4")), Q.AND)
             elif manager.level == 5:
                 types.add(Q(type__contains="SUP"), Q.AND)
+            types.add(~Q(type__contains="_"), Q.AND)
+            types.add(Q(members=1), Q.AND)
             self.chats = Chat.objects.filter(types)
-        elif request.user.is_superuser:
-            self.chats = Chat.objects.filter(type__contains="SUP")
-            self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(SupportChats,self).get(request,*args,**kwargs)
