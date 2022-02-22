@@ -1241,7 +1241,7 @@ class User(AbstractUser):
     def get_all_users(self):
         query = ~Q(type__contains="_")
         if self.is_child():
-            query.add(~Q(Q(type=User.VERIFIED_SEND)|Q(type=User.STANDART)), Q.AND)
+            query.add(~Q(Q(type=User.VER_SEND)|Q(type=User.STAND)), Q.AND)
         return User.objects.filter(query)
 
     def get_pop_followers(self):
