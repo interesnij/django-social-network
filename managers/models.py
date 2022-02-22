@@ -745,7 +745,7 @@ class SupportUsers(models.Model):
         (LEVEL_1, 'Уровень 1'),(LEVEL_2, 'Уровень 2'),(LEVEL_3, 'Уровень 3'),(LEVEL_4, 'Уровень 4'),(LEVEL_5, 'Уровень 5'),
     )
 
-    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, default=LEVEL_1, verbose_name="Уровень сложности")
+    level = models.PositiveSmallIntegerField(default=0, choices=LEVEL, verbose_name="Уровень сложности")
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     points = models.IntegerField(default=0, verbose_name="Компетентность условная")
