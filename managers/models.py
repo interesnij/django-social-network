@@ -749,9 +749,10 @@ class SupportUsers(models.Model):
     manager = models.PositiveIntegerField(default=0, verbose_name="Менеджер")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="Создан")
     points = models.IntegerField(default=0, verbose_name="Компетентность условная")
+    chats = models.PositiveIntegerField(default=0, verbose_name="Всего чатов")
 
     def __str__(self):
-        return self.level
+        return "Менеджер " + str(self.manager) + ", уровень " + self.level + ", Очки " + str(self.points) + ", Чатов " + str(self.chats)
 
     class Meta:
         verbose_name = 'Агент техподдержки'
