@@ -595,11 +595,12 @@ class Chat(models.Model):
                 chat_name = "Чат техподдержки"
             else:
                 from managers.models import SupportUsers
-                user = self.get_chat_member(user_id)
-                manager = SupportUsers.objects.get(manager=user.pk)
-                chat_name = "Агент техподдержки " + str(manager.pk)
-                if user.get_online():
-                    status = ' <span class="status bg-success"></span>'
+                for user in self.get_members():
+                    if user.is_support():
+                        manager = SupportUsers.objects.get(manager=user.pk)
+                        chat_name = "Агент техподдержки " + str(manager.pk)
+                        if user.get_online():
+                            status = ' <span class="status bg-success"></span>'
                 else:
                     status = ''
             media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, beep_icon, status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
