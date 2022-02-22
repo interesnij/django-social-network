@@ -13,7 +13,9 @@
           {% include 'desctop/chat/chat/search.html' %}
           <div class="fixed_messages">
             {% if fix_message %}
-              {% include 'desctop/chat/chat/fixed_message.html' %}
+              {% include 'desctop/chat/chat/detail/fixed_message.html' %}
+            {% elif chat.is_support %}
+              {% include 'desctop/chat/chat/detail/support_block.html' %}
             {% endif %}
           </div>
       </div>
