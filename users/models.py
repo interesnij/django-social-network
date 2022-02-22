@@ -328,7 +328,8 @@ class User(AbstractUser):
     def is_manager(self):
         return self.perm > 29 or self.is_superuser
     def is_support(self):
-        return self.perm > 19 or self.is_superuser
+        from managers.models import SupportUsers
+        return SupportUsers.objects.filter(manager=request.user.pk).exists()
     def is_moderator(self):
         return self.perm > 9 or self.is_superuser
 

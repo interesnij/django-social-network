@@ -552,7 +552,10 @@ class Chat(models.Model):
                 is_read = ' bg-light-secondary'
             created = first_message.get_created()
 
-        request_chat_user = self.get_chat_request_user(user_id)
+        try:
+            beep_icon = self.get_chat_request_user(user_id).get_beep_icon()
+        except:
+            beep_icon = ""
 
         if self.is_group() or self.is_public():
             if self.image:
@@ -563,7 +566,7 @@ class Chat(models.Model):
                  chat_name = self.name
             else:
                 chat_name = "Групповой чат"
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, beep_icon, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
         elif self.is_private():
@@ -582,7 +585,7 @@ class Chat(models.Model):
                 status = ' <span class="status bg-success"></span>'
             else:
                 status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, beep_icon, status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0', is_read ,'" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
         elif self.is_support():
@@ -599,13 +602,13 @@ class Chat(models.Model):
                     status = ' <span class="status bg-success"></span>'
                 else:
                     status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, beep_icon, status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
         elif self.is_manager():
             figure = '<figure><svg fill="currentColor" class="svg_default svg_default_50" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></figure>'
             chat_name = self.name
             status = ''
-            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, request_chat_user.get_beep_icon(), status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
+            media_body = ''.join(['<div class="media-body"><h5 class="time-title mb-0">', chat_name, beep_icon, status, '<small class="float-right text-muted">', str(created), '</small></h5><p class="mb-0" style="white-space: nowrap;">', preview_text, '</p><span class="typed"></span></div>'])
             return ''.join(['<div class="media">', figure, media_body, self.get_unread_count_message(user_id), '</div>'])
 
     def get_name(self, request_user_id):
