@@ -664,9 +664,10 @@ class Chat(models.Model):
                 target_display = target_display = '<span class="type_display small" style="position:absolute;top: 21px;">Чат ждёт менеджера...</span>'
             else:
                 from managers.models import SupportUsers
-                user = self.get_chat_member(user_id)
-                manager = SupportUsers.objects.get(manager=user.pk)
-                chat_name = "Агент техподдержки " + str(manager.pk)
+                for user in self.get_members():
+                    if user.is_support():
+                        manager = SupportUsers.objects.get(manager=user.pk)
+                        chat_name = "Агент техподдержки " + str(manager.pk)
                 target_display = '<span class="type_display small" style="position:absolute;top: 21px;">' + user.get_online_status() + '</span>'
 
         if self.name:
