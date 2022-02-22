@@ -33,7 +33,7 @@ class ClosedSupportChats(ListView):
 		return self.request.user.get_deleted_support_chats()
 
 class ChatDetailView(ListView):
-	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count = None, 30, None, None, None
+	template_name, paginate_by, can_add_members_in_chat, favourite_messages, favourite_messages_count, is_admin = None, 30, None, None, None, None
 
 	def get(self,request,*args,**kwargs):
 		from chat.models import Chat
