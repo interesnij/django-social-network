@@ -115,8 +115,8 @@ class LoadPhotoList(ListView):
 		else:
 			creator = self.list.creator
 			if request.user.is_authenticated:
+				creator = self.list.creator
 				if request.user.pk == creator.pk:
-					user = self.list.creator
 					self.is_user_can_see_photo_section = True
 					self.is_user_can_see_photo_list = True
 					self.is_user_can_create_photos = True

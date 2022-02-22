@@ -50,8 +50,9 @@ class LoadVideoList(ListView):
 				self.get_lists = VideoList.get_community_lists(self.c.pk)
 		else:
 			if request.user.is_authenticated:
-				if request.user.pk == self.list.creator.pk:
-					creator = self.list.creator
+				creator = self.list.creator
+				if request.user.pk == creator.pk:
+
 					self.is_user_can_see_video_section = True
 					self.is_user_can_see_video_list = True
 					self.is_user_can_create_videos = True

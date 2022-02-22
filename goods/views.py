@@ -46,8 +46,8 @@ class LoadGoodList(ListView):
 				self.get_lists = GoodList.get_community_lists(self.c.pk)
 		else:
 			if request.user.is_authenticated:
-				if request.user.pk == self.list.creator.pk:
-					creator = self.list.creator
+				creator = self.list.creator
+				if request.user.pk == creator.pk:
 					self.is_user_can_see_good_section = True
 					self.is_user_can_see_good_list = True
 					self.is_user_can_create_goods = True
