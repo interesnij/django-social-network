@@ -1150,28 +1150,6 @@ class Message(models.Model):
         for recipient in current_chat.get_recipients_2(creator.pk):
             message.create_socket(recipient.user.pk, recipient.beep())
 
-    def get_or_create_support_chat_and_send_message(creator, user, repost, text, attach, voice, sticker):
-        from datetime import datetime
-
-        _text = Message.get_format_text(text)
-        chat = creator.get_or_create_support_chat_pk()
-
-        if voice:
-            message = Message.objects.create(chat=chat, creator=creator, voice=voice)
-        else:
-            message = Message.objects.create(chat=chat, creator=creator, repost=repost, text=_text, attach=Message.get_format_attach(attach))
-        chat.created = datetime.now()
-        if attach:
-            if chat.attach:
-                chat.attach = chat.attach + ", " + attach
-            else:
-                chat.attach = attach
-            chat.save(update_fields=["created", "attach"])
-        else:
-            chat.save(update_fields=["created"])
-        for recipient in chat.get_recipients_2(creator.pk):
-            message.create_socket(recipient.user.pk, recipient.beep())
-
     def get_or_create_manager_chat_and_send_message(creator_pk, text, attach, voice):
         # создаем массовую расслылку сообщений
         from users.models import User
@@ -1253,7 +1231,12 @@ class Message(models.Model):
                 _message.save(update_fields=["text","attach","parent_id"])
 
         chat.created = datetime.now()
-        chat.save(update_fields=["created"])
+        if chat.is_support() and chat.members == 1 and creator.is_support():
+            chat.members += 1
+            chat.save(update_fields=["created", "members"])
+            ChatUsers.objects.create(user=creator, chat=chat)
+        else:
+            chat.save(update_fields=["created"])
         if attach:
             _attach = Message.get_format_attach(attach)
             if chat.attach:
