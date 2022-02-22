@@ -628,7 +628,10 @@ class Chat(models.Model):
 
 
     def get_header_chat(self, user_id):
-        request_chat_user, u_chat_info, target_display, dop_drops = self.get_chat_request_user(user_id), "", "", ""
+        try:
+            beep_icon = self.get_chat_request_user(user_id).get_beep_icon()
+        except:
+            beep_icon = ""
         if self.is_user_can_fix_item(user_id):
             fix_btn = '<span tooltip="Закрепить" flow="up"><svg class="svg_default_30 mr-1 pointer u_message_fixed" fill="currentColor" viewBox="0 0 24 24"><g><rect fill="none" height="24" width="24"/></g><g><path d="M16,9V4l1,0c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H7C6.45,2,6,2.45,6,3v0 c0,0.55,0.45,1,1,1l1,0v5c0,1.66-1.34,3-3,3h0v2h5.97v7l1,1l1-1v-7H19v-2h0C17.34,12,16,10.66,16,9z" fill-rule="evenodd"/></g></svg></span>'
         else:
@@ -668,7 +671,7 @@ class Chat(models.Model):
 
         if self.name:
              chat_name = self.name
-        media_body = ''.join(['<div class="media-body" style="overflow: inherit;padding-top: 3px;"><h5 class="time-title mb-1"><span class="', u_chat_info, ' pointer">', chat_name, '</span><span class="notify_box">', request_chat_user.get_beep_icon(), '</h5><span class="mt-1 mb-2 target_display">', target_display, buttons, '</span></div>'])
+        media_body = ''.join(['<div class="media-body" style="overflow: inherit;padding-top: 3px;"><h5 class="time-title mb-1"><span class="', u_chat_info, ' pointer">', chat_name, '</span><span class="notify_box">', beep_icon, '</h5><span class="mt-1 mb-2 target_display">', target_display, buttons, '</span></div>'])
         dropdown = ''.join(['<div class="dropdown d-inline-block"><a style="cursor:pointer" class="icon-circle icon-30 btn_default drop"><svg class="svg_info" fill="currentColor" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></a><div class="dropdown-menu dropdown-menu-right" style="top: 29px; width: 100%;"><a class="dropdown-item chat_search pointer">Поиск сообщений</a><a class="dropdown-item show_attach_files pointer">Показать вложения</a>', muted_drop, dop_drops,'<a class="dropdown-item u_clean_chat_messages pointer">Очистить историю</a></div></div>'])
         return ''.join([media_body, dropdown])
 
