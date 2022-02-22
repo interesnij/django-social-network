@@ -16,7 +16,6 @@
         <div class="card">
             <div class="card-body px-0 py-0">
               {% if object_list %}
-              {{ is_have_support_chats }}
               <ul class="list-group is_paginate">
                 {% for object in object_list %}
                   <li class="list-group-item" data-pk="{{ object.pk }}">
