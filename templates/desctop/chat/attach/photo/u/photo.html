@@ -23,7 +23,7 @@
         {% endif %}
     </div>
 
-    {% elif request.user.is_moderator %}
+    {% if request.user.is_moderator %}
       <span class="create_close pointer">Закрыть</span>
     {% else %}
       <span class="create_claim pointer">Пожаловаться</span>
