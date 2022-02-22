@@ -248,6 +248,7 @@ class SupportChats(ListView):
 
         if SupportUsers.objects.filter(manager=request.user.pk).exists():
             self.template_name = get_settings_template("managers/support_chat.html", request.user, request.META['HTTP_USER_AGENT'])
+            types = Q()
             manager = SupportUsers.objects.filter(manager=request.user.pk).first()
             if manager.level == 1:
                 types.add(Q(type="SUP1"), Q.AND)
