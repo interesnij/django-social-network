@@ -38,6 +38,6 @@ urlpatterns = [
     url(r'^load_include_users/(?P<pk>\d+)/$', UserChatIncludeUsers.as_view()),
     url(r'^load_exclude_users/(?P<pk>\d+)/$', UserChatExcludeUsers.as_view()),
 
-    url(r'^like_manager/(?P<pk>\d+)$', SupportLikeCreate.as_view()),
+    url(r'^like_manager/(?P<pk>\d+)/$', SupportLikeCreate.as_view()),
     url(r'^dislike_manager/(?P<pk>\d+)/$', SupportDislikeCreate.as_view()),
 ]
