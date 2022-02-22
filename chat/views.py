@@ -43,17 +43,19 @@ class ChatDetailView(ListView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.pk = request.user.pk
-		if self.pk in self.chat.get_members_ids():
+		if self.chat.is_support():
 			self.template_name = get_settings_template("chat/chat/detail/chat.html", request.user, request.META['HTTP_USER_AGENT'])
+		elif self.pk in self.chat.get_members_ids():
+			self.template_name = get_settings_template("chat/chat/detail/chat.html", request.user, request.META['HTTP_USER_AGENT'])
+			self.chat.read_messages(self.pk)
+			self.is_admin = request.user.is_administrator_of_chat(self.chat.pk)
 		else:
 			from django.http import Http404
 			raise Http404
 
 		self.messages = self.chat.get_messages(self.pk)
-		self.chat.read_messages(self.pk)
 		self.favourite_messages_count = request.user.favourite_messages_count()
 		self.get_header_chat = self.chat.get_header_chat(self.pk)
-		self.is_admin = request.user.is_administrator_of_chat(self.chat.pk)
 
 		channel_layer = get_channel_layer()
 		payload = {
