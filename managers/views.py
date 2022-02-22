@@ -260,7 +260,6 @@ class SupportChats(ListView):
                 types.add(Q(Q(type="SUP1")|Q(type="SUP2")|Q(type="SUP3")|Q(type="SUP4")), Q.AND)
             elif manager.level == 5:
                 types.add(Q(type__contains="SUP"), Q.AND)
-            types.add(~Q(type__contains="_"), Q.AND)
             types.add(Q(members=1), Q.AND)
             self.chats = Chat.objects.filter(types)
         else:
