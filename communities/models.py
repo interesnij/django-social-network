@@ -53,7 +53,7 @@ class Community(models.Model):
         (BLOCKED_OPEN, 'Открытый блокнутый'),(BLOCKED_PRIVATE, 'Приватный блокнутый'), (BLOCKED_CLOSED, 'Закрытый блокнутый'),
     )
 
-    CHILD, STANDART, VER_SEND, VER = 'CH', 'ST', 'VS', 'VE'
+    CHILD, STAND, VER_SEND, VER = 'CH', 'ST', 'VS', 'VE'
     PERM = (
         (CHILD, 'Детская'),(STAND, 'Обычные права'),(VER_SEND, 'Запрос на проверку'),(VER, 'Провернный'),
     )
@@ -65,7 +65,7 @@ class Community(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="Создано")
     status = models.CharField(max_length=100, blank=True, verbose_name="статус-слоган")
     type = models.CharField(choices=TYPE, max_length=5)
-    perm = models.CharField(max_length=5, choices=PERM, default=STANDART, verbose_name="Уровень доступа")
+    perm = models.CharField(max_length=5, choices=PERM, default=STAND, verbose_name="Уровень доступа")
     have_link = models.CharField(max_length=17, blank=True, verbose_name='Ссылка')
     s_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
     b_avatar = models.ImageField(blank=True, upload_to=upload_to_community_avatar_directory)
@@ -157,7 +157,7 @@ class Community(models.Model):
     def is_deleted(self):
         return self.type == Community.DELETED
     def is_standart(self):
-        return self.perm == Community.STANDART
+        return self.perm == Community.STAND
     def is_verified_send(self):
         return self.perm == Community.VER_SEND
     def is_verified(self):
