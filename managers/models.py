@@ -752,7 +752,7 @@ class SupportUsers(models.Model):
     chats = models.PositiveIntegerField(default=0, verbose_name="Всего чатов")
 
     def __str__(self):
-        return "Менеджер " + str(self.manager) + ", уровень " + self.level + ", Очки " + str(self.points) + ", Чатов " + str(self.chats)
+        return "Менеджер " + str(self.manager) + ", уровень " + str(self.level) + ", Очки " + str(self.points) + ", Чатов " + str(self.chats)
 
     class Meta:
         verbose_name = 'Агент техподдержки'
