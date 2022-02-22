@@ -505,21 +505,29 @@ class UserChatRecover(View):
 class SupportLikeCreate(View):
 	def get(self,request,*args,**kwargs):
 		from managers.models import SupportUsers
+		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
-		manager = SupportUsers.objects.get(manager=self.kwargs["pk"])
 		if request.is_ajax():
-			manager.send_like(request.user)
+			chat = Chat.objects.get(pk=self.kwargs["pk"])
+			for user in chat.get_members():
+				if user.is_support():
+					manager = SupportUsers.objects.get(manager=user.pk)
+					manager.send_like(request.user)
 			return HttpResponse()
 		raise Http404
 class SupportDislikeCreate(View):
 	def get(self,request,*args,**kwargs):
 		from managers.models import SupportUsers
+		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
-		manager = SupportUsers.objects.get(manager=self.kwargs["pk"])
 		if request.is_ajax():
-			chat.send_dislike(request.user)
+			chat = Chat.objects.get(pk=self.kwargs["pk"])
+			for user in chat.get_members():
+				if user.is_support():
+					manager = SupportUsers.objects.get(manager=user.pk)
+					manager.send_dislike(request.user)
 			return HttpResponse()
 		raise Http404
 
