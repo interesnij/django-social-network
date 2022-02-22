@@ -28,13 +28,6 @@ def get_preview_message(chat, user_id):
     return chat.get_preview_message(user_id)
 
 @register.filter
-def get_header_private_chat(chat, user_id):
-    return chat.get_header_private_chat(user_id)
-@register.filter
-def get_header_group_chat(chat, user_id):
-    return chat.get_header_group_chat(user_id)
-
-@register.filter
 def get_attach(message, request_user):
     return message.get_attach(request_user)
 
@@ -50,3 +43,13 @@ def get_edit_attach(message, request_user):
 @register.filter
 def is_admin(user, chat_pk):
     return user.is_administrator_of_chat(chat_pk)
+
+@register.filter
+def liked_manager(user, chat):
+    from common.model.votes import SupportUserVotes
+    return SupportUserVotes.objects.filter(user=user, manager=chat.get_chat_member(user.id), vote=SupportUserVotes.LIKE)
+
+@register.filter
+def disliked_manager(user, chat):
+    from common.model.votes import SupportUserVotes
+    return SupportUserVotes.objects.filter(user=user, manager=chat.get_chat_member(user.id), vote=SupportUserVotes.DISLIKE)

@@ -758,3 +758,39 @@ class SupportUsers(models.Model):
         verbose_name = 'Агент техподдержки'
         verbose_name_plural = 'Агенты техподдержки'
         indexes = (BrinIndex(fields=['created']),)
+
+    def send_like(self, user):
+        from common.model.votes import SupportUserVotes
+
+        try:
+            item = SupportUserVotes.objects.get(parent=self, manager_id=self.manager)
+            if item.vote != SupportUserVotes.LIKE:
+                item.vote = SupportUserVotes.LIKE
+                item.save(update_fields=['vote'])
+                self.points += 1
+                self.save(update_fields=['points'])
+            else:
+                item.delete()
+                self.points -= 1
+                self.save(update_fields=['points'])
+        except SupportUserVotes.DoesNotExist:
+            SupportUserVotes.objects.create(parent=self, manager_id=self.manager, vote=SupportUserVotes.LIKE)
+            self.points += 1
+            self.save(update_fields=['points'])
+    def send_dislike(self, user):
+        from common.model.votes import SupportUserVotes
+        try:
+            item = SupportUserVotes.objects.get(parent=self, manager_id=self.manager)
+            if item.vote != SupportUserVotes.DISLIKE:
+                item.vote = SupportUserVotes.DISLIKE
+                item.save(update_fields=['vote'])
+                self.points -= 1
+                self.save(update_fields=['points'])
+            else:
+                item.delete()
+                self.points += 1
+                self.save(update_fields=['points'])
+        except SupportUserVotes.DoesNotExist:
+            SupportUserVotes.objects.create(parent=self, manager_id=self.manager, vote=SupportUserVotes.DISLIKE)
+            self.points -= 1
+            self.save(update_fields=['points'])

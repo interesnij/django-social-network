@@ -1711,3 +1711,47 @@ on('#ajax', 'click', '.communities_toggle', function() {
   };
   btn.innerHTML = btn_text;
 });
+
+
+on('#ajax', 'click', '.like_support_manager', function() {
+  _this = this;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/like_manager/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    if (_this.classList.contains("btn_success")) {
+      _this.classList.remove("btn_success");
+      _this.classList.add("btn_default");
+    } else {
+      _this.classList.add("btn_success");
+      _this.classList.remove("btn_default");
+    };
+    next = _this.nextElementSibling.classList;
+    next.remove("btn_danger");
+    next.add("btn_default");
+  }};
+  link.send();
+});
+on('#ajax', 'click', '.dislike_support_manager', function() {
+  _this = this;
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', "/chat/user_progs/dislike_manager/" + this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("chat-pk") + "/", true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    if (_this.classList.contains("btn_danger")) {
+      _this.classList.remove("btn_danger");
+      _this.classList.add("btn_default");
+    } else {
+      _this.classList.add("btn_danger");
+      _this.classList.remove("btn_default");
+    };
+    next = _this.nextElementSibling.classList;
+    next.remove("btn_success");
+    next.add("btn_default");
+  }};
+  link.send();
+});
