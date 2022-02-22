@@ -507,7 +507,7 @@ class SupportLikeCreate(View):
 		from managers.models import SupportUsers
 		from django.http import HttpResponse, Http404
 
-		manager = SupportUsers.objects.get(manager__id=self.kwargs["pk"])
+		manager = SupportUsers.objects.get(manager=self.kwargs["pk"])
 		if request.is_ajax():
 			manager.send_like(request.user)
 			return HttpResponse()
@@ -517,7 +517,7 @@ class SupportDislikeCreate(View):
 		from managers.models import SupportUsers
 		from django.http import HttpResponse, Http404
 
-		manager = SupportUsers.objects.get(manager__id=self.kwargs["pk"])
+		manager = SupportUsers.objects.get(manager=self.kwargs["pk"])
 		if request.is_ajax():
 			chat.send_dislike(request.user)
 			return HttpResponse()
