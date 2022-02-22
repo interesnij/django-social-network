@@ -7,14 +7,9 @@
     {{ list.get_description|safe }} будет разморожен
     {{ list.get_longest_penalties }}.
     <br><br>
-    <i>Коммантарий модератора:<i> {{ list.get_moderated_description }}
-    <br><br>
-
-    Вы можете
-    <a href="/chat/{{ request.user.get_or_create_support_chat_pk }}/" class="ajax">
-      написать в техподдержку
-    </a>
-    , если Вам кажется, что произошло недоразумение.
+    <span class="small">
+      <i>Коммантарий модератора:</i> {{ list.get_moderated_description }}
+    </span>
   </h6>
 </div>
 </span>
