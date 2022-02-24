@@ -39,4 +39,4 @@ loadScripts('/static/scripts/video/community_post.js?ver3');
 loadScripts('/static/scripts/survey/get.js?ver3');
 loadScripts('/static/scripts/survey/post.js?ver3');
 
-Twenmax()
+Tweenmax()
