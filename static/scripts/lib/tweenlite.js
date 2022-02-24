@@ -1491,4 +1491,6 @@
        }
    }
    l = false
-})(window)
+})(window);
+
+gsap.timeline({repeat: 1, yoyo: true});
