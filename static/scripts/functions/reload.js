@@ -10,7 +10,7 @@ function get_dragula(block) {
     //.on('over', function (el, container) {console.log("over!"); over = true;})
     //.on('out', function (el, container) {console.log("over!");;});
 };
-Tweenmax();
+
 var $serf_history = [], $new_window_list = [], $new_elements = [];
 var user_info = document.body.querySelector(".userpic");
 var $request_user_id = user_info.getAttribute("data-id");
