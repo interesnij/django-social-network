@@ -116,7 +116,7 @@ class ConnectPerm(models.Model):
     class Meta:
         verbose_name = 'Исключения/Включения target_user'
         verbose_name_plural = 'Исключения/Включения target_user'
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]
 
     @classmethod
     def get_or_create_perm(cls, user_id, target_user_id, ):

@@ -1637,4 +1637,4 @@ class CommunityMemberPerm(models.Model):
     class Meta:
         verbose_name = 'Исключения/Включения подписчика'
         verbose_name_plural = 'Исключения/Включения подписчиков'
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]

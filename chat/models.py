@@ -983,7 +983,7 @@ class ChatPerm(models.Model):
     class Meta:
         verbose_name = 'Исключения/Включения участника беседы'
         verbose_name_plural = 'Исключения/Включения участников беседы'
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]
 
 
 class Message(models.Model):

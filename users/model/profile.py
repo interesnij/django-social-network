@@ -60,7 +60,7 @@ class UserLocation(models.Model):
     class Meta:
         verbose_name = "Местоположение 1"
         verbose_name_plural = "Местоположения 1"
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]
 
     def __str__(self):
         return '{}, {}, {}'.format(self.country_ru, self.region_ru, self.city_ru)
@@ -73,7 +73,7 @@ class IPUser(models.Model):
     class Meta:
         verbose_name = "ip пользователя"
         verbose_name_plural = "ip пользователей"
-        index_together = [('id', 'user'),]
+        #index_together = [('id', 'user'),]
 
     def __str__(self):
         return '{} - {}'.format(self.user.get_full_name(), self.ip)
