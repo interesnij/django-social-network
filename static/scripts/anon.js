@@ -548,8 +548,8 @@ on('#ajax', 'click', '#code_send', function() {
             	} else {
             		document.body.classList.remove("password");
             	}
-            	}};
               request_2.send(form_data);
+            	}};
         }
     };
     request.send(null)
