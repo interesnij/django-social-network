@@ -200,8 +200,8 @@ class RegisterSerializer(serializers.Serializer):
         _birthday = self.validated_data.get('birthday', '')
 
         _birthday = datetime.strptime(_birthday, '%d/%m/%Y')
-        if timezone.now() < parser.parse(_birthday):
-            raise serializers.ValidationError("tttrrrrtttrrr")
+        #if timezone.now() < parser.parse(_birthday):
+        #    raise serializers.ValidationError("tttrrrrtttrrr")
         user.birthday = _birthday
 
         self.cleaned_data = self.get_cleaned_data()
