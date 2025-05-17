@@ -188,6 +188,8 @@ class RegisterSerializer(serializers.Serializer):
         }
 
     def save(self, request):
+        from dateutil import parser
+
         adapter = get_adapter()
         user = adapter.new_user(request)
         is_have_bad_words(user.first_name)
@@ -198,7 +200,7 @@ class RegisterSerializer(serializers.Serializer):
         _birthday = self.validated_data.get('birthday', '')
 
         _birthday = datetime.strptime(_birthday, '%d/%m/%Y')
-        if timezone.now() < _birthday:
+        if timezone.now() < parser.parse(_birthday):
             raise serializers.ValidationError("tttrrrrtttrrr")
         user.birthday = _birthday
 
