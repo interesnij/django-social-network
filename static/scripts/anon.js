@@ -530,7 +530,7 @@ on('#ajax', 'click', '#code_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
           console.log(request.responseText);
-            //if (request.responseText == "ok") {
+            //if (request.responseText == "ok") { 
               form_data = new FormData(_form);
               form_data.append("first_name", document.body.querySelector(".first_name").value);
               form_data.append("last_name", document.body.querySelector(".last_name").value);
@@ -542,6 +542,7 @@ on('#ajax', 'click', '#code_send', function() {
 
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
+              link.setRequestHeader('Content-Type', 'application/json');
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
