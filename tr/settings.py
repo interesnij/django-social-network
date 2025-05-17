@@ -30,7 +30,7 @@ DJANGO_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.vk',
     'rest_auth',
-    'djcelery',
+    #'djcelery',
 ]
 
 MY_APPS = [
