@@ -515,6 +515,9 @@ on('#ajax', 'click', '#code_send', function() {
   }
   else if (_user_phone[0] == "8") {
     _user_phone = _user_phone.slice(1)
+  }
+  else if (_user_phone[0] == "7") {
+    _user_phone = _user_phone.slice(1)
   };
   _user_phone = 7 + _user_phone;
 
@@ -526,7 +529,8 @@ on('#ajax', 'click', '#code_send', function() {
         if (request.readyState == 4 && request.status == 200) {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
-            if (request.responseText.indexOf("ok") != -1) {
+          console.log(request.responseText);
+            if (request.responseText == "ok") {
               form_data = new FormData(_form);
               form_data.append("first_name", document.body.querySelector(".first_name").value);
               form_data.append("last_name", document.body.querySelector(".last_name").value);
