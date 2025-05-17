@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import re_path
 from invitations.views import InvitationsView
 
 
 urlpatterns = [
-    url(r'^invitations/$', InvitationsView.as_view(), name='invitations')
+    re_path(r'^invitations/$', InvitationsView.as_view(), name='invitations')
 ]

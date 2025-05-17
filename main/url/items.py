@@ -1,8 +1,8 @@
-from django.conf.urls import url, include
+from django.urls import re_path
 from main.view.items import *
 
 
 urlpatterns = [
-	url(r'^likes/$', ItemLikes.as_view()),
-    url(r'^dislikes/$', ItemDislikes.as_view()),
+	re_path(r'^likes/$', ItemLikes.as_view()),
+    re_path(r'^dislikes/$', ItemDislikes.as_view()),
 ]

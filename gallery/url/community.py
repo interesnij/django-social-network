@@ -1,6 +1,6 @@
 ﻿from gallery.view.community import *
-from django.conf.urls import url
+from django.urls import re_path
 
 urlpatterns=[
-	url(r'^preview_photo/(?P<pk>\d+)/$', GetCommunityPhoto.as_view()),
+	re_path(r'^preview_photo/(?P<pk>\d+)/$', GetCommunityPhoto.as_view()),
 ]

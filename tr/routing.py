@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
@@ -12,7 +12,7 @@ application = ProtocolTypeRouter({
     "websocket": AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter([
-                url(r"^notify/$", NotificationsConsumer.as_asgi()),
+                re_path(r"^notify/$", NotificationsConsumer.as_asgi()),
                 #url('ws://раса.рус/(?P<username>[^/]+)/$', MessagerConsumer),
             ])
         ),
