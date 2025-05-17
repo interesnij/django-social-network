@@ -93,7 +93,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tr.wsgi.application'
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 DATABASES = {
     'default': {
