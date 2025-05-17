@@ -68,7 +68,7 @@ class PhoneSend(View):
         import json, requests
         from common.model.other import PhoneCodes
 
-        if not request.is_ajax() and request.user.is_authenticated:
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' and request.user.is_authenticated:
             raise Http404
         else:
             phone = self.kwargs["phone"]
