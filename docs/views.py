@@ -111,7 +111,7 @@ class AddDocInList(View):
 class DocRemove(View):
 	def get(self, request, *args, **kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
-		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest') and doc.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and doc.is_user_can_edit_delete_item(request.user):
 			doc.delete_item()
 		return HttpResponse()
 class DocRestore(View):
