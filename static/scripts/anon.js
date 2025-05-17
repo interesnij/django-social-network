@@ -542,7 +542,7 @@ on('#ajax', 'click', '#code_send', function() {
 
               request_2 = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
               request_2.open( 'POST', "/rest-auth/registration/", true );
-              link.setRequestHeader('Content-Type', 'application/json');
+              request_2.setRequestHeader('Content-Type', 'application/json');
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
