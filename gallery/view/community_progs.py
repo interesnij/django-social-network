@@ -14,7 +14,7 @@ class CommunityAddAvatar(View):
     """
     def post(self, request, *args, **kwargs):
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(community.pk):
             photo_input = request.FILES.get('file')
             _list = PhotoList.objects.get(community=community, type=PhotoList.AVATAR)
             photo = Photo.create_photo(creator=request.user, image=photo_input, list=_list, type="PHAVA", community=community)
@@ -31,7 +31,7 @@ class CommunityPhotoDescription(View):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         community = photo.community
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
-        if request.is_ajax() and form_image.is_valid() and request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_image.is_valid() and request.user.is_administrator_of_community(community.pk):
             form_image.save()
             return HttpResponse(form_image.cleaned_data["description"])
         else:
@@ -42,7 +42,7 @@ class CommunityPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.delete_item()
             return HttpResponse()
         else:
@@ -52,7 +52,7 @@ class CommunityPhotoRecover(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.restore_item()
             return HttpResponse()
         else:
@@ -63,7 +63,7 @@ class CommunityOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -74,7 +74,7 @@ class CommunityCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -85,7 +85,7 @@ class CommunityOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.votes_on = False
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -96,7 +96,7 @@ class CommunityOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         community = Community.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user or request.user.is_administrator_of_community(community.pk):
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
             return HttpResponse()

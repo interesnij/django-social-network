@@ -126,7 +126,7 @@ class PostListLoadIncludeUsers(ListView):
 		from posts.models import PostsList
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 			self.list.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 		return HttpResponse()
@@ -179,7 +179,7 @@ class PostListLoadExcludeUsers(ListView):
 		from posts.models import PostsList
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 			self.list.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 		return HttpResponse()
@@ -232,7 +232,7 @@ class PostListLoadIncludeUsers(ListView):
 		from posts.models import PostsList
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.list = PostsList.objects.get(pk=self.kwargs["pk"])
 			self.list.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 		return HttpResponse()

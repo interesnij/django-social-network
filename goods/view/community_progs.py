@@ -11,7 +11,7 @@ from common.templates import render_for_platform
 class CommunityOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -21,7 +21,7 @@ class CommunityOpenCommentGood(View):
 class CommunityCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -31,7 +31,7 @@ class CommunityCloseCommentGood(View):
 class CommunityOffVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.votes_on = False
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -41,7 +41,7 @@ class CommunityOffVotesGood(View):
 class CommunityOnVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user or request.user.is_staff_of_community(good.community.pk):
             good.votes_on = True
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -52,7 +52,7 @@ class CommunityOnVotesGood(View):
 class CommunityHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(good.community.pk):
             good.is_hide = True
             good.save(update_fields=['is_hide'])
             return HttpResponse()
@@ -60,7 +60,7 @@ class CommunityHideGood(View):
 class CommunityUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(good.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(good.community.pk):
             good.is_hide = False
             good.save(update_fields=['is_hide'])
             return HttpResponse()
@@ -71,7 +71,7 @@ class CommunityGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
         c = good.community
-        if request.is_ajax() and request.user.is_administrator_of_community(c.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(c.pk):
             good.delete_item()
             return HttpResponse()
         else:
@@ -81,7 +81,7 @@ class CommunityGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["good_pk"])
         c = good.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(c.pk):
             good.restore_item()
             return HttpResponse()
         else:
@@ -107,7 +107,7 @@ class GoodCommunityCreate(TemplateView):
 
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
-        if request.is_ajax() and self.form.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
             good = self.form.save(commit=False)
             new_good = good.create_good(
                                         title=good.title,
@@ -146,7 +146,7 @@ class GoodCommunityEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["good_pk"])
         self.form = GoodForm(request.POST,request.FILES, instance=self.good)
-        if request.is_ajax() and self.form.is_valid() and request.user.pk.is_administrator_of_community(self.kwargs["pk"]):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and request.user.pk.is_administrator_of_community(self.kwargs["pk"]):
             from common.notify.notify import user_notify
             good = self.form.save(commit=False)
             new_good = self.good.edit_good(

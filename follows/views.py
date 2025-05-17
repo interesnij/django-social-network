@@ -43,7 +43,7 @@ class FollowCreate(View):
 		from common.notify.notify import user_notify
 
 		followed_user = User.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			new_follow = request.user.follow_user(followed_user)
 			user_notify(request.user, None, followed_user.pk, "USE", "u_follow", "CRE")
 			return HttpResponse()
@@ -54,7 +54,7 @@ class FollowView(View):
 	def get(self,request,*args,**kwargs):
 		follow_user = User.objects.get(pk=self.kwargs["pk"])
 		try:
-			if request.is_ajax():
+			if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 				follow = Follow.objects.get(user=follow_user, followed_user=request.user)
 				follow.view = True
 				follow.save(update_fields=['view'])
@@ -67,7 +67,7 @@ class FollowView(View):
 class FollowDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.followed_user = User.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			request.user.unfollow_user(self.followed_user)
 			return HttpResponse()
 		else:
@@ -78,7 +78,7 @@ class CommunityFollowCreate(View):
 		from common.notify.notify import community_notify
 
 		community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			new_follow = request.user.community_follow_user(community)
 			community_notify(request.user, community, None, "no", "c_follow", "CRE")
 			return HttpResponse()
@@ -89,7 +89,7 @@ class CommunityFollowCreate(View):
 class CommunityFollowDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.community = Community.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			request.user.community_unfollow_user(self.community)
 			return HttpResponse("!")
 		else:
@@ -99,7 +99,7 @@ class CommunityFollowView(View):
 	def get(self,request,*args,**kwargs):
 		community, user = Community.objects.get(pk=self.kwargs["pk"]), User.objects.get(uuid=self.kwargs["uuid"])
 		try:
-			if request.is_ajax():
+			if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 				follow = CommunityFollow.objects.get(user=user, community=community)
 				follow.view = True
 				follow.save(update_fields=['view'])

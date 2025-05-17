@@ -72,7 +72,7 @@ class AddSurveyInList(TemplateView):
 
 		list = SurveyList.objects.get(pk=self.kwargs["pk"])
 		self.form = SurveyForm(request.POST,request.FILES)
-		if request.is_ajax() and self.form.is_valid() and list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and list.is_user_can_create_el(request.user.pk):
 			survey = self.form.save(commit=False)
 			answers = request.POST.getlist("answers")
 			if not answers:
@@ -114,7 +114,7 @@ class SurveyEdit(TemplateView):
 
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
 		form = SurveyForm(request.POST, request.FILES, instance=survey)
-		if request.is_ajax() and form.is_valid() and \
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid() and \
 		survey.list.is_user_can_create_el(request.user.pk)\
 		and survey.is_can_edit():
 			survey = form.save(commit=False)
@@ -138,14 +138,14 @@ class SurveyEdit(TemplateView):
 class SurveyDelete(View):
 	def get(self, request, *args, **kwargs):
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and survey.is_user_can_edit_delete_item(request.user):
 			survey.delete_item()
 		return HttpResponse()
 
 class SurveyRecover(View):
 	def get(self, request, *args, **kwargs):
 		survey = Survey.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and survey.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and survey.is_user_can_edit_delete_item(request.user):
 			survey.restore_item()
 		return HttpResponse()
 

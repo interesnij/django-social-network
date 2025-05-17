@@ -23,7 +23,7 @@ class CommunityGeneralView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.form = GeneralCommunityForm(request.POST, instance=self.c)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse()
 		else:
@@ -57,7 +57,7 @@ class CommunitySectionsOpenView(TemplateView):
 
 		if not c.is_user_can_see_settings(request.user.pk):
 			return HttpResponse("Кыш отсюда!")
-		elif not request.is_ajax() or value == 5 or value == 6:
+		elif not request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' or value == 5 or value == 6:
 			return HttpResponse(value)
 
 		if type[:3] == "can":
@@ -123,7 +123,7 @@ class CommunityNotifyPostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_post, self.form = CommunityNotificationsPost.objects.get(community=self.c), CommunityNotifyPostForm(request.POST, instance=self.notify_post)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyPostView,self).post(request,*args,**kwargs)
@@ -148,7 +148,7 @@ class CommunityNotifyPhotoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_photo, self.form = CommunityNotificationsPhoto.objects.get(community=self.c), CommunityNotifyPhotoForm(request.POST, instance=self.notify_photo)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyPhotoView,self).post(request,*args,**kwargs)
@@ -173,7 +173,7 @@ class CommunityNotifyGoodView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_good, self.form = CommunityNotificationsGood.objects.get(community=self.c), CommunityNotifyGoodForm(request.POST, instance=self.notify_good)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyGoodView,self).post(request,*args,**kwargs)
@@ -198,7 +198,7 @@ class CommunityNotifyVideoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_video, self.form = CommunityNotificationsVideo.objects.get(community=self.c), CommunityNotifyVideoForm(request.POST, instance=self.notify_video)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyVideoView,self).post(request,*args,**kwargs)
@@ -223,7 +223,7 @@ class CommunityNotifyMusicView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
 		self.notify_music, self.form = CommunityNotificationsMusic.objects.get(community=self.c), CommunityNotifyMusicForm(request.POST, instance=self.notify_music)
-		if self.form.is_valid() and request.is_ajax() and request.user.is_administrator_of_community(self.c.pk):
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_community(self.c.pk):
 			self.form.save()
 			return HttpResponse ('!')
 		return super(CommunityNotifyMusicView,self).post(request,*args,**kwargs)
@@ -428,7 +428,7 @@ class CommunityPrivateExcludeUsers(ListView):
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.community = Community.objects.get(pk=self.kwargs["pk"])
 			self.community.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
@@ -496,7 +496,7 @@ class CommunityPrivateIncludeUsers(ListView):
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.community = Community.objects.get(pk=self.kwargs["pk"])
 			self.community.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')

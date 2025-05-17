@@ -15,7 +15,7 @@ class UserAddAvatar(View):
     """
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and user == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and user == request.user:
             photo_input = request.FILES.get('file')
             _list = PhotoList.objects.get(creator=user, type=PhotoList.AVATAR, community__isnull=True)
             photo = Photo.create_photo(creator=user, image=photo_input, list=_list, type="PHAVA", community=None)
@@ -28,7 +28,7 @@ class UserAddAvatar(View):
 class PhotoAttachUserCreate(View):
     def post(self, request, *args, **kwargs):
         photos = []
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             list = PhotoList.objects.get(creator=request.user, type="WAL", community=None)
             for p in request.FILES.getlist('file'):
                 photo = Photo.create_photo(creator=request.user, image=p, list=list, type="PHWAL", community=None)
@@ -43,7 +43,7 @@ class UserPhotoDescription(View):
     def post(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["pk"])
         form_image = PhotoDescriptionForm(request.POST, instance=photo)
-        if request.is_ajax() and form_image.is_valid() and photo.creator.pk == request.user.pk:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_image.is_valid() and photo.creator.pk == request.user.pk:
             form_image.save()
             return HttpResponse(form_image.cleaned_data["description"])
         else:
@@ -54,7 +54,7 @@ class UserPhotoDelete(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.delete_item()
             return HttpResponse()
         else:
@@ -64,7 +64,7 @@ class UserPhotoRecover(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.restore_item()
             return HttpResponse()
         else:
@@ -74,7 +74,7 @@ class UserOpenCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.comments_enabled = True
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -85,7 +85,7 @@ class UserCloseCommentPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.comments_enabled = False
             photo.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -96,7 +96,7 @@ class UserOffVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.votes_on = False
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -107,7 +107,7 @@ class UserOnVotesPhoto(View):
     def get(self,request,*args,**kwargs):
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
         user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and photo.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and photo.creator == request.user:
             photo.votes_on = True
             photo.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -119,7 +119,7 @@ class UserRemoveAvatarPhoto(View):
     def get(self,request,*args,**kwargs):
         user = User.objects.get(pk=self.kwargs["pk"])
         photo = Photo.objects.get(pk=self.kwargs["photo_pk"])
-        if request.is_ajax() and user.pk == request.user.pk:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and user.pk == request.user.pk:
             photo.list = None
             list = PhotoList.objects.get(creator=user, community__isnull=True, type=PhotoList.AVATAR)
             photo.list = list

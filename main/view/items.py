@@ -1,14 +1,15 @@
 from django.views.generic import ListView
 from users.models import User
+from django.http import Http404
 from common.templates import (
 								get_template_community_item,
 								get_template_anon_community_item,
 								get_template_user_item,
 								get_template_anon_user_item,
-								get_template_community_list,
-								get_template_anon_community_list,
-								get_template_user_list,
-								get_template_anon_user_list,
+								#get_template_community_list,
+								#get_template_anon_community_list,
+								#get_template_user_list,
+								#get_template_anon_user_list,
 							)
 
 
@@ -24,7 +25,7 @@ class ItemLikes(ListView):
 			raise Http404
 		if request.user.is_authenticated:
 			if not self.item.list.is_user_can_see_el(request.user.pk):
-				raise Http40
+				raise Http404
 			if self.item.community:
 				self.template_name = get_template_community_item(self.item, "generic/items/comment/", "likes.html", request.user, request.META['HTTP_USER_AGENT'])
 			else:

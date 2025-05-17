@@ -38,7 +38,7 @@ class SendManagerMessages(TemplateView):
 
         form = MessageForm(request.POST, request.FILES)
 
-        if request.is_ajax() and form.is_valid() and request.user.is_administrator():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid() and request.user.is_administrator():
             from chat.models import Message
 
             form_post = form.save(commit=False)
@@ -107,7 +107,7 @@ class SanctionItemCreate(TemplateView):
             return HttpResponseBadRequest()
 
         form = ModeratedForm(request.POST)
-        if request.is_ajax() and form.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid():
             mod = form.save(commit=False)
             case = request.POST.get('case')
             item = list[0]
@@ -164,7 +164,7 @@ class SanctionItemDelete(View):
         if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
             return HttpResponseBadRequest()
 
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             item = list[0]
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             if item.type[:4] == "_CLO":
@@ -204,7 +204,7 @@ class RejectedItemClaims(View):
         if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
             return HttpResponseBadRequest()
 
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             item = list[0]
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.reject_moderation(manager_id=request.user.pk)
@@ -227,7 +227,7 @@ class UnverifyItemCreate(View):
         if (list[2] and request.user.is_administrator()) or not request.user.is_moderator():
             return HttpResponseBadRequest()
 
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             item = list[0]
             moderate_obj = Moderated.objects.get(object_id=item.pk, type=list[1])
             moderate_obj.unverify_moderation(item, manager_id=request.user.pk)

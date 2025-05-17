@@ -23,7 +23,7 @@ def repost_message_send(obj, type, attach, request):
 
     form_post = PostForm(request.POST)
     count = 0
-    if request.is_ajax() and form_post.is_valid():
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
         post = form_post.save(commit=False)
 
         if type[:3] == "pos":

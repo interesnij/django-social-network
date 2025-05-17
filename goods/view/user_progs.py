@@ -13,7 +13,7 @@ from common.templates import get_settings_template, render_for_platform, get_det
 class UserGoodDelete(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.delete_item()
             return HttpResponse()
         else:
@@ -22,7 +22,7 @@ class UserGoodDelete(View):
 class UserGoodRecover(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.restore_item()
             return HttpResponse()
         else:
@@ -31,7 +31,7 @@ class UserGoodRecover(View):
 class UserOpenCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.comments_enabled = True
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -41,7 +41,7 @@ class UserOpenCommentGood(View):
 class UserCloseCommentGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.comments_enabled = False
             good.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -51,7 +51,7 @@ class UserCloseCommentGood(View):
 class UserOffVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.votes_on = False
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -61,7 +61,7 @@ class UserOffVotesGood(View):
 class UserOnVotesGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.votes_on = True
             good.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -71,7 +71,7 @@ class UserOnVotesGood(View):
 class UserUnHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.type = Good.PUBLISHED
             good.save(update_fields=['type'])
             return HttpResponse()
@@ -81,7 +81,7 @@ class UserUnHideGood(View):
 class UserHideGood(View):
     def get(self,request,*args,**kwargs):
         good = Good.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and good.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and good.creator == request.user:
             good.type = Good.DRAFT
             good.save(update_fields=['type'])
             return HttpResponse()
@@ -106,7 +106,7 @@ class GoodUserCreate(TemplateView):
     def post(self,request,*args,**kwargs):
         self.form = GoodForm(request.POST,request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
             from common.notify.notify import user_notify
 
             good = self.form.save(commit=False)
@@ -145,7 +145,7 @@ class GoodUserEdit(TemplateView):
     def post(self,request,*args,**kwargs):
         self.good = Good.objects.get(pk=self.kwargs["pk"])
         self.form = GoodForm(request.POST,request.FILES, instance=self.good)
-        if request.is_ajax() and self.form.is_valid() and request.user.pk == self.good.pk:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and request.user.pk == self.good.pk:
             from common.notify.notify import user_notify
             good = self.form.save(commit=False)
             new_good = self.good.edit_good(

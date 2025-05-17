@@ -83,7 +83,7 @@ class AddDocInList(View):
 		from tinytag import TinyTag
 
 		list = DocsList.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			docs, order, count = [], list.count, 0
 			for file in request.FILES.getlist('file'):
 				count += 1
@@ -111,13 +111,13 @@ class AddDocInList(View):
 class DocRemove(View):
 	def get(self, request, *args, **kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest') and doc.is_user_can_edit_delete_item(request.user):
 			doc.delete_item()
 		return HttpResponse()
 class DocRestore(View):
 	def get(self,request,*args,**kwargs):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and doc.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and doc.is_user_can_edit_delete_item(request.user):
 			doc.restore_item()
 		return HttpResponse()
 
@@ -143,7 +143,7 @@ class DocEdit(TemplateView):
 		doc = Doc.objects.get(pk=self.kwargs["pk"])
 		form_post = DocForm(request.POST, instance=doc)
 
-		if request.is_ajax() and form_post.is_valid() and doc.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and doc.is_user_can_edit_delete_item(request.user):
 			_doc = form_post.save(commit=False)
 			doc.title = _doc.title
 			doc.type_2 = _doc.type_2

@@ -21,7 +21,7 @@ class PostCommunityCreate(View):
         else:
             can_create = list.is_user_can_create_el(request.user.pk)
 
-        if request.is_ajax() and form_post.is_valid() and can_create:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and can_create:
             post = form_post.save(commit=False)
 
             if request.POST.get('text') or request.POST.get('attach_items'):
@@ -65,7 +65,7 @@ class CommunitySaveCreatorDraftPost(View):
         community = list.community
 
         check_private_post_exists(community)
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             new_post = post.create_creator_draft_post(
@@ -92,7 +92,7 @@ class CommunitySaveOfferDraftPost(View):
         community = list.community
 
         check_private_post_exists(community)
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             new_post = post.create_creator_offer_post(
@@ -135,7 +135,7 @@ class PostCommunityEdit(TemplateView):
         community_pk = _post.community.pk
         form_post, attach = PostForm(request.POST, instance=_post), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid() and request.user.is_administrator_of_community(community_pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and request.user.is_administrator_of_community(community_pk):
             post = form_post.save(commit=False)
             if post.text or attach:
                 from common.templates import render_for_platform
@@ -160,7 +160,7 @@ class PostOfferCommunityCreate(View):
             raise Http404
         elif community.is_staff_post_member_can() and not request.user.is_member_of_community(community.pk):
             raise Http404
-        elif request.is_ajax() and form_post.is_valid():
+        elif request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             check_can_get_lists(request.user, community)
             post = form_post.save(commit=False)
             if request.POST.get('text') or request.POST.getlist('attach_items'):
@@ -184,7 +184,7 @@ class PostOfferCommunityCreate(View):
 class PostCommunityFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(post.community.pk):
             post.fixed_post(post.community)
             return HttpResponse()
         else:
@@ -193,7 +193,7 @@ class PostCommunityFixed(View):
 class PostCommunityUnFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(post.community.pk):
             post.unfixed_post()
             return HttpResponse()
         else:
@@ -202,7 +202,7 @@ class PostCommunityUnFixed(View):
 class PostCommunityOffComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(item.community.pk):
             item.comments_enabled = False
             item.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -212,7 +212,7 @@ class PostCommunityOffComment(View):
 class PostCommunityOnComment(View):
     def get(self,request,*args,**kwargs):
         item = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(item.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(item.community.pk):
             item.comments_enabled = True
             item.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -223,7 +223,7 @@ class PostCommunityDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(c.pk):
             post.delete_item()
             return HttpResponse()
         else:
@@ -233,7 +233,7 @@ class PostCommunityRecover(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
         c = post.community
-        if request.is_ajax() and request.user.is_staff_of_community(c.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(c.pk):
             post.restore_item()
             return HttpResponse()
         else:
@@ -242,7 +242,7 @@ class PostCommunityRecover(View):
 class CommunityOnVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(post.community.pk):
             post.votes_on = True
             post.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -252,7 +252,7 @@ class CommunityOnVotesPost(View):
 class CommunityOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.is_staff_of_community(post.community.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_staff_of_community(post.community.pk):
             post.votes_on = False
             post.save(update_fields=['votes_on'])
             return HttpResponse()

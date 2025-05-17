@@ -11,7 +11,7 @@ class PostUserCreate(View):
     def post(self,request,*args,**kwargs):
         form_post, list, attach = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and list.is_user_can_create_el(request.user.pk):
             post = form_post.save(commit=False)
             creator = request.user
             if post.text or attach:
@@ -50,7 +50,7 @@ class UserSaveCreatorDraftPost(View):
     def post(self,request,*args,**kwargs):
         form_post, list = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             post = form_post.save(commit=False)
             new_post = post.create_creator_draft_post(
                                         creator=request.user,
@@ -69,7 +69,7 @@ class UserSaveOfferDraftPost(View):
     def post(self,request,*args,**kwargs):
         form_post, list = PostForm(request.POST), PostsList.objects.get(pk=self.kwargs["pk"])
 
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             post = form_post.save(commit=False)
             new_post = post.create_offer_draft_post(
                                         creator=request.user,
@@ -106,7 +106,7 @@ class PostUserEdit(TemplateView):
         post = Post.objects.get(pk=self.kwargs["pk"])
         form_post, attach = PostForm(request.POST, instance=post), request.POST.getlist('attach_items')
 
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             post = form_post.save(commit=False)
             if post.text or attach:
                 from common.templates import render_for_platform
@@ -128,7 +128,7 @@ class PostUserEdit(TemplateView):
 class PostUserFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user == post.creator:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user == post.creator:
             post.fixed_post(post.creator)
             return HttpResponse()
         else:
@@ -137,7 +137,7 @@ class PostUserFixed(View):
 class PostUserUnFixed(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user == post.creator:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user == post.creator:
             post.unfixed_post()
             return HttpResponse()
         else:
@@ -147,7 +147,7 @@ class PostUserUnFixed(View):
 class PostUserOffComment(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user == post.creator and request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user == post.creator:
             post.comments_enabled = False
             post.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -157,7 +157,7 @@ class PostUserOffComment(View):
 class PostUserOnComment(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user == post.creator and request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user == post.creator:
             post.comments_enabled = True
             post.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -167,7 +167,7 @@ class PostUserOnComment(View):
 class PostUserDelete(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == post.creator.pk:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk == post.creator.pk:
             post.delete_item()
             return HttpResponse()
         else:
@@ -176,7 +176,7 @@ class PostUserDelete(View):
 class PostUserRecover(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and request.user.pk == post.creator.pk:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk == post.creator.pk:
             post.restore_item()
             return HttpResponse()
         else:
@@ -186,7 +186,7 @@ class PostUserRecover(View):
 class UserOnVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and post.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and post.creator == request.user:
             post.votes_on = True
             post.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -196,7 +196,7 @@ class UserOnVotesPost(View):
 class UserOffVotesPost(View):
     def get(self,request,*args,**kwargs):
         post = Post.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and post.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and post.creator == request.user:
             post.votes_on = False
             post.save(update_fields=['votes_on'])
             return HttpResponse()

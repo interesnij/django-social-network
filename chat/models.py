@@ -2,9 +2,9 @@ import uuid
 from django.conf import settings
 from django.db import models
 from common.utils import try_except
-from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
+#from pilkit.processors import ResizeToFill, ResizeToFit, Transpose
 from chat.helpers import upload_to_chat_directory, validate_file_extension
-from imagekit.models import ProcessedImageField
+#from imagekit.models import ProcessedImageField
 from django.contrib.postgres.indexes import BrinIndex
 from django.db.models import Q
 from common.model.other import Stickers

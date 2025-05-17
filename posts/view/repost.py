@@ -1,9 +1,22 @@
+from django.http import HttpResponseBadRequest
+from django.http import HttpResponse
+from common.templates import (
+								get_template_community_item,
+								get_template_anon_community_item,
+								get_template_user_item,
+								get_template_anon_user_item,
+								#get_template_community_list,
+								#get_template_anon_community_list,
+								#get_template_user_list,
+								#get_template_anon_user_list,
+							)
+
 
 class UUPostCopy(View):
     def post(self, request, *args, **kwargs):
         parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
 
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             if parent.creator.pk != request.user.pk:
                 check_user_can_get_list(request.user, parent.creator)
             for list_pk in lists:
@@ -23,7 +36,7 @@ class UUPostCopy(View):
 class CUPostCopy(View):
     def post(self, request, *args, **kwargs):
         parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             check_can_get_lists(request.user, list.community)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)
@@ -44,7 +57,7 @@ class CUPostCopy(View):
 class UCPostCopy(View):
     def post(self, request, *args, **kwargs):
         parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             if parent.creator.pk != request.user.pk:
                 check_user_can_get_list(request.user, parent.creator)
             for list_pk in lists:
@@ -66,7 +79,7 @@ class UCPostCopy(View):
 class CCPostCopy(View):
     def post(self, request, *args, **kwargs):
         parent, lists, count = Post.objects.get(pk=self.kwargs["pk"]), request.POST.getlist('lists'), 0
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             check_can_get_lists(request.user, list.community)
             for list_pk in lists:
                 post_list = PostsList.objects.get(pk=list_pk)

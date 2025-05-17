@@ -30,7 +30,7 @@ class UserInfoChange(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		self.form = InfoUserForm(request.POST,instance=request.user)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ('')
 		return super(UserInfoChange,self).post(request,*args,**kwargs)
@@ -71,7 +71,7 @@ class UserNotifyView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify = UserNotifications.objects.get(user=request.user)
 		self.form = UserNotifyForm(request.POST, instance=self.notify)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ()
 
@@ -98,7 +98,7 @@ class UserNotifyPostView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify_post = UserNotificationsPost.objects.get(user=request.user)
 		self.form = UserNotifyPostForm(request.POST, instance=self.notify_post)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ()
 
@@ -126,7 +126,7 @@ class UserNotifyPhotoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify_photo = UserNotificationsPhoto.objects.get(user=request.user)
 		self.form = UserNotifyPhotoForm(request.POST, instance=self.notify_photo)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ()
 
@@ -154,7 +154,7 @@ class UserNotifyGoodView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify_good = UserNotificationsGood.objects.get(user=request.user)
 		self.form = UserNotifyGoodForm(request.POST, instance=self.notify_good)
-		if request.is_ajax() and self.form.is_valid() and request.user == request.user:
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and request.user == request.user:
 			self.form.save()
 			return HttpResponse ()
 
@@ -182,7 +182,7 @@ class UserNotifyVideoView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify_video = UserNotificationsVideo.objects.get(user=request.user)
 		self.form = UserNotifyVideoForm(request.POST, instance=self.notify_video)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ()
 
@@ -209,7 +209,7 @@ class UserNotifyMusicView(TemplateView):
 	def post(self,request,*args,**kwargs):
 		self.notify_music = UserNotificationsMusic.objects.get(user=request.user)
 		self.form = UserNotifyMusicForm(request.POST, instance=self.notify_music)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse ()
 		return super(UserNotifyMusicView,self).post(request,*args,**kwargs)
@@ -236,7 +236,7 @@ class UserPrivateView(TemplateView):
 			private = ProfilePrivate.objects.create(user=request.user)
 		type = request.GET.get("action")
 		value = request.GET.get("value")
-		if not request.is_ajax() or value == 17 or value == 18:
+		if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' or value == 17 or value == 18:
 			return HttpResponse(value)
 		if type[:3] == "can":
 			if type == "can_see_community":
@@ -295,7 +295,7 @@ class UserEditName(TemplateView):
 		from users.forms import UserNameForm
 
 		self.form = UserNameForm(request.POST,instance=request.user)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
 		return super(UserEditName,self).post(request,*args,**kwargs)
@@ -317,7 +317,7 @@ class UserEditPassword(TemplateView):
 		from users.forms import UserPasswordForm
 
 		self.form = UserPasswordForm(request.POST,instance=request.user)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
 		return super(UserEditPassword,self).post(request,*args,**kwargs)
@@ -339,7 +339,7 @@ class UserEditEmail(TemplateView):
 		from users.forms import UserEmailForm
 
 		self.form = UserEmailForm(request.POST,instance=request.user)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
 		return super(UserEditEmail,self).post(request,*args,**kwargs)
@@ -361,7 +361,7 @@ class UserEditPhone(TemplateView):
 		from users.forms import UserPhoneForm
 
 		self.form = UserPhoneForm(request.POST,instance=request.user)
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			self.form.save()
 			return HttpResponse()
 		return super(UserEditPhone,self).post(request,*args,**kwargs)
@@ -375,7 +375,7 @@ class UserEditLink(TemplateView):
 
 	def post(self,request,*args,**kwargs):
 		from common.model.other import CustomLink
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			link = request.POST.get('link')
 			if CustomLink.objects.filter(link=link).exists():
 				return HttpResponse()
@@ -410,7 +410,7 @@ class UserRemoveProfile(TemplateView):
 		from users.forms import UserDeletedForm
 
 		self.form = UserDeletedForm(request.POST)
-		if request.is_ajax() or self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' or self.form.is_valid():
 			request.user.type = User.DELETED
 			request.user.save(update_fields=['type'])
 			post = self.form.save(commit=False)
@@ -475,7 +475,7 @@ class UserPrivateExcludeUsers(ListView):
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			request.user.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
 		return HttpResponse('not ok')
@@ -537,7 +537,7 @@ class UserPrivateIncludeUsers(ListView):
 	def post(self,request,*args,**kwargs):
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			request.user.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')
 		return HttpResponse('not ok')

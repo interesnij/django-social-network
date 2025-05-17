@@ -96,7 +96,7 @@ class VideoCreate(TemplateView):
 		import json
 
 		list = VideoList.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			file = request.FILES.get('file')
 			uri = request.POST.get('uri')
 
@@ -157,7 +157,7 @@ class VideoEdit(TemplateView):
 
 		video = Video.objects.get(pk=request.POST.get("pk"))
 		form_post = VideoForm(request.POST, request.FILES, instance=video)
-		if request.is_ajax() and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and video.list.is_user_can_create_el(request.user.pk):
 			_video = form_post.save(commit=False)
 			if video.type == Video.UPLOAD:
 				if video.community:

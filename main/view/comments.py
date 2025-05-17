@@ -1,14 +1,15 @@
 from django.views.generic import ListView
 from users.models import User
+from django.http import Http404
 from common.templates import (
 								get_template_community_item,
 								get_template_anon_community_item,
 								get_template_user_item,
 								get_template_anon_user_item,
-								get_template_community_list,
-								get_template_anon_community_list,
-								get_template_user_list,
-								get_template_anon_user_list,
+								#get_template_community_list,
+								#get_template_anon_community_list,
+								#get_template_user_list,
+								#get_template_anon_user_list,
 							)
 
 class ItemCommentList(ListView):
@@ -22,7 +23,7 @@ class ItemCommentList(ListView):
 		self.item = get_item_with_comments(self.type)
 		self.prefix = self.type[:3]
 		self.template_name = get_template_comments(self.item, "generic/items/comment/", "comments.html", request.user, request.META['HTTP_USER_AGENT'])
-		if not request.is_ajax() or not self.item.comments_enabled:
+		if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' or not self.item.comments_enabled:
 			raise Http404
 		return super(ItemCommentList,self).get(request,*args,**kwargs)
 

@@ -107,7 +107,7 @@ class AddTrackInList(View):
 		from tinytag import TinyTag
 
 		list = MusicList.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			tracks, order, count = [], list.count, 0
 			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
@@ -141,14 +141,14 @@ class AddTrackInList(View):
 class TrackRemove(View):
 	def get(self, request, *args, **kwargs):
 		track = Music.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and track.is_user_can_edit_delete_item(request.user):
 			track.delete_item()
 		return HttpResponse()
 
 class TrackRestore(View):
 	def get(self,request,*args,**kwargs):
 		track = Music.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and track.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and track.is_user_can_edit_delete_item(request.user):
 			track.restore_item()
 		return HttpResponse()
 
@@ -174,7 +174,7 @@ class TrackEdit(TemplateView):
 		track = Music.objects.get(pk=self.kwargs["pk"])
 		form_post = EditTrackForm(request.POST, instance=track)
 
-		if request.is_ajax() and form_post.is_valid() and track.is_user_can_edit_delete_item(request.user):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid() and track.is_user_can_edit_delete_item(request.user):
 			_track = form_post.save(commit=False)
 			track.title=_track.title
 			track.save(update_fields=["title"])

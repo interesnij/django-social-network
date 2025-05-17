@@ -18,7 +18,7 @@ class TempListOn(View):
             my_list = UserTempMusicList.objects.get(user=request.user)
         except:
             my_list = UserTempMusicList.objects.create(user=request.user)
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             my_list.tag = None
             my_list.genre = None
             my_list.list = list
@@ -37,7 +37,7 @@ class TempGenreOn(View):
             temp_genre = UserTempMusicList.objects.get(user=request.user)
         except:
             temp_genre = UserTempMusicList.objects.create(user=request.user)
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             temp_genre.list = None
             temp_genre.genre = genre
             temp_genre.tag = None

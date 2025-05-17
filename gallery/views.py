@@ -191,7 +191,7 @@ class AddPhotosInList(View):
 		from common.templates import render_for_platform
 
 		list = PhotoList.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and list.is_user_can_create_el(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			photos = []
 			uploaded_file = request.FILES['file']
 			for p in request.FILES.getlist('file'):

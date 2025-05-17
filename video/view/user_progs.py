@@ -12,7 +12,7 @@ from common.templates import get_settings_template, render_for_platform
 class UserVideoDelete(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.delete_item()
             return HttpResponse()
         else:
@@ -21,7 +21,7 @@ class UserVideoDelete(View):
 class UserVideoRecover(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.restore_item()
             return HttpResponse()
         else:
@@ -30,7 +30,7 @@ class UserVideoRecover(View):
 class UserOpenCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.comments_enabled = True
             video.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -40,7 +40,7 @@ class UserOpenCommentVideo(View):
 class UserCloseCommentVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.comments_enabled = False
             video.save(update_fields=['comments_enabled'])
             return HttpResponse()
@@ -50,7 +50,7 @@ class UserCloseCommentVideo(View):
 class UserOffVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.votes_on = False
             video.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -60,7 +60,7 @@ class UserOffVotesVideo(View):
 class UserOnVotesVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.votes_on = True
             video.save(update_fields=['votes_on'])
             return HttpResponse()
@@ -70,7 +70,7 @@ class UserOnVotesVideo(View):
 class UserOnPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.make_private()
             return HttpResponse()
         else:
@@ -79,7 +79,7 @@ class UserOnPrivateVideo(View):
 class UserOffPrivateVideo(View):
     def get(self,request,*args,**kwargs):
         video = Video.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and video.creator == request.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and video.creator == request.user:
             video.make_publish()
             return HttpResponse()
         else:
@@ -105,7 +105,7 @@ class UserVideoCreate(TemplateView):
 
         self.form_post = VideoForm(request.POST, request.FILES)
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax() and self.form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form_post.is_valid():
             video = self.form_post.save(commit=False)
             new_video = video.create_video(creator=request.user,image=video.image, title=video.title,file=video.file,uri=video.uri,description=video.description,list=video.list,comments_enabled=video.comments_enabled,votes_on=video.votes_on,community=None)
             return render_for_platform(request, 'video/video_new/video.html',{'object': new_video})
@@ -131,7 +131,7 @@ class UserVideoEdit(TemplateView):
         self.video = Video.objects.get(pk=self.kwargs["pk"])
         self.form = VideoForm(request.POST,request.FILES, instance=self.video)
 
-        if request.is_ajax() and self.form.is_valid() and request.user == self.user:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and request.user == self.user:
             video = self.form.save(commit=False)
             new_video = video.edit_video(
                                         title=new_video.title,

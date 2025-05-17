@@ -1,5 +1,5 @@
 from rest_framework.exceptions import PermissionDenied
-
+from rest_framework.exceptions import ValidationError
 
 def check_user_is_staff(user, community_pk):
     if not user.is_staff_of_community(community_pk):

@@ -2,7 +2,7 @@ from django.views.generic.base import TemplateView
 from users.models import User
 from gallery.models import PhotoList, Photo
 from django.views.generic import ListView
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.http import Http404
 from django.views import View
 from gallery.forms import PhotoDescriptionForm
 from common.templates import get_detect_platform_template
@@ -35,7 +35,7 @@ class GetUserPhoto(TemplateView):
 
     def get(self,request,*args,**kwargs):
         self.photo = Photo.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             self.template_name = get_detect_platform_template("gallery/u_photo/preview/my_photo.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404

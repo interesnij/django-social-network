@@ -3,19 +3,20 @@ from users.models import User
 from django.http import HttpResponse
 from django.http import Http404
 from common.templates import render_for_platform, get_detect_platform_template
+from django.http import HttpResponseBadRequest
 
 
 class UserBanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             request.user.block_user_with_pk(self.user.pk)
             return HttpResponse()
 
 class UserUnbanCreate(View):
     def get(self,request,*args,**kwargs):
         self.user = User.objects.get(pk=self.kwargs["pk"])
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             request.user.unblock_user_with_pk(self.user.pk)
             return HttpResponse()
         else:
@@ -25,7 +26,7 @@ class UserColorChange(View):
     def get(self,request,*args,**kwargs):
         from users.model.settings import UserColorSettings
 
-        if not request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest':
             raise Http404
         try:
             model = UserColorSettings.objects.get(user=request.user)
@@ -44,7 +45,7 @@ class PhoneVerify(View):
     def get(self,request,*args,**kwargs):
         from common.model.other import PhoneCodes
 
-        if not request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest':
             raise Http404
         code = self.kwargs["code"]
         phone = self.kwargs["phone"]
@@ -100,7 +101,7 @@ class CommentUserCreate(View):
         type = request.POST.get('item')
         form_post, item = CommentForm(request.POST), get_item_with_comments(type)
 
-        if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment = form_post.save(commit=False)
 
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
@@ -129,7 +130,7 @@ class ReplyUserCreate(View):
         form_post, parent = CommentForm(request.POST), get_comment(type)
         item = parent.get_item()
 
-        if request.is_ajax() and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and item.list.is_user_can_create_comment(request.user.pk) and form_post.is_valid() and item.comments_enabled:
             comment=form_post.save(commit=False)
             if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
                 from common.templates import render_for_platform
@@ -151,7 +152,7 @@ class CommentLikeCreate(View):
 
         type = request.GET.get('type')
         comment = get_comment(type)
-        if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_like(request.user, None)
 
@@ -161,7 +162,7 @@ class CommentDislikeCreate(View):
 
         type = request.GET.get('type')
         comment = get_comment(type)
-        if not request.is_ajax() and comment.get_item().list.is_user_can_see_comment(request.user.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' and comment.get_item().list.is_user_can_see_comment(request.user.pk):
             raise Http404
         return comment.send_dislike(request.user, None)
 
@@ -172,7 +173,7 @@ class ItemLikeCreate(View):
 
         type = request.GET.get('type')
         item = get_item_with_comments(type)
-        if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' and item.list.is_user_can_see_el(request.user.pk):
             raise Http404
         return item.send_like(request.user, None)
 
@@ -182,7 +183,7 @@ class ItemDislikeCreate(View):
 
         type = request.GET.get('type')
         item = get_item_with_comments(type)
-        if not request.is_ajax() and item.list.is_user_can_see_el(request.user.pk):
+        if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest' and item.list.is_user_can_see_el(request.user.pk):
             raise Http404
         return item.send_dislike(request.user, None)
 
@@ -218,7 +219,7 @@ class CommentEdit(TemplateView):
         form = CommentForm(request.POST,instance=comment)
         list = comment.get_item().list
 
-        if request.is_ajax() and form.is_valid() and list.is_user_can_create_comment(request.user.pk) \
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid() and list.is_user_can_create_comment(request.user.pk) \
         and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
             from common.templates import render_for_platform
             from common.processing_2 import get_text_processing
@@ -253,7 +254,7 @@ class CommentDelete(View):
         comment = get_comment(type)
         list = comment.get_item().list
 
-        if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_comment(request.user.pk) \
         and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
             comment.delete_item()
             return HttpResponse()
@@ -267,7 +268,7 @@ class CommentRecover(View):
         comment = get_comment(type)
         list = comment.get_item().list
 
-        if request.is_ajax() and list.is_user_can_create_comment(request.user.pk) \
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_comment(request.user.pk) \
         and (list.creator.pk == request.user.pk or comment.commenter.pk == request.user.pk):
             comment.restore_item()
             return HttpResponse()
@@ -278,7 +279,7 @@ class ListDelete(View):
         from common.utils import get_list_of_type
 
         list = get_list_of_type(request.GET.get('type'))
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             if list.community and not request.user.pk in list.community.get_administrators_ids():
                 return HttpResponse()
             elif not request.user.pk == list.creator.pk:
@@ -291,7 +292,7 @@ class ListRecover(View):
         from common.utils import get_list_of_type
 
         list = get_list_of_type(request.GET.get('type'))
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             if list.community and not request.user.pk in list.community.get_administrators_ids():
                 return HttpResponse()
             elif not request.user.pk == list.creator.pk:
@@ -415,7 +416,7 @@ class RepostCreate(TemplateView):
                 item, t, i =  Community.objects.get(pk=type[3:]), "COM", "community"
 
         form_post, attach, lists, chat_items, count, creator = PostForm(request.POST), request.POST.getlist('attach_items'), request.POST.getlist('lists'), request.POST.getlist('chat_items'), 0, request.user
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             if case == 3 and item.community:
                 check_can_get_lists(request.user, item.community)
             elif case == 3 and item.creator.pk != request.user.pk:
@@ -641,7 +642,7 @@ class ClaimCreate(TemplateView):
                 item, t =  Survey.objects.get(pk=_type[3:]), "FOR"
 
         form_post = ReportForm(request.POST)
-        if request.is_ajax() and form_post.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form_post.is_valid():
             post = form_post.save(commit=False)
             ModerationReport.create_moderation_report(reporter_id=request.user.pk, _type=t, object_id=item.pk, description=post.description, type=post.type)
             return HttpResponse()
@@ -736,7 +737,7 @@ class ListCreate(TemplateView):
             from docs.forms import DocListForm
             form = DocListForm(request.POST)
 
-        if request.is_ajax() and form.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid():
             from common.templates import render_for_platform
 
             list = form.save(commit=False)
@@ -1003,7 +1004,7 @@ class ListEdit(TemplateView):
             from docs.forms import DocListForm
             form = DocListForm(request.POST)
 
-        if request.is_ajax() and form.is_valid():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and form.is_valid():
             list = form.save(commit=False)
             if type[:3] == "lpo":
                 new_list = _list.edit_list(
@@ -1172,7 +1173,7 @@ class CopyCreate(View):
 
         type, lists, user_communities = request.POST.get('type'), request.POST.getlist('lists'), request.POST.getlist('u_c')
         lists = request.POST.getlist('lists')
-        if request.is_ajax():
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 
             if lists:
                 if type[:3] == "pos":

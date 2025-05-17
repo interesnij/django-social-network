@@ -42,7 +42,7 @@ class CreateUserChat(TemplateView):
 		from chat.forms import ChatForm
 
 		self.form = ChatForm(request.POST)
-		if self.form.is_valid() and request.is_ajax():
+		if self.form.is_valid() and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			new_chat = self.form.save(commit=False)
 			new_chat.creator = request.user
 			new_chat = self.form.save()
@@ -92,7 +92,7 @@ class UserSendPageMessage(TemplateView):
 		self.form, self.user, connections = MessageForm(request.POST), User.objects.get(pk=self.kwargs["pk"]), request.POST.getlist("chat_items")
 		check_user_can_get_list(request.user, self.user)
 
-		if request.is_ajax() and self.form.is_valid():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid():
 			message = self.form.save(commit=False)
 			if request.POST.get('text') or request.POST.get('attach_items') or request.POST.get('sticker'):
 				if connections:
@@ -178,7 +178,7 @@ class UserSendVoiceMessage(View):
 		from chat.forms import MessageForm
 
 		chat, form_post = Chat.objects.get(pk=self.kwargs["pk"]), MessageForm(request.POST, request.FILES)
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			import json
 			from django.http import HttpResponse
 			from datetime import datetime
@@ -231,7 +231,7 @@ class UserMessageEdit(TemplateView):
 		from common.templates import render_for_platform
 
 		_message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			if request.POST.get('text') or request.POST.get('attach_items'):
 				_message.edit_message(text=request.POST.get('text'), attach=request.POST.getlist('attach_items'))
 			return render_for_platform(request, 'chat/message/new_edit_message.html', {'object': _message})
@@ -247,7 +247,7 @@ class UserMessageFixed(View):
 		from common.templates import render_for_platform
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.fixed_message_for_user_chat(request.user)
 			return render_for_platform(request, 'chat/message/info_message.html', {'object': info_message})
 		raise Http404
@@ -258,7 +258,7 @@ class UserMessageUnFixed(View):
 		from django.http import Http404, HttpResponse
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and message.chat.is_user_can_fix_item(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and message.chat.is_user_can_fix_item(request.user.pk):
 			info_message = message.unfixed_message_for_user_chat(request.user)
 			return HttpResponse()
 		raise Http404
@@ -269,7 +269,7 @@ class UserMessagesFavorite(View):
 		from django.http import HttpResponse, Http404
 		from chat.models import Message
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			Message.add_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
 		raise Http404
@@ -279,7 +279,7 @@ class UserMessagesUnFavorite(View):
 		from django.http import HttpResponse, Http404
 		from chat.models import Message
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			Message.remove_favourite_messages(request.user.pk, request.GET.get("list"))
 			return HttpResponse()
 		raise Http404
@@ -291,7 +291,7 @@ class UserMessageDelete(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk in message.chat.get_members_ids():
 			message.delete_item(request.user.pk, None)
 			return HttpResponse()
 		raise Http404
@@ -302,7 +302,7 @@ class UserMessageRecover(View):
 		from django.http import HttpResponse, Http404
 
 		message = Message.objects.get(uuid=self.kwargs["uuid"])
-		if request.is_ajax() and request.user.pk in message.chat.get_members_ids():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk in message.chat.get_members_ids():
 			message.restore_item(request.user.pk, None)
 			return HttpResponse()
 		raise Http404
@@ -314,7 +314,7 @@ class PhotoAttachInChatUserCreate(View):
 		from common.templates import render_for_platform
 
 		photos = []
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			for p in request.FILES.getlist('file'):
 				photo = Photo.objects.create(creator=request.user, preview=p,file=p, type="_MES")
 				photos += [photo,]
@@ -329,7 +329,7 @@ class UserChatMemberDelete(View):
 		from django.http import HttpResponse
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
-		if request.is_ajax() and chat.creator == request.user:
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and chat.creator == request.user:
 			chat.delete_member(user=user, creator=request.user)
 			return HttpResponse()
 		raise Http404
@@ -340,7 +340,7 @@ class ExitUserFromUserChat(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user.pk in chat.get_members_ids():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk in chat.get_members_ids():
 			chat.exit_member(user=request.user)
 			return HttpResponse()
 		raise Http404
@@ -351,7 +351,7 @@ class DeleteSupportChat(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user.pk in chat.get_members_ids():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk in chat.get_members_ids():
 			chat.delete_support_chat(request.user.pk)
 			return HttpResponse()
 		raise Http404
@@ -361,7 +361,7 @@ class RefreshSupportChat(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user.pk in chat.get_members_ids():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.pk in chat.get_members_ids():
 			chat.restore_support_chat(request.user.pk)
 			return HttpResponse()
 		raise Http404
@@ -373,7 +373,7 @@ class UserChatAdminCreate(View):
 		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
-		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_chat(chat.pk):
 			new_admin = chat.add_administrator(user)
 			return HttpResponse()
 		else:
@@ -386,7 +386,7 @@ class UserChatAdminDelete(View):
 		from chat.models import Chat
 
 		chat, user = Chat.objects.get(pk=self.kwargs["pk"]), User.objects.get(pk=self.kwargs["user_pk"])
-		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_chat(chat.pk):
 			new_admin = chat.remove_administrator(user)
 			return HttpResponse()
 		else:
@@ -401,7 +401,7 @@ class UserChatBeepOff(View):
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			chat_user.no_disturb = datetime.now() + timedelta(weeks=100)
 			chat_user.save(update_fields=["no_disturb"])
 			return HttpResponse()
@@ -416,7 +416,7 @@ class UserChatBeepOn(View):
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
 		chat_user = ChatUsers.objects.get(chat_id=chat.pk, user_id=request.user.pk)
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			chat_user.no_disturb = None
 			chat_user.save(update_fields=["no_disturb"])
 			return HttpResponse()
@@ -463,7 +463,7 @@ class InviteMembersInUserChat(ListView):
 		return query
 
 	def post(self,request,*args,**kwargs):
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			from common.templates import render_for_platform
 			from chat.models import Chat
 			from django.http import HttpResponse
@@ -486,7 +486,7 @@ class UserChatDelete(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_chat(chat.pk):
 			chat.delete_chat()
 			return HttpResponse()
 		raise Http404
@@ -497,7 +497,7 @@ class UserChatRecover(View):
 		from django.http import HttpResponse, Http404
 
 		chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and request.user.is_administrator_of_chat(chat.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.user.is_administrator_of_chat(chat.pk):
 			chat.restore_chat()
 			return HttpResponse()
 		raise Http404
@@ -508,7 +508,7 @@ class SupportLikeCreate(View):
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			chat = Chat.objects.get(pk=self.kwargs["pk"])
 			for user in chat.get_members():
 				if user.is_support():
@@ -522,7 +522,7 @@ class SupportDislikeCreate(View):
 		from chat.models import Chat
 		from django.http import HttpResponse, Http404
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			chat = Chat.objects.get(pk=self.kwargs["pk"])
 			for user in chat.get_members():
 				if user.is_support():
@@ -576,7 +576,7 @@ class UserChatEdit(TemplateView):
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 		self.form = ChatForm(request.POST, request.FILES, instance=self.chat)
-		if request.is_ajax() and self.form.is_valid() and self.chat.is_user_can_see_settings(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.form.is_valid() and self.chat.is_user_can_see_settings(request.user.pk):
 			chat = self.form.save(commit=False)
 			chat.edit_chat(name=chat.name,description=chat.description,image=request.FILES.get('image'),)
 			return HttpResponse()
@@ -609,7 +609,7 @@ class UserChatPrivate(TemplateView):
 		from django.http import HttpResponse
 
 		self.chat = Chat.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax() and self.chat.is_user_can_see_settings(request.user.pk):
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and self.chat.is_user_can_see_settings(request.user.pk):
 			self.type = request.GET.get("action")
 			self.value = request.GET.get("value")
 			if self.value == 6 or self.value == 5:
@@ -685,7 +685,7 @@ class UserChatIncludeUsers(ListView):
 		from chat.models import Chat
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			self.chat.post_include_users(request.POST.getlist("users"), request.POST.get("type"))
 		return HttpResponse()
@@ -739,7 +739,7 @@ class UserChatExcludeUsers(ListView):
 		from chat.models import Chat
 		from django.http import HttpResponse
 
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			self.chat = Chat.objects.get(pk=self.kwargs["pk"])
 			self.chat.post_exclude_users(request.POST.getlist("users"), request.POST.get("type"))
 			return HttpResponse('ok')

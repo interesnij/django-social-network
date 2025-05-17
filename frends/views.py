@@ -68,7 +68,7 @@ class ConnectCreate(View):
 		from common.notify.notify import user_notify
 
 		target_user = User.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			new_frend = request.user.frend_user(target_user)
 			user_notify(request.user, None, target_user.pk, "USE", "u_connect_create", "CCO")
 			return HttpResponse()
@@ -78,7 +78,7 @@ class ConnectCreate(View):
 class ConnectDelete(View):
 	def get(self,request,*args,**kwargs):
 		self.target_user = User.objects.get(pk=self.kwargs["pk"])
-		if request.is_ajax():
+		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
 			request.user.unfrend_user(self.target_user)
 			return HttpResponse("")
 		else:
