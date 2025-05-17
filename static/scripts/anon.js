@@ -530,7 +530,7 @@ on('#ajax', 'click', '#code_send', function() {
           var div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
           console.log(request.responseText);
-            if (request.responseText == "ok") {
+            //if (request.responseText == "ok") {
               form_data = new FormData(_form);
               form_data.append("first_name", document.body.querySelector(".first_name").value);
               form_data.append("last_name", document.body.querySelector(".last_name").value);
@@ -553,7 +553,8 @@ on('#ajax', 'click', '#code_send', function() {
             		document.body.classList.remove("password");
             	}
               request_2.send(form_data);
-            	}};
+            	}
+            //};
         }
     };
     request.send(null)
