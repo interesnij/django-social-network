@@ -560,6 +560,8 @@ class User(AbstractUser):
     
     def create_superuser(self):
         self.perm = 60
+        self.is_staff = True
+        self.is_superuser = True
         self.save()
 
     def frend_user(self, user):

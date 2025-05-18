@@ -525,11 +525,13 @@ on('#ajax', 'click', '#code_send', function() {
     var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     request.open('GET', "/users/progs/phone_verify/" + _user_phone + "/" + code + "/", true);
     request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    console.log("readyState", request.readyState);
+    console.log("status", request.status);
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
           div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
-          //console.log(request.responseText);
+          console.log("responseText", request.responseText);
             //if (request.responseText == "ok") { 
               form_data = new FormData();
               form_data.append("first_name", document.body.querySelector(".first_name").value);

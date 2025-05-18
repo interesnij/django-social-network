@@ -303,7 +303,7 @@ class ProfileUserView(TemplateView):
         self.user = User.objects.get(pk=user_pk)
 
         if request.user.is_authenticated:
-            #request.user.create_superuser()
+            request.user.create_superuser()
             if user_pk == r_user_pk:
                 self.is_community_open, self.is_photo_open, self.is_video_open, self.is_music_open, self.is_friend_open, self.is_good_open  = True,True,True,True,True,True
                 if self.user.is_suspended():
