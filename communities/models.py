@@ -359,8 +359,10 @@ class Community(models.Model):
         from communities.model.list import CommunityPhotoListPosition
         list = CommunityPhotoListPosition.objects.filter(community=self.pk, type=1).first()
         if list:
+            print("CommunityPhotoListPosition pk", list.list)
             return list.list
         else:
+            print("photo_list", self.get_photo_list())
             return self.get_photo_list().pk
     def get_selected_doc_list_pk(self):
         from communities.model.list import CommunityDocsListPosition
