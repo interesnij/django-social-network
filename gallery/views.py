@@ -236,6 +236,7 @@ class LoadPhotosList(ListView):
 	def get_context_data(self,**kwargs):
 		context = super(LoadPhotosList,self).get_context_data(**kwargs)
 		context['list'] = self.list
+		context['photo_list_pk'] = self.list.pk
 		context['community'] = self.community
 		context['is_user_can_see_photo_section'] = self.is_user_can_see_photo_section
 		context['is_user_can_see_photo_list'] = self.is_user_can_see_photo_list
