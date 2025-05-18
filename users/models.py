@@ -474,7 +474,7 @@ class User(AbstractUser):
 
     def get_online_status(self):
         from datetime import datetime, timedelta
-        if datetime.now() < self.last_activity + timedelta(minutes=3):
+        if datetime.now() < self.last_activity:
             return '<i>Онлайн</i>'
         else: 
             if self.is_women():
@@ -557,6 +557,10 @@ class User(AbstractUser):
         from users.model.list import ListUC, FeaturedUC
         if FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, community=community_id).exists():
             FeaturedUC.objects.filter(list_id=list_id, owner=self.pk, community=community_id).delete()
+    
+    def create_superuser(self):
+        self.perm = 60
+        self.save()
 
     def frend_user(self, user):
         self.get_or_create_featured_objects_in_main_list(user)
