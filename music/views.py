@@ -112,16 +112,16 @@ class AddTrackInList(View):
 			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
 				count += 1
-				order += 1
-				tag = TinyTag.get(file.temporary_file_path())
-				title = tag.title
-				if not title:
-					title = "Без названия"
+				order += 1 
+				#tag = TinyTag.get(file.temporary_file_path())
+				#title = tag.title
+				#if not title:
+				#	title = "Без названия"
 				track = Music.objects.create(
 					creator=request.user,
 					file=file,
 					list=list,
-					title=title,
+					title=file.title,
 					order=order,
 					community=list.community,
 					duration=int(tag.duration)
