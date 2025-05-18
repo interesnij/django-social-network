@@ -114,10 +114,10 @@ class AddTrackInList(View):
 				order += 1
 				print("file", file)
 				print("file name", file.name)
-				tag = TinyTag.get(file.temporary_file_path())
-				title = tag.title
-				if not title:
-					title = "Без названия"
+				#tag = TinyTag.get(file.temporary_file_path())
+				#title = tag.title
+				#if not title:
+				#	title = "Без названия"
 				track = Music.objects.create(
 					creator=request.user,
 					file=file,
