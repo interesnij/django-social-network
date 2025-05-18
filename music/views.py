@@ -122,10 +122,11 @@ class AddTrackInList(View):
 					creator=request.user,
 					file=file,
 					list=list,
-					title=title,
+					title=file.name,
 					order=order,
 					community=list.community,
-					duration=int(tag.duration)
+					#duration=int(tag.duration)
+					duration=0
 				)
 				tracks += [track,]
 			list.count = order
