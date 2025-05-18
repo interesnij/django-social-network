@@ -527,11 +527,11 @@ on('#ajax', 'click', '#code_send', function() {
     request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-          var div = document.getElementById('jsondata');
+          div = document.getElementById('jsondata');
           div.innerHTML = request.responseText;
-          console.log(request.responseText);
-            //if (request.responseText == "ok") { 
-              form_data = new FormData(_form);
+          //console.log(request.responseText);
+            if (request.responseText == "ok") { 
+              form_data = new FormData();
               form_data.append("first_name", document.body.querySelector(".first_name").value);
               form_data.append("last_name", document.body.querySelector(".last_name").value);
               form_data.append("gender", document.body.querySelector(".gender").value);
@@ -545,16 +545,9 @@ on('#ajax', 'click', '#code_send', function() {
               request_2.onreadystatechange = function () {
               if ( request_2.readyState == 4 && request_2.status == 201 ) {
                 window.location.href = "/";
-              }
-              else if (request_2.responseText.indexOf( "Введённый пароль" ) != -1 && document.body.classList.contains("password")) {
-            		alert("Пороль должен состоять минимум из 8 символов - из букв, цифр.");
-            		document.body.classList.add("password");
-            	} else {
-            		document.body.classList.remove("password");
-            	}
+              }}
               request_2.send(form_data);
-            	}
-            //};
+            };
         }
     };
     request.send(null)
