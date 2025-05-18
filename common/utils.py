@@ -222,7 +222,7 @@ def create_community_models(community):
                                     CommunityPostsListPosition,
                                     CommunityDocsListPosition,
                                     CommunityVideoListPosition,
-                                    UserSurveyListPosition,
+                                    CommunitySurveyListPosition,
                                 )
     doc_list = DocsList.objects.create(creator=community.creator, community=community, type=DocsList.MAIN, name="Основной список")
     CommunityDocsListPosition.objects.create(community=community.pk, list=doc_list.pk, position=1)
