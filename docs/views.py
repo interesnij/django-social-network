@@ -86,6 +86,7 @@ class AddDocInList(View):
 		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			docs, order, count = [], list.count, 0
 			for file in request.FILES.getlist('file'):
+				print("file", file)
 				count += 1
 				order += 1
 				doc = Doc.objects.create(
