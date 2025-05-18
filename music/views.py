@@ -109,19 +109,18 @@ class AddTrackInList(View):
 		list = MusicList.objects.get(pk=self.kwargs["pk"])
 		if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and list.is_user_can_create_el(request.user.pk):
 			tracks, order, count = [], list.count, 0
-			uploaded_file = request.FILES['file']
 			for file in request.FILES.getlist('file'):
 				count += 1
 				order += 1 
-				#tag = TinyTag.get(file.temporary_file_path())
-				#title = tag.title
-				#if not title:
-				#	title = "Без названия"
+				tag = TinyTag.get(file.temporary_file_path())
+				title = tag.title
+				if not title:
+					title = "Без названия"
 				track = Music.objects.create(
 					creator=request.user,
 					file=file,
 					list=list,
-					title=file.title,
+					title=title,
 					order=order,
 					community=list.community,
 					duration=int(tag.duration)
