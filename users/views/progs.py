@@ -654,9 +654,6 @@ class ListCreate(TemplateView):
     template_name, community = None, None
 
     def get(self,request,*args,**kwargs):
-        from common.utils import get_list_of_type
-        from common.check.community import check_can_get_lists
-
         self.type = request.GET.get('type')
         if self.type[:3] == "lpo":
             have_comments = True
@@ -701,7 +698,6 @@ class ListCreate(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        from common.check.community import check_can_get_lists
         from django.http import HttpResponse, HttpResponseBadRequest
 
         community_id = request.POST.get('community_id')
