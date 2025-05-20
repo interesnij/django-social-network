@@ -361,13 +361,13 @@ def get_item_for_post_sanction(_type, _subtype):
             return [SurveyList.objects.get(pk=_type[3:]), "SUL", False, _list]
         elif _type[:3] == "lfo":
             from forum.models import ForumList
-            return [SurveyList.objects.get(pk=_type[3:]), "FOL", False, _list]
+            return [ForumList.objects.get(pk=_type[3:]), "FOL", False, _list]
         elif _type[:3] == "lar":
             from article.models import ArticleList
-            return [SurveyList.objects.get(pk=_type[3:]), "ARL", False, _list]
+            return [ArticleList.objects.get(pk=_type[3:]), "ARL", False, _list]
         elif _type[:3] == "lwi":
             from wiki.models import WikiList
-            return [SurveyList.objects.get(pk=_type[3:]), "WIL", False, _list]
+            return [WikiList.objects.get(pk=_type[3:]), "WIL", False, _list]
 
     elif _subtype and _subtype == "comment":
         _list = [3, 0, 9, 16, 22]
