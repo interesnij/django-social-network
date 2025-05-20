@@ -1,11 +1,11 @@
 <div class="card mb-3">
-    <div class="card-body">
-        {% include 'desctop/generic/community/card_meta.html' %}
-    </div>
+  <div class="card-body">
+    {% include 'desctop/generic/community/card_meta.html' %}
+  </div>
 </div>
 
 <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop" type="button">
-    Общее
+  Общая информация
 </a>
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
@@ -17,14 +17,15 @@
 </div>
 
 <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
-    Подписчики
+  Подписчики
 </a>
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
     <ul>
       <li><a href="{% url 'community_member_manage' pk=community.pk %}" class="ajax">Подписчики</a></li>
       {% if community.is_closed %}
-        <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на членство</a></li>
+      <li style="margin-bottom:8px;"><a href="{% url 'community_follows' pk=community.pk %}" class="ajax">Заявки на
+          членство</a></li>
       {% endif %}
       <li><a href="{% url 'community_moders' pk=community.pk %}" class="ajax">Модераторы</a></li>
       <li><a href="{% url 'community_editors' pk=community.pk %}" class="ajax">Редакторы</a></li>
@@ -36,10 +37,10 @@
 </div>
 
 <a class="box-shadow mr-2 btn btn-link ajax" href="{% url 'community_sections_form' pk=community.pk %}">
-    Приватность
+  Приватность
 </a>
 <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
-    Уведомления
+  Уведомления
 </a>
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
@@ -54,13 +55,15 @@
 </div>
 
 <a class="mb-2 box-shadow mr-2 btn btn-link menu_drop">
-    Статистика
+  Статистика
 </a>
 <div class="collapse">
   <div class="card card-body" style="display: contents;">
     <ul style="list-style-type:none">
-      <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший охват</a></li>
-      <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}" class="ajax">Посещаемость</a></li>
+      <li style="margin-bottom:8px;"><a href="{% url 'community_cuberture_day' community.pk %}" class="ajax">Обший
+          охват</a></li>
+      <li style="margin-bottom:8px;"><a href="{% url 'community_traffic_day' community.pk %}"
+          class="ajax">Посещаемость</a></li>
     </ul>
   </div>
 </div>
