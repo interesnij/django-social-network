@@ -242,7 +242,7 @@ class CommunityAdminView(ListView):
 		return context
 
 	def get_queryset(self):
-		return self.c.get_administrators(self.c.pk)
+		return self.c.get_administrators()
 
 
 class CommunityEditorsView(ListView):
@@ -337,7 +337,7 @@ class CommunityMemberManageView(ListView):
 
 	def get(self,request,*args,**kwargs):
 		self.c = Community.objects.get(pk=self.kwargs["pk"])
-		self.a, self.m, self.e, self.ad, self.template_name = Community.get_administrators(self.c.pk),Community.get_moderators(self.c.pk),Community.get_editors(self.c.pk),Community.get_advertisers(self.c.pk),get_community_manage_template("communities/manage/members.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
+		self.a, self.m, self.e, self.ad, self.template_name = Community.get_administrators(),Community.get_moderators(self.c.pk),Community.get_editors(self.c.pk),Community.get_advertisers(self.c.pk),get_community_manage_template("communities/manage/members.html", request.user, self.c.pk, request.META['HTTP_USER_AGENT'])
 		return super(CommunityMemberManageView,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):
