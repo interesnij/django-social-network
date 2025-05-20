@@ -584,8 +584,7 @@ class Survey(models.Model):
             return '<p class="small">Бессрочный опрос.</p>'
 
     def is_can_edit(self):
-        from datetime import datetime
-        return datetime.now() < self.created
+        return True
 
     def get_code(self):
         return "sur" + str(self.pk)
