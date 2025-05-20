@@ -64,9 +64,9 @@
     </div>
   </span>
   <script>
-    {% if user | is_user_list: list.pk %}
+
     document.querySelector("body").classList.add('list_' + {{ list.pk }});
-    {% endif %}
+
   </script>
   {% else %}
   {% include 'desctop/generic/centered/private_page.html' %}
