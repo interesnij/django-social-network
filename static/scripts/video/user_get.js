@@ -25,7 +25,8 @@ on('#ajax', 'click', '.load_video_list', function() {
 
   create_fullscreen("/video/load_list/" + videolist_pk + "/", "item_fullscreen");
   if (owner_pk) {
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk);
+    url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&videolist=" + videolist_pk;
+    window.history.pushState ({"url":url}, "Видеоальбом", url);
   }
 });
 

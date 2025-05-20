@@ -97,7 +97,6 @@ function close_fullscreen() {
     try {prev_window.querySelector(".prev_item").style.display = "unset"} catch {null};
     try {prev_window.querySelector(".next_item").style.display = "unset"} catch {null}
   };
-  window.history.replaceState(null, null, window.location.pathname);
 };
 function close_work_fullscreen() {
   toggle_active_select = false;
@@ -122,7 +121,6 @@ function close_work_fullscreen() {
   if (!container.innerHTML) {
     get_document_opacity_1();
   };
-  window.history.replaceState(null, null, window.location.pathname);
 };
 
 function view_timer(count, list) {
@@ -306,7 +304,6 @@ function change_this_fullscreen(_this, type_class) {
           new_uuid = url_split.slice(-2);
           params = window.location.search.replace( '?', '').split('&');
           new_url = window.location.href.replace(params[2].split("=")[1], new_uuid[0])
-          window.history.replaceState(null, null, new_url);
 
           get_document_opacity_0();
 
@@ -772,7 +769,7 @@ window.addEventListener('popstate', function (e) {
           rtr.innerHTML = ajax.innerHTML;
           window.scrollTo(0, 0);
           title = elem_.querySelector('title').innerHTML;
-          window.history.pushState(null, "vfgffgfgf", $serf_history.slice(-1));
+          indow.history.pushState ({"url":$serf_history.slice(-1)}, title, $serf_history.slice(-1));
           document.title = title;
           if_list(rtr);
           create_pagination(rtr);
@@ -805,7 +802,7 @@ function ajax_get_reload(url) {
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, "vfgffgfgf", url);
+            window.history.pushState ({"url":url}, title, url);
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);
@@ -837,7 +834,7 @@ function search_ajax_get_reload(url) {
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, "vfgffgfgf", url);
+            indow.history.pushState ({"url":url}, title, url);
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);

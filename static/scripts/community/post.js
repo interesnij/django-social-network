@@ -23,7 +23,8 @@ on('#ajax', 'click', '#add_community_btn', function() {
             window.scrollTo(0,0);
             document.title = elem_.querySelector('title').innerHTML;
             if_list(rtr);
-            window.history.pushState(null, "vfgffgfgf", "/public" + pk + "/");
+            url = "/public" + pk + "/";
+            window.history.pushState ({"url":url}, "Сообщество создано", url);
             close_work_fullscreen()
         } else { this.disabled = false }
       }

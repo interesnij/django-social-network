@@ -26,6 +26,7 @@ on('#ajax', 'click', '.load_doc_list', function() {
 
   create_fullscreen("/docs/load_list/" + doclist_pk + "/", "item_fullscreen");
   if (owner_pk) {
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk);
+    url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&doclist=" + doclist_pk;
+    window.history.pushState ({"url":url}, "Список документов", url);
   }
 });

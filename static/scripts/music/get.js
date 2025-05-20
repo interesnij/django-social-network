@@ -27,6 +27,7 @@ on('#ajax', 'click', '.load_music_list', function() {
 
   create_fullscreen("/music/load_list/" + playlist_pk + "/", "item_fullscreen");
   if (owner_pk) {
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&playlist=" + playlist_pk);
+    url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&playlist=" + playlist_pk;
+    indow.history.pushState ({"url":url}, "Плейлист", url);
   }
 });

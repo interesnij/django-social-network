@@ -1025,7 +1025,6 @@ on('#ajax', 'click', '#add_chat_btn', function() {
             rtr.innerHTML = ajax.innerHTML;
             pk = rtr.querySelector(".pk_saver").getAttribute("data-pk");
             document.title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, "vfgffgfgf", "/chat/" + pk + "/");
             get_document_opacity_1();
         }
       }
@@ -1255,7 +1254,6 @@ on('#ajax', 'click', '.chat_ajax', function(e) {
         rtr.querySelector(".fixed_header_chat").style.width = width + "px";
         window.scrollTo( 0, 3000 );
         scrolled(rtr.querySelector('.is_paginate'));
-        window.history.pushState(null, "vfgffgfgf", url);
 
         chats = document.body.querySelector(".new_unread_chats");
         if (chats.querySelector(".tab_badge_left_menu") && _this.querySelector(".tab_badge")) {
@@ -1456,7 +1454,6 @@ on('#ajax', 'click', '.go_transfer_messages', function() {
       rtr.innerHTML = ajax.innerHTML;
       objDiv = document.querySelector(".chat_container");
       objDiv.scrollTop = objDiv.scrollHeight;
-      window.history.pushState(null, "vfgffgfgf", url);
       scrolled(rtr.querySelector('.chat_container'));
       block = rtr.querySelector(".parent_message_block");
       block.innerHTML = "<div>" + creator_p + "<div style='position:relative;padding-bottom:7px'><div style='overflow: hidden;text-overflow:ellipsis;padding-right:5px;'><span style='white-space: nowrap;'>" + preview + "</span><span class='remove_parent_block pointer message_form_parent_block'>x</span></div></div></div>";

@@ -24,6 +24,7 @@ on('#ajax', 'click', '.load_good_list', function() {
   };
   create_fullscreen("/goods/load_list/" + goodlist_pk + "/", "item_fullscreen");
   if (owner_pk) {
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&goodlist=" + goodlist_pk);
+    url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&goodlist=" + goodlist_pk;
+    indow.history.pushState ({"url":url}, "Подборка товаров", url);
   }
 });

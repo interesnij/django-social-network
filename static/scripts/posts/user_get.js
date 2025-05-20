@@ -24,7 +24,8 @@ on('#ajax', 'click', '.load_posts_list', function() {
 
   create_fullscreen("/posts/list/?list=" + postlist_pk, "worker_fullscreen");
   if (owner_pk) {
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + owner_pk + "&postlist=" + postlist_pk);
+    url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&postlist=" + postlist_pk;
+    window.history.pushState ({"url":url}, "Список постов", url);
   }
 });
 
@@ -133,7 +134,8 @@ on('#ajax', 'click', '.wall_fullscreen', function(e) {
   card = this.parentElement.parentElement.parentElement.parentElement;
   pk = card.getAttribute('data-pk');
   create_fullscreen("/posts/post/" + pk + "/", "worker_fullscreen");
-  window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
+  url = window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk;
+  window.history.pushState ({"url":url}, "Пост", url);
 });
 
 on('#ajax', 'click', '.fullscreen', function(e) {
@@ -151,7 +153,8 @@ on('#ajax', 'click', '.fullscreen', function(e) {
   else {
     pk = card.getAttribute('data-pk');
     create_fullscreen("/posts/post/" + pk + "/", "worker_fullscreen");
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
+    url = window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk;
+    window.history.pushState ({"url":url}, "Пост", url);
   }
 });
 
@@ -170,7 +173,8 @@ on('#ajax', 'click', '.fix_fullscreen', function(e) {
   else {
     pk = card.getAttribute('data-pk');
     create_fullscreen("/posts/fix_post/" + pk + "/", "worker_fullscreen");
-    window.history.pushState(null, "vfgffgfgf", window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk);
+    url = window.location.href + "?key=wall&owner_id=" + pk + "&post_pk=" + pk;
+    window.history.pushState ({"url":url}, "Пост", url);
   }
 });
 

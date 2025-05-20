@@ -18,8 +18,7 @@ function close_fullscreen() {
     try {prev_window.querySelector(".prev_item").style.display = "unset"} catch {null};
     try {prev_window.querySelector(".next_item").style.display = "unset"} catch {null}
   };
-  window.history.replaceState(null, null, window.location.pathname);
-  console.log("okkkkk")
+  console.log("okkkkk") 
 };
 
 function create_fullscreen(url, type_class) {
@@ -887,8 +886,9 @@ function ajax_get_reload(url) {
         rtr = document.getElementById('ajax');
         rtr.innerHTML = ajax.innerHTML;
         window.scrollTo(0,0);
-        document.title = elem_.querySelector('title').innerHTML;
-        window.history.pushState({route: url}, "network", url);
+        $title = elem_.querySelector('title').innerHTML;
+        document.title = $title;
+        window.history.pushState ({"url":url}, $title, url);
         if_list(rtr);
         get_document_opacity_1()
       }
@@ -911,7 +911,7 @@ function search_ajax_get_reload(url) {
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
-            window.history.pushState(null, "vfgffgfgf", url);
+            window.history.pushState ({"url":url}, title, url);
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);

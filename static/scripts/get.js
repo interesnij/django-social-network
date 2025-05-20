@@ -15,7 +15,7 @@ on('#ajax', 'keydown', '.search_main_form', function(e) {
         section = params[0].split("=")[1];
       }
     };
-    window.history.replaceState(null, null, new_url);
+    window.history.pushState ({"url":new_url}, "Поиск", new_url);
 
     var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     ajax_link.open('GET', '/search/?s=' + section + '&q=' + value, true);
@@ -202,7 +202,7 @@ on('body', 'click', '.notify_ajax', function(event) {
           rtr.innerHTML = ajax.innerHTML;
           window.scrollTo(0, 0);
           title = elem_.querySelector('title').innerHTML;
-          window.history.pushState(null, "vfgffgfgf", url);
+          window.history.pushState ({"url":url}, title, url);
           document.title = title;
           loaded = false;
           create_pagination(rtr);

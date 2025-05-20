@@ -294,9 +294,11 @@ function post_and_load_object_page(form, url_post, url_1, url_2, stat_type) {
 
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
-            document.title = elem_.querySelector('title').innerHTML;
+            title = elem_.querySelector('title').innerHTML;
+            document.title = title;
             uuid = rtr.querySelector(".uuid_saver").getAttribute("data-uuid");
-            window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/');
+            url = url_1 + pk + url_2 + uuid + '/';
+            window.history.pushState ({"url":url}, title, url);
             get_document_opacity_1();
             add_list_in_all_stat(stat_type,pk,prev_container.getAttribute("data-type"),prev_container.getAttribute("data-pk"))
         }
@@ -319,9 +321,11 @@ function edit_and_load_object_page(form, url_post, url_1, url_2) {
             rtr = document.getElementById('ajax');
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
-            document.title = elem_.querySelector('title').innerHTML;
+            title = elem_.querySelector('title').innerHTML;
+            url = url_1 + pk + url_2 + uuid + '/';
+            document.title = title;
             uuid = rtr.querySelector(".pk_saver").getAttribute("data-uuid");
-            window.history.pushState(null, "vfgffgfgf", url_1 + pk + url_2 + uuid + '/')
+            window.history.pushState ({"url":url}, title, url);
         }
     }
     ajax_link.send(form_data)
