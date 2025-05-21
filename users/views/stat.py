@@ -85,9 +85,12 @@ class UserCoberturaDay(TemplateView):
 		for i in self.days:
 			view = request.user.get_post_views_for_day(i.day)
 			self.views += [view]
-		current_views = UserNumbers.objects.filter(created__day=self.days[0].day, target=pk).values('target').distinct()
-		user_ids = [use['target'] for use in current_views]
-		self.users = User.objects.filter(id__in=user_ids)
+		try:
+			current_views = UserNumbers.objects.filter(created__day=self.days[0].day, target=pk).values('target').distinct()
+			user_ids = [use['target'] for use in current_views] 
+			self.users = User.objects.filter(id__in=user_ids)
+		except:
+			self.users = [ User.objects.get(id=1)]
 		return super(UserCoberturaDay,self).get(request,*args,**kwargs)
 
 	def get_context_data(self,**kwargs):

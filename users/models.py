@@ -1531,16 +1531,16 @@ class User(AbstractUser):
         private = self.profile_private
         if private.can_see_info == 1:
             return True
-        elif private.can_see_info == 6 and self.pk == user_pk:
+        elif private.can_see_info == 6 and self.pk == user_id:
             return True
-        elif private.can_see_info == 4 and user_pk in self.get_all_friends_ids():
+        elif private.can_see_info == 4 and user_id in self.get_all_friends_ids():
             return True
-        elif private.can_see_info == 5 and user_pk in self.get_friend_and_friend_of_friend_ids():
+        elif private.can_see_info == 5 and user_id in self.get_friend_and_friend_of_friend_ids():
             return True
         elif private.can_see_info == 17:
-            return not user_pk in self.get_can_see_info_exclude_users_ids()
+            return not user_id in self.get_can_see_info_exclude_users_ids()
         elif private.can_see_info == 18:
-            return user_pk in self.get_can_see_info_include_users_ids()
+            return user_id in self.get_can_see_info_include_users_ids()
         return False
 
     def is_user_can_add_in_chat(self, user_pk):
