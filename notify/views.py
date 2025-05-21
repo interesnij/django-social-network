@@ -46,7 +46,7 @@ class CNotifyView(ListView):
 
     def get(self,request,*args,**kwargs):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
-        self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
+        self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
         self.community.read_community_notify(self.user.pk)
         return super(CNotifyView,self).get(request,*args,**kwargs)
 
