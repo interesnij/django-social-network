@@ -769,7 +769,7 @@ window.addEventListener('popstate', function (e) {
           rtr.innerHTML = ajax.innerHTML;
           window.scrollTo(0, 0);
           title = elem_.querySelector('title').innerHTML;
-          indow.history.pushState ({"url":$serf_history.slice(-1)}, title, $serf_history.slice(-1));
+          window.history.pushState ({"url":$serf_history.slice(-1)}, title, $serf_history.slice(-1));
           document.title = title;
           if_list(rtr);
           create_pagination(rtr);
@@ -834,7 +834,7 @@ function search_ajax_get_reload(url) {
             rtr.innerHTML = ajax.innerHTML;
             window.scrollTo(0, 0);
             title = elem_.querySelector('title').innerHTML;
-            indow.history.pushState ({"url":url}, title, url);
+            window.history.pushState ({"url":url}, title, url);
             document.title = title;
             if_list(rtr);
             create_pagination(rtr);

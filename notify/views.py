@@ -21,17 +21,17 @@ class AllNotifyView(ListView):
     def get_queryset(self):
         return self.all_notify
 
-class UserNotifyView(ListView):
+class UNotifyView(ListView):
     """ Все уведомления пользователя, если он владеет правами в сообществах. Будет кнопка "назад" на станницу блоков "Пользователь-сообщество-..." """
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
         self.user, self.template_name, self.all_notify = request.user, get_settings_template("notify/user_notify.html", request.user, request.META['HTTP_USER_AGENT']), request.user.get_user_notify()
         request.user.read_user_notify()
-        return super(UserNotifyView,self).get(request,*args,**kwargs)
+        return super(UNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(UserNotifyView,self).get_context_data(**kwargs)
+        context = super(UNotifyView,self).get_context_data(**kwargs)
         context["user"] = self.user
         return context
 
@@ -40,7 +40,7 @@ class UserNotifyView(ListView):
         return all_notify
 
 
-class CommunityNotifyView(ListView):
+class CNotifyView(ListView):
     """ Все уведомления сообщества, если текущий пользователь владеет правами в сообществах. Будет кнопка "назад" на станницу блоков "Пользователь-сообщество-..." """
     template_name, paginate_by = None, 15
 
@@ -48,10 +48,10 @@ class CommunityNotifyView(ListView):
         self.community = Community.objects.get(pk=self.kwargs["pk"])
         self.user, self.template_name, self.all_notify = request.user, get_community_moders_template("notify/community_notify.html", request.user, self.community.pk, request.META['HTTP_USER_AGENT']), self.community.get_community_notify()
         self.community.read_community_notify(self.user.pk)
-        return super(CommunityNotifyView,self).get(request,*args,**kwargs)
+        return super(CNotifyView,self).get(request,*args,**kwargs)
 
     def get_context_data(self,**kwargs):
-        context = super(CommunityNotifyView,self).get_context_data(**kwargs)
+        context = super(CNotifyView,self).get_context_data(**kwargs)
         context["community"] = self.community
         context["user"] = self.user
         return context

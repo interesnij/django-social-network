@@ -18,7 +18,7 @@ on('#ajax', 'click', '.detail_photo', function() {
   document.body.querySelector(".pk_saver") ? pk = document.body.querySelector(".pk_saver").getAttribute('data-pk') : pk = card.getAttribute('data-pk');
   create_fullscreen("/gallery/photo/" + photo_pk + "/", "photo_fullscreen");
   url = window.location.href + "?key=big_page&owner_id=" + pk + "&photo_pk=" + photo_pk;
-  indow.history.pushState ({"url":url}, "Фотография", url);
+  window.history.pushState ({"url":url}, "Фотография", url);
 });
 
 on('#ajax', 'click', '.comment_photo', function() {
@@ -33,7 +33,7 @@ on('#ajax', 'click', '.post_photo', function() {
 
   create_fullscreen("/gallery/post_photo/" + post_pk + "/" + photo_pk + "/", "photo_fullscreen");
   url = window.location.href + "?key=wall&owner_id=" + pk + "&photo_pk=" + photo_pk + "&post_pk=" + post_pk;
-  indow.history.pushState ({"url":url}, "Фотография", url);
+  window.history.pushState ({"url":url}, "Фотография", url);
 });
 on('body', 'click', '.chat_photo', function() {
   photo_pk = this.getAttribute('photo-pk');
@@ -53,6 +53,6 @@ on('#ajax', 'click', '.load_photo_list', function() {
   create_fullscreen("/gallery/load_list/" + photolist_pk + "/", "item_fullscreen");
   if (owner_pk) {
     url = window.location.href + "?key=wall&owner_id=" + owner_pk + "&photolist=" + photolist_pk;
-    indow.history.pushState ({"url":url}, "Фотоальбом", url);
+    window.history.pushState ({"url":url}, "Фотоальбом", url);
   }
 });

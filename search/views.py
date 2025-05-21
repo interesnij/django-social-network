@@ -30,7 +30,7 @@ class SearchView(ListView):
             _users = User.objects.filter(Q(first_name__icontains=self.q)|Q(last_name__icontains=self.q))
             _communities = Community.objects.filter(Q(name__icontains=self.q)|Q(description__icontains=self.q))
             _goods = Good.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
-            _musics = Music.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
+            _musics = Music.objects.filter(title__icontains=self.q)
             _videos = Video.objects.filter(Q(title__icontains=self.q)|Q(description__icontains=self.q))
             self.list = Post.objects.filter(text__icontains=self.q)
             if _users:
