@@ -116,8 +116,9 @@ LOGOUT_REDIRECT_URL = "news_list"
 
 LANGUAGE_CODE = 'ru-RU'
 
-#TIME_ZONE = 'Europe/Moscow'
-#USE_TZ = True
+TIME_ZONE = 'Asia/Hong_Kong'
+
+USE_TZ = True
 
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
