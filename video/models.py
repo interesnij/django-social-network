@@ -1071,8 +1071,9 @@ class Video(models.Model):
         self.title = title
         self.file = file
         if self.list.pk != list.pk:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
+            if self.list.count > 0:
+                self.list.count -= 1
+                self.list.save(update_fields=["count"])
             list.count += 1
             list.save(update_fields=["count"])
         self.list = list
@@ -1118,8 +1119,9 @@ class Video(models.Model):
             self.community.minus_videos(1)
         else:
             self.creator.minus_videos(1)
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="VID", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="VID", object_id=self.pk, verb="ITE").exists():
@@ -1145,8 +1147,9 @@ class Video(models.Model):
         if self.type == "PUB":
             self.type = Video.CLOSED
         self.save(update_fields=['type'])
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if community:
             community.minus_videos(1)
         else:

@@ -1074,8 +1074,9 @@ class Good(models.Model):
 		self.title = title
 		self.description = description
 		if self.list.pk != list.pk:
-			self.list.count -= 1
-			self.list.save(update_fields=["count"])
+			if self.list.count > 0:
+				self.list.count -= 1
+				self.list.save(update_fields=["count"])
 			list.count += 1
 			list.save(update_fields=["count"])
 		self.votes_on = votes_on
@@ -1099,8 +1100,9 @@ class Good(models.Model):
 			self.community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
-		self.list.count -= 1
-		self.list.save(update_fields=["count"])
+		if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
@@ -1130,8 +1132,9 @@ class Good(models.Model):
 			community.minus_goods(1)
 		else:
 			self.creator.minus_goods(1)
-		self.list.count -= 1
-		self.list.save(update_fields=["count"])
+		if self.list.count > 0:
+			self.list.count -= 1
+			self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():

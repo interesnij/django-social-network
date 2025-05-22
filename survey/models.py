@@ -734,8 +734,9 @@ class Survey(models.Model):
         from notify.models import Notify, Wall
         self.type = Survey.DELETED
         self.save(update_fields=['type'])
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
@@ -756,8 +757,9 @@ class Survey(models.Model):
         if self.type == "PUB":
             self.type = Survey.CLOSED
         self.save(update_fields=['type'])
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="SUR", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="SUR", object_id=self.pk, verb="ITE").exists():

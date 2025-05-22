@@ -1057,8 +1057,9 @@ class Photo(models.Model):
             self.community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
@@ -1088,8 +1089,9 @@ class Photo(models.Model):
             self.community.minus_photos(1)
         else:
             self.creator.minus_photos(1)
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="PHO", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="PHO", object_id=self.pk, verb="ITE").exists():

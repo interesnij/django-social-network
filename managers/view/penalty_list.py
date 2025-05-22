@@ -1,4 +1,4 @@
-from users.models import User
+from managers.models import ModerationPenalty
 from django.views.generic import ListView
 from django.http import Http404
 from common.templates import get_staff_template
@@ -94,7 +94,7 @@ class PenaltyAudioList(ListView):
         return super(PenaltyAudioList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_penalty_audios()
+        list = ModerationPenalty.get_penalty_audios()
         return list
 
 

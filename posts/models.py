@@ -1189,8 +1189,9 @@ class Post(models.Model):
         _text = get_text_processing(text)
 
         if self.list.pk != list:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
+            if self.list.count > 0:
+                self.list.count -= 1
+                self.list.save(update_fields=["count"])
             list.count += 1
             list.save(update_fields=["count"])
         self.text = _text
@@ -1229,8 +1230,9 @@ class Post(models.Model):
             self.community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
@@ -1260,8 +1262,9 @@ class Post(models.Model):
             self.community.minus_posts(1)
         else:
             self.creator.minus_posts(1)
-        self.list.count -= 1
-        self.list.save(update_fields=["count"])
+        if self.list.count > 0:
+            self.list.count -= 1
+            self.list.save(update_fields=["count"])
         if Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
             Notify.objects.filter(type="POS", object_id=self.pk, verb="ITE").update(status="C")
         if Wall.objects.filter(type="POS", object_id=self.pk, verb="ITE").exists():
