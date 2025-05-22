@@ -456,7 +456,7 @@ class User(AbstractUser):
     def get_online(self):
         from datetime import datetime, timedelta
         naive = self.last_activity.replace(tzinfo=None)
-        return datetime.now(datetime.timezone.utc) < naive + timedelta(minutes=3)
+        return datetime.now() < naive + timedelta(minutes=3)
 
     def get_online_display(self):
         from datetime import datetime, timedelta
