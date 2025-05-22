@@ -592,10 +592,10 @@ function show_play_items(block, track_id) {
       }
     }
   }
-  console.log("play list" + list_id);
+  //console.log("play list" + list_id);
   // отражаем проигрываемый трек и плейлист
   remove_play_items(block);
-  show_active_track(block, list_id, track_id);
+  //show_active_track(block, list_id, track_id);
 }
 
 function get_music_player_support(block) {
