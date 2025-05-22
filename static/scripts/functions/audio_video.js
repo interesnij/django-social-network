@@ -504,7 +504,7 @@ function music_onPlay() {
 $playlist = document.body.querySelector("#saved_playlist");
 function music_update_time() { 
   //try {
-    blocks = document.body.querySelectorAll(".track");
+    blocks = document.body.querySelectorAll(".music");
     track_id = music_player.buy();
     if (track_id == null) {
       track_id = $playlist.getAttribute("track-pk");

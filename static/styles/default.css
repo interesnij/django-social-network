@@ -945,10 +945,14 @@ width: 100%;
   width: 94%;
   overflow: hidden;
   padding-top: 5px;
+  z-index: 10;
 }
 .music_list_post a,
 .music_list_comment a {
   white-space: nowrap;
+  overflow: hidden;
+}
+.svg_default {
   overflow: hidden;
 }
 
