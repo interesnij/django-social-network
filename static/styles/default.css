@@ -1762,6 +1762,7 @@ footer.main-footer {
 .list-group-item {
   background: none;
   padding: .75rem 15px;
+  width: 100%;
 }
 
 .list-group-item p {

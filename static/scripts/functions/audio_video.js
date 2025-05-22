@@ -8,27 +8,69 @@ function msToTime(duration) {
   return minutes + ":" + seconds;
 };
 
-function get_video_dop(){
+function get_video_dop() {
   styles = document.querySelectorAll(".my_color_settings");
   style = styles[styles.length- 1];
   settings = [];
-  if (style.href.indexOf("white") != -1){
+  if (style.href.indexOf("a.css") != -1){
     settings += ["images/video_white",'#eeeeee','#FFFFFF']
   } else {
     settings += ["images/video_dark",'#000000','#000000']
   }
   return settings.split(',')
 };
-function get_audio_dop(){
-  styles = document.querySelectorAll(".my_color_settings");
-  style = styles[styles.length- 1];
-  settings = [];
-  if (style.href.indexOf("white") != -1){
-    settings += ["images/audio_white",'#eeeeee','#FFFFFF']
-  } else {
-    settings += ["images/audio_dark",'#000000','#000000']
-  }
-  return settings.split(',')
+
+function play_video_list(url, counter, video_pk) {
+  loader = document.getElementById("video_loader");
+  open_video_fullscreen(url);
+
+  video_player_id = document.body.getAttribute('data-video');
+  document.body.setAttribute('data-video', document.body.getAttribute('data-video') + "a");
+
+  setTimeout(function() {
+    load_video_playlist(video_player_id + "a");
+    info_video = document.body.querySelector('#info_video');
+    _playlist = info_video.parentElement.querySelector('#my_video_playlist');
+    items = _playlist.querySelectorAll('.video_playlist_li');
+    ids = []
+    for (var i = 0; i < items.length; i++) {
+      id = items[i].getAttribute("data-video-uuid");
+      ids.push(id);
+    };
+
+    video_player.addListener(FWDUVPlayer.READY, videoReady);
+    video_player.addListener(FWDUVPlayer.PLAY, videoStart);
+    video_player.addListener(FWDUVPlayer.PAUSE, videoPause);
+
+    function videoReady() {
+      console.log("video player ready");
+      info_video.classList.remove("hide");
+      setTimeout(function() {
+        video_player.playVideo(counter);
+      }, 1000);
+
+      info_video = document.body.querySelector("#info_video");
+      if (info_video.innerHTML == "" || info_video.getAttribute("data-pk") != video_pk){
+        info_video.setAttribute("data-pk", video_pk);
+        console.log("Воспроизводится ролик № : " + video_pk)
+      }
+    };
+    function videoStart() {
+      try { music_player.pause() } catch { null };
+      new_counter = video_player.getVideoId();
+      console.log("current id ", ids[new_counter]);
+      if (new_counter != counter) {
+        counter = new_counter;
+        list_block_load(info_video, "#info_video", "/video/load_video/" + ids[new_counter] + "/");
+      }
+    };
+    function videoPause() {
+      console.log("video player pause!");
+    }
+  }, 500);
+  video = document.createElement("div");
+  video.classList.add("video_init");
+  document.body.querySelector("#video_loader").append(video)
 };
 
 function load_video_playlist(video_saver_id) {
@@ -262,18 +304,35 @@ video_player = new FWDUVPlayer({
 });
 };
 
-function get_resize_screen(){
+function get_resize_screen() {
   video_player.maxWidth = 360;
   video_player.maxHeight = 270;
   video_player.showPlaylist();
 };
-function get_normal_screen(){
+function get_normal_screen() {
   video_player.maxWidth = 1170;
   video_player.maxHeight = 659;
   video_player.hidePlaylist();
 };
 
-music_player = new FWDMSP({
+if (document.body.querySelector(".desctop_nav")) {
+  pos = "bottom"
+}
+else {
+  pos = "top";
+}
+function get_audio_dop() {
+  styles = document.querySelectorAll(".my_color_settings");
+  style = styles[styles.length- 1];
+  settings = [];
+  if (style.href.indexOf("a.css") != -1){
+    settings += ["images/audio_white",'#000000','#000000']
+  } else {
+    settings += ["images/audio_dark",'#eeeeee','#FFFFFF']
+  }
+  return settings.split(',')
+};
+music_player = new FWDMSP ({
     //main settings
     instanceName:"player1",
     playlistsId:"audio_playlists",
@@ -281,7 +340,7 @@ music_player = new FWDMSP({
     skinPath:get_audio_dop()[0],
     showSoundCloudUserNameInTitle:"no",   // показывать имя пользователя soundcloud
     showMainBackground:"no",  						// показать общий фон
-    verticalPosition:"bottom",                    // расположение плеера
+    verticalPosition: pos,                // расположение плеера
     rightClickContextMenu:"developer",
     useDeepLinking:"no",									// использовать глубокие ссылки - защита от перехвата. Не будет работать с souncloud
     rightClickContextMenu:"no",           // показ контекстног меню по щелчку правой кнопкой мыши
@@ -303,7 +362,7 @@ music_player = new FWDMSP({
     expandBackground:"no",
     showBuyButton:"yes",
     showPlaylistItemBuyButton:"no",
-    titleColor:get_audio_dop()[3],                 // цвет названия
+    titleColor:get_audio_dop()[2],        // цвет названия
     timeColor:"#919191",                  // цвет времени
 
     // настройки выравнивания и размера контроллера (подробно описаны в документации!)
@@ -341,11 +400,11 @@ music_player = new FWDMSP({
     thumbnailMaxHeight:330,              // макс. высота миниатюр
     horizontalSpaceBetweenThumbnails:40, // пространство между миниатюрами по горизонтали
     verticalSpaceBetweenThumbnails:40,   // пространство между миниатюрами по вертикали
-    mainSelectorBackgroundSelectedColor:get_audio_dop()[3], // цвет фона выбранного
+    mainSelectorBackgroundSelectedColor:get_audio_dop()[2], // цвет фона выбранного
     mainSelectorTextNormalColor:"#737373",  // цвет текста селектора
-    mainSelectorTextSelectedColor:get_audio_dop()[3], // цвет текста селектора выбранного
+    mainSelectorTextSelectedColor:get_audio_dop()[2], // цвет текста селектора выбранного
     mainButtonTextNormalColor:"#7C7C7C", // цвет текста кнопок
-    mainButtonTextSelectedColor:get_audio_dop()[3], // цвет текста кнопок выбранных
+    mainButtonTextSelectedColor:get_audio_dop()[2], // цвет текста кнопок выбранных
 
     //playlist settings
     playTrackAfterPlaylistLoad:"no",     // воспроизведение трека после загрузки плейлиста
@@ -354,10 +413,10 @@ music_player = new FWDMSP({
     showPlayListByDefault:"no",          // показывть плейлист по умолчанию
     showPlaylistItemPlayButton:"yes",    // показать кнопку воспроизведения элемента плейлиста
     addScrollBarMouseWheelSupport:"yes",  // прокручивать колесиком мыши
-    showTracksNumbers:"yes",							// показывать номер трека
-    playlistBackgroundColor:get_audio_dop()[3],    // цвет фона плейлиста
+    showTracksNumbers:"no",							// показывать номер трека
+    playlistBackgroundColor:get_audio_dop()[2],    // цвет фона плейлиста
     trackTitleNormalColor:"#737373",      // цвет заголовка трека
-    trackTitleSelectedColor:get_audio_dop()[3],    // цвет заголовка выбранного трека
+    trackTitleSelectedColor:get_audio_dop()[2],    // цвет заголовка выбранного трека
     trackDurationColor:"#7C7C7C",         // цвет времени трека
     maxPlaylistItems:1000,                  // Макс. количество плейлистов
     nrOfVisiblePlaylistItems:12,          // число видимых элементов списка воспроизведения
@@ -371,7 +430,6 @@ music_player = new FWDMSP({
     defaultPlaybackRate:1, //min - 0.5 / max - 3 // скорость воспроизведения по умолчанию (от 0,5 до 3)
     playbackRateWindowTextColor:"#888888",// цвет текста на окне выбора скорости
 
-    //search bar settings
     showSearchBar:"no",                  // показывать секцию поиска треков
     showSortButtons:"yes",                // показывать секцию сортировки треков
     searchInputColor:"#999999",						// цвет секции поиска
@@ -379,106 +437,380 @@ music_player = new FWDMSP({
     inputSearchTextOffsetTop:1,           // смещение текста ввода поиска сверху
     inputSearchOffsetLeft:0,              // смещение текста ввода поиска слева
 
-    //opener settings
     openerAlignment:"right",              // открывание
     showOpener:"yes",                     // показывать эффект
     showOpenerPlayPauseButton:"yes",      // показывать кнопку плей / пауза
     openerEqulizerOffsetLeft:3,           // сдвигание эквалайзера слева
     openerEqulizerOffsetTop:-1,           // сдвигание эквалайзера сверху
 
-    //a to b loop
     atbTimeBackgroundColor:"transparent", // цвет фона "от / до"
     atbTimeTextColorNormal:"#888888",     // цвет текста "от / до"
-    atbTimeTextColorSelected:get_audio_dop()[3],   // цвет выбранного текста "от / до"
+    atbTimeTextColorSelected:get_audio_dop()[2],   // цвет выбранного текста "от / до"
     atbButtonTextNormalColor:"#888888",   // цвет кнопки "от / до"
-    atbButtonTextSelectedColor:get_audio_dop()[3], // цвет выбранной кнопки "от / до"
-    atbButtonBackgroundNormalColor:get_audio_dop()[3], // цвет фона кнопки "от / до"
-    atbButtonBackgroundSelectedColor:get_audio_dop()[3], // цвет фона выбранной кнопки "от / до"
+    atbButtonTextSelectedColor:get_audio_dop()[2], // цвет выбранной кнопки "от / до"
+    atbButtonBackgroundNormalColor:get_audio_dop()[2], // цвет фона кнопки "от / до"
+    atbButtonBackgroundSelectedColor:get_audio_dop()[2], // цвет фона выбранной кнопки "от / до"
   });
 
-    FWDMSPUtils.onReady(function(){
-            music_player.addListener(FWDMSP.READY, music_onReady);
-            music_player.addListener(FWDMSP.PLAY, music_onPlay);
-            music_player.addListener(FWDMSP.PAUSE, music_onPause);
-        });
+FWDMSPUtils.onReady(function() {
+  music_player.addListener(FWDMSP.READY, music_onReady);
+  music_player.addListener(FWDMSP.PLAY, music_onPlay);
+  music_player.addListener(FWDMSP.PAUSE, music_onPause);
+  music_player.addListener(FWDMSP.UPDATE_TIME, music_update_time);
+});
 
 function music_onReady(){console.log("Аудио плеер готов");}
 
-    function music_onPause(){
-      try{
-      div = document.createElement("div");
-      div.innerHTML = music_player.getTrackTitle();
-      title = div.querySelector('span').innerHTML;
-      document.title = "Музыка приостановлена";
-      if(document.querySelector(".user_status")){
-        document.querySelector(".user_status").innerHTML = "Музыка приостановлена";
-      }}catch{null}
-    }
-    function music_onPlay(){
-        div = document.createElement("div");
-        div.innerHTML = music_player.getTrackTitle();
-        try{
-        title = "¶ " + div.querySelector('span').innerHTML}
-        catch {title = "Без названия"}
+function toSeconds(str) {
+    var pieces = str.split(":");
+    var result = Number(pieces[0]) * 60 + Number(pieces[1]);
+    //return(result.toFixed(3));
+    return(result*1);
+}
 
-        console.log("Воспроизводится трек: " + title);
-        document.title = title;
-        if(document.querySelector(".user_status")){
-          document.querySelector(".user_status").innerHTML = title;
-        }
-        try {video_player.pause()} catch {null}
-    };
+function music_onPause() {
+  try {
+    document.title = "Музыка приостановлена";
+    if (document.querySelector(".user_status")) {
+      document.querySelector(".user_status").innerHTML = "Музыка приостановлена";
+    }
+  } catch { null }
+};
+
+function music_onPlay() {
+  track_id = music_player.buy();
+  console.log("buy ", track_id);
+  if (track_id == null) {
+    track_id = $playlist.getAttribute("track-pk");
+  }
+  else {
+    $playlist.setAttribute("track-pk", track_id);
+  }
+  remove_play_items(document.body);
+  show_play_items(document.body, track_id);
+  try { video_player.pause() } catch { null };
+  console.log(track_id);
+
+  title = music_player.getTrackTitle();
+  if (title != undefined) {
+    title_replace = title.replace(/<\/?[^>]+(>|$)/g, "");
+    document.title = "¶ " + title_replace;
+    if (document.querySelector(".user_status")) {
+      document.querySelector(".user_status").innerHTML = "¶ " + title_replace;
+    }
+  }
+};
+
+$playlist = document.body.querySelector("#saved_playlist");
+function music_update_time() { 
+  //try {
+    blocks = document.body.querySelectorAll(".track");
+    track_id = music_player.buy();
+    if (track_id == null) {
+      track_id = $playlist.getAttribute("track-pk");
+    }
+    current = toSeconds(music_player.getCurrentTime());
+    duration = toSeconds(music_player.getDuration());
+    if (current == 0) {
+      return;
+    }
+    procent = current / duration * 100;
+    for (i=0; i < blocks.length; i++) {
+      if (blocks[i].getAttribute("track-pk") == track_id) {
+        progress = blocks[i].querySelector(".progress2");
+        progress.style.width = procent + "%";
+      }
+    }
+  //} catch { null };
+}
+
+///////////////////////////
+
+function show_active_track(block, list_pk, track_pk) {
+  playlists = block.querySelectorAll(".playlist");
+  for (i=0; i < playlists.length; i++) {
+    if (playlists[i].getAttribute("data-pk") == list_pk) {
+      if (playlists[i].classList.contains("is_paginate")) {
+        console.log("Обнаружен проигрываемый список плейлиста!");
+      }
+      else {
+        playlists[i].classList.add("play");
+        try {
+          playlists[i].querySelector(".play_list_mode").classList.add("music_list_pause");
+        } catch { null };
+      }
+    }
+  }
+
+  music_update_time();
+
+};
+
+function remove_play_items(block) {
+  // уберем все подсветки плейлистов и треков
+  items = block.querySelectorAll('.track');
+  for (i=0; i < items.length; i++) {
+    items[i].querySelector('.progress2').removeAttribute("style");
+  }
+
+  playlists = block.querySelectorAll('.playlist');
+  for (i=0; i < playlists.length; i++) {
+    if (playlists[i].classList.contains("is_paginate")) {
+      console.log("Обнаружен проигрываемый список плейлиста!");
+    }
+    else {
+      playlists[i].classList.remove("play");
+      try {
+        playlists[i].querySelector(".play_list_mode").classList.remove("music_list_pause");
+      } catch { null };
+    }
+  }
+  // ---- //
+};
+
+function show_play_items(block, track_id) {
+  if (track_id == 0) {
+    return;
+  }
+
+  type = $playlist.getAttribute("data-type");
+  pk = type.slice(3);
+
+  // у пользователя выбран плейлист.
+  if (type.indexOf('lis') !== -1) {
+    if (block.querySelector('[playlist-pk=' + '"' + pk + '"' + ']')) {
+      list_id = pk;
+    }
+  }
+  // выбран плейлист записи
+  else if (type.indexOf('pos') !== -1) {
+    posts_tracks = block.querySelectorAll('.music_list_post');
+    for (i=0; i < posts_tracks.length; i++) {
+      if (posts_tracks[i].classList.contains("music_title") && posts_tracks[i].parentElement.parentElement.parentElement.getAttribute("track-pk") == track_id) {
+        list_id = posts_tracks[i].parentElement.parentElement.parentElement.getAttribute('playlist-pk');
+        break;
+      }
+    }
+  }
+  console.log("play list" + list_id);
+  // отражаем проигрываемый трек и плейлист
+  remove_play_items(block);
+  show_active_track(block, list_id, track_id);
+}
+
+function get_music_player_support(block) {
+  console.log("Time: " + music_player.getCurrentTime());
+  if (music_player.getCurrentTime() && music_player.getCurrentTime() != "00:00") {
+    show_play_items(block, $playlist.getAttribute("track-pk"));
+  }
+}
 
 function dragElement(elmnt){var pos1=0,pos2=0,pos3=0,pos4=0;document.querySelector("#draggable-header").onmousedown=dragMouseDown;document.querySelector("#draggable-resize").onmousedown=resizeMouseDown;function dragMouseDown(e){e=e||window.event;e.preventDefault();pos3=e.clientX;pos4=e.clientY;document.onmouseup=closeDragElement;document.onmousemove=elementDrag}function resizeMouseDown(e){e=e||window.event;e.preventDefault();pos3=0;pos4=0;document.onmouseup=closeDragElement;document.onmousemove=elementResize}function elementResize(e){e=e||window.event;e.preventDefault();var content=document.querySelector(".draggable");var width=content.offsetWidth;var height=content.offsetHeight;pos1=(e.clientX-width)-content.offsetLeft;pos2=(e.clientY-height)-content.offsetTop;content.style.width=width+pos1+'px';content.style.height=height+pos2+'px'}function elementDrag(e){e=e||window.event;e.preventDefault();pos1=pos3-e.clientX;pos2=pos4-e.clientY;pos3=e.clientX;pos4=e.clientY;elmnt.style.top=(elmnt.offsetTop-pos2)+"px";elmnt.style.left=(elmnt.offsetLeft-pos1)+"px"}function closeDragElement(){document.onmouseup=null;document.onmousemove=null}}
 
-on('#ajax', 'click', '.music_list_item', function() {
-      track_id = this.parentElement.parentElement.getAttribute('music-counter') - 1;
-      parents = this.parentElement.parentElement.parentElement.parentElement;
-      list_pk = parents.getAttribute('data-pk');
-      if (!document.body.classList.contains("list_" + list_pk) && list_pk){
-        save_playlist("list_" + list_pk, '/music/manage/temp_list/' + list_pk, '/music/get/list/' + list_pk + "/", track_id)
-      }else{
-        music_player.loadPlaylist(0);
-        if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-        setTimeout(function() {music_player.playSpecificTrack("list_" + list_pk, track_id)}, 50);
-      }
-      }
-    });
 
-    function save_playlist(suffix, post_link, get_link, track_id){
-        var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-        playlist_link.open( 'GET', post_link, true );
-        playlist_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        playlist_link.onreadystatechange = function () {
-        if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
-          document.querySelector("body").className = "";
-          document.querySelector("body").classList.add(suffix);
+on('#ajax', 'click', '.music_list_item', function(e) {
+  target_list = e.target.classList;
+  counter = 0;
+  // работа с плейлистом
+  if (target_list.contains("play_list_mode")) {
+    console.log("play_list_mode!!");
+    playlist = this.parentElement.parentElement.parentElement.parentElement;
+    if (playlist.classList.contains("play")) {
+      if (target_list.contains("music_list_pause")) {
+        music_player.pause();
+        target_list.remove('music_list_pause');
+        return;
+      }
+      else {
+        //music_player.pause();
+        music_player.play();
+        target_list.add('music_list_pause');
+        return;
+      }
+    }
+    track_id = this.getAttribute("track-pk");
+    list_id = this.parentElement.parentElement.parentElement.getAttribute('playlist-pk');
+    tracks = document.body.querySelectorAll(".track");
+  }
 
-          var _link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-          _link.open( 'GET', get_link, true );
-          _link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-          _link.onreadystatechange = function () {
-            if ( _link.readyState == 4 && _link.status == 200 ) {
-              var response = document.createElement('span');
-              response.innerHTML = _link.responseText;
-              var list = response.querySelectorAll("li");
-              var count = 50;
-              for(i=0; i<count && i>=track_id; i++) {
-                try{
-                _source=list[i].getAttribute("data-path");
-                _title=list[i].getAttribute("data-title");
-                _thumbPath=list[i].getAttribute("data-thumbpath");
-                _duration=list[i].getAttribute("data-duration");
-                time = msToTime(_duration);
-                music_player.addTrack(_source, _title, _thumbPath, time, true, false, null)
-              }catch{break}
-            }
-              music_player.loadPlaylist(0);
-              if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
-              setTimeout(function() {music_player.playSpecificTrack(suffix, track_id)}, 50);
-            }
-          }};
-          _link.send( null );
-        }};
-        playlist_link.send( null );
-        };
+  // работа с треком
+  else {
+    track = this.parentElement.parentElement.parentElement;
+    if (track.querySelector(".progress2").getAttribute("style")) {
+      if (track.classList.contains('pause')) {
+        music_player.play();
+        track.classList.remove('pause');
+        return;
+      }
+      else {
+        music_player.pause();
+        track.classList.add('pause');
+        return;
+      }
+    }
+
+    track_id = track.getAttribute("track-pk");
+    list_id = track.getAttribute('playlist-pk');
+    tracks = track.parentElement.querySelectorAll(".track");
+    for (i=0; i < tracks.length; i++) {
+      if (tracks[i].getAttribute("track-pk") == track_id) {
+        counter = i;
+      }
+    };
+  }
+
+
+  current_type = "lis" + list_id;
+  $playlist.setAttribute("track-pk", track_id);
+
+  if ($playlist.getAttribute("data-type") != current_type) {
+      save_playlist('/users/progs/save_playlist/' + current_type + "/", counter, track_id);
+      $playlist.setAttribute("data-type", current_type);
+  } else {
+      music_player.loadPlaylist(0);
+      if (FWDMSP.LOAD_PLAYLIST_COMPLETE) {
+        setTimeout(function() {
+          music_player.playSpecificTrack(0, counter);
+        }, 50);
+      }
+  }
+});
+
+on('#ajax', 'click', '.music_list_post', function() {
+  track = this.parentElement.parentElement.parentElement;
+  if (track.querySelector(".progress2").getAttribute("style")) {
+    if (track.classList.contains('pause')) {
+      music_player.play();
+      track.classList.remove('pause');
+      return;
+    }
+    else {
+      music_player.pause();
+      track.classList.add('pause');
+      return;
+    }
+  }
+  counter = 0;
+  track_id = track.getAttribute("track-pk");
+  post_id = track.parentElement.parentElement.getAttribute('data-pk');
+
+  tracks = track.parentElement.querySelectorAll(".track");
+  for (i=0; i < tracks.length; i++) {
+    console.log(i);
+    if (tracks[i].getAttribute("track-pk") == track_id) {
+      console.log("ok " + i);
+      counter = i;
+    }
+  };
+
+  current_type = "pos" + post_id;
+  $playlist.setAttribute("track-pk", track_id);
+
+  if ($playlist.getAttribute("data-type") != current_type) {
+      save_playlist('/users/progs/save_playlist/' + current_type + "/", counter, track_id);
+      $playlist.setAttribute("data-type", current_type);
+  } else {
+      music_player.loadPlaylist(0);
+      if (FWDMSP.LOAD_PLAYLIST_COMPLETE) {
+        setTimeout(function() {
+          music_player.playSpecificTrack(0, counter);
+        }, 50);
+      }
+  }
+});
+
+on('#ajax', 'click', '.music_list_comment', function() {
+  track = this.parentElement.parentElement.parentElement;
+  if (track.querySelector(".progress2").getAttribute("style")) {
+    if (track.classList.contains('pause')) {
+      music_player.play();
+      track.classList.remove('pause');
+      return;
+    }
+    else {
+      music_player.pause();
+      track.classList.add('pause');
+      return;
+    }
+  }
+  counter = 0;
+  track_id = track.getAttribute("track-pk");
+  list_id = track.getAttribute('playlist-pk');
+
+  tracks = track.parentElement.querySelectorAll(".track");
+  for (i=0; i < tracks.length; i++) {
+    console.log(i);
+    if (tracks[i].getAttribute("track-pk") == track_id) {
+      console.log("ok " + i);
+      counter = i;
+    }
+  };
+
+  current_type = track.parentElement.nextElementSibling.querySelector(".react_style").getAttribute("data-type");
+  $playlist.setAttribute("track-pk", track_id);
+
+  if ($playlist.getAttribute("data-type") != current_type) {
+      save_playlist('/users/progs/save_playlist/' + current_type + "/", counter, track_id);
+      $playlist.setAttribute("data-type", current_type);
+  } else {
+      music_player.loadPlaylist(0);
+      if (FWDMSP.LOAD_PLAYLIST_COMPLETE) {
+        setTimeout(function() {
+          music_player.playSpecificTrack(0, counter);
+        }, 50);
+      }
+  }
+});
+
+function save_playlist(post_link, counter, track_id) {
+  var playlist_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  playlist_link.open( 'POST', post_link, true );
+  playlist_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  playlist_link.onreadystatechange = function () {
+    if ( playlist_link.readyState == 4 && playlist_link.status == 200 ) {
+      data = JSON.parse(playlist_link.responseText);
+
+      category = document.body.querySelector("#saved_audio_category")
+      category.querySelector(".name").innerHTML = data.name;
+      category.querySelector(".minimalWhiteCategoriesDescription").innerHTML = data.description;
+      category.setAttribute("data-thumbnail-path", data.image);
+
+      tracks = data.tracks.reverse();
+
+      for(i=0; i < tracks.length; i++) {
+        title = tracks[i].title;
+        if (title.indexOf(".") != -1) {
+          title = title.split(".")[0];
+        }
+        _source=tracks[i].url;
+        _title=title;
+        _thumbPath=tracks[i].image;
+        _id=tracks[i].id;
+                //_duration=list[i].getAttribute("data-duration");
+                //time = msToTime(_duration);
+        music_player.addTrack(_source, title, _thumbPath, null, true, false, null, _id) // 4 позиция - время (time)
+      }
+      music_player.loadPlaylist(0);
+      $playlist.setAttribute("track-pk", track_id);
+      if (FWDMSP.LOAD_PLAYLIST_COMPLETE){
+        setTimeout(function() {music_player.playSpecificTrack(0, counter)}, 50);
+      }
+      show_play_items(document.body.querySelector("#ajax"), $playlist.getAttribute("track-pk"));
+  }};
+  playlist_link.send( null );
+};
+
+function add_html_tracks_in_player (html) {
+  span = document.createElement("div");
+  span.innerHTML = html;
+  tracks = span.querySelectorAll(".li");
+  for (i=0; i < tracks.length; i++) {
+    _source = tracks[i].getAttribute("data-file");
+    _title = tracks[i].querySelector(".new_title").innerHTML;
+    _thumbPath = "/static/images/news_small3.jpg";
+    _id=tracks[i].id;
+    music_player.addTrack(_source, title, _thumbPath, null, true, false, _id)
+  }
+  fullscreen_resize();
+};

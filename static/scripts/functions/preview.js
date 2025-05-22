@@ -354,39 +354,48 @@ function create_preview_video_list(name, pk, count){
   return $div
 };
 
-function create_preview_music(img_src, pk, counter){
+function create_preview_music(title, img_src, track_pk, list_pk){
   $div = document.createElement("div");
 
   $input = document.createElement("span");
   $img = document.createElement("img");
   $figure = document.createElement("figure");
   $media = document.createElement("span");
+  $progress2 = document.createElement("div");
+  $h6 = document.createElement("h6");
 
-  media_body = _this.querySelector(".media-body");
-
-  $div.classList.add("music", "handle");
+  $div.classList.add("music", "handle", "track");
+  $div.setAttribute("track-pk", track_pk);
+  $div.setAttribute("playlist-pk", list_pk);
   $div.style.display = "flex";
   $div.style.margin = "5px";
+  $div.style.position = "relative";
   $div.style.flexBasis = "100%";
-  $div.setAttribute('music-counter', counter);
 
-  $input.innerHTML = '<input type="hidden" name="attach_items" value="mus' + pk + '">';
+  $input.innerHTML = '<input class="attach" type="hidden" name="attach_items" value="mus' + track_pk + '">';
 
   $img.src = img_src;
   $img.style.width = "30px";
   $figure.append($img);
 
-  $media.innerHTML = media_body.innerHTML;
   $media.style.marginLeft = "10px";
   $media.style.marginRight = "40px";
   $media.style.overflow = "hidden";
-  h6 = $media.querySelector("h6");
-  h6.classList.add("music_list_item", "pointer", "music_title");
+  $media.style.zIndex = "1";
+  $h6.classList.add("music_list_item", "pointer", "music_title");
+  $h6.innerHTML = title;
+
+  $h6_wrapper = document.createElement("span");
+  $h6_wrapper.append($h6);
+  $media.append($h6_wrapper);
+
+  $progress2.classList.add("progress2");
 
   $div.append(music_preview_delete());
   $div.append($input);
   $div.append($figure);
   $div.append($media);
+  $div.append($progress2);
   return $div
 };
 function create_preview_playlist(name, pk, count){
