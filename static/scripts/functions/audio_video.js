@@ -506,6 +506,7 @@ function music_update_time() {
   //try {
     blocks = document.body.querySelectorAll(".music");
     track_id = music_player.buy();
+    console.log("track_id", track_id)
     if (track_id == null) {
       track_id = $playlist.getAttribute("track-pk");
     }
