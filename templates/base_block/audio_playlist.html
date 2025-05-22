@@ -1,7 +1,7 @@
 {% load get_key %}
 
 <ul id="audio_playlists" style="display:none;">
-	<li data-source="playlist_" data-playlist-name="My first playlist"
+	<li data-source="saved_playlist" data-playlist-name="My first playlist"
 		data-thumbnail-path="/static/images/news_small1.jpg">
 		<p class="minimalWhiteCategoriesTitle"><span class="boldWhite">Название: </span>Мой плейлист</p>
 		<p class="minimalWhiteCategoriesType"><span class="boldWhite">Здесь тип плейлиста</span></p>
@@ -16,7 +16,7 @@
 </ul>
 
 
-<ul id="playlist_" track-pk="0" data-type="" style="display:none;">
+<ul id="saved_playlist" track-pk="0" data-type="" style="display:none;">
 	{% for track in request.user.my_playlist_too %}
 	<li data-path="/media/{{ track.file }}"
 		data-thumbpath="{% if track.artwork_url %}{{ track.artwork_url.url }}{% endif %}"
