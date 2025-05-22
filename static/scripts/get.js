@@ -296,7 +296,7 @@ on('#ajax', 'click', '.genre_item', function() {
 on('#ajax', 'click', '.music_list_post', function() {
   document.body.querySelector("#saved_playlist").setAttribute("track-pk", this.nextElementSibling.getAttribute("data-pk"));
   var track_id = this.parentElement.parentElement.getAttribute('music-counter');
-  item = this.parentElement.parentElement.parentElement.parentElement;
+  item = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   var item_pk = item.getAttribute('data-pk');
   if (!document.body.classList.contains("item_" + item_pk)){
     document.querySelector("body").classList = "";
