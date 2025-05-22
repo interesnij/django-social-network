@@ -678,7 +678,8 @@ on('#ajax', 'click', '.music_list_item', function(e) {
 });
 
 on('#ajax', 'click', '.music_list_post', function() {
-  track = this.parentElement.parentElement.parentElement;
+  _this = this;
+  track = _this.parentElement.parentElement.parentElement;
   if (track.querySelector(".progress2").getAttribute("style")) {
     if (track.classList.contains('pause')) {
       music_player.play();
@@ -692,10 +693,10 @@ on('#ajax', 'click', '.music_list_post', function() {
     }
   }
   counter = 0;
-  track_id = track.getAttribute("track-pk");
+  track_id = _this.nextElementSibling.getAttribute("data-pk");
   post_id = track.parentElement.parentElement.getAttribute('data-pk');
 
-  tracks = track.parentElement.querySelectorAll(".track");
+  tracks = track.parentElement.querySelectorAll(".music");
   for (i=0; i < tracks.length; i++) {
     console.log(i);
     if (tracks[i].getAttribute("track-pk") == track_id) {
