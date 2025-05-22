@@ -1101,8 +1101,8 @@ class Good(models.Model):
 		else:
 			self.creator.minus_goods(1)
 		if self.list.count > 0:
-            self.list.count -= 1
-            self.list.save(update_fields=["count"])
+			self.list.count -= 1
+			self.list.save(update_fields=["count"])
 		if Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
 			Notify.objects.filter(type="GOO", object_id=self.pk, verb="ITE").update(status="C")
 		if Wall.objects.filter(type="GOO", object_id=self.pk, verb="ITE").exists():
