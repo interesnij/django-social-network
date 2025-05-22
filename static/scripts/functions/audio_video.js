@@ -549,7 +549,7 @@ function show_active_track(block, list_pk, track_pk) {
 
 function remove_play_items(block) {
   // уберем все подсветки плейлистов и треков
-  items = block.querySelectorAll('.track');
+  items = block.querySelectorAll('.music');
   for (i=0; i < items.length; i++) {
     items[i].querySelector('.progress2').removeAttribute("style");
   }
@@ -631,7 +631,7 @@ on('#ajax', 'click', '.music_list_item', function(e) {
     }
     track_id = this.getAttribute("track-pk");
     list_id = this.parentElement.parentElement.parentElement.getAttribute('playlist-pk');
-    tracks = document.body.querySelectorAll(".track");
+    tracks = document.body.querySelectorAll(".music");
   }
 
   // работа с треком
@@ -652,7 +652,7 @@ on('#ajax', 'click', '.music_list_item', function(e) {
 
     track_id = track.getAttribute("track-pk");
     list_id = track.getAttribute('playlist-pk');
-    tracks = track.parentElement.querySelectorAll(".track");
+    tracks = track.parentElement.querySelectorAll(".music");
     for (i=0; i < tracks.length; i++) {
       if (tracks[i].getAttribute("track-pk") == track_id) {
         counter = i;
@@ -739,7 +739,7 @@ on('#ajax', 'click', '.music_list_comment', function() {
   track_id = track.getAttribute("track-pk");
   list_id = track.getAttribute('playlist-pk');
 
-  tracks = track.parentElement.querySelectorAll(".track");
+  tracks = track.parentElement.querySelectorAll(".music");
   for (i=0; i < tracks.length; i++) {
     console.log(i);
     if (tracks[i].getAttribute("track-pk") == track_id) {
