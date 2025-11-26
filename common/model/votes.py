@@ -85,4 +85,4 @@ class SupportUserVotes(models.Model):
 
     vote = models.IntegerField(verbose_name="Голос", choices=VOTES)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="+", on_delete=models.CASCADE, verbose_name="Пользователь")
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="+", on_delete=models.CASCADE, verbose_name="Менеджер")
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, related_name="+", on_delete=models.CASCADE, verbose_name="Менеджер")
