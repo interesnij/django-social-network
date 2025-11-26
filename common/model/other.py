@@ -23,7 +23,7 @@ class CustomLink(models.Model):
 class StickerCategory(models.Model):
     name = models.CharField(max_length=32, unique=True, verbose_name="Название")
     order = models.PositiveSmallIntegerField(default=0, verbose_name="Порядковый номер")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
     description = models.CharField(max_length=200, blank=True, verbose_name="Описание")
 
     class Meta:
@@ -79,7 +79,7 @@ class Smiles(models.Model):
         return self.name
 
 class UserPopulateSmiles(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
     smile = models.ForeignKey(Smiles, on_delete=models.CASCADE, related_name='smile', verbose_name="Смайл")
     count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
 
@@ -101,7 +101,7 @@ class UserPopulateSmiles(models.Model):
 
 
 class UserPopulateStickers(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
     sticker = models.ForeignKey(Stickers, on_delete=models.CASCADE, related_name='sticker', verbose_name="Стикер")
     count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
 
