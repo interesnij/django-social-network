@@ -101,7 +101,7 @@ class UserPopulateSmiles(models.Model):
 
 
 class UserPopulateStickers(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='+', verbose_name="Пользователь")
     sticker = models.ForeignKey(Stickers, on_delete=models.CASCADE, related_name='sticker', verbose_name="Стикер")
     count = models.PositiveIntegerField(default=1, verbose_name="Количество использований пользователем")
 
