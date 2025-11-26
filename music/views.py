@@ -112,8 +112,8 @@ class AddTrackInList(View):
 			for file in request.FILES.getlist('file'):
 				count += 1
 				order += 1
-				print("file", file)
-				print("file name", file.name)
+				#print("file", file)
+				#print("file name", file.name)
 				#tag = TinyTag.get(file.temporary_file_path())
 				#title = tag.title
 				#if not title:
