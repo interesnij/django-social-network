@@ -6,7 +6,7 @@ from common.model.other import *
 class PostVotesAdmin(admin.ModelAdmin):
     list_display = (
         'vote',
-        'user',
+        #'user',
         #'parent',
     )
 
