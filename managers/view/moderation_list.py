@@ -16,7 +16,8 @@ class ModerationUserList(ListView):
         return super(ModerationUserList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_moderation_users()
+        from models import Moderated
+        list = Moderated.get_moderation_users()
         return list
 
 class ModerationCommunityList(ListView):
@@ -25,13 +26,14 @@ class ModerationCommunityList(ListView):
     def get(self,request,*args,**kwargs):
         self.user = request.user
         if self.user.is_manager():
-            self.template_name = get_detect_platform_template("managers/moderation_list/community_list.html", request.user, request.META['HTTP_USER_AGENT'])
+            self.template_name = get_staff_template("managers/moderation_list/community_list.html", request.user, request.META['HTTP_USER_AGENT'])
         else:
             raise Http404
         return super(ModerationCommunityList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_staff_template()
+        from models import Moderated
+        list = Moderated.get_moderation_communities()
         return list
 
 class ModerationPostsList(ListView):
@@ -46,7 +48,8 @@ class ModerationPostsList(ListView):
         return super(ModerationPostsList,self).get(request,*args,**kwargs)
 
     def get_queryset(self):
-        list = self.user.get_moderation_posts()
+        from models import Moderated
+        list = Moderated.get_moderation_posts()
         return list
 
 class ModerationPhotoList(ListView):

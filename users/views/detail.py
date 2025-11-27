@@ -81,7 +81,8 @@ class UserStaffCommunities(ListView):
     template_name, paginate_by = None, 15
 
     def get(self,request,*args,**kwargs):
-        from common.utils import get_folder
+        from common.templates import get_folder
+
         self.user = User.objects.get(pk=self.kwargs["pk"])
         if self.user.is_staffed_user() and self.user == request.user:
             self.template_name = get_folder(request.META['HTTP_USER_AGENT']) + "users/user_community/staffed_communities.html"

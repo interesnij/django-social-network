@@ -1059,6 +1059,16 @@ class User(AbstractUser):
             return list.list
         else:
             return self.get_playlist().pk
+        
+    def get_selected_music_list(self):
+        from users.model.list import UserPlayListPosition
+        list = UserPlayListPosition.objects.filter(user=self.pk, type=1).first()
+        if list:
+            from music.models import MusicList
+            pk = list.list
+            return MusicList.objects.get(pk=pk)
+        else:
+            return self.get_playlist()
     def get_selected_video_list_pk(self):
         from users.model.list import UserVideoListPosition
         list = UserVideoListPosition.objects.filter(user=self.pk, type=1).first()

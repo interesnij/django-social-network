@@ -3,25 +3,25 @@
 <span data-type="{{ list.get_code }}" data-community-id="{{ list.community.pk }}">
   {% if request.user|is_can_work_list:list %}
   <a class="create_list pointer">
-    Добавить список
+    Добавить
   </a>
   <a class="edit_list pointer hide_delete">
-    Изменить список
+    Изменить
   </a>
   {% if list.is_have_edit %}
   <a class="delete_list pointer">
-    Удалить список
+    Удалить
   </a>
   {% endif %}
-
+  список
   {% elif request.user.is_moderator %}
   <a class="create_close pointer">
-    Закрыть
+    Закрыть список
   </a>
 
   {% else %}
   <a class="create_claim pointer">
-    Пожаловаться
+    Пожаловаться на список
   </a>
   {% endif %}
 
