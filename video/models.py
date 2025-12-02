@@ -1084,14 +1084,14 @@ class Video(models.Model):
 
     def get_uri(self):
         if self.file:
-            return 'data-video-source="https://трезвый.рус' + self.file.url + '"'
+            return 'data-video-source="https://network.codtesla.store' + self.file.url + '"'
         elif self.uri:
             if "vimeo" in self.uri:
                 return 'data-video-source="' + self.uri + '"'
             else:
                 return 'data-video-source="' + self.uri + '"'
         else:
-            return "https://трезвый.рус/static/images/demo_video/travel.mp4"
+            return "https://network.codtesla.storeс/static/images/demo_video/travel.mp4"
 
     def make_private(self):
         from notify.models import Notify, Wall
