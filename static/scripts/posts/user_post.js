@@ -82,6 +82,7 @@ on('body', 'change', '.case_all_input', function() {
 
   link_.open( 'POST', url, true )
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  jsonResponse = 1;
 
   link_.onreadystatechange = function () { 
   if ( this.readyState == 4 && this.status == 200 ) {
@@ -105,7 +106,10 @@ on('body', 'change', '.case_all_input', function() {
         close_work_fullscreen();
         id_video_upload_start = true;
         create_fullscreen("/video/edit_video/", "worker_fullscreen");
-        //fullscreen_resize()
+        console.log("jsonResponse", jsonResponse);
+        console.log("upload_video_form", document.body.querySelector("#upload_video_form"));
+        console.log("upload_video_pk", document.body.querySelector("#upload_video_pk"));
+        document.body.querySelector("#upload_video_pk").setAttribute("value", jsonResponse.pk);
       };
       if (is_video_edit_window_loaded) {
         try {
