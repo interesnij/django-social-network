@@ -83,10 +83,12 @@ on('body', 'change', '.case_all_input', function() {
   link_.open( 'POST', url, true )
   link_.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-  link_.onreadystatechange = function () {
+  link_.onreadystatechange = function () { 
   if ( this.readyState == 4 && this.status == 200 ) {
       if (case_video) {
         jsonResponse = JSON.parse(link_.responseText);
+        console.log("upload_video_form", document.body.querySelector("#upload_video_form"));
+        console.log("upload_video_pk", document.body.querySelector("#upload_video_pk"));
         document.body.querySelector("#upload_video_pk").setAttribute("value", jsonResponse.pk)
       }
       else { 

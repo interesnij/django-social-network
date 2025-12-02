@@ -293,7 +293,7 @@ def get_message_edit(message, user):
         elif item[:3] == "vid":
             try:
                 from video.models import Video
-                video = Video.objects.get(query, pk=item[3:])
+                video = Video.objects.get(pk=item[3:])
                 if video.type[0] == "_":
                     pass
                 block = ''.join([block, '<div class="col-md-6"><span class="video_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="vid', str(video.pk), '"></span><img class="image_fit" src="', video.image.url, '"><span class="video_icon_play_v2 u_video_detail" video-pk="', str(video.pk), '"></span></div>'])
@@ -302,7 +302,7 @@ def get_message_edit(message, user):
         elif item[:3] == "mus":
             try:
                 from music.models import Music
-                music = Music.objects.get(query, pk=item[3:])
+                music = Music.objects.get(pk=item[3:])
                 if music.type[0] == "_":
                     pass
                 block = ''.join([block, '<div style="display: flex; padding: 3px;"><span class="music_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="mus', str(music.pk), '"></span><span><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></span><span style="margin-left: 10px; margin-right: 40px; overflow: hidden;"><h6 class="music_list_item pointer music_title" style="padding-top: 4px;"><a>', str(music.pk), '</a></h6></span></div>'])
@@ -311,7 +311,7 @@ def get_message_edit(message, user):
         elif item[:3] == "doc":
             try:
                 from docs.models import Doc
-                doc = Doc.objects.get(query, pk=item[3:])
+                doc = Doc.objects.get(pk=item[3:])
                 if doc.type[0] == "_":
                     pass
                 block = ''.join([block, '<div class="col-md-12" doc-pk="8" style="padding: 3px; display: flex;"><span class="doc_preview_delete" tooltip="Не прикреплять" flow="up"><svg fill="#FF0000" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span><span><input type="hidden" name="attach_items" value="doc', str(doc.pk), '"></span><span><span><svg fill="currentColor" style="width:35px;heigth:35px" class="svg_default" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg></span></span><span class="media_title"><h6 style="padding-top: 9px;"><a href="', doc.file.url, '" style="white-space: nowrap;" target="_blank" rel="nofollow">', doc.title, '</a></h6></span></div>'])
@@ -320,7 +320,7 @@ def get_message_edit(message, user):
         elif item[:3] == "sur":
             try:
                 from survey.models import Survey
-                survey = Survey.objects.get(query, pk=item[3:])
+                survey = Survey.objects.get(pk=item[3:])
                 if survey.type[0] == "_":
                     pass
                 _class, voted, answers, creator = "", "", "", survey.creator
@@ -354,7 +354,7 @@ def get_message_edit(message, user):
         elif item[:3] == "lmu":
             try:
                 from music.models import MusicList
-                playlist = MusicList.objects.get(list_query, pk=item[3:])
+                playlist = MusicList.objects.get(pk=item[3:])
                 if playlist.type[0] == "_":
                     pass
                 block = ''.join([block, '<div class="folder" owner-pk="', str(creator.pk), '" playlist-pk="', str(playlist.pk), '" style="text-align: center;padding: 3px;"><span><input type="hidden" name="attach_items" value="lmu', str(playlist.pk), '"></span><div class="card-img-top file-logo-wrapper" style="padding: 2rem;"><a class="nowrap"><div class="d-flex align-items-center justify-content-center w-100 load_playlist pointer"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div></a></div><div class="card-body pt-0"><div class="content-wrapper" style="display: flex;"><p class="card-text file-name mb-0 load_playlist pointer"><a class="nowrap">', playlist.name, ' (', str(playlist.count_items()), ')</a></p></div><small class="file-accessed pointer doc_attach_list_remove underline">Открепить</small></div></div>'])
@@ -363,7 +363,7 @@ def get_message_edit(message, user):
         elif item[:3] == "ldo":
             try:
                 from docs.models import DocsList
-                list = DocsList.objects.get(list_query, pk=item[3:])
+                list = DocsList.objects.get(pk=item[3:])
                 if list.type[0] == "_":
                     pass
                 image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>'
@@ -382,7 +382,7 @@ def get_message_edit(message, user):
         elif item[:3] == "lvi":
             try:
                 from video.models import VideoList
-                list = VideoList.objects.get(list_query, pk=item[3:])
+                list = VideoList.objects.get(pk=item[3:])
                 if list.type[0] == "_":
                     pass
                 image = '<svg fill="currentColor" class="svg_default" style="width:60px;height:88px;" viewBox="0 0 24 24"><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"></path></svg>'
